@@ -5,6 +5,20 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite App</title>
+    <script>
+    /**
+     * this is a hack for error: global is not defined
+     */
+    var global = global || window
+    </script>
+    <script type="module">
+      import path from "path";
+
+      globalThis.__dirname = path.dirname('foo');
+
+      import { Buffer } from 'buffer';
+      window.Buffer = Buffer;
+    </script>
   </head>
   <body>
     <div id="app"></div>

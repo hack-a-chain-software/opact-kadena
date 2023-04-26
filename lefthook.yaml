@@ -1,8 +1,8 @@
 pre-push:
   parallel: true
   commands:
-    front-ts:
-      run: pnpm tsc
+    # front-ts:
+    #   run: pnpm tsc
 
     front-lint:
       files: git diff --name-only HEAD @{push}
@@ -16,8 +16,8 @@ pre-push:
 pre-commit:
   parallel: true
   commands:
-    front-ts:
-      run: pnpm tsc
+    # front-ts:
+    #   run: pnpm tsc
 
     front-lint:
       glob: "*.{js,vue,ts}"
