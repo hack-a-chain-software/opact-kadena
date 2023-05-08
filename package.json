@@ -1,11 +1,12 @@
 {
-  "name": "hackadena",
+  "name": "opact",
   "private": true,
   "scripts": {
+    "postinstall": "npx lefthook install -a; sh build/patch",
     "front": "pnpm --filter front",
-    "postinstall": "npx lefthook install -a",
-    "lint": "eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix"
-  },
+    "circuits": "pnpm --filet circuits",
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix ."
+  }, 
   "devDependencies": {
     "@arkweid/lefthook": "0.7.7",
     "@rushstack/eslint-patch": "^1.2.0",

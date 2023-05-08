@@ -1,0 +1,13 @@
+{
+  // "exclude": [
+  //   "**/*.spec.ts"
+  // ],
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "commonjs",
+    "outDir": "./out",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true
+  }
+}

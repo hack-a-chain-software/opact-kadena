@@ -1,5 +1,5 @@
 import Pact from "pact-lang-api";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { defineStore } from "pinia";
 
 export const useKadena = defineStore("kadena", () => {

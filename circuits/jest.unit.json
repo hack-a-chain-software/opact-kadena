@@ -1,0 +1,8 @@
+{
+    "preset": "ts-jest",
+    "testMatch": [
+        "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "resetMocks": true,
+    "clearMocks": true
+}
