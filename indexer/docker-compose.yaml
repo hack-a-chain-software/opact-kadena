@@ -53,7 +53,7 @@ services:
 
   # Optional (can be used instead of chainweb-db-initialize
   # Shut down chainweb-node before running this.
-  chainweb-valiate-db-sync:
+  chainweb-validate-db-sync:
     container_name: chainweb-validate-db-sync
     image: larsk/rsync
     profiles:

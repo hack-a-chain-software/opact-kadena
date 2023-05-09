@@ -25,7 +25,7 @@ Initialize Database
 -------------------
 
 ```
-docker compose run chainweb-initialize-db
+docker compose up -d chainweb-initialize-db
 ```
 
 The resulting database is *untrusted*. It is fine for use in testing and
@@ -40,7 +40,7 @@ after initialization.
 ```
 # Shut down chainweb-node before running this.
 docker compose run chainweb-validate-db-sync
-docker compose run chainweb-validate-db
+docker compose up -d chainweb-validate-db
 ```
 
 The first command can be skipped if the database has been initialized already.
