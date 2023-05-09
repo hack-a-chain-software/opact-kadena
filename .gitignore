@@ -18,3 +18,4 @@ public/dist
 test-ledger
 wip
 /tests/*.js
+*.env
