@@ -1,7 +1,7 @@
 Droplet
 =====
 
-Docker Compose Setup For A Chainweb Mining Node on Ubuntu 20.04.3 LTS (Focal Fossa)
+Docker Compose Setup For A Chainweb Node on Ubuntu 20.04.3 LTS (Focal Fossa)
 
 Basic understanding of Linux and assuming a fresh install of Ubuntu 20.04.3 LTS and the following requirements are met:
 
