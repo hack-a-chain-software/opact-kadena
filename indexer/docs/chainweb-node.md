@@ -25,11 +25,13 @@ Initialize Database
 -------------------
 
 ```
-docker compose up -d chainweb-initialize-db
+docker compose up chainweb-initialize-db
 ```
 
 The resulting database is *untrusted*. It is fine for use in testing and
 non-critical applications.
+
+The command can be skipped if the database has been initialized already.
 
 Validate Database
 -----------------
@@ -38,12 +40,9 @@ For production applications it is highly recommended to validate the database
 after initialization.
 
 ```
-# Shut down chainweb-node before running this.
-docker compose run chainweb-validate-db-sync
 docker compose up -d chainweb-validate-db
+docker logs chainweb-validate-db
 ```
-
-The first command can be skipped if the database has been initialized already.
 
 The second command can take several hours depending on available hardware.
 Currently, it takes about 6 hours on a cloud VM with eight CPU cores and eight
