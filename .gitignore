@@ -19,3 +19,4 @@ test-ledger
 wip
 /tests/*.js
 *.env
+**/.env
