@@ -43,16 +43,3 @@ The migrations are managed by the `graphile-migrate` tool. Refer to the [project
 We version the migrations at the `migrations` folder, which contains two subfolders: `current` & `committed`. The `commited` folder contains previous migrations which were already committed to the production database, while the `current` folder contains the current iteration of migrations, to be numbered according to the order they are supposed to run, with optional leading zeroes and an optional dash-separated name (e.g. `0001-whatever.sql`). We strongly recommend naming the migration before commiting it (instead of commiting with the default `1-current.sql` name).
 
 *It's fundamental to keep migrations idempotent.*
-
-## Seeding
-
-It's possible to seed the database by running `yarn seed`, which in turns just runs the `src/seeds.sql` query against the database.
-
-> TODO: come up with a solution for keeping seeds in sync with migrations.
-
-## Storage
-
-> TODO: elaborate about the storage solution in different environments (e.g. local development; production).
-
-The `media` columns on the tables are of type UUID, refering to objects on the storage service (S3 compatible).
-
