@@ -1,6 +1,8 @@
 Node Usage
 =====
 
+Before starting chainweb-node, make sure your droplet is configured correctly: [Droplet Tutorial](./digitalocean-droplet.md)
+
 Hardware requirements:
 
 * 4 CPU cores,

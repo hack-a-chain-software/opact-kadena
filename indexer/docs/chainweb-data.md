@@ -6,10 +6,6 @@ This package contains the migrations needed in order to initialize the applicati
 
 This repository contains a `Dockerfile` which generates a Postgres image. Currently there are no modifications to the base `postgres:14.5-bullseye` image, except for labeling. However, the `docker-compose.yml` at the repository's root, mounts a volume with commited migrations to `/docker-entrypoint-initdb.d`, which ensures the database is up to date with them.
 
-> Note: seeding does not happen automatically, as it's a development-only procedure and we're currently sharing the image with production and development. As that'll hardly matter - the production database does not get redeployed after all -, it's reasonable to consider if we should only use the image for development. In either case the use of a custom image itself may be a mistake, as we could just mount volumes to the base image instead.
-
-> TODO: document `graphile-migrate` user and databases requirements (e.g. the shadow database), as they're applicable to production as well.
-
 ## Migrations
 
 The migrations are managed by the `graphile-migrate` tool. Refer to the [project's documentation](https://github.com/graphile/migrate) for more information.
@@ -23,8 +19,20 @@ We version the migrations at the `migrations` folder, which contains two subfold
 ### Run
 ```shell script
 $ docker compose up chainweb-data --build -d
-
 ```
+
+### Vars
+The Chainweb-data container receives all database and node parameters via the .env file. Here are the variables:
+```
+# Chainweb-data vars
+CWD_NODE=""
+CWD_DB_PORT=""
+CWD_DB_USER=""
+CWD_DB_NAME=""
+CWD_DB_PASS=""
+CWD_DB_HOST=""
+```
+
 ### Chainweb-data complex solution
 - server 
 - fill
