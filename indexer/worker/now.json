@@ -1,0 +1,22 @@
+{
+  "name": "my-project",
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/graphql",
+      "dest": ".now/node"
+    }
+  ],
+  "env": {
+    "PGUSER": "your_db_username",
+    "PGHOST": "your_db_host",
+    "PGDATABASE": "your_db_name",
+    "PGPASSWORD": "your_db_password",
+    "PGPORT": "your_db_port"
+  }
+}

@@ -1,4 +1,4 @@
-Droplet
+Digital Ocean Droplet
 =====
 
 Docker Compose Setup For A Chainweb Node on Ubuntu 20.04.3 LTS (Focal Fossa)

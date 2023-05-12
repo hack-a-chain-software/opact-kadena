@@ -1,3 +1,7 @@
+--! Previous: -
+--! Hash: sha1:4c414c3c10c245cf2984085e123f5a65f8efb2c6
+
+--! split: 1-current.sql
 CREATE TABLE blocks (
     chainid bigint NOT NULL,
     creationtime timestamp with time zone NOT NULL,
@@ -37,6 +41,35 @@ ALTER TABLE ONLY events
 
 ALTER TABLE ONLY events
     ADD CONSTRAINT events_block_fkey FOREIGN KEY (block) REFERENCES blocks(hash);
+
+CREATE OR REPLACE FUNCTION check_opact_event()
+    RETURNS trigger AS $BODY$
+BEGIN
+IF strpos('coin', new.module) > 0 THEN
+    INSERT INTO events VALUES (
+        new.block,
+        new.chainid,
+        new.height,
+        new.idx,
+        new.module,
+        new.modulehash,
+        new.name,
+        new.params,
+        new.paramtext,
+        new.qualname,
+        new.requestkey
+    );
+END IF;
+RETURN NULL;
+END;
+$BODY$
+
+LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE TRIGGER check_event BEFORE INSERT OR UPDATE ON events
+FOR EACH ROW
+WHEN (pg_trigger_depth() < 1)
+EXECUTE PROCEDURE check_opact_event();
 
 CREATE INDEX events_height_chainid_idx
   ON events

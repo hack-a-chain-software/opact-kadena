@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "front": "pnpm --filter front",
+    "indexer:db": "pnpm --prefix indexer/db",
     "postinstall": "npx lefthook install -a",
+    "indexer:worker": "pnpm --prefix indexer/worker",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix"
   },
   "devDependencies": {
