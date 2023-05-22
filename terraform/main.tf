@@ -1,7 +1,7 @@
 provider "digitalocean" { token = var.do_token }
 
 resource "digitalocean_ssh_key" "opact-ssh" {
-  name       = "tf"
+  name       = "opact-ssh"
   public_key = file(var.pub_key)
 }
 
@@ -84,6 +84,7 @@ resource "digitalocean_droplet" "chainweb-data" {
       "npm install",
       "npm run migrate",
       "docker compose up chainweb-data -d",
+      "sleep 1",
     ]
   }
 }
