@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "init": "terraform init",
+    "install": "terraform init",
     "plan": "terraform plan -var-file=.tfvars",
-    "apply": "terraform apply -var-file=.tfvars",
-    "destroy": "terraform destroy"
+    "apply": "terraform apply -var-file=.tfvars -auto-approve",
+    "destroy": "terraform destroy -var-file=.tfvars -auto-approve"
   },
   "keywords": [],
   "author": "",

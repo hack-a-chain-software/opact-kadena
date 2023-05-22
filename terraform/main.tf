@@ -5,8 +5,8 @@ resource "digitalocean_ssh_key" "opact-protocol" {
   public_key = file(var.pub_key)
 }
 
-resource "digitalocean_database_cluster" "cwd-database" {
-  name = "cwd-database"
+resource "digitalocean_database_cluster" "chainweb-database" {
+  name = "chainweb-database"
   engine = "pg"
   version = "15"
   size = "db-s-1vcpu-2gb"
@@ -16,27 +16,31 @@ resource "digitalocean_database_cluster" "cwd-database" {
 }
 
 resource "digitalocean_database_db" "indexer" {
-  cluster_id = digitalocean_database_cluster.cwd-database.id
+  cluster_id = digitalocean_database_cluster.chainweb-database.id
   name = "indexer"
 }
 
 resource "digitalocean_database_db" "indexer_shadow" {
-  cluster_id = digitalocean_database_cluster.cwd-database.id
+  cluster_id = digitalocean_database_cluster.chainweb-database.id
   name = "indexer_shadow"
 }
 
 data "digitalocean_database_ca" "ca" {
-  cluster_id = digitalocean_database_cluster.cwd-database.id
+  cluster_id = digitalocean_database_cluster.chainweb-database.id
 }
 
 resource "digitalocean_droplet" "chainweb-data" {
-  depends_on = [ digitalocean_database_cluster.cwd-database ]
+  depends_on = [
+    digitalocean_droplet.chainweb-node,
+    digitalocean_floating_ip.chainweb-node-ip,
+    digitalocean_database_cluster.chainweb-database
+  ]
   name = "chainweb-data"
   image = "ubuntu-22-04-x64"
   region = "nyc1"
   size = "s-1vcpu-2gb"
 
-  ssh_keys = [digitalocean_ssh_key.hac.fingerprint]
+  ssh_keys = [digitalocean_ssh_key.opact-protocol.fingerprint]
 
   connection {
     user = "root"
@@ -68,13 +72,13 @@ resource "digitalocean_droplet" "chainweb-data" {
       "sudo systemctl enable containerd.service",
       "sudo apt-get install -y jq",
       "cd ./chainweb-data",
-      "echo \"CWD_DB_HOST=${digitalocean_database_cluster.cwd-database.host}\" | sudo tee .env",
+      "echo \"CWD_DB_HOST=${digitalocean_database_cluster.chainweb-database.host}\" | sudo tee .env",
       "echo \"CWD_DB_USER=doadmin\" | sudo tee -a .env",
       "echo \"NODE_ENV=production\" | sudo tee -a .env",
-      "echo \"CWD_DB_PASS=${digitalocean_database_cluster.cwd-database.password}\" | sudo tee -a .env",
+      "echo \"CWD_DB_PASS=${digitalocean_database_cluster.chainweb-database.password}\" | sudo tee -a .env",
       "echo \"CWD_DB_PORT=25060\" | sudo tee -a .env",
       "echo \"CWD_DB_NAME=indexer\" | sudo tee -a .env",
-      "echo \"CWD_NODE=64.227.5.244\" | sudo tee -a .env",
+      "echo \"CWD_NODE=${digitalocean_floating_ip.chainweb-node-ip.ip_address}\" | sudo tee -a .env",
       "mkdir /tls",
       "echo \"${data.digitalocean_database_ca.ca.certificate}\" | sudo tee /tls/do-ca.crt",
       "npm install",
@@ -85,7 +89,6 @@ resource "digitalocean_droplet" "chainweb-data" {
 }
 
 resource "digitalocean_droplet" "chainweb-node" {
-  # depends_on = [ digitalocean_database_cluster.cwd-database ]
   name = "chainweb-node"
   image = "ubuntu-22-04-x64"
   region = "nyc1"
@@ -134,4 +137,9 @@ resource "digitalocean_droplet" "chainweb-node" {
       "systemctl start cwnode.service",
     ]
   }
+}
+
+resource "digitalocean_floating_ip" "chainweb-node-ip" {
+  droplet_id = digitalocean_droplet.chainweb-node.id
+  region = digitalocean_droplet.chainweb-node.region
 }
