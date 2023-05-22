@@ -1,4 +1,4 @@
 packages:
   - 'front'
+  - 'indexer'
   - 'contracts'
-  - 'indexer/**'

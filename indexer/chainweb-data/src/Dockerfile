@@ -15,16 +15,12 @@ RUN set -eux; \
 	chown -R postgres:postgres /var/lib/postgresql
 
 ENV PG_VERSION=15 \
-    PG_USER=postgres \
-    PG_LOGDIR=/var/log/postgresql \
-    PGDATA=/var/lib/postgresql/data \
     FONTCONFIG_FILE=/etc/fonts/fonts.conf \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LC_CTYPE=en_US.UTF-8 \
     LOCALE_ARCHIVE=/usr/lib/locale/locale-archive \
     UBUNTUVER=22.04
-
 
 RUN apt-get update -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y locales postgresql-${PG_VERSION} postgresql-client-${PG_VERSION} postgresql-contrib-${PG_VERSION} \
@@ -44,15 +40,15 @@ RUN PACKAGE=$(curl --silent "https://api.github.com/repos/kadena-io/chainweb-dat
 
 RUN mkdir -p /var/log/supervisor
 
-# COPY ./chainweb-data/.env /etc/supervisor/conf.d/
+COPY ./src/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./src/scripts/chainweb-data.sh /chainweb-data.sh
+COPY ./src/scripts/backfill.sh /backfill.sh
+COPY ./src/scripts/check-health.sh /check-health.sh
 
-COPY ./chainweb-data/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY ./chainweb-data/chainweb-data.sh /chainweb-data.sh
-COPY ./chainweb-data/check-health.sh /check-health.sh
-
+RUN chmod 755 /backfill.sh
 RUN chmod 755 /chainweb-data.sh
 RUN chmod 755 /check-health.sh
 
-HEALTHCHECK --start-period=10m --interval=1m --retries=5 --timeout=20s CMD /check-health.sh
+# HEALTHCHECK --start-period=10m --interval=1m --retries=5 --timeout=20s CMD /check-health.sh
 
 ENTRYPOINT ["/usr/bin/supervisord"]

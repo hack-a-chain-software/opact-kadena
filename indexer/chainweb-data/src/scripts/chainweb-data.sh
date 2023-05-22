@@ -1,13 +1,14 @@
 #!/bin/bash
 
-set -e
-
 function node_await() {
  check=$(curl -SsL -k -m 15 https://64.227.5.244:1789/chainweb/0.0/mainnet01/cut  2>/dev/null | jq .height 2>/dev/null)
- if [[ "$check" == "" ]]; then
-   until [ $check != "" ] ; do
+
+ if [ -z "$check" ]; then
+   until [ -n "$check" ]; do
      check=$(curl -SsL -k -m 15 https://64.227.5.244:1789/chainweb/0.0/mainnet01/cut 2>/dev/null | jq .height 2>/dev/null)
+
      echo -e "Waiting for KDA node..."
+
      sleep 200
    done
  fi

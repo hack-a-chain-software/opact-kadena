@@ -22,10 +22,10 @@ const LOCAL_ENV = {
 // TODO: decide what to hard-code and what to use env vars for.
 // I used the current production values as defaults for host & port and hard-coded the rest, except for secrets.
 const PROD_ENV = {
-  user: "admin",
-  password: process.env.USER_PASSWORD,
-  host: process.env.HOST,
-  port: process.env.PORT,
+  user: "doadmin",
+  password: process.env.CWD_DB_PASS,
+  host: process.env.CWD_DB_HOST,
+  port: process.env.CWD_DB_PORT || 25060,
   database: "indexer",
   tls: true,
   cert: "tls/do-ca.crt",
