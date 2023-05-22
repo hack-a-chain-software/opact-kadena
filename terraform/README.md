@@ -20,7 +20,15 @@ Follow the steps below to use this Terraform code:
 
 - Clone the repository: Clone this repository to your local machine.
 
-- Set up Terraform variables: Open the variables.tf file and update the variable values according to your configuration. Provide the path to your private and public SSH keys, DigitalOcean API token, project ID, Kadena chainweb-node host, and Kadena network.
+- Set up Terraform variables: Create a file named .tfvars in the root directory as the Terraform code. Add the following content to the file and replace the placeholder values with your own:
+```
+do_token = "YOUR_DIGITALOCEAN_API_TOKEN"
+project_id = "YOUR_DIGITALOCEAN_PROJECT_ID"
+pvt_key = "/path/to/your/private/ssh/key"
+pub_key = "/path/to/your/public/ssh/key"
+db_sync_server = "KADENA_CHAINWEB_NODE_HOST"
+kadena_network = "KADENA_NETWORK"
+```
 
 - Initialize Terraform: Open a terminal or command prompt, navigate to the cloned repository directory, and run the following command to initialize Terraform:
 
