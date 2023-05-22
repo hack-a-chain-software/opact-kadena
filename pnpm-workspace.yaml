@@ -2,3 +2,4 @@ packages:
   - 'front'
   - 'indexer'
   - 'contracts'
+  - 'terraform'
