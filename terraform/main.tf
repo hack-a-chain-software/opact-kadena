@@ -1,6 +1,6 @@
 provider "digitalocean" { token = var.do_token }
 
-resource "digitalocean_ssh_key" "opact-protocol" {
+resource "digitalocean_ssh_key" "opact-ssh" {
   name       = "tf"
   public_key = file(var.pub_key)
 }
@@ -40,7 +40,7 @@ resource "digitalocean_droplet" "chainweb-data" {
   region = "nyc1"
   size = "s-1vcpu-2gb"
 
-  ssh_keys = [digitalocean_ssh_key.opact-protocol.fingerprint]
+  ssh_keys = [digitalocean_ssh_key.opact-ssh.fingerprint]
 
   connection {
     user = "root"
@@ -94,7 +94,7 @@ resource "digitalocean_droplet" "chainweb-node" {
   region = "nyc1"
   size = "s-8vcpu-16gb"
 
-  ssh_keys = [digitalocean_ssh_key.opact-protocol.fingerprint]
+  ssh_keys = [digitalocean_ssh_key.opact-ssh.fingerprint]
 
   connection {
     user = "root"
