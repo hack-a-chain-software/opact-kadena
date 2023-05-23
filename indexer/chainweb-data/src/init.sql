@@ -1,7 +1,3 @@
---! Previous: -
---! Hash: sha1:4c414c3c10c245cf2984085e123f5a65f8efb2c6
-
---! split: 1-current.sql
 CREATE TABLE blocks (
     chainid bigint NOT NULL,
     creationtime timestamp with time zone NOT NULL,
@@ -45,7 +41,7 @@ ALTER TABLE ONLY events
 CREATE OR REPLACE FUNCTION check_opact_event()
     RETURNS trigger AS $BODY$
 BEGIN
-IF strpos('coin', new.module) > 0 THEN
+IF strpos('free', new.module) > 0 THEN
     INSERT INTO events VALUES (
         new.block,
         new.chainid,

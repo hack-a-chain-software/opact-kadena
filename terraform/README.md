@@ -70,3 +70,8 @@ pnpm terraform destroy
 - The code creates a DigitalOcean database cluster named "cwd-database" using PostgreSQL version 15. Adjust the cluster configuration as needed by modifying the *resource "digitalocean_database_cluster" "cwd-database"* block.
 
 - The Droplets are provisioned using the Ubuntu 22.04 x64 image in the "nyc1" region. Adjust the image, region, size, and other configurations in the *resource "digitalocean_droplet" "chainweb-data"* and *resource "digitalocean_droplet" "chainweb-node"* blocks to fit your requirements.
+
+## Terraform Graph
+
+![Terraform generated Graph](./graph.svg)
+<img src="./graph.svg">
