@@ -1,3 +1,6 @@
+# This code defines the required provider and backend configurations for a Terraform project.
+
+# The "terraform" block specifies the required providers and the backend configuration.
 terraform {
   # The "required_providers" block specifies that the project requires the DigitalOcean provider.
   # It sets the source to "digitalocean/digitalocean" and specifies that any version in the "~> 2.0" range is acceptable.
