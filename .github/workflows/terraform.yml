@@ -1,9 +1,12 @@
 name: Terraform Deployment
 
 on:
-  push:
-    branches:
-      - main
+  repository_dispatch:
+    types: [deploy-command]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:

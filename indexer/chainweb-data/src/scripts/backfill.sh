@@ -13,7 +13,7 @@ fi
 
 if [[ -f /tmp/backfill ]]; then
     echo -e "Running fill as gaps..."
-    chainweb-data fill --service-host=$CWD_NODE --p2p-host=$CWD_NODE --service-port=1848 --p2p-port=1789 --dbuser=$CWD_DB_USER --dbpass=$CWD_DB_PASS --dbname=indexer --dbhost=$CWD_DB_HOST --dbport=$CWD_DB_PORT --ignore-schema-diff
+    chainweb-data fill --service-host=$CWD_NODE --p2p-host=$CWD_NODE --service-port=1848 --p2p-port=1789 --dbuser=$CWD_DB_USER --dbpass=$CWD_DB_PASS --dbname=indexer --dbhost=$CWD_DB_HOST --dbport=$CWD_DB_PORT
     exit
 fi
 
@@ -36,7 +36,7 @@ until [[ "$x" == 1 ]] ; do
     date_timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo -e "Fill started at $date_timestamp"
-    chainweb-data fill --service-host=$CWD_NODE --p2p-host=$CWD_NODE --service-port=1848 --p2p-port=1789 --dbuser=$CWD_DB_USER --dbpass=$CWD_DB_PASS --dbname=indexer --dbhost=$CWD_DB_HOST --dbport=$CWD_DB_PORT --ignore-schema-diff +RTS -N
+    chainweb-data fill --service-host=$CWD_NODE --p2p-host=$CWD_NODE --service-port=1848 --p2p-port=1789 --dbuser=$CWD_DB_USER --dbpass=$CWD_DB_PASS --dbname=indexer --dbhost=$CWD_DB_HOST --dbport=$CWD_DB_PORT +RTS -N
 
     sleep 10
 

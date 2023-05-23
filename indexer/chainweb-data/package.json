@@ -4,18 +4,9 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "commit": "graphile-migrate commit",
-    "migrate": "graphile-migrate migrate",
-    "uncommit": "graphile-migrate uncommit",
     "docker:stop:cwd": "docker compose stop chainweb-data",
     "docker:up:pgl": "docker compose up postgresql --build -d",
     "docker:up:cwd": "docker compose up chainweb-data --build -d",
     "docker:logs:cwd": "docker compose logs chainweb-data --follow"
-  },
-  "devDependencies": {
-    "graphile-migrate": "^1.4.0"
-  },
-  "dependencies": {
-    "dotenv": "^16.0.3"
   }
 }
