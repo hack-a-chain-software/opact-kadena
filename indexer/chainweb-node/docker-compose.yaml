@@ -88,32 +88,38 @@ services:
             pruneChainDatabase: headers-checked
         logging:
           telemetryBackend:
-            enabled: false
+            enabled: true
             configuration:
-              color: 'true'
+              handle: stdout
+              color: auto
+              format: text
+
           backend:
-            color: 'true'
+            handle: stdout
+            color: auto
+            format: text
+
+          logger:
+            log_level: info
+
           filter:
             rules:
-            - value: mempool
-              key: component
-              level: warn
-            - value: connection-manager
-              key: component
-              level: warn
-            - value: sync
-              key: sub-component
-              level: warn
-            - value: MempoolAccess
-              key: sub-component
-              level: warn
-            - value: PactService
-              key: logger
-              level: warn
-            - value: Checkpointer
-              key: logger
-              level: warn
-            default: info
+              - key: component
+                value: cut-monitor
+                level: info
+              - key: component
+                value: pact-tx-replay
+                level: info
+              - key: component
+                value: connection-manager
+                level: info
+              - key: component
+                value: miner
+                level: info
+              - key: component
+                value: local-handler
+                level: info
+            default: error
         EOF
 
   # Shut down chainweb-node before running this.
