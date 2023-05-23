@@ -70,22 +70,7 @@ services:
           headerStream: true
           throttling:
             global: 1000
-          version: ${KADENA_NETWORK}
-          onlySyncPact: true
-          validateHashesOnReplay: true
-          p2p:
-            peer:
-              interface: localhost
-              hostaddress:
-                port: 4445
-            private: true
-            ignoreBootstrapNodes: true
-          transactionIndex:
-            enabled: false
-          mempoolP2p:
-            enabled: false
-          cuts:
-            pruneChainDatabase: headers-checked
+
         logging:
           telemetryBackend:
             enabled: true

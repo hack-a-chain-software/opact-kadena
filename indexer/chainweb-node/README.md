@@ -1,27 +1,7 @@
-Node Usage
+Kadena Chainweb Node
 =====
 
-Before starting chainweb-node, make sure your droplet is configured correctly: [Droplet Tutorial](./digitalocean-droplet.md)
-
-Hardware requirements:
-
-* 4 CPU cores,
-* 8GB of RAM, and
-* 256 GB of disk space.
-
-For supporting higher API loads we recommend to use at least 8 CPU cores and
-16GB of RAM.
-
-Networking:
-
-Chainweb node is configured to use port 1789 to communicate with other Chainweb
-nodes.
-
-*The P2P port must be reachable from the internet.*
-
-This means that it must allow inbound requests from any IP address.
-
-The HTTP REST API of Chainweb node is available on the host on port 1848.
+The Chainweb Node is a central component in the Chainweb ecosystem. It plays a crucial role in executing and maintaining the operations of the Chainweb blockchain network. In our specific library, the Chainweb Node is configured to connect to a Chainweb Data.
 
 Initialize Database
 -------------------

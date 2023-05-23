@@ -1,20 +1,6 @@
-# Database
+## Kadena Chainweb Data
 
-This package contains the migrations needed in order to initialize the application's database, as well as seed it with development data.
-
-## Container Image
-
-This repository contains a `Dockerfile` which generates a Postgres image. Currently there are no modifications to the base `postgres:14.5-bullseye` image, except for labeling. However, the `docker-compose.yml` at the repository's root, mounts a volume with commited migrations to `/docker-entrypoint-initdb.d`, which ensures the database is up to date with them.
-
-## Migrations
-
-The migrations are managed by the `graphile-migrate` tool. Refer to the [project's documentation](https://github.com/graphile/migrate) for more information.
-
-We version the migrations at the `migrations` folder, which contains two subfolders: `current` & `committed`. The `commited` folder contains previous migrations which were already committed to the production database, while the `current` folder contains the current iteration of migrations, to be numbered according to the order they are supposed to run, with optional leading zeroes and an optional dash-separated name (e.g. `0001-whatever.sql`). We strongly recommend naming the migration before commiting it (instead of commiting with the default `1-current.sql` name).
-
-*It's fundamental to keep migrations idempotent.*
-
-## Kadena chainweb-data for kadena node
+Chainweb Data serves as a data source that provides real-time information about chains, transactions, and other elements of the Chainweb blockchain. By connecting the Chainweb Node to the Chainweb Data, our library allows the node to access real-time data to facilitate its functions, such as transaction execution, block validation, and updating the blockchain state.
 
 ### Run
 ```shell script

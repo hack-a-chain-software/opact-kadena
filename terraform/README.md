@@ -67,7 +67,7 @@ Enter *yes* when prompted to confirm the destruction of resources.
 
 - The SSH key paths and DigitalOcean API token are defined as variables in the *variable* blocks. You can customize these values in the *variables.tf* file or by using command-line flags when executing Terraform commands.
 
-- The code provisions a DigitalOcean SSH key named *tf* using the public key located at the path specified in the *pub_key* variable. Make sure the file exists and contains the correct public key.
+- The code provisions a DigitalOcean SSH key named *opact-ssh* using the public key located at the path specified in the *pub_key* variable. Make sure the file exists and contains the correct public key.
 
 - The code creates a DigitalOcean database cluster named "cwd-database" using PostgreSQL version 15. Adjust the cluster configuration as needed by modifying the *resource "digitalocean_database_cluster" "cwd-database"* block.
 
