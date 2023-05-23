@@ -33,22 +33,21 @@ kadena_network = "KADENA_NETWORK"
 - Initialize Terraform: Open a terminal or command prompt, navigate to the cloned repository directory, and run the following command to initialize Terraform:
 
 ```
-terraform init
+pnpm terraform install
 ```
 
 - Review the execution plan: Run the following command to see the execution plan and ensure that everything looks correct:
 
 ```
-terraform plan
+pnpm terraform plan
 ```
 Verify that the planned changes match your expectations.
 
 - Apply the Terraform configuration: Once you're ready to provision the infrastructure, run the following command:
 
 ```
-terraform apply
+pnpm terraform apply
 ```
-You will be prompted to confirm the execution. Enter *yes* to proceed.
 
 - Wait for the deployment: Terraform will start provisioning the resources on DigitalOcean. Wait for the process to complete.
 
@@ -57,9 +56,8 @@ You will be prompted to confirm the execution. Enter *yes* to proceed.
 - Cleanup and destroy: To clean up and destroy the created infrastructure, run the following command:
 
 ```
-terraform destroy
+pnpm terraform destroy
 ```
-Enter *yes* when prompted to confirm the destruction of resources.
 
 ## Additional Information
 
