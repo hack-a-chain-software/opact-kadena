@@ -38,35 +38,6 @@ ALTER TABLE ONLY events
 ALTER TABLE ONLY events
     ADD CONSTRAINT events_block_fkey FOREIGN KEY (block) REFERENCES blocks(hash);
 
-CREATE OR REPLACE FUNCTION check_opact_event()
-    RETURNS trigger AS $BODY$
-BEGIN
-IF strpos('free', new.module) > 0 THEN
-    INSERT INTO events VALUES (
-        new.block,
-        new.chainid,
-        new.height,
-        new.idx,
-        new.module,
-        new.modulehash,
-        new.name,
-        new.params,
-        new.paramtext,
-        new.qualname,
-        new.requestkey
-    );
-END IF;
-RETURN NULL;
-END;
-$BODY$
-
-LANGUAGE 'plpgsql';
-
-CREATE OR REPLACE TRIGGER check_event BEFORE INSERT OR UPDATE ON events
-FOR EACH ROW
-WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE check_opact_event();
-
 CREATE INDEX events_height_chainid_idx
   ON events
   USING btree (height DESC, chainid, idx);
@@ -182,6 +153,8 @@ CREATE TABLE schema_migrations (
     executed_at timestamp without time zone DEFAULT now() NOT NULL
 );
 
+-- Add trigger to skip insertion
+
 CREATE OR REPLACE FUNCTION skip_write()
     RETURNS trigger AS $BODY$
         BEGIN
@@ -210,3 +183,78 @@ CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON events
 FOR EACH ROW
 WHEN (pg_trigger_depth() < 1)
 EXECUTE PROCEDURE skip_write();
+
+-- Add trigger on events table
+
+CREATE OR REPLACE FUNCTION check_opact_event()
+    RETURNS trigger AS $BODY$
+BEGIN
+IF strpos('free.crankk01', new.module) > 0 THEN
+    INSERT INTO events VALUES (
+        new.block,
+        new.chainid,
+        new.height,
+        new.idx,
+        new.module,
+        new.modulehash,
+        new.name,
+        new.params,
+        new.paramtext,
+        new.qualname,
+        new.requestkey
+    );
+END IF;
+RETURN NULL;
+END;
+$BODY$
+
+LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE TRIGGER check_event BEFORE INSERT OR UPDATE ON events
+FOR EACH ROW
+WHEN (pg_trigger_depth() < 1)
+EXECUTE PROCEDURE check_opact_event();
+
+-- Add trigger on transactions table
+
+CREATE OR REPLACE FUNCTION check_opact_transactions()
+    RETURNS trigger AS $BODY$
+BEGIN
+IF strpos('free.hello-world', new.module) > 0 THEN
+    INSERT INTO transactions VALUES (
+        new.badresult,
+        new.block,
+        new.chainid,
+        new.code,
+        new.continuation,
+        new.creationtime,
+        new.data,
+        new.gas,
+        new.gaslimit,
+        new.gasprice,
+        new.goodresult,
+        new.height,
+        new.logs,
+        new.metadata,
+        new.nonce,
+        new.num_events,
+        new.pactid,
+        new.proof,
+        new.requestkey,
+        new.rollback,
+        new.sender,
+        new.step,
+        new.ttl,
+        new.txid
+    );
+END IF;
+RETURN NULL;
+END;
+$BODY$
+
+LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE TRIGGER check_event BEFORE INSERT OR UPDATE ON events
+FOR EACH ROW
+WHEN (pg_trigger_depth() < 1)
+EXECUTE PROCEDURE check_opact_event();
