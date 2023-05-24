@@ -2,31 +2,64 @@ name: Terraform Deployment
 
 on:
   repository_dispatch:
-    types: [deploy-command]
+    types: [terraform-sync-command]
 
 concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  terraform:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.TERRAFORM_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.TERRAFORM_SSH_PUB_KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa.pub
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-    - name: Configure DigitalOcean Token
-      run: echo ${{ secrets.DIGITALOCEAN_TOKEN }} >> $GITHUB_ENV
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
 
-    - name: Terraform Init
-      run: terraform init
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
 
-    - name: Terraform Plan
-      run: terraform plan
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.1.0
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+      - name: Configure DigitalOcean credentials
+        env:
+          DO_ACCESS_KEY: ${{ secrets.DO_ACCESS_KEY }}
+          DO_SECRET_ACCESS_KEY: ${{ secrets.DO_SECRET_ACCESS_KEY }}
+        run: |
+          aws configure --profile digitalocean set aws_access_key_id $DO_ACCESS_KEY
+          aws configure --profile digitalocean set aws_secret_access_key $DO_SECRET_ACCESS_KEY
+
+      - name: Create .tfvars file
+        run: |
+          echo "do_token=\"${{ secrets.DO_TOKEN }}\"" >> ./terraform/.tfvars
+          echo "project_id=\"${{ secrets.DO_PROJECT_ID }}\"" >> ./terraform/.tfvars
+          echo "" >> ./terraform/.tfvars
+
+      - name: Terraform Init
+        run: pnpm terraform install
+        env:
+          AWS_PROFILE: "digitalocean"
+
+      - name: Terraform Plan
+        run: pnpm terraform plan
+        env:
+          AWS_PROFILE: "digitalocean"
+
+      - name: Terraform Apply
+        run: pnpm terraform apply
+        env:
+          AWS_PROFILE: "digitalocean"
