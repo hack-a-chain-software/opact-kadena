@@ -181,3 +181,32 @@ CREATE TABLE schema_migrations (
     checksum character varying(32) NOT NULL,
     executed_at timestamp without time zone DEFAULT now() NOT NULL
 );
+
+CREATE OR REPLACE FUNCTION skip_write()
+    RETURNS trigger AS $BODY$
+        BEGIN
+            RETURN NULL;
+        END;
+    $BODY$
+
+LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON transfers
+FOR EACH ROW
+WHEN (pg_trigger_depth() < 1)
+EXECUTE PROCEDURE skip_write();
+
+CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON signers
+FOR EACH ROW
+WHEN (pg_trigger_depth() < 1)
+EXECUTE PROCEDURE skip_write();
+
+CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON minerkeys
+FOR EACH ROW
+WHEN (pg_trigger_depth() < 1)
+EXECUTE PROCEDURE skip_write();
+
+CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON events
+FOR EACH ROW
+WHEN (pg_trigger_depth() < 1)
+EXECUTE PROCEDURE skip_write();
