@@ -73,4 +73,4 @@ pnpm terraform destroy
 
 ## Terraform Graph
 
-![Terraform generated Graph](./graph.svg)
+![Terraform generated Graph](./assets/graph.svg)

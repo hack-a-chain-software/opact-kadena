@@ -21,4 +21,4 @@ To manage the indexer infrastructure with Terraform, you can use the provided Te
 
 By leveraging Terraform for infrastructure management, you can easily scale, modify, and version your indexer infrastructure, providing a reliable and efficient foundation for indexing and analyzing events on the Kadena blockchain.
 
-![Indexer Graph](./indexer.jpeg)
+![Indexer Graph](./assets/indexer.jpeg)
