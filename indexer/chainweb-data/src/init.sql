@@ -254,7 +254,7 @@ $BODY$
 
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE TRIGGER check_event BEFORE INSERT OR UPDATE ON events
+CREATE OR REPLACE TRIGGER check_opact_transactions BEFORE INSERT OR UPDATE ON events
 FOR EACH ROW
 WHEN (pg_trigger_depth() < 1)
 EXECUTE PROCEDURE check_opact_event();
