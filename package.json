@@ -3,6 +3,8 @@
   "private": true,
   "scripts": {
     "front": "pnpm --filter front",
+    "indexer": "pnpm --filter indexer",
+    "terraform": "pnpm --filter terraform",
     "postinstall": "npx lefthook install -a",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix"
   },
