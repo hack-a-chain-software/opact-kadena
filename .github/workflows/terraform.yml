@@ -50,7 +50,7 @@ jobs:
           echo "" >> ./terraform/.tfvars
 
       - name: Terraform Init
-        run: pnpm terraform install
+        run: pnpm terraform init-terraform
         env:
           AWS_PROFILE: "digitalocean"
 
