@@ -1,0 +1,336 @@
+(module plonk MODULE_ADMIN
+    (defcap MODULE_ADMIN () true)
+
+    (defschema G1Point
+        "Structure representing a G1 point."
+        x: integer
+        y: integer)
+    
+    (defschema G2Point
+        "Structure representing a G2 point."
+        x: [integer]
+        y: [integer])
+
+    (defschema Verifier
+        "Structure representing the verifier."
+        ;; n values
+        power: integer
+        n: integer
+        n_public: integer
+        n_lagrange: integer
+        ;; q values
+        q_m: object{G1Point}
+        q_l: object{G1Point}
+        q_r: object{G1Point}
+        q_o: object{G1Point}
+        q_c: object{G1Point}
+        ;; s values
+        s_1: object{G1Point}
+        s_2: object{G1Point}
+        s_3: object{G1Point}
+        ;; k values
+        k_1: integer
+        k_2: integer
+        ;; x2 values
+        x_2: object{G2Point}
+        ;; field size constants
+        q: integer
+        qf: integer
+        ;; omega value
+        w1: integer)
+
+    (defschema Proof
+        "Structure representing a proof."
+        public_values: [integer]
+        a: object{G1Point}
+        b: object{G1Point}
+        c: object{G1Point}
+        z: object{G1Point}
+        t_1: object{G1Point}
+        t_2: object{G1Point}
+        t_3: object{G1Point}
+        eval_a: integer
+        eval_b: integer
+        eval_c: integer
+        eval_s1: integer
+        eval_s2: integer
+        eval_zw: integer
+        eval_r: integer
+        wxi: object{G1Point}
+        wxi_w: object{G1Point}
+    )
+
+    (defschema TempValues
+        alpha: integer
+        beta: integer
+        gamma: integer
+        xi: integer
+        xin: integer
+        beta_xi: integer
+        v_1: integer
+        v_2: integer
+        v_3: integer
+        v_4: integer
+        v_5: integer
+        v_6: integer
+        u: integer
+        pl: integer
+        eval_t: integer
+        a_1: integer
+        b_1: integer
+        zh: integer
+        zh_inv: integer
+        eval_l: [integer]
+    )
+
+    (defun transform-point (point: object{G1Point})
+        (let ((x (at 'x point))
+              (y (at 'y point)))
+            (if (= x 0)
+                { "x": x, "y": 0 }
+                { "x": x, "y": y }))
+    )
+
+    (defun mulmod (a: integer v_1: integer q: integer)
+        (mod (* a v_1) q))
+
+    (defun new-verifier (ver:object{Verifier})
+        (let*
+            (  
+                (q_m (transform-point (at 'q_m ver)))
+                (q_l (transform-point (at 'q_l ver)))
+                (q_r (transform-point (at 'q_r ver)))
+                (q_o (transform-point (at 'q_o ver)))
+                (q_c (transform-point (at 'q_c ver)))
+                (s_1 (transform-point (at 's_1 ver)))
+                (s_2 (transform-point (at 's_2 ver)))
+                (s_3 (transform-point (at 's_3 ver)))
+                (n (exp (at 'power ver))) ; convert to integer
+                (n_public (at 'n_public ver))
+                (n_lagrange (if (= n_public 0) 1 n_public))
+            )
+            { 
+                "power": (at 'power ver),
+                "n": n,
+                "n_public": (at 'n_public ver),
+                "n_lagrange": n_lagrange,
+                "q_m": q_m, 
+                "q_l": q_l,
+                "q_r": q_r,
+                "q_o": q_o,
+                "q_c": q_c,
+                "s_1": s_1, 
+                "s_2": s_2,
+                "s_3": s_3,
+                "k_1": (at 'k_1 ver),
+                "k_2": (at 'k_2 ver),
+                "x_2": (at 'x_2 ver),
+                "q": (at 'q ver),
+                "qf": (at 'qf ver),
+                "w1": (at 'w1 ver)
+            }
+        )
+    )
+
+    (defun check-value (val: integer q: integer)
+        (enforce (< val q) "value outside field range"))
+
+    (defun check-input (ver:object{Verifier} proof:object{Proof})
+        (let*
+            (
+                (public_values (at 'public_values proof))
+                (n_public (at 'n_public ver))
+            )
+
+            (map check-value (public_values))
+            (enforce (= (n_public) (length public_values)) "Some public value checks failed")
+
+            (check-value (at 'eval_a proof))
+            (check-value (at 'eval_b proof))
+            (check-value (at 'eval_c proof))
+            (check-value (at 'eval_s1 proof))
+            (check-value (at 'eval_s2 proof))
+            (check-value (at 'eval_zw proof))
+            (check-value (at 'eval_r proof))
+    ))
+
+    (defun verify (proof:object{Proof})
+        (
+            let* 
+            (
+                (verifier 
+                    { 
+                        "n": 0, ; will be calculated later
+                        "n_lagrange": 0, ; will be calculated later
+                        "q": 0, ; will be calculated later
+                        "qf": 0, ; will be calculated later
+                        "w1": 0, ; will be calculated later
+                        "power": <%= power %>,
+                        "n_public": <%= n_public %>,
+                        "q_m": { "x": <%= q_m.x %>, "y": <%= q_m.y %> },
+                        "q_l": { "x": <%= q_l.x %>, "y": <%= q_l.y %> },
+                        "q_r": { "x": <%= q_r.x %>, "y": <%= q_r.y %> },
+                        "q_o": { "x": <%= q_o.x %>, "y": <%= q_o.y %> },
+                        "q_c": { "x": <%= q_c.x %>, "y": <%= q_c.y %> },
+                        "s_1": { "x": <%= s_1.x %>, "y": <%= s_1.y %> },
+                        "s_2": { "x": <%= s_2.x %>, "y": <%= s_2.y %> },
+                        "s_3": { "x": <%= s_3.x %>, "y": <%= s_3.y %> },
+                        "k_1": <%= k_1 %>,
+                        "k_2": <%= k_2 %>,
+                        "x_2": { "x": [<%= String(x_2.x).replace(","," ") %>], "y": [<%= String(x_2.y).replace(",", " ") %>] }
+                    }
+                )
+
+                (verifier_transformed (new-verifier verifier))
+            )
+            (check-input verifier_transformed proof)
+            (calculate-challenges verifier_transformed proof)
+        )   
+    )
+
+    (defun calculate-challenges (ver:object{Verifier} proof:object{Proof})
+        (
+          let*
+          (
+            (q (at 'q ver))
+            (a_x (at 'x (at 'a proof)))
+            (a_y (at 'y (at 'a proof)))
+            (b_x (at 'x (at 'b proof)))
+            (b_y (at 'y (at 'b proof)))
+            (c_x (at 'x (at 'c proof)))
+            (c_y (at 'y (at 'c proof)))
+            (public_values (at 'public_values proof))
+
+            (bytes_b_list_1 (list a_x a_y b_x b_y c_x c_y))
+            (bytes_b_list_2 (+ public_values bytes_b_list_1))
+            (bytes_b_bitwise (fold (&) 0 public_values))
+
+            (beta (mod (keccak256-bs bytes_b_bitwise) q))
+            (temp_beta beta)
+            
+            (gamma (mod (keccak256-bs beta) q))
+            (temp_gamma gamma)
+            
+            (z_x (at 'x (at 'z proof)))
+            (z_y (at 'y (at 'z proof)))
+
+            (bytes_z_list (list z_x z_y))
+            (bytes_z_bitwise (fold (&) 0 bytes_z_list))
+
+            (alpha (mod (keccak256-bs bytes_z_bitwise) q))
+            (temp_alpha alpha)
+            
+            (t_1_x (at 'x (at 't_1 proof)))
+            (t_1_y (at 'y (at 't_1 proof)))
+            (t_2_x (at 'x (at 't_2 proof)))
+            (t_2_y (at 'y (at 't_2 proof)))
+            (t_3_x (at 'x (at 't_3 proof)))
+            (t_3_y (at 'y (at 't_3 proof)))
+
+            (bytes_a_list (list t_1_x t_1_y t_2_x t_2_y t_3_x t_3_y))
+            (bytes_a_bitwise (fold (&) 0 bytes_a_list))
+            (bytes_a_0 (mod (keccak256-bs bytes_a_bitwise) q))
+
+            (temp_xi bytes_a_0)
+            (temp_beta_xi (mulmod beta bytes_a_0 q))
+
+            (power (at 'power ver))
+
+        <% for (let i = 1; i <= power; i++) { %>
+            (bytes_a_<%= i %> (mulmod bytes_a_<%= i - 1 %> bytes_a_<%= i - 1 %> q))
+        <% } %>
+
+            (bytes_a_power bytes_a_<%= power %>)
+            
+            (temp_xin bytes_a_power)
+
+            (a_1 (mod (+ (- bytes_a_power 1) q) q))
+            (temp_zh a_1)
+            (temp_zh_inv a_1)
+
+            (eval_a (at 'eval_a proof))
+            (eval_b (at 'eval_b proof))
+            (eval_c (at 'eval_c proof))
+            (eval_s1 (at 'eval_s1 proof))
+            (eval_s2 (at 'eval_s2 proof))
+            (eval_zw (at 'eval_zw proof))
+            (eval_r (at 'eval_r proof))
+
+            (bytes_eval_list (list eval_a eval_b eval_c eval_s1 eval_s2 eval_zw eval_r))
+            (bytes_eval_bitwise (fold (&) 0 bytes_eval_list))
+            (v_1 (mod (keccak256-bs bytes_eval_bitwise) q))
+            (temp_v1 v_1)
+
+            (a_2:integer (mulmod v_1 v_1 q))
+            (temp_v2 a_2)
+
+            (a_3:integer (mulmod a_2 v_1 q))
+            (temp_v3 a_3)
+
+            (a_4:integer (mulmod a_3 v_1 q))
+            (temp_v4 a_4)
+
+            (a_5:integer (mulmod a_4 v_1 q))
+            (temp_v5 a_5)
+
+            (a_6:integer (mulmod a_5 v_1 q))
+            (temp_v6 a_6)
+
+            (wxi_x (at 'x (at 'wxi proof)))
+            (wxi_y (at 'y (at 'wxi proof)))
+            (wxi_w_x (at 'x (at 'wxi_w proof)))
+            (wxi_w_y (at 'y (at 'wxi_w proof)))
+
+            (bytes_wxi_list (list wxi_x wxi_y wxi_w_x wxi_w_y))
+            (bytes_wxi_bitwise (fold (&) 0 bytes_wxi_list))
+            (u (mod (keccak256-bs bytes_wxi_bitwise) q))
+            (temp_u u)
+          )
+          {
+            "temp_beta": temp_beta,
+            "temp_gamma": temp_gamma,
+            "temp_alpha": temp_alpha, 
+            "temp_xi": temp_xi,
+            "temp_beta_xi": temp_beta_xi,
+            "temp_xin": temp_xin,
+            "temp_zh": temp_zh,
+            "temp_zh_inv": temp_zh_inv,
+            "temp_v1": temp_v1,
+            "temp_v2": temp_v2,
+            "temp_v3": temp_v3,
+            "temp_v4": temp_v4,
+            "temp_v5": temp_v5,
+            "temp_v6": temp_v6,
+            "temp_u": temp_u
+          }
+        )
+    )
+
+    (defun calculate-lagrange (ver:object{Verifier} proof:object{Proof})
+        (
+            let*
+            (
+                (w_0 1)
+                (n_public (at 'n_public ver))
+                (xi (at 'xi ver))
+                (q (at 'q ver))
+                (n (at 'n ver))
+
+            <% for (let i = 1; i <= n_public; i++) { %>
+                (op_1_<%= i %> (- (+ xi q) w_0))
+                (op_2_<%= i %> (mod op_1_<%= i %> q))
+                (eval_l_<%= i %> (mulmod n op_2_<%= i %> q))
+            <% if (i < n_public) { %>
+                (w_<%= i %> (mulmod w_<%= i - 1 %> xi q))
+            <% } %>
+            <% } %>
+
+                (eval_l (list <% for (let i = 1; i <= n_public; i++) { %> eval_l_<%= i %><% } %>))
+                (w w_<%= n_public - 1 %>)
+
+                ;; inverse_array
+            )
+            {"success": "true"}
+        )
+    )
+)
