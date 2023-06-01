@@ -1,0 +1,8 @@
+{
+	"scripts": {
+		"generate-plonk": "pnpm ejs ./plonk-verifier/src/ejs/lib.ejs.repl -f ./plonk-verifier/src/ejs/sample.verifier.json -o ./plonk-verifier/src/lib.repl"
+	},
+	"dependencies": {
+		"ejs": "^3.1.9"
+	}
+}

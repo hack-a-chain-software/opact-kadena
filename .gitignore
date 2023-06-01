@@ -25,3 +25,5 @@ wip
 out
 out_tests
 .pact-history
+node_modules
+.draft
