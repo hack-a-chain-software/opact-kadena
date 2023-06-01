@@ -19,3 +19,5 @@ test-ledger
 wip
 /tests/*.js
 .pact-history
+node_modules
+.draft

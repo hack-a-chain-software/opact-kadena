@@ -105,7 +105,7 @@
                 (s_1 (transform-point (at 's_1 ver)))
                 (s_2 (transform-point (at 's_2 ver)))
                 (s_3 (transform-point (at 's_3 ver)))
-                (n (exp (at 'power ver))) ; convert to integer
+                (n (^ 2 (at 'power ver)))
                 (n_public (at 'n_public ver))
                 (n_lagrange (if (= n_public 0) 1 n_public))
             )
@@ -140,18 +140,19 @@
             (
                 (public_values (at 'public_values proof))
                 (n_public (at 'n_public ver))
+                (q (at 'q ver))
             )
 
-            (map check-value (public_values))
-            (enforce (= (n_public) (length public_values)) "Some public value checks failed")
+            (map (lambda (x) (enforce (< x q) "[lambda] value outside field range")) public_values)
+            (enforce (= n_public (length public_values)) "Some public value checks failed")
 
-            (check-value (at 'eval_a proof))
-            (check-value (at 'eval_b proof))
-            (check-value (at 'eval_c proof))
-            (check-value (at 'eval_s1 proof))
-            (check-value (at 'eval_s2 proof))
-            (check-value (at 'eval_zw proof))
-            (check-value (at 'eval_r proof))
+            (check-value (at 'eval_a proof) q)
+            (check-value (at 'eval_b proof) q)
+            (check-value (at 'eval_c proof) q)
+            (check-value (at 'eval_s1 proof) q)
+            (check-value (at 'eval_s2 proof) q)
+            (check-value (at 'eval_zw proof) q)
+            (check-value (at 'eval_r proof) q)
     ))
 
     (defun verify (proof:object{Proof})
@@ -162,9 +163,9 @@
                     { 
                         "n": 0, ; will be calculated later
                         "n_lagrange": 0, ; will be calculated later
-                        "q": 0, ; will be calculated later
-                        "qf": 0, ; will be calculated later
-                        "w1": 0, ; will be calculated later
+                        "q": <%= q %>,
+                        "qf": <%= qf %>,
+                        "w1": <%= w1 %>,
                         "power": <%= power %>,
                         "n_public": <%= n_public %>,
                         "q_m": { "x": <%= q_m.x %>, "y": <%= q_m.y %> },
@@ -193,32 +194,56 @@
           let*
           (
             (q (at 'q ver))
+
+            ;; bytes_b
+
             (a_x (at 'x (at 'a proof)))
             (a_y (at 'y (at 'a proof)))
             (b_x (at 'x (at 'b proof)))
             (b_y (at 'y (at 'b proof)))
             (c_x (at 'x (at 'c proof)))
             (c_y (at 'y (at 'c proof)))
+            
             (public_values (at 'public_values proof))
 
-            (bytes_b_list_1 (list a_x a_y b_x b_y c_x c_y))
-            (bytes_b_list_2 (+ public_values bytes_b_list_1))
-            (bytes_b_bitwise (fold (&) 0 public_values))
+            (shift_c_y (shift c_y 0))
+            (shift_c_x (shift c_x 256))
+            (shift_b_y (shift b_y 512))
+            (shift_b_x (shift b_x 768))
+            (shift_a_y (shift a_y 1024))
+            (shift_a_x (shift a_x 1280))
+            (bytes_b_0 (+ (+ (+ (+ (+ shift_a_x shift_a_y) shift_b_x) shift_b_y) shift_c_x) shift_c_y))
 
-            (beta (mod (keccak256-bs bytes_b_bitwise) q))
+        <% for (let i = 1; i <= n_public; i++) { %>
+            (public_<%= i %> (at <%= i - 1 %> public_values))
+            (shift_public_<%= i %> (shift public_<%= i %> <%= (256 * ( i + 5)) %>))
+            (bytes_b_<%= i %> (+ bytes_b_<%= i - 1 %> shift_public_<%= i %>))
+        <% } %>
+
+            (bytes_b_size (* <%= parseInt(n_public) + 6 %> 32))
+
+            (beta (mod (keccak256-bs bytes_b_size bytes_b_<%= n_public%>) q))
             (temp_beta beta)
-            
-            (gamma (mod (keccak256-bs beta) q))
+
+            (bytes_gamma 32)
+            (gamma (mod (keccak256-bs bytes_gamma beta) q))
             (temp_gamma gamma)
+
+            ;; bytes_z
             
             (z_x (at 'x (at 'z proof)))
             (z_y (at 'y (at 'z proof)))
 
-            (bytes_z_list (list z_x z_y))
-            (bytes_z_bitwise (fold (&) 0 bytes_z_list))
+            (shift_z_x (shift z_x 256))
+            (shift_z_y (shift z_y 0))
 
-            (alpha (mod (keccak256-bs bytes_z_bitwise) q))
+            (bytes_z (+ shift_z_x shift_z_y))
+            (bytes_z_size (* 2 32))
+
+            (alpha (mod (keccak256-bs bytes_z_size bytes_z) q))
             (temp_alpha alpha)
+
+            ;; bytes_a
             
             (t_1_x (at 'x (at 't_1 proof)))
             (t_1_y (at 'y (at 't_1 proof)))
@@ -227,9 +252,16 @@
             (t_3_x (at 'x (at 't_3 proof)))
             (t_3_y (at 'y (at 't_3 proof)))
 
-            (bytes_a_list (list t_1_x t_1_y t_2_x t_2_y t_3_x t_3_y))
-            (bytes_a_bitwise (fold (&) 0 bytes_a_list))
-            (bytes_a_0 (mod (keccak256-bs bytes_a_bitwise) q))
+            (shift_t_1_x (shift t_1_x 1280))
+            (shift_t_1_y (shift t_1_y 1024))
+            (shift_t_2_x (shift t_2_x 768))
+            (shift_t_2_y (shift t_2_y 512))
+            (shift_t_3_x (shift t_3_x 256))
+            (shift_t_3_y (shift t_3_y 0))
+            
+            (bytes_a (+ (+ (+ (+ (+ shift_t_1_x shift_t_1_y) shift_t_2_x) shift_t_2_y) shift_t_3_x) shift_t_3_y))
+            (bytes_a_size (* 6 32))
+            (bytes_a_0 (mod (keccak256-bs bytes_a_size bytes_a) q))
 
             (temp_xi bytes_a_0)
             (temp_beta_xi (mulmod beta bytes_a_0 q))
@@ -248,6 +280,8 @@
             (temp_zh a_1)
             (temp_zh_inv a_1)
 
+            ;; bytes_eval
+
             (eval_a (at 'eval_a proof))
             (eval_b (at 'eval_b proof))
             (eval_c (at 'eval_c proof))
@@ -256,9 +290,18 @@
             (eval_zw (at 'eval_zw proof))
             (eval_r (at 'eval_r proof))
 
-            (bytes_eval_list (list eval_a eval_b eval_c eval_s1 eval_s2 eval_zw eval_r))
-            (bytes_eval_bitwise (fold (&) 0 bytes_eval_list))
-            (v_1 (mod (keccak256-bs bytes_eval_bitwise) q))
+            (shift_eval_a (shift eval_a 1536))
+            (shift_eval_b (shift eval_b 1280))
+            (shift_eval_c (shift eval_c 1024))
+            (shift_eval_s1 (shift eval_s1 768))
+            (shift_eval_s2 (shift eval_s2 512))
+            (shift_eval_zw (shift eval_zw 256))
+            (shift_eval_r (shift eval_r 0))
+
+            (bytes_eval (+ (+ (+ (+ (+ (+ shift_eval_a shift_eval_b) shift_eval_c) shift_eval_s1) shift_eval_s2) shift_eval_zw) shift_eval_r))
+            (bytes_eval_size (* 7 32))
+
+            (v_1 (mod (keccak256-bs bytes_eval_size bytes_eval) q))
             (temp_v1 v_1)
 
             (a_2:integer (mulmod v_1 v_1 q))
@@ -276,14 +319,22 @@
             (a_6:integer (mulmod a_5 v_1 q))
             (temp_v6 a_6)
 
+            ;; bytes_wxi
+
             (wxi_x (at 'x (at 'wxi proof)))
             (wxi_y (at 'y (at 'wxi proof)))
             (wxi_w_x (at 'x (at 'wxi_w proof)))
             (wxi_w_y (at 'y (at 'wxi_w proof)))
 
-            (bytes_wxi_list (list wxi_x wxi_y wxi_w_x wxi_w_y))
-            (bytes_wxi_bitwise (fold (&) 0 bytes_wxi_list))
-            (u (mod (keccak256-bs bytes_wxi_bitwise) q))
+            (shift_wxi_x (shift wxi_x 768))
+            (shift_wxi_y (shift wxi_y 512))
+            (shift_wxi_w_x (shift wxi_w_x 256))
+            (shift_wxi_w_y (shift wxi_w_y 0))
+
+            (bytes_wxi (+ (+ (+ shift_wxi_x shift_wxi_y) shift_wxi_w_x) shift_wxi_w_y))
+            (bytes_wxi_size (* 4 32))
+
+            (u (mod (keccak256-bs bytes_wxi_size bytes_wxi) q))
             (temp_u u)
           )
           {
