@@ -159,7 +159,7 @@
         (
             let* 
             (
-                (verifier 
+                (verifier_init 
                     { 
                         "n": 0, ; will be calculated later
                         "n_lagrange": 0, ; will be calculated later
@@ -182,10 +182,11 @@
                     }
                 )
 
-                (verifier_transformed (new-verifier verifier))
+                (verifier (new-verifier verifier_init))
+                (check-input verifier proof)
+                (temp_values (calculate-challenges verifier proof))
             )
-            (check-input verifier_transformed proof)
-            (calculate-challenges verifier_transformed proof)
+            (calculate-lagrange verifier temp_values proof)
         )   
     )
 
@@ -338,50 +339,138 @@
             (temp_u u)
           )
           {
-            "temp_beta": temp_beta,
-            "temp_gamma": temp_gamma,
-            "temp_alpha": temp_alpha, 
-            "temp_xi": temp_xi,
-            "temp_beta_xi": temp_beta_xi,
-            "temp_xin": temp_xin,
-            "temp_zh": temp_zh,
-            "temp_zh_inv": temp_zh_inv,
-            "temp_v1": temp_v1,
-            "temp_v2": temp_v2,
-            "temp_v3": temp_v3,
-            "temp_v4": temp_v4,
-            "temp_v5": temp_v5,
-            "temp_v6": temp_v6,
-            "temp_u": temp_u
+            "alpha": temp_alpha, 
+            "beta": temp_beta,
+            "gamma": temp_gamma,
+            "xi": temp_xi,
+            "xin": temp_xin,
+            "beta_xi": temp_beta_xi,
+            "v_1": temp_v1,
+            "v_2": temp_v2,
+            "v_3": temp_v3,
+            "v_4": temp_v4,
+            "v_5": temp_v5,
+            "v_6": temp_v6,
+            "u": temp_u,
+            "pl": 0, ; will be calculated later
+            "eval_t": 0, ; will be calculated later
+            "a_1": 0, ; will be calculated later
+            "b_1": 0, ; will be calculated later
+            "zh": temp_zh,
+            "zh_inv": temp_zh_inv,
+            "eval_l": [0] ; will be calculated later
           }
         )
     )
 
-    (defun calculate-lagrange (ver:object{Verifier} proof:object{Proof})
+    (defun mod-inverse (a: integer m: integer)
+        (
+            let* 
+            (
+                (g_x_y (egcd a m))
+                (g (at 0 g_x_y))
+                (x (at 1 g_x_y))
+            )
+            (if (= g 1) (mod x m) 0)
+        )
+    )
+
+    (defun calculate-lagrange (verifier:object{Verifier} temp:object{TempValues} proof:object{Proof})
         (
             let*
             (
                 (w_0 1)
-                (n_public (at 'n_public ver))
-                (xi (at 'xi ver))
-                (q (at 'q ver))
-                (n (at 'n ver))
+
+                (n_public (at 'n_public verifier))
+                (q (at 'q verifier))
+                (n (at 'n verifier))
+                (w1 (at 'w1 verifier))
+
+                (temp_xi (at 'xi temp))
+                (temp_zh (at 'zh temp))
+                (temp_zh_inv (at 'zh_inv temp))
 
             <% for (let i = 1; i <= n_public; i++) { %>
-                (op_1_<%= i %> (- (+ xi q) w_0))
+                (op_1_<%= i %> (- (+ temp_xi q) w_0))
                 (op_2_<%= i %> (mod op_1_<%= i %> q))
                 (eval_l_<%= i %> (mulmod n op_2_<%= i %> q))
-            <% if (i < n_public) { %>
-                (w_<%= i %> (mulmod w_<%= i - 1 %> xi q))
-            <% } %>
+                <% if (i < n_public) { %>
+                (w_<%= i %> (mulmod w_<%= i - 1 %> w1 q))
+                <% } %>
             <% } %>
 
-                (eval_l (list <% for (let i = 1; i <= n_public; i++) { %> eval_l_<%= i %><% } %>))
                 (w w_<%= n_public - 1 %>)
 
-                ;; inverse_array
+                ;; begin - inverse_array
+
+                (m q)
+                (partials_0 1)
+
+                (values_0 temp_zh_inv)
+            <% for (let i = 1; i <= n_public; i++) { %>
+                (values_<%= i %> eval_l_<%= i %>)
+            <% } %>
+
+            <% for (let i = 0; i < parseInt(n_public) + 1; i++) { %>
+                (partials_<%= i + 1 %> (mulmod partials_<%= i %> values_<%= i %> m))
+            <% } %>
+
+                (inv_0 (mod-inverse partials_<%=  parseInt(n_public) + 1 %> m))
+
+            <% let counter = 1 %>
+            <% for (let i = parseInt(n_public); i >= 0; i--) { %>
+                (output_inverse_value_<%= i %> (mulmod partials_<%= i %> inv_<%= counter - 1 %> m))
+                (inv_<%= counter %> (mulmod inv_<%= counter - 1 %> values_<%= i %> m))
+            <% counter = counter + 1 %>
+            <% } %>
+
+                ;; end - inverse_array
+
+                (temp_zh_inv output_inverse_value_0)
+            
+            <% for (let i = 1; i < parseInt(n_public) + 1; i++) { %>
+                (temp_eval_l_pre_<%= i - 1 %> output_inverse_value_<%= i %>)
+            <% } %>
+
+                (temp_eval_l_0 temp_eval_l_pre_<%= n_public - 1 %>)
+
+                (w__0 1)
+
+            <% for (let i = 1; i <= n_public; i++) { %>
+                <% if (i == 1) { %>
+                (temp_eval_l_<%= i - 1 %> (mulmod temp_eval_l_<%= i - 1 %> temp_zh q))
+                <% } else { %>
+                (temp_eval_l_<%= i - 1 %> (mulmod w__<%= i - 1 %> (mulmod temp_eval_l_<%= i - 1 %> temp_zh q) q))
+                <% } %>
+                <% if (i < n_public) { %>
+                (w__<%= i %> (mulmod w__<%= i - 1 %> w1 q))
+                <% } %>
+            <% } %>
+
+                (temp_eval_l temp_eval_l_<%= n_public - 1 %>)
             )
-            {"success": "true"}
+            {
+                "alpha": (at 'alpha temp),
+                "beta": (at 'beta temp),
+                "gamma": (at 'gamma temp),
+                "xi": temp_xi,
+                "xin": (at 'xin temp),
+                "beta_xi": (at 'beta_xi temp),
+                "v1": (at 'v_1 temp),
+                "v2": (at 'v_2 temp),
+                "v3": (at 'v_3 temp),
+                "v4": (at 'v_4 temp),
+                "v5": (at 'v_5 temp),
+                "v6": (at 'v_6 temp),
+                "u": (at 'u temp),
+                "pl": 0, ; will be calculated later
+                "eval_t": 0, ; will be calculated later
+                "a_1": 0, ; will be calculated later
+                "b_1": 0, ; will be calculated later
+                "zh": temp_zh,
+                "zh_inv": temp_zh_inv,
+                "eval_l": temp_eval_l
+            }
         )
     )
 )
