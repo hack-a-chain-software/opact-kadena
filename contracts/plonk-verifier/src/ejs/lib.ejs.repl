@@ -184,9 +184,10 @@
 
                 (verifier (new-verifier verifier_init))
                 (check-input verifier proof)
-                (temp_values (calculate-challenges verifier proof))
+                (temp_values_challenges (calculate-challenges verifier proof))
+                (temp_values_lagrange (calculate-lagrange verifier temp_values_challenges proof))
             )
-            (calculate-lagrange verifier temp_values proof)
+            (calculate-pl verifier temp_values_lagrange proof)
         )   
     )
 
@@ -352,13 +353,13 @@
             "v_5": temp_v5,
             "v_6": temp_v6,
             "u": temp_u,
-            "pl": 0, ; will be calculated later
+            "pl": 0, ; will be calculated later - pl
             "eval_t": 0, ; will be calculated later
             "a_1": 0, ; will be calculated later
             "b_1": 0, ; will be calculated later
             "zh": temp_zh,
             "zh_inv": temp_zh_inv,
-            "eval_l": [0] ; will be calculated later
+            "eval_l": [0] ; will be calculated later - lagrange
           }
         )
     )
@@ -380,7 +381,6 @@
             let*
             (
                 (w_0 1)
-
                 (n_public (at 'n_public verifier))
                 (q (at 'q verifier))
                 (n (at 'n verifier))
@@ -446,14 +446,56 @@
                 (w__<%= i %> (mulmod w__<%= i - 1 %> w1 q))
                 <% } %>
             <% } %>
-
-                (temp_eval_l temp_eval_l_<%= n_public - 1 %>)
+                (temp_eval_l [<% for (let i = 0; i < n_public; i++) { %> temp_eval_l_<%= i %><% } %> ])
             )
             {
                 "alpha": (at 'alpha temp),
                 "beta": (at 'beta temp),
                 "gamma": (at 'gamma temp),
                 "xi": temp_xi,
+                "xin": (at 'xin temp),
+                "beta_xi": (at 'beta_xi temp),
+                "v_1": (at 'v_1 temp),
+                "v_2": (at 'v_2 temp),
+                "v_3": (at 'v_3 temp),
+                "v_4": (at 'v_4 temp),
+                "v_5": (at 'v_5 temp),
+                "v_6": (at 'v_6 temp),
+                "u": (at 'u temp),
+                "pl": 0, ; will be calculated later - pl
+                "eval_t": 0, ; will be calculated later
+                "a_1": 0, ; will be calculated later
+                "b_1": 0, ; will be calculated later
+                "zh": temp_zh,
+                "zh_inv": temp_zh_inv,
+                "eval_l": temp_eval_l
+            }
+        )
+    )
+
+    (defun calculate-pl(verifier:object{Verifier} temp:object{TempValues} proof:object{Proof})
+        (
+            let*
+            (
+                (pl_0 0)
+                (n_public (at 'n_public verifier))
+                (q (at 'q verifier))
+                (temp_eval_l (at 'eval_l temp))
+                (public_values (at 'public_values proof))
+
+            <% for (let i = 0; i < n_public; i++) { %>
+                (op_1 (mulmod (at <%= i %> temp_eval_l) (at <%= i %> public_values) q))
+                (op_2 (- (+ pl_<%= i %> q) op_1))
+                (pl_<%= i + 1 %> (mod op_2 q))
+            <% } %>
+
+                (pl pl_<%= n_public %>)
+            )
+            {
+                "alpha": (at 'alpha temp),
+                "beta": (at 'beta temp),
+                "gamma": (at 'gamma temp),
+                "xi": (at 'xi temp),
                 "xin": (at 'xin temp),
                 "beta_xi": (at 'beta_xi temp),
                 "v1": (at 'v_1 temp),
@@ -463,12 +505,12 @@
                 "v5": (at 'v_5 temp),
                 "v6": (at 'v_6 temp),
                 "u": (at 'u temp),
-                "pl": 0, ; will be calculated later
+                "pl": pl,
                 "eval_t": 0, ; will be calculated later
                 "a_1": 0, ; will be calculated later
                 "b_1": 0, ; will be calculated later
-                "zh": temp_zh,
-                "zh_inv": temp_zh_inv,
+                "zh": (at 'zh temp),
+                "zh_inv": (at 'zh_inv temp),
                 "eval_l": temp_eval_l
             }
         )
