@@ -186,8 +186,9 @@
                 (check-input verifier proof)
                 (temp_values_challenges (calculate-challenges verifier proof))
                 (temp_values_lagrange (calculate-lagrange verifier temp_values_challenges proof))
+                (temp_values_pl (calculate-pl verifier temp_values_lagrange proof))
             )
-            (calculate-pl verifier temp_values_lagrange proof)
+            (calculate-t verifier temp_values_pl proof)
         )   
     )
 
@@ -498,12 +499,12 @@
                 "xi": (at 'xi temp),
                 "xin": (at 'xin temp),
                 "beta_xi": (at 'beta_xi temp),
-                "v1": (at 'v_1 temp),
-                "v2": (at 'v_2 temp),
-                "v3": (at 'v_3 temp),
-                "v4": (at 'v_4 temp),
-                "v5": (at 'v_5 temp),
-                "v6": (at 'v_6 temp),
+                "v_1": (at 'v_1 temp),
+                "v_2": (at 'v_2 temp),
+                "v_3": (at 'v_3 temp),
+                "v_4": (at 'v_4 temp),
+                "v_5": (at 'v_5 temp),
+                "v_6": (at 'v_6 temp),
                 "u": (at 'u temp),
                 "pl": pl,
                 "eval_t": 0, ; will be calculated later
@@ -511,6 +512,81 @@
                 "b_1": 0, ; will be calculated later
                 "zh": (at 'zh temp),
                 "zh_inv": (at 'zh_inv temp),
+                "eval_l": temp_eval_l
+            }
+        )
+    )
+
+    (defun calculate-t(verifier:object{Verifier} temp:object{TempValues} proof:object{Proof})
+        (
+            let*
+            (
+                (q (at 'q verifier))
+
+                (eval_r (at 'eval_r proof))
+                (eval_c (at 'eval_c proof))
+                (eval_s1 (at 'eval_s1 proof))
+                (eval_s2 (at 'eval_s2 proof))
+                (eval_a (at 'eval_a proof))
+                (eval_b (at 'eval_b proof))
+                (eval_zw (at 'eval_zw proof))
+                
+                (temp_eval_l (at 'eval_l temp))
+                (temp_pl (at 'pl temp))
+                (temp_alpha (at 'alpha temp))
+                (temp_beta (at 'beta temp))
+                (temp_gamma (at 'gamma temp))
+                (temp_zh_inv (at 'zh_inv temp))
+
+                (eval_l_0 (at 0 temp_eval_l))
+
+                (t (mod (+ eval_r temp_pl) q))
+                (t_1_0 (mulmod eval_s1 temp_beta q))
+                (t_1_1 (mod (+ t_1_0 eval_a) q))
+                (t_1_2 (mod (+ t_1_1 temp_gamma) q))
+
+                (t_2_0 (mulmod eval_s2 temp_beta q))
+                (t_2_1 (mod (+ t_2_0 eval_b) q))
+                (t_2_2 (mod (+ t_2_1 temp_gamma) q))
+
+                (t_1_3 (mulmod t_1_2 t_2_2 q))
+
+                (t_2_3 (mod (+ eval_c temp_gamma) q))
+
+                (t_1_4 (mulmod t_1_3 t_2_3 q))
+                (t_1_5 (mulmod t_1_4 eval_zw q))
+                (t_1_6 (mulmod t_1_5 temp_alpha q))
+
+                (t_2_4 (mulmod eval_l_0 temp_alpha q))
+                (t_2_5 (mulmod t_2_4 temp_alpha q))
+
+                (t_1_7 (mod (+ t_1_6 t_2_5) q))
+
+                (t_1 (- (+ t q) t_1_7))
+                (t_2 (mulmod t_1 temp_zh_inv q))
+                
+                (temp_eval_t t_2)
+            )
+            {
+                "alpha": temp_alpha,
+                "beta": temp_beta,
+                "gamma": temp_gamma,
+                "xi": (at 'xi temp),
+                "xin": (at 'xin temp),
+                "beta_xi": (at 'beta_xi temp),
+                "v_1": (at 'v_1 temp),
+                "v_2": (at 'v_2 temp),
+                "v_3": (at 'v_3 temp),
+                "v_4": (at 'v_4 temp),
+                "v_5": (at 'v_5 temp),
+                "v_6": (at 'v_6 temp),
+                "u": (at 'u temp),
+                "pl": temp_pl,
+                "eval_t": temp_eval_t,
+                "a_1": 0, ; will be calculated later
+                "b_1": 0, ; will be calculated later
+                "zh": (at 'zh temp),
+                "zh_inv": temp_zh_inv,
                 "eval_l": temp_eval_l
             }
         )
