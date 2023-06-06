@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "esbuild src/server.ts --bundle --platform=node --outfile=src/server.js"
+    "build": "esbuild src/server.ts --bundle --platform=node --outfile=src/server.js",
+    "deploy": "pnpm build && serverless deploy"
   },
   "keywords": [],
   "author": "",
