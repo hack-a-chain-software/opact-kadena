@@ -3,7 +3,7 @@
 resource "aws_db_instance" "chainweb_database" {
   identifier        = "chainweb-database"
   engine            = "postgres"
-  name        = "indexer"
+  db_name        = "indexer"
   engine_version    = "14.6"
   instance_class    = "db.t3.medium"
   username          = var.db_username
@@ -36,7 +36,7 @@ resource "null_resource" "init_db" {
     command = <<EOF
       export PGPASSWORD=${aws_db_instance.chainweb_database.password}
 
-      psql -h ${aws_db_instance.chainweb_database.address} -U ${aws_db_instance.chainweb_database.username} -d ${aws_db_instance.chainweb_database.name} -p 5432 -f ../indexer/chainweb-data/src/init.sql
+      psql -h ${aws_db_instance.chainweb_database.address} -U ${aws_db_instance.chainweb_database.username} -d ${aws_db_instance.chainweb_database.db_name} -p 5432 -f ../indexer/chainweb-data/src/init.sql
     EOF
   }
 }
