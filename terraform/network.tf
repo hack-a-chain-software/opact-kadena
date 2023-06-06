@@ -117,7 +117,7 @@ resource "aws_network_acl" "indexer" {
 
   ingress {
     protocol   = "tcp"
-    rule_no    = 106
+    rule_no    = 101
     action     = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 443
@@ -147,48 +147,3 @@ resource "aws_network_acl" "indexer" {
     Name = "indexer-network-acl"
   }
 }
-
-resource "aws_network_acl_rule" "allow_chainweb_inbound" {
-  network_acl_id = aws_network_acl.indexer.id
-  rule_number    = 101
-  egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = "0.0.0.0/0"
-  from_port      = 1789
-  to_port        = 1789
-}
-
-resource "aws_network_acl_rule" "allow_chainweb_outbound" {
-  network_acl_id = aws_network_acl.indexer.id
-  rule_number    = 101
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = "0.0.0.0/0"
-  from_port      = 1789
-  to_port        = 1789
-}
-
-# resource "aws_network_acl_rule" "allow_chainweb_inbound443" {
-#   network_acl_id = aws_network_acl.indexer.id
-#   rule_number    = 102
-#   egress         = false
-#   protocol       = "tcp"
-#   rule_action    = "allow"
-#   cidr_block     = "0.0.0.0/0"
-#   from_port      = 443
-#   to_port        = 443
-# }
-
-# resource "aws_network_acl_rule" "allow_chainweb_outbound443" {
-#   network_acl_id = aws_network_acl.indexer.id
-#   rule_number    = 102
-#   egress         = true
-#   protocol       = "tcp"
-#   rule_action    = "allow"
-#   cidr_block     = "0.0.0.0/0"
-#   from_port      = 443
-#   to_port        = 443
-# }
-

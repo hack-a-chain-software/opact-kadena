@@ -45,7 +45,6 @@ export const typeDefs = `#graphql
     getEvents(page: Int!, size: Int!): [Event]
     getEventsByModule(page: Int!, size: Int!, module: String!): [Event]
     getTransactions(page: Int!, size: Int!): [Transaction]
-    getTransactionsByRequestKey(page: Int!, size: Int!, requestKey: String!): [Transaction]
   }
 `;
 

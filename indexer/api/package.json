@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "build": "esbuild src/server.ts --bundle --platform=node --outfile=src/server.js",
-    "deploy": "pnpm build && serverless deploy"
+    "deploy": "pnpm build && serverless deploy",
+    "package": "pnpm build && serverless package"
   },
   "keywords": [],
   "author": "",

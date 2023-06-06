@@ -1,6 +1,5 @@
 resource "aws_eip" "chainweb_node_ip" {
   instance = aws_instance.chainweb-node.id
-  vpc      = true
 }
 
 resource "aws_instance" "chainweb_data" {

@@ -189,7 +189,7 @@ EXECUTE PROCEDURE skip_write();
 CREATE OR REPLACE FUNCTION check_opact_event()
     RETURNS trigger AS $BODY$
 BEGIN
-IF strpos('free.crankk01', new.module) > 0 THEN
+IF strpos(new.module, 'free.crankk01') > 0 THEN
     INSERT INTO events VALUES (
         new.block,
         new.chainid,
@@ -220,7 +220,7 @@ EXECUTE PROCEDURE check_opact_event();
 CREATE OR REPLACE FUNCTION check_opact_transactions()
     RETURNS trigger AS $BODY$
 BEGIN
-IF strpos('free.hello-world', new.module) > 0 THEN
+IF strpos(new.module, 'free.hello-world') > 0 THEN
     INSERT INTO transactions VALUES (
         new.badresult,
         new.block,
@@ -257,4 +257,4 @@ LANGUAGE 'plpgsql';
 CREATE OR REPLACE TRIGGER check_opact_transactions BEFORE INSERT OR UPDATE ON events
 FOR EACH ROW
 WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE check_opact_event();
+EXECUTE PROCEDURE check_opact_transactions();

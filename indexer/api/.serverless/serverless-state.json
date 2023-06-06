@@ -1,12 +1,12 @@
 {
   "service": {
-    "service": "apollo-lambda",
+    "service": "indexer-service",
     "serviceObject": {
-      "name": "apollo-lambda"
+      "name": "indexer-service"
     },
     "provider": {
       "name": "aws",
-      "runtime": "nodejs16.x",
+      "runtime": "nodejs18.x",
       "httpApi": {
         "cors": true
       },
@@ -89,7 +89,7 @@
           "GraphqlLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/apollo-lambda-dev-graphql"
+              "LogGroupName": "/aws/lambda/indexer-service-dev-graphql"
             }
           },
           "IamRoleLambdaExecution": {
@@ -117,7 +117,7 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "apollo-lambda",
+                        "indexer-service",
                         "dev",
                         "lambda"
                       ]
@@ -135,7 +135,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/apollo-lambda-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/indexer-service-dev*:*"
                           }
                         ]
                       },
@@ -146,7 +146,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/apollo-lambda-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/indexer-service-dev*:*:*"
                           }
                         ]
                       }
@@ -159,7 +159,7 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "apollo-lambda",
+                    "indexer-service",
                     "dev",
                     {
                       "Ref": "AWS::Region"
@@ -177,11 +177,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/apollo-lambda/dev/1686062680298-2023-06-06T14:44:40.298Z/graphql.zip"
+                "S3Key": "serverless/indexer-service/dev/1686075392057-2023-06-06T18:16:32.057Z/graphql.zip"
               },
               "Handler": "src/server.graphqlHandler",
-              "Runtime": "nodejs16.x",
-              "FunctionName": "apollo-lambda-dev-graphql",
+              "Runtime": "nodejs18.x",
+              "FunctionName": "indexer-service-dev-graphql",
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -195,20 +195,20 @@
               "GraphqlLogGroup"
             ]
           },
-          "GraphqlLambdaVersiondbTYSm4AOu180bYMljkQVBjv1LrqCuz6Z0Xq8TUUGpU": {
+          "GraphqlLambdaVersionkUMkOIvS9ebrQNScBdAdZoR3mX9V5IBYRP0NPINCnp0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GraphqlLambdaFunction"
               },
-              "CodeSha256": "XBt17Y+aqzgqF3HITGNLmk2FyHg+sSR3thwRwiqNxlc="
+              "CodeSha256": "toIVhxjm0ugdjr2tp49zyRlsjAwU3GUSbuFGRNXzDcQ="
             }
           },
           "HttpApi": {
             "Type": "AWS::ApiGatewayV2::Api",
             "Properties": {
-              "Name": "dev-apollo-lambda",
+              "Name": "dev-indexer-service",
               "ProtocolType": "HTTP",
               "CorsConfiguration": {
                 "AllowHeaders": [
@@ -344,16 +344,16 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-apollo-lambda-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-indexer-service-dev-ServerlessDeploymentBucketName"
             }
           },
           "GraphqlLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GraphqlLambdaVersiondbTYSm4AOu180bYMljkQVBjv1LrqCuz6Z0Xq8TUUGpU"
+              "Ref": "GraphqlLambdaVersionkUMkOIvS9ebrQNScBdAdZoR3mX9V5IBYRP0NPINCnp0"
             },
             "Export": {
-              "Name": "sls-apollo-lambda-dev-GraphqlLambdaFunctionQualifiedArn"
+              "Name": "sls-indexer-service-dev-GraphqlLambdaFunctionQualifiedArn"
             }
           },
           "HttpApiId": {
@@ -362,7 +362,7 @@
               "Ref": "HttpApi"
             },
             "Export": {
-              "Name": "sls-apollo-lambda-dev-HttpApiId"
+              "Name": "sls-indexer-service-dev-HttpApiId"
             }
           },
           "HttpApiUrl": {
@@ -387,7 +387,7 @@
               ]
             },
             "Export": {
-              "Name": "sls-apollo-lambda-dev-HttpApiUrl"
+              "Name": "sls-indexer-service-dev-HttpApiUrl"
             }
           }
         }
@@ -498,21 +498,21 @@
             "resolvedPath": "/"
           }
         ],
-        "name": "apollo-lambda-dev-graphql",
+        "name": "indexer-service-dev-graphql",
         "package": {
           "artifact": "/Users/mateussantana/Projects/hackadena/indexer/api/.serverless/graphql.zip"
         },
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs16.x",
+        "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "GraphqlLambdaVersiondbTYSm4AOu180bYMljkQVBjv1LrqCuz6Z0Xq8TUUGpU"
+        "versionLogicalId": "GraphqlLambdaVersionkUMkOIvS9ebrQNScBdAdZoR3mX9V5IBYRP0NPINCnp0"
       }
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
     "initialServerlessConfig": {
-      "service": "apollo-lambda",
+      "service": "indexer-service",
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
       },
@@ -527,8 +527,8 @@
         "include": [
           "src/server.js"
         ],
-        "artifactsS3KeyDirname": "serverless/apollo-lambda/dev/code-artifacts",
-        "artifactDirectoryName": "serverless/apollo-lambda/dev/1686062680298-2023-06-06T14:44:40.298Z"
+        "artifactsS3KeyDirname": "serverless/indexer-service/dev/code-artifacts",
+        "artifactDirectoryName": "serverless/indexer-service/dev/1686075392057-2023-06-06T18:16:32.057Z"
       }
     },
     "layers": {},
@@ -536,7 +536,7 @@
   },
   "package": {
     "individually": true,
-    "artifactDirectoryName": "serverless/apollo-lambda/dev/1686062680298-2023-06-06T14:44:40.298Z",
+    "artifactDirectoryName": "serverless/indexer-service/dev/1686075392057-2023-06-06T18:16:32.057Z",
     "artifact": ""
   }
 }
