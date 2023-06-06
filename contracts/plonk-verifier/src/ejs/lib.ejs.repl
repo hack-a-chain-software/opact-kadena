@@ -4,12 +4,14 @@
     (defschema G1Point
         "Structure representing a G1 point."
         x: integer
-        y: integer)
+        y: integer
+    )
     
     (defschema G2Point
         "Structure representing a G2 point."
         x: [integer]
-        y: [integer])
+        y: [integer]
+    )
 
     (defschema Verifier
         "Structure representing the verifier."
@@ -37,7 +39,8 @@
         q: integer
         qf: integer
         ;; omega value
-        w1: integer)
+        w1: integer
+    )
 
     (defschema Proof
         "Structure representing a proof."
@@ -76,8 +79,8 @@
         u: integer
         pl: integer
         eval_t: integer
-        a_1: integer
-        b_1: integer
+        a_1: object{G1Point}
+        b_1: object{G1Point}
         zh: integer
         zh_inv: integer
         eval_l: [integer]
@@ -92,7 +95,8 @@
     )
 
     (defun mulmod (a: integer v_1: integer q: integer)
-        (mod (* a v_1) q))
+        (mod (* a v_1) q)
+    )
 
     (defun new-verifier (ver:object{Verifier})
         (let*
@@ -133,7 +137,8 @@
     )
 
     (defun check-value (val: integer q: integer)
-        (enforce (< val q) "value outside field range"))
+        (enforce (< val q) "value outside field range")
+    )
 
     (defun check-input (ver:object{Verifier} proof:object{Proof})
         (let*
@@ -153,7 +158,8 @@
             (check-value (at 'eval_s2 proof) q)
             (check-value (at 'eval_zw proof) q)
             (check-value (at 'eval_r proof) q)
-    ))
+        )
+    )
 
     (defun verify (proof:object{Proof})
         (
@@ -187,8 +193,10 @@
                 (temp_values_challenges (calculate-challenges verifier proof))
                 (temp_values_lagrange (calculate-lagrange verifier temp_values_challenges proof))
                 (temp_values_pl (calculate-pl verifier temp_values_lagrange proof))
-            )
-            (calculate-t verifier temp_values_pl proof)
+                (temp_values_t (calculate-t verifier temp_values_pl proof))
+                (temp_values_a1 (calculate-a1 verifier temp_values_t proof))
+                )
+            (calculate-b1 verifier temp_values_a1 proof)
         )   
     )
 
@@ -356,8 +364,8 @@
             "u": temp_u,
             "pl": 0, ; will be calculated later - pl
             "eval_t": 0, ; will be calculated later
-            "a_1": 0, ; will be calculated later
-            "b_1": 0, ; will be calculated later
+            "a_1": { "x": 0, "y": 0 }, ; will be calculated later
+            "b_1": { "x": 0, "y": 0 }, ; will be calculated later
             "zh": temp_zh,
             "zh_inv": temp_zh_inv,
             "eval_l": [0] ; will be calculated later - lagrange
@@ -465,8 +473,8 @@
                 "u": (at 'u temp),
                 "pl": 0, ; will be calculated later - pl
                 "eval_t": 0, ; will be calculated later
-                "a_1": 0, ; will be calculated later
-                "b_1": 0, ; will be calculated later
+                "a_1": { "x": 0, "y": 0 }, ; will be calculated later
+                "b_1": { "x": 0, "y": 0 }, ; will be calculated later
                 "zh": temp_zh,
                 "zh_inv": temp_zh_inv,
                 "eval_l": temp_eval_l
@@ -508,8 +516,8 @@
                 "u": (at 'u temp),
                 "pl": pl,
                 "eval_t": 0, ; will be calculated later
-                "a_1": 0, ; will be calculated later
-                "b_1": 0, ; will be calculated later
+                "a_1": { "x": 0, "y": 0 }, ; will be calculated later
+                "b_1": { "x": 0, "y": 0 }, ; will be calculated later
                 "zh": (at 'zh temp),
                 "zh_inv": (at 'zh_inv temp),
                 "eval_l": temp_eval_l
@@ -583,11 +591,213 @@
                 "u": (at 'u temp),
                 "pl": temp_pl,
                 "eval_t": temp_eval_t,
-                "a_1": 0, ; will be calculated later
-                "b_1": 0, ; will be calculated later
+                "a_1": { "x": 0, "y": 0 }, ; will be calculated later
+                "b_1": { "x": 0, "y": 0 }, ; will be calculated later
                 "zh": (at 'zh temp),
                 "zh_inv": temp_zh_inv,
                 "eval_l": temp_eval_l
+            }
+        )
+    )
+
+    (defun calculate-a1(verifier:object{Verifier} temp:object{TempValues} proof:object{Proof})
+        (
+            let*
+            (
+                (wxi_w (at 'wxi_w proof))
+                (wxi (at 'wxi proof))
+                (temp_u (at 'u temp))
+
+                (mul (scalar-mult 'g1 wxi_w temp_u))
+                (a_1 (point-add 'g1 wxi mul))
+            )
+            {
+                "alpha": (at 'alpha temp),
+                "beta": (at 'beta temp),
+                "gamma": (at 'gamma temp),
+                "xi": (at 'xi temp),
+                "xin": (at 'xin temp),
+                "beta_xi": (at 'beta_xi temp),
+                "v_1": (at 'v_1 temp),
+                "v_2": (at 'v_2 temp),
+                "v_3": (at 'v_3 temp),
+                "v_4": (at 'v_4 temp),
+                "v_5": (at 'v_5 temp),
+                "v_6": (at 'v_6 temp),
+                "u": temp_u,
+                "pl": (at 'pl temp),
+                "eval_t": (at 'eval_t temp),
+                "a_1" : a_1,
+                "b_1": { "x": 0, "y": 0 }, ; will be calculated later
+                "zh": (at 'zh temp),
+                "zh_inv": (at 'zh_inv temp),
+                "eval_l": (at 'eval_l temp)
+            }
+        )
+    )
+
+    (defun calculate-b1(verifier:object{Verifier} temp:object{TempValues} proof:object{Proof})
+        (
+            let*
+            (
+                (eval_a (at 'eval_a proof))
+                (eval_b (at 'eval_b proof))
+                (eval_c (at 'eval_c proof))
+                (eval_s1 (at 'eval_s1 proof))
+                (eval_s2 (at 'eval_s2 proof))
+                (eval_zw (at 'eval_zw proof))
+                (eval_r (at 'eval_r proof))
+                (t_1 (at 't_1 proof))
+                (t_2 (at 't_2 proof))
+                (t_3 (at 't_3 proof))
+                (z (at 'z proof))
+                (a (at 'a proof))
+                (b (at 'b proof))
+                (c (at 'c proof))
+                (wxi (at 'wxi proof))
+                (wxi_w (at 'wxi_w proof))
+
+                (q (at 'q verifier))
+                (q_l (at 'q_l verifier))
+                (q_m (at 'q_m verifier))
+                (q_r (at 'q_r verifier))
+                (q_o (at 'q_o verifier))
+                (q_c (at 'q_c verifier))
+                (k_1 (at 'k_1 verifier))
+                (k_2 (at 'k_2 verifier))
+                (w1 (at 'w1 verifier))
+                (verifier_s_1 (at 's_1 verifier))
+                (verifier_s_2 (at 's_2 verifier))
+                (verifier_s_3 (at 's_3 verifier))
+                
+                (temp_v_1 (at 'v_1 temp))
+                (temp_v_2 (at 'v_2 temp))
+                (temp_v_3 (at 'v_3 temp))
+                (temp_v_4 (at 'v_4 temp))
+                (temp_v_5 (at 'v_5 temp))
+                (temp_v_6 (at 'v_6 temp))
+                (temp_beta_xi (at 'beta_xi temp))
+                (temp_gamma (at 'gamma temp))
+                (eval_l (at 'eval_l temp))
+                (eval_l_0 (at 0 eval_l))
+                (temp_u (at 'u temp))
+                (temp_beta (at 'beta temp))
+                (temp_alpha (at 'alpha temp))
+                (temp_xi (at 'xi temp))
+                (temp_xin (at 'xin temp))
+                (temp_eval_t (at 'eval_t temp))
+
+                (s_1 (mulmod eval_a temp_v_1 q))
+                (p_1 (scalar-mult 'g1 q_l s_1))
+
+                (s_2 (mulmod s_1 eval_b q))
+                (p_2 (point-add 'g1 (scalar-mult 'g1 q_m s_2) p_1))
+
+                (s_3 (mulmod eval_b temp_v_1 q))
+                (p_3 (point-add 'g1 (scalar-mult 'g1 q_r s_3) p_2))
+
+                (s_4 (mulmod eval_c temp_v_1 q))
+                (p_4 (point-add 'g1 (scalar-mult 'g1 q_o s_4) p_3))
+
+                (s_5 temp_v_1)
+                (p_5 (point-add 'g1 (scalar-mult 'g1 q_c s_5) p_4))
+
+                (s_6 (mod (+ eval_a temp_beta_xi) q))
+                (s_7 (mod (+ s_6 temp_gamma) q))
+
+                (s_1_1 (mulmod k_1 temp_beta_xi q))
+                (s_1_2 (mod (+ s_1_1 eval_b) q))
+                (s_1_3 (mod (+ s_1_2 temp_gamma) q))
+
+                (s_8 (mulmod s_7 s_1_3 q))
+
+                (s_1_4 (mulmod k_2 temp_beta_xi q))
+                (s_1_5 (mod (+ s_1_4 eval_c) q))
+                (s_1_6 (mod (+ s_1_5 temp_gamma) q))
+
+                (s_9 (mulmod s_8 s_1_6 q))
+                (s_10 (mulmod s_9 temp_alpha q))
+                (s_11 (mulmod s_10 temp_v_1 q))
+
+                (s_1_7 (mulmod eval_l_0 temp_alpha q))
+                (s_1_8 (mulmod s_1_7 temp_alpha q))
+                (s_1_9 (mulmod s_1_8 temp_v_1 q))
+
+                (s_12 (mod (+ s_11 s_1_9) q))
+                (s_13 (mod (+ s_12 temp_u) q))
+
+                (p_6 (point-add 'g1 (scalar-mult 'g1 z s_13) p_5))
+
+                (s_14 (mulmod temp_beta eval_s1 q))
+                (s_15 (mod (+ s_14 eval_a) q))
+                (s_16 (mod (+ s_15 temp_gamma) q))
+
+                (s_1_10 (mulmod temp_beta eval_s2 q))
+                (s_1_11 (mod (+ s_1_10 eval_b) q))
+                (s_1_12 (mod (+ s_1_11 temp_gamma) q))
+
+                (s_17 (mulmod s_16 s_1_12 q))
+                (s_18 (mulmod s_17 temp_alpha q))
+                (s_19 (mulmod s_18 temp_v_1 q))
+                (s_20 (mulmod s_19 temp_beta q))
+                (s_21 (mulmod s_20 eval_zw q))
+                (s_22 (mod (- q s_21) q))
+                (p_7 (point-add 'g1 (scalar-mult 'g1 verifier_s_3 s_22) p_6))
+
+                (p_8 (point-add 'g1 t_1 p_7))
+                (s_23 temp_xin)
+                (p_9 (point-add 'g1 (scalar-mult 'g1 t_2 s_23) p_8))
+                (s_24 (mulmod s_23 s_23 q))
+                (p_10 (point-add 'g1 (scalar-mult 'g1 t_3 s_24) p_9))
+
+                (p_11 (point-add 'g1 (scalar-mult 'g1 a temp_v_2) p_10))
+                (p_12 (point-add 'g1 (scalar-mult 'g1 b temp_v_3) p_11))
+                (p_13 (point-add 'g1 (scalar-mult 'g1 c temp_v_4) p_12))
+                (p_14 (point-add 'g1 (scalar-mult 'g1 verifier_s_1 temp_v_5) p_13))
+                (p_15 (point-add 'g1 (scalar-mult 'g1 verifier_s_2 temp_v_6) p_14))
+
+                (s_25 temp_eval_t)
+                (s_26 (mod (+ s_25 (mulmod eval_r temp_v_1 q)) q))
+                (s_27 (mod (+ s_26 (mulmod eval_a temp_v_2 q)) q))
+                (s_28 (mod (+ s_27 (mulmod eval_b temp_v_3 q)) q))
+                (s_29 (mod (+ s_28 (mulmod eval_c temp_v_4 q)) q))
+                (s_30 (mod (+ s_29 (mulmod eval_s1 temp_v_5 q)) q))
+                (s_31 (mod (+ s_30 (mulmod eval_s2 temp_v_6 q)) q))
+                (s_32 (mod (+ s_31 (mulmod eval_zw temp_u q)) q))
+                (s_33 (mod (- q s_32) q))
+
+                (p_16 (point-add 'g1 (scalar-mult 'g1 {"x": 1, "y": 2} s_33) p_15))
+
+                (s_34 temp_xi)
+                (p_17 (point-add 'g1 (scalar-mult 'g1 wxi s_34) p_16))
+
+                (s_35 (mulmod temp_u temp_xi q))
+                (s_36 (mulmod s_35 w1 q))
+                (p_18 (point-add 'g1 (scalar-mult 'g1 wxi_w s_36) p_17))
+
+                (b_1 p_18)
+            )
+            {
+                "alpha": temp_alpha,
+                "beta": temp_beta,
+                "gamma": temp_gamma,
+                "xi": temp_xi,
+                "xin": temp_xin,
+                "beta_xi": temp_beta_xi,
+                "v_1": temp_v_1,
+                "v_2": temp_v_2,
+                "v_3": temp_v_3,
+                "v_4": temp_v_4,
+                "v_5": temp_v_5,
+                "v_6": temp_v_6,
+                "u": temp_u,
+                "pl": (at 'pl temp),
+                "eval_t": temp_eval_t,
+                "a_1" : (at 'a_1 temp),
+                "b_1": b_1,
+                "zh": (at 'zh temp),
+                "zh_inv": (at 'zh_inv temp),
+                "eval_l": eval_l
             }
         )
     )
