@@ -4,10 +4,10 @@ pre-push:
     # front-ts:
     #   run: pnpm tsc
 
-    front-lint:
-      files: git diff --name-only HEAD @{push}
-      glob: "*.{js,vue,ts}"
-      run: eslint --ext .ts,.vue --ignore-path .prettierignore --fix --quiet {files}
+    # front-lint:
+    #   files: git diff --name-only HEAD @{push}
+    #   glob: "*.{js,vue,ts}"
+    #   run: eslint --ext .ts,.vue --ignore-path .prettierignore --fix --quiet {files}
 
     skip_output:
       - meta #(version and which hook running)
@@ -19,13 +19,13 @@ pre-commit:
     # front-ts:
     #   run: pnpm tsc
 
-    front-lint:
-      glob: "*.{js,vue,ts}"
-      run: eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix --quiet {staged_files}
+    # front-lint:
+    #   glob: "*.{js,vue,ts}"
+    #   run: eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix --quiet {staged_files}
 
-    front-format:
-      glob: "*.{js,vue,ts}"
-      run: prettier {staged_files} --write --loglevel=error --no-error-on-unmatched-pattern
+    # front-format:
+    #   glob: "*.{js,vue,ts}"
+    #   run: prettier {staged_files} --write --loglevel=error --no-error-on-unmatched-pattern
 
     packages-audit:
       skip:

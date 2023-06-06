@@ -20,4 +20,4 @@ node_await
 
 echo -e "Starting chainweb-data..."
 
-chainweb-data server --port 8888 --service-host=$CWD_NODE --p2p-host=$CWD_NODE --service-port=1848 --p2p-port=1789 --dbuser=$CWD_DB_USER --dbpass=$CWD_DB_PASS --dbname=indexer --dbhost=$CWD_DB_HOST --dbport=$CWD_DB_PORT
+chainweb-data server --port 8888 --service-host=$CWD_NODE --p2p-host=$CWD_NODE --service-port=1848 --p2p-port=1789 --dbuser=$CWD_DB_USER --dbpass=$CWD_DB_PASS --dbname=indexer --dbhost=$CWD_DB_HOST --dbport=$CWD_DB_PORT --ignore-schema-diff

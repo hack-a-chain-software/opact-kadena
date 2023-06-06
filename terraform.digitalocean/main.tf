@@ -90,7 +90,6 @@ resource "digitalocean_droplet" "chainweb-data" {
       "echo \"CWD_DB_PORT=25060\" | sudo tee -a .env",
       "echo \"CWD_DB_NAME=indexer\" | sudo tee -a .env",
       "echo \"CWD_NODE=${digitalocean_floating_ip.chainweb-node-ip.ip_address}\" | sudo tee -a .env",
-      "cd ./chainweb-data",
       "docker compose up chainweb-data -d",
     ]
   }
