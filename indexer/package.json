@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "api": "pnpm --filter indexer-api",
+
     "db:migrate" : "pnpm --filter indexer-cwd migrate",
 
     "docker:postgresql": "pnpm --filter indexer-cwd docker:up:pgl",
