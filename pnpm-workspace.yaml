@@ -1,5 +1,5 @@
 packages:
   - 'front'
-  - 'indexer'
+  - 'indexer/**'
   - 'contracts'
   - 'terraform'
