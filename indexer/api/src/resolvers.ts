@@ -16,7 +16,7 @@ export const resolvers = {
       const offset = (args.page - 1) * args.size;
 
       const query =
-        "SELECT * FROM events WHERE module = '$1' LIMIT $2 OFFSET $3;";
+        "SELECT * FROM events WHERE module = $1 LIMIT $2 OFFSET $3;";
 
       const result = await baseRequest(query, [args.module, args.size, offset]);
 
@@ -29,20 +29,6 @@ export const resolvers = {
       const query = "SELECT * FROM transactions LIMIT $1 OFFSET $2;";
 
       const result = await baseRequest(query, [args.size, offset]);
-
-      return result.rows;
-    },
-
-    getTransactionsByRequestKey: async (_, args) => {
-      const offset = (args.page - 1) * args.size;
-
-      const query = `SELECT * FROM transactions WHERE requestkey = $1 LIMIT $2 OFFSET $3;`;
-
-      const result = await baseRequest(query, [
-        args.requestkey,
-        args.size,
-        offset,
-      ]);
 
       return result.rows;
     },
