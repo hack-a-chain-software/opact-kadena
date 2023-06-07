@@ -2,8 +2,7 @@
 
 # The "terraform" block specifies the required providers and the backend configuration.
 terraform {
-  # The "required_providers" block specifies that the project requires the DigitalOcean provider.
-  # It sets the source to "digitalocean/digitalocean" and specifies that any version in the "~> 2.0" range is acceptable.
+  # The "required_providers" block specifies that the project requires the hashicorp/aws provider.
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -11,7 +10,8 @@ terraform {
     }
   }
 
-  # The "backend" block configures the backend to store the Terraform state. In this case, it is configured to use the S3 backend. The "region" parameter specifies the region where the S3 bucket is located.
+  # The "backend" block configures the backend to store the Terraform state. In this case, it is configured to use the S3 backend.
+  # The "region" parameter specifies the region where the S3 bucket is located.
   backend "s3" {
     region = "us-east-1"
     bucket = "terraform213"

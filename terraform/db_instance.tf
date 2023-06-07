@@ -1,5 +1,5 @@
-# The resource "digitalocean_database_cluster" represents the configuration for the database cluster named "chainweb-database".
-# The cluster is set up with PostgreSQL as the engine, version 15. The cluster is associated with the project specified by the variable "project_id".
+# The "aws_db_instance" resource block describes an Amazon RDS database instance named "chainweb-database" that runs PostgreSQL version 14.6. It is a t3.medium instance class, with a username and password set via variables. It has a 25GB gp2 storage volume and is not configured for multi-AZ deployment. It's associated with a security group and a subnet group.
+
 resource "aws_db_instance" "chainweb_database" {
   identifier        = "chainweb-database"
   engine            = "postgres"
@@ -23,8 +23,7 @@ resource "aws_db_instance" "chainweb_database" {
   }
 }
 
-# The "null_resource" resource block represents a resource that doesn't create any infrastructure itself but can be used to trigger actions or perform local operations.
-# In this case, it is used to initialize a database
+# The "null_resource" block is used to run an arbitrary local command that does not create any infrastructure resources. In this case, it is used to initialize a database by executing an SQL file located at the specified path.
 resource "null_resource" "init_db" {
   triggers = {
     schema_file = filebase64sha256(
