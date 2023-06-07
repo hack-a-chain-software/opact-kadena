@@ -1,3 +1,4 @@
+# The "aws_iam_policy_document" block defines an IAM policy that allows describing DB instances on the RDS database.
 data "aws_iam_policy_document" "indexer_api_access" {
   statement {
     actions = [
@@ -9,8 +10,9 @@ data "aws_iam_policy_document" "indexer_api_access" {
   }
 }
 
+# The "aws_iam_role" block creates an IAM role that allows Lambda services to assume it.
 resource "aws_iam_role" "indexer_api_role" {
-  name = "lambda_role"
+  name = "indexer-api-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -27,13 +29,16 @@ resource "aws_iam_role" "indexer_api_role" {
   })
 }
 
+# The "aws_iam_role_policy" attaches the IAM policy defined earlier to the IAM role.
 resource "aws_iam_role_policy" "indexer_api_role_policy" {
-  name = "lambda_role_policy"
+  name = "indexer-api-role-policy"
   role = "${aws_iam_role.indexer_api_role.id}"
 
   policy = "${data.aws_iam_policy_document.indexer_api_access.json}"
 }
 
+# The "aws_lambda_function" block sets up a Lambda function named "indexer-api",
+# using a zip file in the specified path as the source code. It uses the Node.js 18.x runtime.
 resource "aws_lambda_function" "indexer_api" {
   filename      = "../indexer/api/.serverless/graphql.zip"
   function_name = "indexer-api"
@@ -54,7 +59,8 @@ resource "aws_lambda_function" "indexer_api" {
   }
 }
 
-resource "aws_lambda_function_url" "test_latest" {
+# The "aws_lambda_function_url" block creates a URL for testing the latest version of the function.
+resource "aws_lambda_function_url" "indexer_api_url" {
   function_name      = aws_lambda_function.indexer_api.function_name
   authorization_type = "NONE"
 }

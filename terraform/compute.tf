@@ -1,10 +1,14 @@
+# This resource block is creating an Elastic IP (EIP) in AWS and associating it with the EC2 chainweb-node instance. An EIP is an AWS public static IPv4 address that you can allocate to your AWS account. You can attach an EIP to any instance or network interface for Internet connectivity.
 resource "aws_eip" "chainweb_node_ip" {
-  instance = aws_instance.chainweb-node.id
+  instance = aws_instance.chainweb_node.id
 }
 
+# This resource block creates an EC2 instance on AWS with a specified AMI (Amazon Machine Image) and an instance type of t2.micro. This instance is configured to associate a public IP address and launch within a specific subnet within the VPC. The instance is tagged with the name chainweb-data and the security configuration is defined through a specific security group. Additionally, the instance is provisioned with Docker and other settings related to chainweb-data.
 resource "aws_instance" "chainweb_data" {
-  ami           = "ami-004dac467bb041dc7"
   instance_type = "t2.micro"
+
+  ami = "ami-053b0d53c279acc90"
+
   associate_public_ip_address = true
 
   subnet_id = "${aws_subnet.indexer.id}"
@@ -15,7 +19,12 @@ resource "aws_instance" "chainweb_data" {
     Name = "chainweb-data"
   }
 
-  vpc_security_group_ids      = ["${aws_security_group.indexer.id}"]
+  depends_on = [
+    null_resource.init_db,
+    aws_instance.chainweb_node,
+  ]
+
+  vpc_security_group_ids = ["${aws_security_group.indexer.id}"]
 
   connection {
     type        = "ssh"
@@ -58,9 +67,10 @@ resource "aws_instance" "chainweb_data" {
 
 # In summary, this resource defines the creation of an AWS EC2 instance named "chainweb-node"
 # with specific configuration and provisions it with necessary software and configurations to run a Kadena's Chainweb Node.
-resource "aws_instance" "chainweb-node" {
-  ami = "ami-004dac467bb041dc7"
-  instance_type = "t2.large" # Equivalent to DigitalOcean's s-8vcpu-16gb Droplet
+resource "aws_instance" "chainweb_node" {
+  ami = "ami-053b0d53c279acc90"
+
+  instance_type = "t2.large"
 
   associate_public_ip_address = true
 
@@ -72,7 +82,7 @@ resource "aws_instance" "chainweb-node" {
     Name = "chainweb-node"
   }
 
-  vpc_security_group_ids      = ["${aws_security_group.indexer.id}"]
+  vpc_security_group_ids = ["${aws_security_group.indexer.id}"]
 
   connection {
     type        = "ssh"
@@ -108,9 +118,9 @@ resource "aws_instance" "chainweb-node" {
       "sudo apt-get install -y jq",
       "echo \"DB_SYNC_SERVER=${var.db_sync_server}\" | sudo tee ./chainweb-node/.env",
       "echo \"KADENA_NETWORK=${var.kadena_network}\" | sudo tee -a ./chainweb-node/.env",
-      "sudo systemctl daemon-reload",
-      "sudo systemctl enable cwnode.service",
-      "sudo systemctl start cwnode.service"
+      # "sudo systemctl daemon-reload",
+      # "sudo systemctl enable cwnode.service",
+      # "sudo systemctl start cwnode.service"
     ]
   }
 }
