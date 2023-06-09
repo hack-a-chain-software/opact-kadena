@@ -11,23 +11,29 @@ variable "pub_key" {
 }
 
 variable "aws_access_key" {
-  description = "Digital Ocean API token"
+  description = "AWS access key"
   type        = string
 }
+
 variable "aws_secret_key" {
-  description = "Digital Ocean API token"
+  description = "AWS secret key"
   type        = string
 }
+
 variable "aws_region" {
-  description = "Digital Ocean API token"
+  description = "AWS region"
   type        = string
+  default     = "~/.ssh/id_rsa.pub"
 }
+
 variable "db_username" {
-  description = "Digital Ocean API token"
+  description = "DB username"
   type        = string
+  default     = "doadmin"
 }
+
 variable "db_password" {
-  description = "Digital Ocean API token"
+  description = "DB password"
   type        = string
 }
 
