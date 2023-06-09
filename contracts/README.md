@@ -20,7 +20,7 @@ true
 ## Run the test
 
 ```bash
-contracts$ pact plonk-verifier/tests/plonk-tests.repl
+pnpm test-plonk
 ```
 
 If everything is ok, you should see the following output:
