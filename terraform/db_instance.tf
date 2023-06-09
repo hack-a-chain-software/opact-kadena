@@ -1,5 +1,4 @@
 # The "aws_db_instance" resource block describes an Amazon RDS database instance named "chainweb-database" that runs PostgreSQL version 14.6. It is a t3.medium instance class, with a username and password set via variables. It has a 25GB gp2 storage volume and is not configured for multi-AZ deployment. It's associated with a security group and a subnet group.
-
 resource "aws_db_instance" "chainweb_database" {
   identifier        = "chainweb-database"
   engine            = "postgres"
