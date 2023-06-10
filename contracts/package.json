@@ -1,7 +1,9 @@
 {
 	"scripts": {
 		"generate-plonk": "pnpm ejs ./plonk-verifier/src/ejs/lib.ejs.repl -f ./plonk-verifier/src/ejs/sample.verifier.json -o ./plonk-verifier/src/lib.repl",
-		"test-plonk": "pact plonk-verifier/tests/plonk-tests.repl"
+		"generate-groth16": "pnpm ejs ./groth16-verifier/src/ejs/lib.ejs.repl -f ./groth16-verifier/src/ejs/sample.verifier.json -o ./groth16-verifier/src/lib.repl",
+		"test-plonk": "pact plonk-verifier/tests/plonk-tests.repl",
+		"test-groth16": "pact groth16-verifier/tests/groth16-tests.repl"
 	},
 	"dependencies": {
 		"ejs": "^3.1.9"
