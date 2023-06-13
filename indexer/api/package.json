@@ -5,7 +5,7 @@
   "scripts": {
     "build": "esbuild src/server.ts --bundle --platform=node --outfile=src/server.js",
     "deploy": "pnpm build && serverless deploy",
-    "package": "pnpm build && serverless package"
+    "package": "pnpm build && npx serverless package"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@pnpm/make-dedicated-lockfile": "^0.5.4",
     "esbuild": "^0.17.19",
+    "serverless": "^3.32.2",
     "serverless-bundle": "^6.0.0",
     "serverless-esbuild": "^1.45.1",
     "serverless-plugin-typescript": "^2.1.5",

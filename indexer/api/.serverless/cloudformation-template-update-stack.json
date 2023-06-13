@@ -162,7 +162,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/indexer-service/dev/1686144695744-2023-06-07T13:31:35.744Z/graphql.zip"
+          "S3Key": "serverless/indexer-service/dev/1686664058542-2023-06-13T13:47:38.542Z/graphql.zip"
         },
         "Handler": "src/server.graphqlHandler",
         "Runtime": "nodejs18.x",

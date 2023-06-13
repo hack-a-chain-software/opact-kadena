@@ -144,6 +144,9 @@ importers:
       esbuild:
         specifier: ^0.17.19
         version: 0.17.19
+      serverless:
+        specifier: ^3.32.2
+        version: 3.32.2
       serverless-bundle:
         specifier: ^6.0.0
         version: 6.0.0(@types/node@18.15.5)(esbuild@0.17.19)(react-dom@17.0.2)(react@17.0.2)(serverless@3.32.2)
