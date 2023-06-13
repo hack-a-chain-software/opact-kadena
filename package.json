@@ -4,7 +4,8 @@
   "scripts": {
     "front": "pnpm --filter front",
     "postinstall": "npx lefthook install -a",
-    "lint": "eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix"
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix",
+    "contracts": "pnpm --filter contracts"
   },
   "devDependencies": {
     "@arkweid/lefthook": "0.7.7",
