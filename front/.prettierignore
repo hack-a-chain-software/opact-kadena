@@ -1,0 +1,7 @@
+build
+node_modules
+public
+out
+*.json
+*.test.js
+/tests
