@@ -5,8 +5,7 @@ useHead({
     {
       hid: 'description',
       name: 'description',
-      content:
-        'Opact'
+      content: 'Opact'
     },
     {
       hid: 'robots',

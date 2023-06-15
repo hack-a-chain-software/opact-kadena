@@ -1,11 +1,15 @@
 <template>
-  <LandingSection
-    class="mb-[40px]"
-  >
+  <LandingSection class="mb-[40px]">
     <LandingContainer>
       <h3
         class="
-          bg-opact-gradient bg-clip-text text-transparent w-max text-sm font-[500] uppercase mb-[12px]
+          bg-opact-gradient bg-clip-text
+          text-transparent
+          w-max
+          text-sm
+          font-[500]
+          uppercase
+          mb-[12px]
         "
       >
         Documentation
@@ -22,13 +26,7 @@
         Refer to our docs to understand how it all works:
       </h2>
 
-      <p
-        class="
-          text-lg-xs
-          text-[#BDBDBD]
-          mb-[32px]
-        "
-      >
+      <p class="text-lg-xs text-[#BDBDBD] mb-[32px]">
         Explore the inner workings of Opact.
       </p>
 
@@ -37,9 +35,7 @@
         variant="secondary"
         class=""
       >
-        <span>
-          Opact Documentation
-        </span>
+        <span> Opact Documentation </span>
 
         <LandingAssetsArrow />
       </LandingButton>

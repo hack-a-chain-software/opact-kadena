@@ -1,7 +1,5 @@
 export default defineNuxtConfig({
-  extends: [
-    './apps/landing'
-  ],
+  extends: ['./apps/landing'],
   modules: [
     '@pinia/nuxt',
     '@nuxt/image',
@@ -33,7 +31,9 @@ export default defineNuxtConfig({
     preconnect: true,
     families: {
       Lato: [100, 300, 400, 700, 900],
-      Poppins: [100, 200, 300, 400, 500, 600, 700, 800, 900]
+      Poppins: [
+        100, 200, 300, 400, 500, 600, 700, 800, 900
+      ]
     }
   },
   routeRules: {

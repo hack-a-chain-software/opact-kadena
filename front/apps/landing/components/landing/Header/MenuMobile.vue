@@ -36,17 +36,11 @@ const moveTo = (id: string) => {
 </script>
 
 <template>
-  <Menu
-    as="div"
-  >
+  <Menu as="div">
     <MenuButton v-slot="{ open }">
-      <LandingAssetsClose
-        v-if="open"
-      />
+      <LandingAssetsClose v-if="open" />
 
-      <LandingAssetsMenu
-        v-else
-      />
+      <LandingAssetsMenu v-else />
     </MenuButton>
 
     <MenuItems
@@ -55,19 +49,12 @@ const moveTo = (id: string) => {
         left-0
         absolute
         w-full
-        divide-y
-        divide-white/[0.32]
+        divide-y divide-white/[0.32]
         rounded-b-[12px]
         bg-dark-blue
       "
     >
-      <div
-        class="
-          mb-4
-          max-h-[104px]
-          flex flex-wrap
-        "
-      >
+      <div class="mb-4 max-h-[104px] flex flex-wrap">
         <MenuItem
           v-for="{ title, to } in navigation"
           :key="`mobile-menu-item-${to}`"
@@ -88,18 +75,12 @@ const moveTo = (id: string) => {
         as="div"
         class="text-white pt-4 flex items-start"
       >
-        <div
-          class="flex flex-col"
-        >
-          <h3
-            class="text-xs-poppins font-title mb-3"
-          >
+        <div class="flex flex-col">
+          <h3 class="text-xs-poppins font-title mb-3">
             Community
           </h3>
 
-          <div
-            class="flex space-x-4 mb-6"
-          >
+          <div class="flex space-x-4 mb-6">
             <LandingAssetsTwitter />
             <LandingAssetsDiscord />
             <LandingAssetsGithub />
@@ -109,9 +90,7 @@ const moveTo = (id: string) => {
             :with-icon="true"
             variant="primary"
           >
-            <span>
-              Louch App
-            </span>
+            <span> Louch App </span>
 
             <LandingAssetsArrow />
           </LandingButton>

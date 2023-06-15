@@ -1,11 +1,6 @@
 <template>
   <div
-    class="
-      h-[32px]
-      p-[1px]
-      rounded-[8px]
-      bg-opact-gradient
-    "
+    class="h-[32px] p-[1px] rounded-[8px] bg-opact-gradient"
   >
     <div
       class="
@@ -14,7 +9,9 @@
         px-[12px]
         rounded-[8px]
         bg-dark-blue
-        flex items-center justify-center
+        flex
+        items-center
+        justify-center
       "
     >
       <slot />

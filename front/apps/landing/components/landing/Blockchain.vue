@@ -30,12 +30,12 @@ const chains = {
       h-[40px]
       overflow-hidden
       rounded-full
-      flex items-center justify-center
+      flex
+      items-center
+      justify-center
       border border-[#F4F4F5]
     "
   >
-    <component
-      :is="chains[chain].icon"
-    />
+    <component :is="chains[chain].icon" />
   </div>
 </template>

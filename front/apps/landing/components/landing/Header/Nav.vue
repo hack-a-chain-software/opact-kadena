@@ -21,23 +21,24 @@ const navigation: NavigationItem[] = [
       left-0
       right-0
       z-[999]
-      flex items-center
+      flex
+      items-center
       bg-dark-blue
     "
   >
     <div
       class="
-        py-3 px-4
+        py-3
+        px-4
         max-w-full
         w-screen
-        flex justify-between
+        flex
+        justify-between
       "
     >
       <LandingLogo />
 
-      <LandingHeaderMenuMobile
-        :navigation="navigation"
-      />
+      <LandingHeaderMenuMobile :navigation="navigation" />
     </div>
   </div>
 </template>

@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex-1 bg-dark-blue"
-  >
+  <div class="flex-1 bg-dark-blue">
     <header>
       <LandingHeaderNav />
 
