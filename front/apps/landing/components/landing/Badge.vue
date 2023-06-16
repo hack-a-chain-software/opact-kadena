@@ -1,8 +1,10 @@
 <template>
   <div
     class="
-      h-[32px] p-[1px] rounded-[8px] bg-opact-gradient
-
+      h-[32px]
+      p-[1px]
+      rounded-[8px]
+      bg-opact-gradient
       md:h-[30px]
     "
   >
@@ -16,7 +18,6 @@
         flex
         items-center
         justify-center
-
         sm:text-[14px]
         sm:font-[500]
         sm:leading-[20px]

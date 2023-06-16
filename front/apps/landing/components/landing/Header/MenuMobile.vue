@@ -37,7 +37,11 @@ const moveTo = (id: string) => {
 
 <template>
   <Menu as="div">
-    <MenuButton v-slot="{ open }" as="div" class="flex items-center justify-center">
+    <MenuButton
+      v-slot="{ open }"
+      as="div"
+      class="flex items-center justify-center"
+    >
       <LandingAssetsClose v-if="open" />
 
       <LandingAssetsMenu v-else />
@@ -47,11 +51,11 @@ const moveTo = (id: string) => {
       class="
         p-4
         px-0
-        left-1/2 -translate-x-1/2
+        left-1/2
+        -translate-x-1/2
         top-[100%]
         absolute
         w-full
-
         rounded-b-[12px]
         bg-dark-blue
       "
@@ -62,20 +66,31 @@ const moveTo = (id: string) => {
           mx-auto
           w-screen
           max-w-[420px]
-
-          sm:max-w-[640px]
-          sm:px-8
-
+          sm:max-w-[640px] sm:px-8
           md:max-w-[768px]
           divide-y divide-white/[0.32]
         "
       >
-        <div class="mb-4 max-h-[104px] flex flex-wrap sm:space-x-[12px] ">
+        <div
+          class="
+            mb-4
+            max-h-[104px]
+            flex flex-wrap
+            sm:space-x-[12px]
+          "
+        >
           <MenuItem
             v-for="{ title, to } in navigation"
             :key="`mobile-menu-item-${to}`"
             as="div"
-            class="max-w-[130px] sm:max-w-max h-[24px] w-full mb-4 sm:mb-0"
+            class="
+              max-w-[130px]
+              sm:max-w-max
+              h-[24px]
+              w-full
+              mb-4
+              sm:mb-0
+            "
           >
             <a
               role="button"
@@ -92,7 +107,14 @@ const moveTo = (id: string) => {
           class="text-white pt-4 flex items-start"
         >
           <div class="flex flex-col">
-            <h3 class="text-xs-poppins sm:text-base-xs font-title mb-3">
+            <h3
+              class="
+                text-xs-poppins
+                sm:text-base-xs
+                font-title
+                mb-3
+              "
+            >
               Community
             </h3>
 

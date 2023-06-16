@@ -69,9 +69,7 @@ const tag = computed(() =>
 <template>
   <div
     :class="variants[variant].parent"
-    class="
-      text-white rounded-[100px]
-    "
+    class="text-white rounded-[100px]"
   >
     <component
       :is="tag"
@@ -80,22 +78,22 @@ const tag = computed(() =>
       :type="type"
       :class="variants[variant].children"
       class="
-        pl-[22px] pr-[14px] rounded-[100px]
-
+        pl-[22px]
+        pr-[14px]
+        rounded-[100px]
         sm:pl-[24px]
-
         sm:text-[18px]
         sm:font-[500]
         sm:leading-[27px]
       "
     >
       <div
-        class="
-          flex items-center
-
-          font-title
+        class="flex items-center font-title"
+        :class="
+          withIcon
+            ? 'space-x-[8px]'
+            : 'pr-[8px] sm:pr-[12px]'
         "
-        :class="withIcon ? 'space-x-[8px]' : 'pr-[8px] sm:pr-[12px]'"
       >
         <slot />
       </div>

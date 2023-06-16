@@ -10,7 +10,6 @@
           font-[500]
           uppercase
           mb-[10px]
-
           sm:font-[900]
           sm:text-[18px]
           sm:leading-[27px]
@@ -26,13 +25,8 @@
           font-title
           text-white
           mb-[8px]
-
-          sm:text-[32px]
-          sm:leading-[40px]
-
-          md:font-[600]
-          md:text-[40px]
-          md:leading-[60px]
+          sm:text-[32px] sm:leading-[40px]
+          md:font-[600] md:text-[40px] md:leading-[60px]
         "
       >
         Refer to our docs to understand how it all works:
@@ -40,8 +34,8 @@
 
       <p
         class="
-          text-lg-xs text-[#BDBDBD] mb-[30px]
-
+          text-lg-xs text-[#BDBDBD]
+          mb-[30px]
           sm:font-[500]
           sm:text-[20px]
           sm:leading-[30px]

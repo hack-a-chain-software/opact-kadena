@@ -15,14 +15,7 @@ const navigation: NavigationItem[] = [
 
 <template>
   <div
-    class="
-      fixed
-      top-0
-      left-0
-      right-0
-      z-[999]
-      bg-dark-blue
-    "
+    class="fixed top-0 left-0 right-0 z-[999] bg-dark-blue"
   >
     <div
       class="
@@ -33,10 +26,7 @@ const navigation: NavigationItem[] = [
         flex
         max-w-[420px]
         justify-between
-
-        sm:max-w-[640px]
-        sm:px-8
-
+        sm:max-w-[640px] sm:px-8
         md:max-w-[768px]
       "
     >

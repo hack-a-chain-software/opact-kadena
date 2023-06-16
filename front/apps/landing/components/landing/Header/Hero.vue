@@ -1,15 +1,14 @@
 <template>
-  <div class="pt-[52px] md:pt-[60px] mb-[40px] overflow-x-clip">
+  <div
+    class="pt-[52px] md:pt-[60px] mb-[40px] overflow-x-clip"
+  >
     <LandingSection
       class="
         pt-[24px]
-        flex
-        flex-col
+        flex flex-col
         items-center
         mb-[22px]
-
-        sm:pt-[50px]
-        sm:mb-0
+        sm:pt-[50px] sm:mb-0
       "
     >
       <h1
@@ -19,15 +18,9 @@
           relative
           font-title
           mx-auto
-          text-3xl-poppins-xs
-          text-white text-center
-
+          text-3xl-poppins-xs text-white text-center
           max-w-[290px]
-
-          sm:text-[48px]
-          sm:max-w-[490px]
-          sm:pb-[22px]
-
+          sm:text-[48px] sm:max-w-[490px] sm:pb-[22px]
           md:font-[700]
           md:leading-[62.4px]
           md:max-w-full
@@ -44,20 +37,18 @@
           text-center text-sm-hero
           z-[2]
           relative
-
           mx-auto
-
           max-w-[290px]
-
           sm:max-w-[440px]
-
           sm:font-[400]
           sm:text-[20px]
           sm:leading-[30px]
           md:max-w-[620px]
         "
       >
-        Opact Wallet allows you to perform anonymous transactions on the Blockchain by creating private accounts powered by Zero Knowledge.
+        Opact Wallet allows you to perform anonymous
+        transactions on the Blockchain by creating private
+        accounts powered by Zero Knowledge.
       </h2>
 
       <div
@@ -66,22 +57,16 @@
           order-2
           mt-[-40px]
           overflow-y-clip
-          flex items-center justify-center
-
-          sm:order-3
-          sm:mt-[-16%]
-
+          flex
+          items-center
+          justify-center
+          sm:order-3 sm:mt-[-16%]
           w-[466px]
-
           sm:w-[874px]
-
-          md:mt-[-90px]
-          md:translate-x-[18px]
+          md:mt-[-90px] md:translate-x-[18px]
         "
       >
-        <figure
-          class="rotate-[-8.05deg]"
-        >
+        <figure class="rotate-[-8.05deg]">
           <nuxt-img
             src="/hero.png"
             alt="Hero illustration"
@@ -94,13 +79,9 @@
         class="
           order-3
           w-full
-
           z-[2]
-
           space-y-[16px]
-
           mt-[-28px]
-
           sm:flex
           sm:mt-0
           sm:space-y-0
@@ -109,9 +90,7 @@
           sm:space-x-[24px]
           sm:order-2
           sm:pt-[32px]
-
-          md:pt-[34px]
-          md:mt-0
+          md:pt-[34px] md:mt-0
         "
       >
         <LandingButton
@@ -133,15 +112,13 @@
       </div>
     </LandingSection>
 
-    <LandingSection class="z-[1] space-y-[16px] relative md:pb-[46px]">
+    <LandingSection
+      class="z-[1] space-y-[16px] relative md:pb-[46px]"
+    >
       <div
         class="
-          flex
-          flex-col
-          sm:flex-row
-          sm:items-center
-          sm:space-x-[24px]
-
+          flex flex-col
+          sm:flex-row sm:items-center sm:space-x-[24px]
           md:mt-[-30px]
         "
       >
@@ -151,10 +128,8 @@
             mb-[8px]
             tracking-[0.05rem]
             font-[600]
-
             sm:mb-0
             sm:text-lg
-
             sm:text-[20px]
             sm:leading-[30px]
           "

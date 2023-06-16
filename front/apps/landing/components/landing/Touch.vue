@@ -1,7 +1,17 @@
 <template>
   <LandingSection>
     <LandingContainer>
-      <figure class="absolute left-[-4px] top-[-4px] right-[-4px] bottom-[-4px] z-[0] rounded-[12px]">
+      <figure
+        class="
+          absolute
+          left-[-4px]
+          top-[-4px]
+          right-[-4px]
+          bottom-[-4px]
+          z-[0]
+          rounded-[12px]
+        "
+      >
         <nuxt-img
           src="/touch-bg.png"
           class="w-full h-full"
@@ -10,23 +20,14 @@
         />
       </figure>
 
-      <div
-        class="
-          z-[2] relative
-
-          md:pt-[12px]
-        "
-      >
+      <div class="z-[2] relative md:pt-[12px]">
         <h2
           class="
             text-2xl-poppins
             font-title
             text-white
             mb-[8px]
-
-            sm:text-[32px]
-            sm:leading-[40px]
-
+            sm:text-[32px] sm:leading-[40px]
             md:text-[38px]
             md:font-[600]
             md:leading-[57px]
@@ -38,8 +39,8 @@
 
         <p
           class="
-            text-base-xs text-[#BDBDBD] mb-[32px]
-
+            text-base-xs text-[#BDBDBD]
+            mb-[32px]
             sm:font-[500]
             sm:text-[20px]
             sm:leading-[30px]

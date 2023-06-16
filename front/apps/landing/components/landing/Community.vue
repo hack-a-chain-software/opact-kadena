@@ -10,7 +10,6 @@
           font-[500]
           uppercase
           mb-[10px]
-
           sm:text-[18px]
           sm:font-[900]
           sm:leading-[27px]
@@ -26,22 +25,19 @@
           font-title
           text-white
           mb-[6px]
-
-          sm:text-[32px]
-          sm:leading-[40px]
-
-          md:font-[600]
-          md:text-[40px]
-          md:leading-[60px]
+          sm:text-[32px] sm:leading-[40px]
+          md:font-[600] md:text-[40px] md:leading-[60px]
         "
       >
-        Connect with the Opact <span class="hidden md:inline">Wallet</span> community
+        Connect with the Opact
+        <span class="hidden md:inline">Wallet</span>
+        community
       </h2>
 
       <p
         class="
-          text-lg-xs text-[#BDBDBD] mb-[32px]
-
+          text-lg-xs text-[#BDBDBD]
+          mb-[32px]
           sm:font-[500]
           sm:text-[20px]
           sm:leading-[30px]
@@ -62,7 +58,6 @@
             items-center
             justify-center
             text-dark-blue
-
             sm:w-auto
             sm:pl-[16px]
             sm:pr-[24px]
@@ -71,11 +66,15 @@
         >
           <LandingAssetsGithub />
 
-          <div
-            class="hidden sm:block"
-          >
+          <div class="hidden sm:block">
             <p
-              class="text-[16px] font-[500] leading-[24px] text-dark-blue font-title"
+              class="
+                text-[16px]
+                font-[500]
+                leading-[24px]
+                text-dark-blue
+                font-title
+              "
             >
               Github
             </p>
@@ -92,7 +91,6 @@
             items-center
             justify-center
             text-dark-blue
-
             sm:w-auto
             sm:pl-[16px]
             sm:pr-[24px]
@@ -101,11 +99,15 @@
         >
           <LandingAssetsDiscord />
 
-          <div
-            class="hidden sm:block"
-          >
+          <div class="hidden sm:block">
             <p
-              class="text-[16px] font-[500] leading-[24px] text-dark-blue font-title"
+              class="
+                text-[16px]
+                font-[500]
+                leading-[24px]
+                text-dark-blue
+                font-title
+              "
             >
               Discord
             </p>
@@ -122,7 +124,6 @@
             items-center
             justify-center
             text-dark-blue
-
             sm:w-auto
             sm:pl-[16px]
             sm:pr-[24px]
@@ -131,11 +132,15 @@
         >
           <LandingAssetsTwitter />
 
-          <div
-            class="hidden sm:block"
-          >
+          <div class="hidden sm:block">
             <p
-              class="text-[16px] font-[500] leading-[24px] text-dark-blue font-title"
+              class="
+                text-[16px]
+                font-[500]
+                leading-[24px]
+                text-dark-blue
+                font-title
+              "
             >
               Twitter
             </p>
