@@ -37,7 +37,7 @@ const moveTo = (id: string) => {
 
 <template>
   <Menu as="div">
-    <MenuButton v-slot="{ open }">
+    <MenuButton v-slot="{ open }" as="div" class="flex items-center justify-center">
       <LandingAssetsClose v-if="open" />
 
       <LandingAssetsMenu v-else />
@@ -46,56 +46,74 @@ const moveTo = (id: string) => {
     <MenuItems
       class="
         p-4
-        left-0
+        px-0
+        left-1/2 -translate-x-1/2
+        top-[100%]
         absolute
         w-full
-        divide-y divide-white/[0.32]
+
         rounded-b-[12px]
         bg-dark-blue
       "
     >
-      <div class="mb-4 max-h-[104px] flex flex-wrap">
-        <MenuItem
-          v-for="{ title, to } in navigation"
-          :key="`mobile-menu-item-${to}`"
-          as="div"
-          class="max-w-[130px] h-[24px] w-full mb-4"
-        >
-          <a
-            role="button"
-            class="text-base-xs font-title text-white"
-            @click="moveTo(to)"
+      <div
+        class="
+          px-4
+          mx-auto
+          w-screen
+          max-w-[420px]
+
+          sm:max-w-[640px]
+          sm:px-8
+
+          md:max-w-[768px]
+          divide-y divide-white/[0.32]
+        "
+      >
+        <div class="mb-4 max-h-[104px] flex flex-wrap sm:space-x-[12px] ">
+          <MenuItem
+            v-for="{ title, to } in navigation"
+            :key="`mobile-menu-item-${to}`"
+            as="div"
+            class="max-w-[130px] sm:max-w-max h-[24px] w-full mb-4 sm:mb-0"
           >
-            {{ title }}
-          </a>
+            <a
+              role="button"
+              class="text-base-xs font-title text-white"
+              @click="moveTo(to)"
+            >
+              {{ title }}
+            </a>
+          </MenuItem>
+        </div>
+
+        <MenuItem
+          as="div"
+          class="text-white pt-4 flex items-start"
+        >
+          <div class="flex flex-col">
+            <h3 class="text-xs-poppins sm:text-base-xs font-title mb-3">
+              Community
+            </h3>
+
+            <div class="flex space-x-4 mb-6">
+              <LandingAssetsTwitter />
+              <LandingAssetsDiscord />
+              <LandingAssetsGithub />
+            </div>
+
+            <LandingButton
+              :with-icon="true"
+              variant="primary"
+              class="sm:h-[36px]"
+            >
+              <span> Louch App </span>
+
+              <LandingAssetsArrow />
+            </LandingButton>
+          </div>
         </MenuItem>
       </div>
-
-      <MenuItem
-        as="div"
-        class="text-white pt-4 flex items-start"
-      >
-        <div class="flex flex-col">
-          <h3 class="text-xs-poppins font-title mb-3">
-            Community
-          </h3>
-
-          <div class="flex space-x-4 mb-6">
-            <LandingAssetsTwitter />
-            <LandingAssetsDiscord />
-            <LandingAssetsGithub />
-          </div>
-
-          <LandingButton
-            :with-icon="true"
-            variant="primary"
-          >
-            <span> Louch App </span>
-
-            <LandingAssetsArrow />
-          </LandingButton>
-        </div>
-      </MenuItem>
     </MenuItems>
   </Menu>
 </template>

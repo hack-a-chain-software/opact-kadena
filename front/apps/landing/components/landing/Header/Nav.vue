@@ -21,8 +21,6 @@ const navigation: NavigationItem[] = [
       left-0
       right-0
       z-[999]
-      flex
-      items-center
       bg-dark-blue
     "
   >
@@ -30,10 +28,16 @@ const navigation: NavigationItem[] = [
       class="
         py-3
         px-4
-        max-w-full
+        mx-auto
         w-screen
         flex
+        max-w-[420px]
         justify-between
+
+        sm:max-w-[640px]
+        sm:px-8
+
+        md:max-w-[768px]
       "
     >
       <LandingLogo />

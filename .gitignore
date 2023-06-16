@@ -21,3 +21,4 @@ wip
 *.env
 **/.env
 **/node_modules
+.vercel

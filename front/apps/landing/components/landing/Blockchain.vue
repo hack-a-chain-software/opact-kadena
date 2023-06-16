@@ -34,6 +34,9 @@ const chains = {
       items-center
       justify-center
       border border-[#F4F4F5]
+
+      sm:w-[48px]
+      sm:h-[48px]
     "
   >
     <component :is="chains[chain].icon" />

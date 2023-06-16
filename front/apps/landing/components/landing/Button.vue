@@ -16,19 +16,19 @@ export interface Variants {
 const variants: Variants = {
   primary: {
     parent:
-      'bg-opact-gradient p-[2px] inline-flex items-center justify-center h-[36px]',
+      'bg-opact-gradient p-[2px] inline-flex items-center justify-center h-[36px] sm:h-[48px]',
     children:
       'bg-dark-blue w-full h-full flex items-center justify-center'
   },
   secondary: {
     parent:
-      'bg-white p-[2px] inline-flex items-center justify-center h-[36px]',
+      'bg-white p-[2px] inline-flex items-center justify-center h-[36px] sm:h-[41px] sm:font-[500] sm:text-[16px] sm:leading-[20px]',
     children:
       'bg-white text-dark-blue w-full h-full flex items-center justify-center'
   },
   tertiary: {
     parent:
-      'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[36px]',
+      'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[36px] sm:h-[48px]',
     children:
       'bg-inverted-card-gradient w-full h-full flex items-center justify-center'
   }
@@ -69,7 +69,9 @@ const tag = computed(() =>
 <template>
   <div
     :class="variants[variant].parent"
-    class="text-white rounded-[100px]"
+    class="
+      text-white rounded-[100px]
+    "
   >
     <component
       :is="tag"
@@ -77,11 +79,23 @@ const tag = computed(() =>
       :href="href"
       :type="type"
       :class="variants[variant].children"
-      class="pl-[22px] pr-[14px] rounded-[100px]"
+      class="
+        pl-[22px] pr-[14px] rounded-[100px]
+
+        sm:pl-[24px]
+
+        sm:text-[18px]
+        sm:font-[500]
+        sm:leading-[27px]
+      "
     >
       <div
-        class="flex items-center"
-        :class="withIcon ? 'space-x-[8px]' : 'pr-[8px]'"
+        class="
+          flex items-center
+
+          font-title
+        "
+        :class="withIcon ? 'space-x-[8px]' : 'pr-[8px] sm:pr-[12px]'"
       >
         <slot />
       </div>
