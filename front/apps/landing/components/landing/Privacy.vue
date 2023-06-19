@@ -117,7 +117,6 @@
           xl:leading-[60px]
           xl:mb-[23px]
           xl:tracking-normal
-
           2xl:font-[600]
           2xl:text-[54px]
           2xl:leading-[64.8px]

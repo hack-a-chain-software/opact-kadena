@@ -157,9 +157,7 @@
           xl:mt-0
           xl:right-[-9rem]
           xl:w-[970px]
-          2xl:w-[1057px]
-          2xl:top-[-6rem]
-          2xl:right-[-8rem]
+          2xl:w-[1057px] 2xl:top-[-6rem] 2xl:right-[-8rem]
         "
       >
         <figure class="rotate-[-8.05deg] lg:rotate-0">
