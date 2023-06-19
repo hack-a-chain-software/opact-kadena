@@ -6,8 +6,25 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@nuxtjs/tailwindcss',
+    '@vueuse/motion/nuxt',
     '@nuxtjs/google-fonts'
   ],
+  motion: {
+    directives: {
+      'pop-bottom': {
+        initial: {
+          scale: 0,
+          opacity: 0,
+          y: 100
+        },
+        visible: {
+          scale: 1,
+          opacity: 1,
+          y: 0
+        },
+      }
+    }
+  },
   runtimeConfig: {
     public: {
       gaId: process.env.GTM_TAG,

@@ -6,6 +6,7 @@
       rounded-[8px]
       bg-opact-gradient
       md:h-[30px]
+      xl:h-[32px]
     "
   >
     <div

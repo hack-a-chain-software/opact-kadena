@@ -36,11 +36,11 @@ const moveTo = (id: string) => {
 </script>
 
 <template>
-  <Menu as="div">
+  <Menu as="div" class="lg:hidden">
     <MenuButton
       v-slot="{ open }"
       as="div"
-      class="flex items-center justify-center"
+      class="flex items-center justify-center h-full"
     >
       <LandingAssetsClose v-if="open" />
 
@@ -57,7 +57,7 @@ const moveTo = (id: string) => {
         absolute
         w-full
         rounded-b-[12px]
-        bg-dark-blue
+        outline-none bg-[rgba(16,_20,_24,_0.88)] backdrop-blur-[4px] lg:bg-dark-blue/[0.42] lg:backdrop-blur-[6px]
       "
     >
       <div

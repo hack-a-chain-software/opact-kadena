@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 bg-dark-blue">
+  <div class="bg-dark-blue">
     <header>
       <LandingHeaderNav />
 
