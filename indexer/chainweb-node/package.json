@@ -1,0 +1,24 @@
+{
+  "name": "indexer-cwn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init-node": "./src/init-cwnode.sh",
+    "docker:stop:cwn": "docker compose stop chainweb-node",
+    "docker:pull:cwn": "docker compose pull chainweb-node",
+    "docker:up:cwn": "docker compose up chainweb-node --build -d",
+    "docker:logs:cwd": "docker compose logs chainweb-node --follow",
+
+    "docker:up:initdb": "docker compose up chainweb-initialize-db",
+    "docker:stop:initdb": "docker compose stop chainweb-initialize-db",
+    "docker:logs:initdb": "docker compose logs chainweb-initialize-db --follow",
+
+    "docker:up:validatedb": "docker compose up chainweb-validate-db",
+    "docker:stop:validatedb": "docker compose stop chainweb-validate-db",
+    "docker:logs:validatedb": "docker compose logs chainweb-validate-db --follow"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

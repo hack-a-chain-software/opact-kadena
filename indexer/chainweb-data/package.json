@@ -1,0 +1,12 @@
+{
+  "name": "indexer-cwd",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "docker:stop:cwd": "docker compose stop chainweb-data",
+    "docker:up:pgl": "docker compose up postgresql --build -d",
+    "docker:up:cwd": "docker compose up chainweb-data --build -d",
+    "docker:logs:cwd": "docker compose logs chainweb-data --follow"
+  }
+}

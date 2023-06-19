@@ -1,0 +1,29 @@
+{
+  "name": "indexer",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "api": "pnpm --filter indexer-api",
+
+    "docker:postgresql": "pnpm --filter indexer-cwd docker:up:pgl",
+    "docker:up:chainwebdata": "pnpm --filter indexer-cwd docker:up:cwd",
+    "docker:stop:chainwebdata": "pnpm --filter indexer-cwd docker:stop:cwd",
+    "docker:logs:chainwebdata": "pnpm --filter indexer-cwd docker:logs:cwd",
+
+    "docker:up:chainwebnode": "pnpm --filter indexer-cwn docker:up:cwn",
+    "docker:pull:chainwebnode": "pnpm --filter indexer-cwn docker:pull:cwn",
+    "docker:stop:chainwebnode": "pnpm --filter indexer-cwn docker:stop:cwn",
+    "docker:logs:chainwebnode": "pnpm --filter indexer-cwn docker:logs:cwd",
+
+    "docker:up:initializedb": "pnpm --filter indexer-cwn docker:up:initdb",
+    "docker:stop:initializedb": "pnpm --filter indexer-cwn docker:stop:initdb",
+    "docker:logs:initializedb": "pnpm --filter indexer-cwn docker:logs:initdb",
+
+    "docker:up:validatedb": "pnpm --filter indexer-cwn docker:up:validatedb",
+    "docker:stop:validatedb": "pnpm --filter indexer-cwn docker:stop:validatedb",
+    "docker:logs:validatedb": "pnpm --filter indexer-cwn docker:logs:validatedb"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
