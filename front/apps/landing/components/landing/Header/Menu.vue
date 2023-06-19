@@ -53,11 +53,5 @@ const moveTo = (id: string) => {
     </template>
 
     <LandingButton withIcon text="Louch App" />
-
-    <!-- <div
-      class="lg:w-[122px] lg:h-[28px] xl:h-[32px] xl:w-[156px] bg-white rounded-full flex items-center justify-center"
-    >
-      <span> Louch App </span>
-    </div> -->
   </div>
 </template>

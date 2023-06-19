@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { computed } from 'vue'
+import { twMerge } from 'tailwind-merge';
+import { computed } from 'vue';
+import type { PropType } from 'vue';
 
 export interface Variant {
   parent: string;
@@ -21,6 +22,10 @@ const variants: Variants = {
     parent:
       'bg-opact-gradient p-[2px] inline-flex items-center justify-center lg:h-[28px] xl:h-[36px]',
     children: `bg-dark-blue w-full h-full flex items-center justify-center
+        lg:text-[13px]
+        lg:leading-[20px]
+        lg:font-[400]
+
         xl:text-[16px]
         xl:leading-[24px]
         xl:font-[400]
@@ -34,6 +39,10 @@ const variants: Variants = {
       inline-flex items-center justify-center sm:font-[500] sm:text-[16px] sm:leading-[20px]
     `,
     children: `bg-white text-dark-blue w-full h-full flex items-center justify-center
+        lg:text-[13px]
+        lg:leading-[20px]
+        lg:font-[500]
+
         xl:text-[16px]
         xl:leading-[20px]
         xl:font-[500]
@@ -41,9 +50,22 @@ const variants: Variants = {
   },
   tertiary: {
     parent:
-      'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[36px] sm:h-[48px]',
+      'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[44px] lg:h-[38px] xl:h-[49px]',
     children:
-      'bg-inverted-card-gradient w-full h-full flex items-center justify-center'
+      `bg-inverted-card-gradient w-full h-full flex items-center justify-center
+
+        sm:text-[18px]
+        sm:font-[500]
+        sm:leading-[27px]
+
+        lg:text-[14px]
+        lg:font-[400]
+        lg:leading-[27px]
+
+        xl:text-[18px]
+        xl:font-[500]
+        xl:leading-[27px]
+      `
   },
   'hero-primary': {
     parent: `
@@ -53,7 +75,21 @@ const variants: Variants = {
       h-[44px] lg:h-[38px] xl:h-[49px]
     `,
     children:
-      'bg-dark-blue w-full h-full flex items-center justify-center'
+      `bg-dark-blue w-full h-full flex items-center justify-center
+        lg:px-[22px]
+
+        sm:text-[18px]
+        sm:font-[500]
+        sm:leading-[27px]
+
+        lg:text-[14px]
+        lg:font-[400]
+        lg:leading-[27px]
+
+        xl:text-[18px]
+        xl:font-[500]
+        xl:leading-[27px]
+      `
   },
   'hero-secondary': {
     parent: `
@@ -76,7 +112,8 @@ const variants: Variants = {
         w-full h-[44px] lg:h-[38px] xl:h-[49px]
       `,
     children:
-      'bg-white text-dark-blue w-full h-full flex items-center justify-center'
+      `bg-white text-dark-blue w-full h-full flex items-center justify-center
+      `
   }
 }
 
@@ -104,7 +141,14 @@ const props = defineProps({
     >,
     default: 'primary',
     validator: (v: string) =>
-      ['primary', 'secondary', 'tertiary', 'hero-primary', 'hero-secondary', 'hero-tertiary'].includes(v)
+      [
+        'primary',
+        'secondary',
+        'tertiary',
+        'hero-primary',
+        'hero-secondary',
+        'hero-tertiary'
+      ].includes(v)
   },
   to: {
     type: [String, Object],
@@ -123,16 +167,14 @@ const tag = computed(() =>
 
 <template>
   <div
-    :class="variants[variant].parent"
-    class="text-white rounded-[100px] xl:w-max"
+    :class="twMerge('text-white rounded-[100px] xl:w-max', variants[variant].parent)"
   >
     <component
       :is="tag"
       :to="to"
       :href="href"
       :type="type"
-      :class="variants[variant].children"
-      class="
+      :class="twMerge(`
         px-[22px]
         rounded-[100px]
         sm:px-[24px]
@@ -140,7 +182,9 @@ const tag = computed(() =>
         sm:font-[500]
         sm:leading-[27px]
         xl:w-max
-      "
+        lg:px-[18px]
+        xl:px-[24px]
+      `, variants[variant].children)"
     >
       <div class="flex items-center font-title">
         <span>
@@ -158,7 +202,7 @@ const tag = computed(() =>
               ml-[10px] mr-[-8px] sm:mr-[-12px]
             `
               : `
-              ml-[8px] mr-[-8px] sm:mr-[-12px]
+              ml-[8px] mr-[-8px] sm:mr-[-12px] xl:ml-[8px] xl:mr-[-12px] lg:ml-[4px] lg:mr-[-8px]
             `
           "
         />
