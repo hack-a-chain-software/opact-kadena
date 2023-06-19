@@ -19,6 +19,8 @@ test-ledger
 wip
 /tests/*.js
 .pact-history
-node_modules
 .draft
 lib.repl
+*.env
+**/.env
+**/node_modules
