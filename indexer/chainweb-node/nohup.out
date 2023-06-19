@@ -1,0 +1,21 @@
+Container chainweb-validate-db-config  Creating
+Container chainweb-initialize-db  Creating
+Container container-monitor  Creating
+Container chainweb-initialize-db  Created
+Container container-monitor  Created
+Container chainweb-validate-db-config  Created
+Container chainweb-validate-db  Creating
+Container chainweb-validate-db  Created
+Container chainweb-node  Creating
+Container chainweb-node  Created
+Container chainweb-initialize-db  Starting
+Container chainweb-validate-db-config  Starting
+Container container-monitor  Starting
+Container chainweb-validate-db-config  Started
+Container chainweb-initialize-db  Started
+Container chainweb-initialize-db  Waiting
+Container chainweb-validate-db-config  Waiting
+Container container-monitor  Started
+Container chainweb-validate-db-config  Exited
+Container chainweb-initialize-db  Exited
+service "chainweb-initialize-db" didn't completed successfully: exit 137
