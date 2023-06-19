@@ -47,12 +47,15 @@
             xl:top-[-140px]
             xl:left-[0px]
             xl:max-w-[891px]
+            2xl:min-w-[1011px]
+            2xl:top-[-200px]
+            2xl:left-[-90px]
           "
         >
           <nuxt-img
             src="/security.png"
             class="scale-x-[-1] lg:scale-x-[1]"
-            sizes="xs:429px md:765px lg:700px xl:891px"
+            sizes="xs:429px md:765px lg:700px xl:891px 2xl:1011px"
             alt="Illustrative image of the marijuana plant"
           />
         </figure>

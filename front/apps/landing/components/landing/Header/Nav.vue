@@ -45,6 +45,7 @@ const navigation: NavigationItem[] = [
         xl:h-[80px]
         xl:px-[60px]
         xl:items-center
+        2xl:max-w-[1440px]
       "
     >
       <LandingLogo />

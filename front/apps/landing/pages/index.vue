@@ -26,6 +26,7 @@ useHead({
       xl:flex
       xl:space-x-[32px]
       xl:items-stretch
+      2xl:max-w-[1440px]
     "
   >
     <LandingDocumentation />

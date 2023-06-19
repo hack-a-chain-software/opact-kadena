@@ -52,6 +52,7 @@
           xl:leading-[48px]
           xl:max-w-full
           xl:mb-[6px]
+          2xl:max-w-[455px]
         "
       >
         Connect with the Opact

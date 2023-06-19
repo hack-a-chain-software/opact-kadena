@@ -8,6 +8,7 @@
       mb-[40px]
       lg:mb-[62px]
       xl:mb-[90px]
+      2xl:mb-[110px]
       overflow-x-clip
       max-w-screen
     "
@@ -29,6 +30,7 @@
         xl:overflow-visible
         xl:pt-[107px]
         xl:mb-[65px]
+        2xl:pt-[102px]
       "
     >
       <h1
@@ -155,6 +157,9 @@
           xl:mt-0
           xl:right-[-9rem]
           xl:w-[970px]
+          2xl:w-[1057px]
+          2xl:top-[-6rem]
+          2xl:right-[-8rem]
         "
       >
         <figure class="rotate-[-8.05deg] lg:rotate-0">

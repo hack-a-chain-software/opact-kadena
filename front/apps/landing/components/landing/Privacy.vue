@@ -45,6 +45,7 @@
         max-w-[569px]
         lg:max-w-[500px]
         xl:max-w-[569px]
+        2xl:max-w-[648px]
       "
     >
       <div
@@ -116,6 +117,12 @@
           xl:leading-[60px]
           xl:mb-[23px]
           xl:tracking-normal
+
+          2xl:font-[600]
+          2xl:text-[54px]
+          2xl:leading-[64.8px]
+          2xl:mb-[23px]
+          2xl:tracking-normal
         "
       >
         Protect your privacy on-chain with Opact
@@ -137,6 +144,7 @@
           xl:leading-[30px]
           xl:font-[500]
           lg:text-[16px] lg:leading-[25px] lg:font-[500]
+          2xl:mb-[50px]
         "
       >
         Blockchains are transparent and everything you do

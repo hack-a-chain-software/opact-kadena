@@ -34,16 +34,19 @@ const moveTo = (id: string) => {
       hidden
       lg:flex lg:space-x-[26px]
       xl:space-x-[38px]
+      2xl:space-x-[40px]
       items-center
     "
   >
     <template v-for="item in navigation" :key="item.title">
       <NuxtLink
         class="
+          2xl:font-[200] 2xl:text-[16px] 2xl:leading-[24px]
           xl:font-[400] xl:text-[16px] xl:leading-[24px]
           font-title
           text-white
           lg:font-[400] lg:text-[14px]
+          font-tile
         "
         role="button"
         @click="moveTo(item.to)"
