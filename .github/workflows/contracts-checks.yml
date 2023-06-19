@@ -30,7 +30,9 @@ jobs:
       #     cabal v2-install exe:pact --overwrite-policy=always
 
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          npm install -g pnpm
+          pnpm install
 
       - name: Run generate-plonk
         run: pnpm contracts generate-plonk
