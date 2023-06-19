@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { twMerge } from 'tailwind-merge';
-import { computed } from 'vue';
-import type { PropType } from 'vue';
+import { twMerge } from 'tailwind-merge'
+import { computed } from 'vue'
+import type { PropType } from 'vue'
 
 export interface Variant {
   parent: string;
@@ -51,8 +51,7 @@ const variants: Variants = {
   tertiary: {
     parent:
       'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[44px] lg:h-[38px] xl:h-[49px]',
-    children:
-      `bg-inverted-card-gradient w-full h-full flex items-center justify-center
+    children: `bg-inverted-card-gradient w-full h-full flex items-center justify-center
 
         sm:text-[18px]
         sm:font-[500]
@@ -74,8 +73,7 @@ const variants: Variants = {
       inline-flex items-center justify-center
       h-[44px] lg:h-[38px] xl:h-[49px]
     `,
-    children:
-      `bg-dark-blue w-full h-full flex items-center justify-center
+    children: `bg-dark-blue w-full h-full flex items-center justify-center
         lg:px-[22px]
 
         sm:text-[18px]
@@ -111,8 +109,7 @@ const variants: Variants = {
         inline-flex items-center justify-center
         w-full h-[44px] lg:h-[38px] xl:h-[49px]
       `,
-    children:
-      `bg-white text-dark-blue w-full h-full flex items-center justify-center
+    children: `bg-white text-dark-blue w-full h-full flex items-center justify-center
       `
   }
 }
@@ -167,14 +164,21 @@ const tag = computed(() =>
 
 <template>
   <div
-    :class="twMerge('text-white rounded-[100px] xl:w-max', variants[variant].parent)"
+    :class="
+      twMerge(
+        'text-white rounded-[100px] xl:w-max',
+        variants[variant].parent
+      )
+    "
   >
     <component
       :is="tag"
       :to="to"
       :href="href"
       :type="type"
-      :class="twMerge(`
+      :class="
+        twMerge(
+          `
         px-[22px]
         rounded-[100px]
         sm:px-[24px]
@@ -184,7 +188,10 @@ const tag = computed(() =>
         xl:w-max
         lg:px-[18px]
         xl:px-[24px]
-      `, variants[variant].children)"
+      `,
+          variants[variant].children
+        )
+      "
     >
       <div class="flex items-center font-title">
         <span>

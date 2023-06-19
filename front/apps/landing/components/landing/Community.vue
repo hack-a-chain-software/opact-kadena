@@ -93,14 +93,8 @@
             sm:space-x-[8px]
             lg:h-[30px]
             xl:h-[40px]
-
-            lg:pl-[10px]
-            lg:pr-[18px]
-            lg:space-x-[8px]
-
-            xl:pl-[16px]
-            xl:pr-[24px]
-            xl:space-x-[8px]
+            lg:pl-[10px] lg:pr-[18px] lg:space-x-[8px]
+            xl:pl-[16px] xl:pr-[24px] xl:space-x-[8px]
           "
         >
           <LandingAssetsGithub />
@@ -113,13 +107,9 @@
                 leading-[24px]
                 text-dark-blue
                 font-title
-
-
                 lg:text-[14px]
                 lg:font-[500]
                 lg:leading-[24px]
-
-
                 xl:text-[16px]
                 xl:font-[500]
                 xl:leading-[24px]
@@ -146,14 +136,8 @@
             sm:space-x-[8px]
             lg:h-[30px]
             xl:h-[40px]
-
-            lg:pl-[10px]
-            lg:pr-[18px]
-            lg:space-x-[8px]
-
-            xl:pl-[16px]
-            xl:pr-[24px]
-            xl:space-x-[8px]
+            lg:pl-[10px] lg:pr-[18px] lg:space-x-[8px]
+            xl:pl-[16px] xl:pr-[24px] xl:space-x-[8px]
           "
         >
           <LandingAssetsDiscord />
@@ -166,11 +150,9 @@
                 leading-[24px]
                 text-dark-blue
                 font-title
-
                 lg:text-[14px]
                 lg:font-[500]
                 lg:leading-[24px]
-
                 xl:text-[16px]
                 xl:font-[500]
                 xl:leading-[24px]
@@ -197,14 +179,8 @@
             sm:space-x-[8px]
             lg:h-[30px]
             xl:h-[40px]
-
-            lg:pl-[10px]
-            lg:pr-[18px]
-            lg:space-x-[8px]
-
-            xl:pl-[16px]
-            xl:pr-[24px]
-            xl:space-x-[8px]
+            lg:pl-[10px] lg:pr-[18px] lg:space-x-[8px]
+            xl:pl-[16px] xl:pr-[24px] xl:space-x-[8px]
           "
         >
           <LandingAssetsTwitter />
@@ -217,12 +193,9 @@
                 leading-[24px]
                 text-dark-blue
                 font-title
-
                 lg:text-[14px]
                 lg:font-[500]
                 lg:leading-[24px]
-
-
                 xl:text-[16px]
                 xl:font-[500]
                 xl:leading-[24px]
