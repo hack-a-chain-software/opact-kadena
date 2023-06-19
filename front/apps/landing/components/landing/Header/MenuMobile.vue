@@ -57,7 +57,10 @@ const moveTo = (id: string) => {
         absolute
         w-full
         rounded-b-[12px]
-        outline-none bg-[rgba(16,_20,_24,_0.88)] backdrop-blur-[4px] lg:bg-dark-blue/[0.42] lg:backdrop-blur-[6px]
+        outline-none
+        bg-[rgba(16,_20,_24,_0.88)]
+        backdrop-blur-[4px]
+        lg:bg-dark-blue/[0.42] lg:backdrop-blur-[6px]
       "
     >
       <div

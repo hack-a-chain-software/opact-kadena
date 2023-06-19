@@ -20,8 +20,7 @@ const variants: Variants = {
   primary: {
     parent:
       'bg-opact-gradient p-[2px] inline-flex items-center justify-center lg:h-[28px] xl:h-[36px]',
-    children:
-      `bg-dark-blue w-full h-full flex items-center justify-center
+    children: `bg-dark-blue w-full h-full flex items-center justify-center
         xl:text-[16px]
         xl:leading-[24px]
         xl:font-[400]
@@ -34,8 +33,7 @@ const variants: Variants = {
       lg:h-[32px] xl:h-[39px]
       inline-flex items-center justify-center sm:font-[500] sm:text-[16px] sm:leading-[20px]
     `,
-    children:
-      `bg-white text-dark-blue w-full h-full flex items-center justify-center
+    children: `bg-white text-dark-blue w-full h-full flex items-center justify-center
         xl:text-[16px]
         xl:leading-[20px]
         xl:font-[500]
@@ -64,16 +62,14 @@ const variants: Variants = {
       md:h-[51px] xl:mt-[1.6rem]
       inline-flex items-center justify-center sm:font-[500] sm:text-[16px] sm:leading-[20px]
     `,
-    children:
-      `bg-white text-dark-blue w-full h-full flex items-center justify-center
+    children: `bg-white text-dark-blue w-full h-full flex items-center justify-center
         xl:text-[18px]
         xl:leading-[20px]
         xl:font-[400]
       `
   },
   'hero-tertiary': {
-    parent:
-      `
+    parent: `
         bg-card-gradient
         p-[2px]
         inline-flex items-center justify-center
@@ -81,7 +77,7 @@ const variants: Variants = {
       `,
     children:
       'bg-white text-dark-blue w-full h-full flex items-center justify-center'
-  },
+  }
 }
 
 const props = defineProps({
@@ -95,15 +91,20 @@ const props = defineProps({
   },
   text: {
     type: String,
-    default: '',
+    default: ''
   },
   variant: {
     type: String as PropType<
-      'primary' | 'secondary' | 'tertiary' | 'hero-primary' | 'hero-secondary' | 'hero-tertiary'
+      | 'primary'
+      | 'secondary'
+      | 'tertiary'
+      | 'hero-primary'
+      | 'hero-secondary'
+      | 'hero-tertiary'
     >,
     default: 'primary',
     validator: (v: string) =>
-      ['primary', 'secondary', 'tertiary'].includes(v)
+      ['primary', 'secondary', 'tertiary', 'hero-primary', 'hero-secondary', 'hero-tertiary'].includes(v)
   },
   to: {
     type: [String, Object],
@@ -138,13 +139,10 @@ const tag = computed(() =>
         sm:text-[18px]
         sm:font-[500]
         sm:leading-[27px]
-
         xl:w-max
       "
     >
-      <div
-        class="flex items-center font-title"
-      >
+      <div class="flex items-center font-title">
         <span>
           {{ text }}
         </span>
@@ -152,15 +150,17 @@ const tag = computed(() =>
         <LandingAssetsArrow
           v-if="withIcon"
           src="/arrow.svg"
-          :class="variant === 'hero-primary'
-            ? `
+          :class="
+            variant === 'hero-primary'
+              ? `
               xl:w-[28px]
               xl:scale-[1.2]
               ml-[10px] mr-[-8px] sm:mr-[-12px]
             `
-            : `
+              : `
               ml-[8px] mr-[-8px] sm:mr-[-12px]
-            `"
+            `
+          "
         />
       </div>
     </component>

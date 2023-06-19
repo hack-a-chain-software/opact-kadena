@@ -21,7 +21,7 @@ export default defineNuxtConfig({
           scale: 1,
           opacity: 1,
           y: 0
-        },
+        }
       }
     }
   },

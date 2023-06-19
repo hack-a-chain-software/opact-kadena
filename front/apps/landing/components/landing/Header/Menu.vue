@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 interface NavigationItem {
   to: string;
   title: string;
@@ -31,22 +30,20 @@ const moveTo = (id: string) => {
 
 <template>
   <div
-    class="hidden lg:flex lg:space-x-[26px] xl:space-x-[38px] items-center"
+    class="
+      hidden
+      lg:flex lg:space-x-[26px]
+      xl:space-x-[38px]
+      items-center
+    "
   >
-    <template
-      v-for="item in navigation"
-      :key="item.title"
-    >
+    <template v-for="item in navigation" :key="item.title">
       <NuxtLink
         class="
-          xl:font-[400]
-          xl:text-[16px]
-          xl:leading-[24px]
+          xl:font-[400] xl:text-[16px] xl:leading-[24px]
           font-title
           text-white
-
-          lg:font-[400]
-          lg:text-[14px]
+          lg:font-[400] lg:text-[14px]
         "
         role="button"
         @click="moveTo(item.to)"
@@ -55,10 +52,7 @@ const moveTo = (id: string) => {
       </NuxtLink>
     </template>
 
-    <LandingButton
-      withIcon
-      text="Louch App"
-    />
+    <LandingButton withIcon text="Louch App" />
 
     <!-- <div
       class="lg:w-[122px] lg:h-[28px] xl:h-[32px] xl:w-[156px] bg-white rounded-full flex items-center justify-center"

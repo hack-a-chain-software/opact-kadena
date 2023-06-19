@@ -1,5 +1,13 @@
 <template>
-  <LandingSection class="mb-[40px] md:mb-[60px] lg:mb-[70px] xl:mb-[80px] lg:!px-0">
+  <LandingSection
+    class="
+      mb-[40px]
+      md:mb-[60px]
+      lg:mb-[70px]
+      xl:mb-[80px]
+      lg:!px-0
+    "
+  >
     <LandingContainer>
       <h3
         class="
@@ -14,12 +22,10 @@
           sm:font-[900]
           sm:leading-[27px]
           sm:mb-[18px]
-
           lg:text-[18px]
           lg:leading-[33px]
           lg:font-[700]
           lg:mb-[4px]
-
           xl:font-[900]
           xl:text-[18px]
           xl:leading-[27px]
@@ -37,13 +43,11 @@
           mb-[6px]
           sm:text-[32px] sm:leading-[40px]
           md:font-[600] md:text-[40px] md:leading-[60px]
-
           lg:font-[600]
           lg:text-[24px]
           lg:leading-[40px]
           lg:max-w-[350px]
           lg:mb-[8px]
-
           xl:text-[32px]
           xl:leading-[48px]
           xl:max-w-full
@@ -63,10 +67,8 @@
           sm:text-[20px]
           sm:leading-[30px]
           sm:mb-[38px]
-
           lg:mb-[42px]
           xl:mb-[58px]
-
           lg:text-[16px] lg:font-[500] lg:leading-[25px]
           xl:text-[20px] xl:font-[500] xl:leading-[30px]
         "
@@ -89,7 +91,6 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-
             lg:h-[30px]
             xl:h-[40px]
           "
@@ -125,7 +126,6 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-
             lg:h-[30px]
             xl:h-[40px]
           "
@@ -161,7 +161,6 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-
             lg:h-[30px]
             xl:h-[40px]
           "

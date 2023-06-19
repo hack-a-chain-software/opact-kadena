@@ -1,8 +1,8 @@
 <template>
-  <LandingSection class="mb-[40px] md:mb-[60px] lg:mb-[65px] xl:mb-[80px]">
-    <LandingContainer
-      class="relative"
-    >
+  <LandingSection
+    class="mb-[40px] md:mb-[60px] lg:mb-[65px] xl:mb-[80px]"
+  >
+    <LandingContainer class="relative">
       <div
         class="
           mt-[-48px]
@@ -10,16 +10,8 @@
           ml-[-32px]
           translate-x-[16px]
           md:mb-0 md:ml-0 md:translate-x-0 md:w-[704px]
-
-          lg:absolute
-          lg:top-0
-          lg:right-0
-          lg:w-auto
-
-          xl:absolute
-          xl:top-0
-          xl:right-0
-          xl:w-auto
+          lg:absolute lg:top-0 lg:right-0 lg:w-auto
+          xl:absolute xl:top-0 xl:right-0 xl:w-auto
         "
       >
         <figure class="h-[238px] md:h-[482px]">
@@ -47,12 +39,10 @@
             md:translate-x-0
             md:top-[-170px]
             md:left-[-100px]
-
             lg:rotate-0
             lg:top-[-105px]
             lg:left-[130px]
             lg:max-w-[740px]
-
             xl:rotate-0
             xl:top-[-140px]
             xl:left-[0px]
@@ -81,12 +71,10 @@
           sm:text-[22px]
           sm:leading-[33px]
           sm:mb-[24px]
-
           lg:text-[18px]
           lg:leading-[33px]
           lg:font-[700]
           lg:mb-[12px]
-
           xl:font-[900]
           xl:text-[22px]
           xl:leading-[33px]
@@ -111,24 +99,21 @@
           md:text-[42px]
           md:leading-[63px]
           md:mb-[24px]
-
           lg:tracking-normal
           lg:font-[600]
           lg:text-[34px]
           lg:leading-[54px]
           lg:mb-[12px]
-
           xl:tracking-normal
           xl:font-[600]
           xl:text-[42px]
           xl:leading-[63px]
           xl:mb-[24px]
-
           lg:w-[493px]
           xl:w-[493px]
         "
       >
-        Secure and Compliant <br>
+        Secure and Compliant <br />
         Privacy with
         <span
           class="
@@ -136,7 +121,8 @@
             sm:bg-clip-text
             sm:text-transparent
           "
-        >Opact</span>
+          >Opact</span
+        >
       </h2>
 
       <p
@@ -146,14 +132,16 @@
           leading-[24px]
           text-[16px]
           sm:text-[20px] sm:font-[500] sm:leading-[30px]
-
           lg:w-[380px]
           lg:mb-[37px]
-          lg:text-[16px] lg:font-[500] lg:leading-[25px]
-
+          lg:text-[16px]
+          lg:font-[500]
+          lg:leading-[25px]
           xl:w-[493px]
           xl:mb-[46px]
-          xl:text-[20px] xl:font-[500] xl:leading-[30px]
+          xl:text-[20px]
+          xl:font-[500]
+          xl:leading-[30px]
         "
       >
         Many privacy apps have been used by malicious actors

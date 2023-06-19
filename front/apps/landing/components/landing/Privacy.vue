@@ -6,12 +6,10 @@
       md:mb-[60px]
       overflow-hidden
       relative
-
       lg:flex
       lg:mb-[64px]
       lg:flex-row-reverse
       lg:justify-between
-
       xl:flex
       xl:mb-[84px]
       xl:flex-row-reverse
@@ -27,12 +25,10 @@
           sm:h-auto sm:max-w-[510px]
           md:max-w-[622px]
           mx-auto
-
           lg:h-auto
           lg:max-w-[420px]
           lg:translate-y-[0px]
           lg:translate-x-[-30px]
-
           xl:h-auto
           xl:max-w-[520px]
           xl:translate-y-[0px]
@@ -45,7 +41,11 @@
     </figure>
 
     <div
-      class="max-w-[569px] lg:max-w-[500px] xl:max-w-[569px]"
+      class="
+        max-w-[569px]
+        lg:max-w-[500px]
+        xl:max-w-[569px]
+      "
     >
       <div
         class="
@@ -54,7 +54,6 @@
           md:items-center
           md:space-x-[24px]
           md:mb-[25px]
-
           lg:mb-[12px]
           xl:mb-[25px]
         "
@@ -70,14 +69,8 @@
             mb-[12px]
             md:mb-0
             sm:leading-[33px] sm:text-[22px] sm:font-[900]
-
-            lg:text-[18px]
-            lg:leading-[33px]
-            lg:font-[700]
-
-            xl:text-[22px]
-            xl:leading-[33px]
-            xl:font-[700]
+            lg:text-[18px] lg:leading-[33px] lg:font-[700]
+            xl:text-[22px] xl:leading-[33px] xl:font-[700]
           "
         >
           Privacy
@@ -114,12 +107,10 @@
           sm:max-w-full
           sm:tracking-normal
           sm:text-4xl-poppins-md
-
           lg:font-[600]
           lg:text-[42px]
           lg:leading-[50px]
           lg:mb-[12px]
-
           xl:font-[600]
           xl:text-[50px]
           xl:leading-[60px]
@@ -139,24 +130,19 @@
           sm:leading-[30px]
           sm:font-[500]
           sm:mb-[42px]
-          lg:tracking-[0.005rem]
-          lg:mb-[39px]
+          lg:tracking-[0.005rem] lg:mb-[39px]
           xl:tracking-[0.005rem]
           xl:mb-[47px]
-
           xl:text-[20px]
           xl:leading-[30px]
           xl:font-[500]
-
-          lg:text-[16px]
-          lg:leading-[25px]
-          lg:font-[500]
+          lg:text-[16px] lg:leading-[25px] lg:font-[500]
         "
       >
         Blockchains are transparent and everything you do
-        on-chain is available for anyone to see. Privacy tools
-        are mandatory for the blockchain to achieve mainstream
-        adoption as a financial system.
+        on-chain is available for anyone to see. Privacy
+        tools are mandatory for the blockchain to achieve
+        mainstream adoption as a financial system.
       </p>
 
       <LandingButton

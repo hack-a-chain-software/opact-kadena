@@ -9,15 +9,19 @@
       space-y-[12px]
       pb-[16px]
       md:pt-[124px]
-
       lg:pt-[135px]
       xl:pt-[170px]
     "
   >
     <img
       src="/opact-logo.svg"
-      class="sm:w-[128px] md:w-[165px] lg:w-[128px] xl:w-[162px]"
-    >
+      class="
+        sm:w-[128px]
+        md:w-[165px]
+        lg:w-[128px]
+        xl:w-[162px]
+      "
+    />
 
     <p
       class="
