@@ -17,20 +17,20 @@ jobs:
         with:
           node-version: "16"
 
-      - uses: actions/setup-haskell@v1.1.4
-        with:
-          ghc-version: "8.8"
-          cabal-version: "3.0.1.0"
+      # - uses: actions/setup-haskell@v1.1.4
+      #   with:
+      #     ghc-version: "8.8"
+      #     cabal-version: "3.0.1.0"
 
-      - name: Install Pact
-        run: |
-          git clone -b feat/modular-inverse https://github.com/hack-a-chain-software/pact.git
-          cd pact
-          cabal build
-          cabal v2-install exe:pact --overwrite-policy=always
+      # - name: Install Pact
+      #   run: |
+      #     git clone -b feat/modular-inverse https://github.com/hack-a-chain-software/pact.git
+      #     cd pact
+      #     cabal build
+      #     cabal v2-install exe:pact --overwrite-policy=always
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
 
       - name: Run generate-plonk
         run: pnpm contracts generate-plonk
