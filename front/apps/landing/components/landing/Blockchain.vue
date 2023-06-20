@@ -27,35 +27,54 @@ const chains = {
   <div
     class="
       group
-      hover:w-auto
+      hover:w-[200px]
+      px-[12px]
+      max-w-max
       cursor-pointer
-      hover:px-[12px]
       w-[40px]
       h-[40px]
       overflow-hidden
       rounded-full
       flex
       items-center
-      justify-center
       border border-[#F4F4F5]
       sm:w-[48px] sm:h-[48px]
-      lg:w-[48px] lg:h-[48px]
+      lg:min-w-[48px] lg:h-[48px]
+      opact-blockchain
     "
   >
-    <component :is="chains[chain].icon" />
+    <component
+      :is="chains[chain].icon"
+      class="shrink-0 w-[24px]"
+    />
 
     <span
       class="
-        hidden
-        group-hover:inline
+        opact-blockchain__text
+        w-0
+        flex
+        max-w-max
+        group-hover:w-[78px]
         text-[16px]
         font-[500]
         leading-[24px]
         text-white
-        pl-[8px]
+        overflow-hidden
       "
     >
       {{ chains[chain].label }}
     </span>
   </div>
 </template>
+
+<style scoped>
+.opact-blockchain__text {
+  transition: width 1s ease-out
+}
+.opact-blockchain {
+  transition-delay: 1s
+}
+.opact-blockchain:hover {
+  transition-delay: 0s
+}
+</style>
