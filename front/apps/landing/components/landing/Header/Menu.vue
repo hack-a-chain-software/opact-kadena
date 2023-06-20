@@ -30,12 +30,7 @@ const moveTo = (id: string) => {
 
 <template>
   <div
-    class="
-      hidden
-      lg:flex
-      lg:space-x-[40px]
-      items-center
-    "
+    class="hidden lg:flex lg:space-x-[40px] items-center"
   >
     <template v-for="item in navigation" :key="item.title">
       <NuxtLink

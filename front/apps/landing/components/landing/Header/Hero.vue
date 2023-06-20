@@ -196,8 +196,7 @@
             lg:mb-0 lg:text-[20px] lg:leading-[30px]
             xl:mb-0
             lg:text-lg
-            xl:text-[20px]
-            xl:leading-[30px]
+            xl:text-[20px] xl:leading-[30px]
           "
         >
           Building on

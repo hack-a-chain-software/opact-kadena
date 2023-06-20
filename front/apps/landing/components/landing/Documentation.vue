@@ -31,14 +31,11 @@
           mb-[8px]
           sm:text-[32px] sm:leading-[40px]
           md:font-[600] md:text-[40px] md:leading-[60px]
-
           lg:font-[600]
           lg:text-[32px]
           lg:leading-[48px]
           lg:max-[501px]
           lg:mb-[8px]
-
-
           xl:max-w-full
         "
       >
@@ -55,7 +52,9 @@
           sm:mb-[41px]
           xl:mb-[56px]
           lg:mb-[120px]
-          lg:text-[20px] lg:font-[500] lg:leading-[30px]
+          lg:text-[20px]
+          lg:font-[500]
+          lg:leading-[30px]
         "
       >
         Explore the inner workings of Opact.

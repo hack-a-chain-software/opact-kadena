@@ -64,7 +64,9 @@
               xl:max-w-full
               lg:mb-0
               lg:max-w-[554px]
-              lg:text-[20px] lg:font-[500] lg:leading-[30px]
+              lg:text-[20px]
+              lg:font-[500]
+              lg:leading-[30px]
             "
           >
             Reach out to us for Support, Partnerships, or

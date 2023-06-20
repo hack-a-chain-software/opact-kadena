@@ -43,8 +43,7 @@
       class="
         max-w-[569px]
         lg:min-w-[500px]
-        xl:min-w-auto
-        xl:max-w-[569px]
+        xl:min-w-auto xl:max-w-[569px]
         2xl:max-w-[648px]
       "
     >
@@ -125,7 +124,9 @@
           2xl:tracking-normal
         "
       >
-        Protect your <br class="hidden lg:inline xl:hidden"/> privacy on-chain with Opact
+        Protect your
+        <br class="hidden lg:inline xl:hidden" />
+        privacy on-chain with Opact
         <span class="hidden md:inline">Wallet</span>
       </h2>
 
@@ -137,7 +138,8 @@
           sm:leading-[30px]
           sm:font-[500]
           sm:mb-[42px]
-          lg:tracking-[0.005rem] lg:mb-[48px]
+          lg:tracking-[0.005rem]
+          lg:mb-[48px]
           lg:max-w-[441px]
           xl:max-w-auto
           xl:tracking-[0.005rem]

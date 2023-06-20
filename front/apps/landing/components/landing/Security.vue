@@ -98,7 +98,6 @@
           md:text-[42px]
           md:leading-[63px]
           md:mb-[24px]
-
           lg:tracking-normal
           lg:font-[600]
           lg:text-[42px]
@@ -107,8 +106,10 @@
           xl:w-[493px]
         "
       >
-        Secure and <br class="hidden lg:inline xl:hidden"/> Compliant <br class="lg:hidden xl:inline" />
-        Privacy <br class="hidden lg:inline xl:hidden"/>  with
+        Secure and <br class="hidden lg:inline xl:hidden" />
+        Compliant <br class="lg:hidden xl:inline" />
+        Privacy <br class="hidden lg:inline xl:hidden" />
+        with
         <span
           class="
             sm:bg-opact-gradient
@@ -126,8 +127,6 @@
           leading-[24px]
           text-[16px]
           sm:text-[20px] sm:font-[500] sm:leading-[30px]
-
-
           lg:w-[400px]
           xl:w-[493px]
           lg:mb-[46px]

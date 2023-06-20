@@ -40,7 +40,6 @@
           sm:text-[32px] sm:leading-[40px]
           md:font-[600] md:text-[40px] md:leading-[60px]
           lg:font-[600]
-
           lg:text-[32px]
           lg:leading-[48px]
           lg:max-w-full
@@ -70,7 +69,16 @@
         Engage with the Opact Community
       </p>
 
-      <div class="flex space-x-[24px] lg:space-x-0 xl:space-x-[24px] lg:flex-wrap xl:flex-nowrap">
+      <div
+        class="
+          flex
+          space-x-[24px]
+          lg:space-x-0
+          xl:space-x-[24px]
+          lg:flex-wrap
+          xl:flex-nowrap
+        "
+      >
         <div
           class="
             w-[40px]
@@ -85,8 +93,12 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-            lg:mr-[24px] xl:mr-0
-            lg:pl-[16px] lg:pr-[24px] lg:space-x-[8px] lg:h-[40px]
+            lg:mr-[24px]
+            xl:mr-0
+            lg:pl-[16px]
+            lg:pr-[24px]
+            lg:space-x-[8px]
+            lg:h-[40px]
           "
         >
           <LandingAssetsGithub />
@@ -126,7 +138,10 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-            lg:pl-[16px] lg:pr-[24px] lg:space-x-[8px] lg:h-[40px]
+            lg:pl-[16px]
+            lg:pr-[24px]
+            lg:space-x-[8px]
+            lg:h-[40px]
           "
         >
           <LandingAssetsDiscord />
@@ -166,8 +181,12 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-            lg:mt-[24px] xl:mt-0
-            lg:pl-[16px] lg:pr-[24px] lg:space-x-[8px] lg:h-[40px]
+            lg:mt-[24px]
+            xl:mt-0
+            lg:pl-[16px]
+            lg:pr-[24px]
+            lg:space-x-[8px]
+            lg:h-[40px]
           "
         >
           <LandingAssetsTwitter />
