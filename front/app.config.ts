@@ -11,7 +11,7 @@ export default defineAppConfig({
       kadena: 'Kadena',
       twitter: 'Twitter',
       discord: 'Discord',
-      opactLogo: 'OpactLogo',
+      opactLogo: 'OpactLogo'
     }
   }
 })

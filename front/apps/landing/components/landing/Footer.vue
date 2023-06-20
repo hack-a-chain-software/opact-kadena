@@ -15,12 +15,7 @@
   >
     <Icon
       name="opactLogo"
-      class="
-        h-[32px]
-        w-[100px]
-        md:h-[50px]
-        md:w-[155.72px]
-      "
+      class="h-[32px] w-[100px] md:h-[50px] md:w-[155.72px]"
     />
 
     <p
