@@ -9,209 +9,203 @@
     "
   >
     <LandingContainer>
-      <h3
-        class="
-          bg-opact-gradient bg-clip-text
-          text-transparent
-          w-max
-          text-sm
-          font-[500]
-          uppercase
-          mb-[10px]
-          sm:text-[18px]
-          sm:font-[900]
-          sm:leading-[27px]
-          sm:mb-[18px]
-          lg:font-[900]
-          lg:text-[18px]
-          lg:leading-[27px]
-          lg:mb-[18px]
-        "
+      <template
+        v-slot:tag
       >
-        Community
-      </h3>
+        <span
+          class="
+            block
+            mb-[10px]
+            sm:mb-[18px]
+            lg:mb-[18px]
+          "
+        >
+          Community
+        </span>
+      </template>
 
-      <h2
-        class="
-          text-2xl-poppins
-          font-title
-          text-white
-          mb-[6px]
-          sm:text-[32px] sm:leading-[40px]
-          md:font-[600] md:text-[40px] md:leading-[60px]
-          lg:font-[600]
-          lg:text-[32px]
-          lg:leading-[48px]
-          lg:max-w-full
-          lg:mb-[10px]
-          xl:mb-[6px]
-          2xl:max-w-[455px]
-        "
+      <template
+        v-slot:title
       >
-        Connect with the Opact
-        <span class="hidden md:inline">Wallet</span>
-        community
-      </h2>
+        <span
+          class="
+            block
+            mb-[6px]
+            lg:max-w-full
+            lg:mb-[10px]
+            xl:mb-[6px]
+            2xl:max-w-[455px]
+          "
+        >
+          Connect with the Opact
+          <span class="hidden md:inline">Wallet</span>
+          community
+        </span>
+      </template>
 
-      <p
-        class="
-          text-lg-xs text-[#BDBDBD]
-          mb-[32px]
-          sm:font-[500]
-          sm:text-[20px]
-          sm:leading-[30px]
-          sm:mb-[38px]
-          lg:mb-[55px]
-          xl:mb-[58px]
-          lg:text-[20px] lg:font-[500] lg:leading-[30px]
-        "
+      <template
+        v-slot:text
       >
-        Engage with the Opact Community
-      </p>
+        <span
+          class="
+            block
+            mb-[32px]
+            sm:mb-[38px]
+            lg:mb-[55px]
+            xl:mb-[58px]
+          "
+        >
+          Engage with the Opact Community
+        </span>
+      </template>
 
-      <div
-        class="
-          flex
-          space-x-[24px]
-          lg:space-x-0
-          xl:space-x-[24px]
-          lg:flex-wrap
-          xl:flex-nowrap
-        "
+      <template
+        v-slot:cta
       >
         <div
           class="
-            w-[40px]
-            h-[40px]
-            bg-white
-            rounded-full
             flex
-            items-center
-            justify-center
-            text-dark-blue
-            sm:w-auto
-            sm:pl-[16px]
-            sm:pr-[24px]
-            sm:space-x-[8px]
-            lg:mr-[24px]
-            xl:mr-0
-            lg:pl-[16px]
-            lg:pr-[24px]
-            lg:space-x-[8px]
-            lg:h-[40px]
+            space-x-[24px]
+            lg:space-x-0
+            xl:space-x-[24px]
+            lg:flex-wrap
+            xl:flex-nowrap
           "
         >
-          <Icon name="github" />
+          <div
+            class="
+              w-[40px]
+              h-[40px]
+              bg-white
+              rounded-full
+              flex
+              items-center
+              justify-center
+              text-dark-blue
+              sm:w-auto
+              sm:pl-[16px]
+              sm:pr-[24px]
+              sm:space-x-[8px]
+              lg:mr-[24px]
+              xl:mr-0
+              lg:pl-[16px]
+              lg:pr-[24px]
+              lg:space-x-[8px]
+              lg:h-[40px]
+            "
+          >
+            <Icon name="github" />
 
-          <div class="hidden sm:block">
-            <p
-              class="
-                text-[16px]
-                font-[500]
-                leading-[24px]
-                text-dark-blue
-                font-title
-                lg:text-[14px]
-                lg:font-[500]
-                lg:leading-[24px]
-                xl:text-[16px]
-                xl:font-[500]
-                xl:leading-[24px]
-              "
-            >
-              Github
-            </p>
+            <div class="hidden sm:block">
+              <p
+                class="
+                  text-[16px]
+                  font-[500]
+                  leading-[24px]
+                  text-dark-blue
+                  font-title
+                  lg:text-[14px]
+                  lg:font-[500]
+                  lg:leading-[24px]
+                  xl:text-[16px]
+                  xl:font-[500]
+                  xl:leading-[24px]
+                "
+              >
+                Github
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="
+              w-[40px]
+              h-[40px]
+              bg-white
+              rounded-full
+              flex
+              items-center
+              justify-center
+              text-dark-blue
+              sm:w-auto
+              sm:pl-[16px]
+              sm:pr-[24px]
+              sm:space-x-[8px]
+              lg:pl-[16px]
+              lg:pr-[24px]
+              lg:space-x-[8px]
+              lg:h-[40px]
+            "
+          >
+            <Icon name="discord" />
+
+            <div class="hidden sm:block">
+              <p
+                class="
+                  text-[16px]
+                  font-[500]
+                  leading-[24px]
+                  text-dark-blue
+                  font-title
+                  lg:text-[14px]
+                  lg:font-[500]
+                  lg:leading-[24px]
+                  xl:text-[16px]
+                  xl:font-[500]
+                  xl:leading-[24px]
+                "
+              >
+                Discord
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="
+              w-[40px]
+              h-[40px]
+              bg-white
+              rounded-full
+              flex
+              items-center
+              justify-center
+              text-dark-blue
+              sm:w-auto
+              sm:pl-[16px]
+              sm:pr-[24px]
+              sm:space-x-[8px]
+              lg:mt-[24px]
+              xl:mt-0
+              lg:pl-[16px]
+              lg:pr-[24px]
+              lg:space-x-[8px]
+              lg:h-[40px]
+            "
+          >
+            <Icon name="twitter" />
+
+            <div class="hidden sm:block">
+              <p
+                class="
+                  text-[16px]
+                  font-[500]
+                  leading-[24px]
+                  text-dark-blue
+                  font-title
+                  lg:text-[14px]
+                  lg:font-[500]
+                  lg:leading-[24px]
+                  xl:text-[16px]
+                  xl:font-[500]
+                  xl:leading-[24px]
+                "
+              >
+                Twitter
+              </p>
+            </div>
           </div>
         </div>
-
-        <div
-          class="
-            w-[40px]
-            h-[40px]
-            bg-white
-            rounded-full
-            flex
-            items-center
-            justify-center
-            text-dark-blue
-            sm:w-auto
-            sm:pl-[16px]
-            sm:pr-[24px]
-            sm:space-x-[8px]
-            lg:pl-[16px]
-            lg:pr-[24px]
-            lg:space-x-[8px]
-            lg:h-[40px]
-          "
-        >
-          <Icon name="discord" />
-
-          <div class="hidden sm:block">
-            <p
-              class="
-                text-[16px]
-                font-[500]
-                leading-[24px]
-                text-dark-blue
-                font-title
-                lg:text-[14px]
-                lg:font-[500]
-                lg:leading-[24px]
-                xl:text-[16px]
-                xl:font-[500]
-                xl:leading-[24px]
-              "
-            >
-              Discord
-            </p>
-          </div>
-        </div>
-
-        <div
-          class="
-            w-[40px]
-            h-[40px]
-            bg-white
-            rounded-full
-            flex
-            items-center
-            justify-center
-            text-dark-blue
-            sm:w-auto
-            sm:pl-[16px]
-            sm:pr-[24px]
-            sm:space-x-[8px]
-            lg:mt-[24px]
-            xl:mt-0
-            lg:pl-[16px]
-            lg:pr-[24px]
-            lg:space-x-[8px]
-            lg:h-[40px]
-          "
-        >
-          <Icon name="twitter" />
-
-          <div class="hidden sm:block">
-            <p
-              class="
-                text-[16px]
-                font-[500]
-                leading-[24px]
-                text-dark-blue
-                font-title
-                lg:text-[14px]
-                lg:font-[500]
-                lg:leading-[24px]
-                xl:text-[16px]
-                xl:font-[500]
-                xl:leading-[24px]
-              "
-            >
-              Twitter
-            </p>
-          </div>
-        </div>
-      </div>
+      </template>
     </LandingContainer>
   </LandingSection>
 </template>

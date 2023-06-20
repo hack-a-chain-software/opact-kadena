@@ -34,5 +34,5 @@ useHead({
     <LandingCommunity />
   </div>
 
-  <LandingTouch id="contact" />
+  <LandingContact id="contact" />
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark-blue">
+  <div>
     <header>
       <LandingHeaderNav />
 
@@ -10,3 +10,9 @@
     <LandingFooter />
   </div>
 </template>
+
+<style>
+body {
+  background-color: #060A0F;
+}
+</style>
