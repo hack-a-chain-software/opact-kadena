@@ -17,20 +17,20 @@ export default defineAppConfig({
   routes: [
     {
       to: 'privacy',
-      title: 'Privacy',
+      title: 'Privacy'
     },
     {
       to: 'security',
-      title: 'Security',
+      title: 'Security'
     },
     {
       title: 'Documentation',
-      to: 'documentation',
+      to: 'documentation'
     },
     {
       title: 'Contact',
-      to: 'contact',
-    },
+      to: 'contact'
+    }
   ],
   community: [
     {
@@ -47,6 +47,6 @@ export default defineAppConfig({
       icon: 'twitter',
       title: 'Twitter',
       to: 'https://twitter.com/'
-    },
+    }
   ]
 })

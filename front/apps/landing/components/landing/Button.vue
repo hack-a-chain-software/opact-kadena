@@ -232,8 +232,7 @@ const tag = computed(() =>
             rotate-[45deg]
             lg:scale-[1.2]
             duration-[0.3s]
-            group-hover:w-[20px]
-            group-hover:pl-[8px]
+            group-hover:w-[20px] group-hover:pl-[8px]
           "
         />
       </div>

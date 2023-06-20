@@ -32,14 +32,9 @@ withDefaults(
       cursor-pointer
     "
   >
-    <Icon
-      :name="icon"
-      class="w-5 h-5 relative z-[1]"
-    />
+    <Icon :name="icon" class="w-5 h-5 relative z-[1]" />
 
-    <div
-      class="hidden sm:block z-[1]"
-    >
+    <div class="hidden sm:block z-[1]">
       <p
         class="
           text-[16px]
@@ -69,7 +64,6 @@ withDefaults(
     />
   </div>
 </template>
-
 
 <style scoped>
 .opact-icon-button:hover::after {
