@@ -5,9 +5,8 @@
         class="
           max-w-[142.17px]
           md:max-w-[200px]
-          lg:max-w-[140px]
-          xl:max-w-[180px]
-          2xl:max-w-[194px]
+          lg:h-[38px]
+          xl:h-[55px]
         "
         alt="Opact Wallet Logo"
         src="/opact-wallet-logo.svg"

@@ -5,7 +5,6 @@ interface NavigationItem {
 }
 
 const navigation: NavigationItem[] = [
-  { title: 'Home', to: 'products' },
   { title: 'Privacy', to: 'legalization' },
   { title: 'Security', to: 'procedure' },
   { title: 'Documentation', to: 'forwhom' },
@@ -34,18 +33,13 @@ const navigation: NavigationItem[] = [
         w-screen
         flex
         justify-between
-        max-w-[420px]
-        sm:max-w-[640px] sm:px-8
-        md:max-w-[768px]
-        lg:max-w-[1024px]
-        lg:h-[64px]
-        lg:px-[48px]
-        lg:items-center
-        xl:max-w-[1280px]
-        xl:h-[80px]
+        max-w-[1900px]
+        sm:px-8
+        lg:h-[80px]
+        lg:px-[30px]
         xl:px-[60px]
+        lg:items-center
         xl:items-center
-        2xl:max-w-[1440px]
       "
     >
       <LandingLogo />

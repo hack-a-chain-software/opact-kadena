@@ -14,14 +14,10 @@
           sm:text-[18px]
           sm:leading-[27px]
           sm:mb-[18px]
-          lg:mb-[8px]
+          lg:font-[900]
           lg:text-[18px]
-          lg:leading-[33px]
-          lg:font-[700]
-          xl:font-[900]
-          xl:text-[18px]
-          xl:leading-[27px]
-          xl:mb-[18px]
+          lg:leading-[27px]
+          lg:mb-[18px]
         "
       >
         Documentation
@@ -35,16 +31,15 @@
           mb-[8px]
           sm:text-[32px] sm:leading-[40px]
           md:font-[600] md:text-[40px] md:leading-[60px]
+
           lg:font-[600]
-          lg:text-[24px]
-          lg:leading-[40px]
-          lg:max-w-[350px]
-          lg:mb-[4px]
-          xl:font-[600]
-          xl:text-[32px]
-          xl:leading-[48px]
+          lg:text-[32px]
+          lg:leading-[48px]
+          lg:max-[501px]
+          lg:mb-[8px]
+
+
           xl:max-w-full
-          xl:mb-[8px]
         "
       >
         Refer to our docs to understand how it all works:
@@ -59,8 +54,8 @@
           sm:leading-[30px]
           sm:mb-[41px]
           xl:mb-[56px]
-          lg:text-[16px] lg:font-[500] lg:leading-[25px]
-          xl:text-[20px] xl:font-[500] xl:leading-[30px]
+          lg:mb-[120px]
+          lg:text-[20px] lg:font-[500] lg:leading-[30px]
         "
       >
         Explore the inner workings of Opact.

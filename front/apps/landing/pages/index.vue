@@ -17,9 +17,9 @@ useHead({
     class="
       mx-auto
       lg:max-w-[1024px]
-      lg:px-[48px]
+      lg:px-[60px]
       lg:flex
-      lg:space-x-[28px]
+      lg:space-x-[32px]
       lg:items-stretch
       xl:max-w-[1280px]
       xl:px-[60px]

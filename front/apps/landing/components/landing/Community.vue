@@ -22,14 +22,10 @@
           sm:font-[900]
           sm:leading-[27px]
           sm:mb-[18px]
+          lg:font-[900]
           lg:text-[18px]
-          lg:leading-[33px]
-          lg:font-[700]
-          lg:mb-[4px]
-          xl:font-[900]
-          xl:text-[18px]
-          xl:leading-[27px]
-          xl:mb-[18px]
+          lg:leading-[27px]
+          lg:mb-[18px]
         "
       >
         Community
@@ -44,13 +40,11 @@
           sm:text-[32px] sm:leading-[40px]
           md:font-[600] md:text-[40px] md:leading-[60px]
           lg:font-[600]
-          lg:text-[24px]
-          lg:leading-[40px]
-          lg:max-w-[350px]
-          lg:mb-[8px]
-          xl:text-[32px]
-          xl:leading-[48px]
-          xl:max-w-full
+
+          lg:text-[32px]
+          lg:leading-[48px]
+          lg:max-w-full
+          lg:mb-[10px]
           xl:mb-[6px]
           2xl:max-w-[455px]
         "
@@ -68,16 +62,15 @@
           sm:text-[20px]
           sm:leading-[30px]
           sm:mb-[38px]
-          lg:mb-[42px]
+          lg:mb-[55px]
           xl:mb-[58px]
-          lg:text-[16px] lg:font-[500] lg:leading-[25px]
-          xl:text-[20px] xl:font-[500] xl:leading-[30px]
+          lg:text-[20px] lg:font-[500] lg:leading-[30px]
         "
       >
         Engage with the Opact Community
       </p>
 
-      <div class="flex space-x-[24px]">
+      <div class="flex space-x-[24px] lg:space-x-0 xl:space-x-[24px] lg:flex-wrap xl:flex-nowrap">
         <div
           class="
             w-[40px]
@@ -92,10 +85,8 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-            lg:h-[30px]
-            xl:h-[40px]
-            lg:pl-[10px] lg:pr-[18px] lg:space-x-[8px]
-            xl:pl-[16px] xl:pr-[24px] xl:space-x-[8px]
+            lg:mr-[24px] xl:mr-0
+            lg:pl-[16px] lg:pr-[24px] lg:space-x-[8px] lg:h-[40px]
           "
         >
           <LandingAssetsGithub />
@@ -135,10 +126,7 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-            lg:h-[30px]
-            xl:h-[40px]
-            lg:pl-[10px] lg:pr-[18px] lg:space-x-[8px]
-            xl:pl-[16px] xl:pr-[24px] xl:space-x-[8px]
+            lg:pl-[16px] lg:pr-[24px] lg:space-x-[8px] lg:h-[40px]
           "
         >
           <LandingAssetsDiscord />
@@ -178,10 +166,8 @@
             sm:pl-[16px]
             sm:pr-[24px]
             sm:space-x-[8px]
-            lg:h-[30px]
-            xl:h-[40px]
-            lg:pl-[10px] lg:pr-[18px] lg:space-x-[8px]
-            xl:pl-[16px] xl:pr-[24px] xl:space-x-[8px]
+            lg:mt-[24px] xl:mt-0
+            lg:pl-[16px] lg:pr-[24px] lg:space-x-[8px] lg:h-[40px]
           "
         >
           <LandingAssetsTwitter />

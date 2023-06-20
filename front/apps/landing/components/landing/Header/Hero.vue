@@ -6,7 +6,7 @@
       pt-[52px]
       md:pt-[60px]
       mb-[40px]
-      lg:mb-[62px]
+      lg:mb-[74px]
       xl:mb-[90px]
       2xl:mb-[110px]
       overflow-x-clip
@@ -23,8 +23,8 @@
         lg:items-start
         lg:relative
         lg:overflow-visible
-        lg:pt-[74px]
-        lg:mb-[50px]
+        lg:pt-[108px]
+        lg:mb-[40px]
         xl:items-start
         xl:relative
         xl:overflow-visible
@@ -50,11 +50,11 @@
           lg:text-left
           lg:max-w-[410px]
           lg:mx-0
-          lg:pb-[19px]
+          lg:pb-[26px]
           lg:font-[600]
-          lg:text-[44px]
-          lg:leading-[56px]
-          lg:tracking-[0.06rem]
+          lg:text-[50px]
+          lg:leading-[65px]
+          lg:tracking-[0.09rem]
           xl:text-left
           xl:max-w-[499px]
           xl:mx-0
@@ -83,10 +83,10 @@
           sm:leading-[30px]
           md:max-w-[620px]
           lg:text-left
-          lg:max-w-[400px]
+          lg:max-w-[450px]
           lg:mx-0
-          lg:text-[18px]
-          lg:leading-[24px]
+          lg:text-[20px]
+          lg:leading-[30px]
           xl:text-left
           xl:max-w-[499px]
           xl:mx-0
@@ -116,7 +116,7 @@
           sm:order-2
           sm:pt-[32px]
           md:pt-[34px] md:mt-0
-          lg:text-left lg:max-w-[499px] lg:mx-0 lg:pt-[27px]
+          lg:text-left lg:max-w-[499px] lg:mx-0 lg:pt-[31px]
           xl:text-left xl:pt-[34px] xl:max-w-[499px] xl:mx-0
         "
       >
@@ -146,11 +146,11 @@
           sm:w-[874px]
           md:mt-[-90px] md:translate-x-[18px]
           lg:bottom-auto
-          lg:top-[-5rem]
+          lg:top-[-4rem]
           lg:absolute
           lg:mt-0
-          lg:right-[-8rem]
-          lg:w-[800px]
+          lg:right-[-10rem]
+          lg:w-[861px]
           xl:bottom-auto
           xl:top-[-5rem]
           xl:absolute
@@ -164,7 +164,7 @@
           <nuxt-img
             src="/hero.png"
             alt="Hero illustration"
-            sizes="xs:466px sm:874px lg:800px xl:970px 2xl:1057px"
+            sizes="xs:466px sm:874px lg:861px xl:970px 2xl:1057px"
           />
         </figure>
       </div>
@@ -180,8 +180,7 @@
           md:mt-[-30px]
           lg:mt-0
           xl:mt-0
-          lg:space-x-[18px]
-          xl:space-x-[24px]
+          lg:space-x-[24px]
         "
       >
         <span
@@ -194,9 +193,9 @@
             sm:text-lg
             sm:text-[20px]
             sm:leading-[30px]
-            lg:mb-0 lg:text-[16px] lg:leading-[30px]
+            lg:mb-0 lg:text-[20px] lg:leading-[30px]
             xl:mb-0
-            xl:text-lg
+            lg:text-lg
             xl:text-[20px]
             xl:leading-[30px]
           "
@@ -212,9 +211,9 @@
             xl:space-x-[16px]
           "
         >
-          <LandingBlockchain chain="near" />
-
           <LandingBlockchain chain="kadena" />
+
+          <LandingBlockchain chain="near" />
 
           <LandingBlockchain chain="eth" />
         </div>

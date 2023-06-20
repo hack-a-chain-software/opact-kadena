@@ -1,6 +1,6 @@
 <template>
   <LandingSection
-    class="mb-[40px] md:mb-[60px] lg:mb-[65px] xl:mb-[80px]"
+    class="mb-[40px] md:mb-[60px] lg:mb-[79px] xl:mb-[80px]"
   >
     <LandingContainer class="relative">
       <div
@@ -39,10 +39,10 @@
             md:translate-x-0
             md:top-[-170px]
             md:left-[-100px]
-            lg:rotate-0
-            lg:top-[-105px]
+            lg:rotate-[-26deg]
+            lg:top-[-140px]
             lg:left-[130px]
-            lg:max-w-[740px]
+            lg:max-w-[891px]
             xl:rotate-0
             xl:top-[-140px]
             xl:left-[0px]
@@ -55,7 +55,7 @@
           <nuxt-img
             src="/security.png"
             class="scale-x-[-1] lg:scale-x-[1]"
-            sizes="xs:429px md:765px lg:700px xl:891px 2xl:1011px"
+            sizes="xs:429px md:765px lg:891px xl:891px 2xl:1011px"
             alt="Illustrative image of the marijuana plant"
           />
         </figure>
@@ -74,14 +74,10 @@
           sm:text-[22px]
           sm:leading-[33px]
           sm:mb-[24px]
-          lg:text-[18px]
-          lg:leading-[33px]
           lg:font-[700]
-          lg:mb-[12px]
-          xl:font-[900]
-          xl:text-[22px]
-          xl:leading-[33px]
-          xl:mb-[24px]
+          lg:text-[22px]
+          lg:leading-[33px]
+          lg:mb-[24px]
         "
       >
         Security
@@ -102,22 +98,17 @@
           md:text-[42px]
           md:leading-[63px]
           md:mb-[24px]
+
           lg:tracking-normal
           lg:font-[600]
-          lg:text-[34px]
-          lg:leading-[54px]
-          lg:mb-[12px]
-          xl:tracking-normal
-          xl:font-[600]
-          xl:text-[42px]
-          xl:leading-[63px]
-          xl:mb-[24px]
-          lg:w-[493px]
+          lg:text-[42px]
+          lg:leading-[63px]
+          lg:mb-[24px]
           xl:w-[493px]
         "
       >
-        Secure and Compliant <br />
-        Privacy with
+        Secure and <br class="hidden lg:inline xl:hidden"/> Compliant <br class="lg:hidden xl:inline" />
+        Privacy <br class="hidden lg:inline xl:hidden"/>  with
         <span
           class="
             sm:bg-opact-gradient
@@ -135,16 +126,14 @@
           leading-[24px]
           text-[16px]
           sm:text-[20px] sm:font-[500] sm:leading-[30px]
-          lg:w-[380px]
-          lg:mb-[37px]
-          lg:text-[16px]
-          lg:font-[500]
-          lg:leading-[25px]
+
+
+          lg:w-[400px]
           xl:w-[493px]
-          xl:mb-[46px]
-          xl:text-[20px]
-          xl:font-[500]
-          xl:leading-[30px]
+          lg:mb-[46px]
+          lg:text-[20px]
+          lg:font-[500]
+          lg:leading-[30px]
         "
       >
         Many privacy apps have been used by malicious actors

@@ -35,30 +35,27 @@ const variants: Variants = {
     parent: `
       bg-white
       p-[2px]
-      lg:h-[32px] xl:h-[39px]
+      lg:h-[39px] xl:h-[39px]
       inline-flex items-center justify-center sm:font-[500] sm:text-[16px] sm:leading-[20px]
     `,
-    children: `bg-white text-dark-blue w-full h-full flex items-center justify-center
-        lg:text-[13px]
-        lg:leading-[20px]
-        lg:font-[500]
-
-        xl:text-[16px]
-        xl:leading-[20px]
-        xl:font-[500]
-      `
+    children: `
+      bg-white text-dark-blue w-full h-full flex items-center justify-center
+      lg:text-[16px]
+      lg:leading-[20px]
+      lg:font-[500]
+    `
   },
   tertiary: {
     parent:
-      'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[44px] lg:h-[38px] xl:h-[49px]',
+      'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[44px] lg:h-[49px] xl:h-[49px]',
     children: `bg-inverted-card-gradient w-full h-full flex items-center justify-center
 
         sm:text-[18px]
         sm:font-[500]
         sm:leading-[27px]
 
-        lg:text-[14px]
-        lg:font-[400]
+        lg:text-[18px]
+        lg:font-[500]
         lg:leading-[27px]
 
         xl:text-[18px]
@@ -71,7 +68,7 @@ const variants: Variants = {
       bg-opact-gradient
       p-[2px]
       inline-flex items-center justify-center
-      h-[44px] lg:h-[38px] xl:h-[49px]
+      h-[44px] lg:h-[49px]
     `,
     children: `bg-dark-blue w-full h-full flex items-center justify-center
         lg:px-[22px]
@@ -80,7 +77,7 @@ const variants: Variants = {
         sm:font-[500]
         sm:leading-[27px]
 
-        lg:text-[14px]
+        lg:text-[18px]
         lg:font-[400]
         lg:leading-[27px]
 
@@ -204,12 +201,12 @@ const tag = computed(() =>
           :class="
             variant === 'hero-primary'
               ? `
-              xl:w-[28px]
-              xl:scale-[1.2]
+              lg:w-[28px]
+              lg:scale-[1.2]
               ml-[10px] mr-[-8px] sm:mr-[-12px]
             `
               : `
-              ml-[8px] mr-[-8px] sm:mr-[-12px] xl:ml-[8px] xl:mr-[-12px] lg:ml-[4px] lg:mr-[-8px]
+              ml-[8px] mr-[-8px] sm:mr-[-12px] lg:ml-[8px] lg:mr-[-12px]
             `
           "
         />
