@@ -1,13 +1,13 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    text: string,
-    icon: string
+    text: string;
+    icon: string;
   }>(),
   {
     text: '',
-    icon: '',
-  },
+    icon: ''
+  }
 )
 </script>
 
@@ -22,19 +22,11 @@ withDefaults(
       items-center
       justify-center
       text-dark-blue
-      sm:w-auto
-      sm:pl-[16px]
-      sm:pr-[24px]
-      sm:space-x-[8px]
-      lg:pl-[16px]
-      lg:pr-[24px]
-      lg:space-x-[8px]
-      lg:h-[40px]
+      sm:w-auto sm:pl-[16px] sm:pr-[24px] sm:space-x-[8px]
+      lg:pl-[16px] lg:pr-[24px] lg:space-x-[8px] lg:h-[40px]
     "
   >
-    <Icon
-      name="discord"
-    />
+    <Icon name="discord" />
 
     <div class="hidden sm:block">
       <p
@@ -44,12 +36,8 @@ withDefaults(
           leading-[24px]
           text-dark-blue
           font-title
-          lg:text-[14px]
-          lg:font-[500]
-          lg:leading-[24px]
-          xl:text-[16px]
-          xl:font-[500]
-          xl:leading-[24px]
+          lg:text-[14px] lg:font-[500] lg:leading-[24px]
+          xl:text-[16px] xl:font-[500] xl:leading-[24px]
         "
       >
         {{ text }}

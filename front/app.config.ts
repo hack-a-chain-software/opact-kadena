@@ -10,7 +10,7 @@ export default defineAppConfig({
       github: 'Github',
       kadena: 'Kadena',
       discord: 'Discord',
-      twitter: 'Twitter',
+      twitter: 'Twitter'
     }
   }
 })

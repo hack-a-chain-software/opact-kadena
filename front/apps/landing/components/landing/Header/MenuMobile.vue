@@ -42,16 +42,9 @@ const moveTo = (id: string) => {
       as="div"
       class="flex items-center justify-center h-full"
     >
-      <Icon
-        name="close"
-        v-if="open"
-      />
+      <Icon name="close" v-if="open" />
 
-      <Icon
-        v-else
-        name="menu"
-      />
-
+      <Icon v-else name="menu" />
     </MenuButton>
 
     <MenuItems
@@ -129,17 +122,11 @@ const moveTo = (id: string) => {
             </h3>
 
             <div class="flex space-x-4 mb-6">
-              <Icon
-                name="twitter"
-              />
+              <Icon name="twitter" />
 
-              <Icon
-                name="discord"
-              />
+              <Icon name="discord" />
 
-              <Icon
-                name="github"
-              />
+              <Icon name="github" />
             </div>
 
             <LandingButton
@@ -149,9 +136,7 @@ const moveTo = (id: string) => {
             >
               <span> Louch App </span>
 
-              <Icon
-                name="Arrow"
-              />
+              <Icon name="Arrow" />
             </LandingButton>
           </div>
         </MenuItem>

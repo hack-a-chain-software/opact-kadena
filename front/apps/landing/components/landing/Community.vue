@@ -101,9 +101,7 @@
             lg:h-[40px]
           "
         >
-          <Icon
-            name="github"
-          />
+          <Icon name="github" />
 
           <div class="hidden sm:block">
             <p
@@ -146,9 +144,7 @@
             lg:h-[40px]
           "
         >
-          <Icon
-            name="discord"
-          />
+          <Icon name="discord" />
 
           <div class="hidden sm:block">
             <p
@@ -193,9 +189,7 @@
             lg:h-[40px]
           "
         >
-          <Icon
-            name="twitter"
-          />
+          <Icon name="twitter" />
 
           <div class="hidden sm:block">
             <p
