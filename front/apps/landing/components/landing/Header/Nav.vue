@@ -5,10 +5,10 @@ interface NavigationItem {
 }
 
 const navigation: NavigationItem[] = [
-  { title: 'Privacy', to: 'legalization' },
-  { title: 'Security', to: 'procedure' },
-  { title: 'Documentation', to: 'forwhom' },
-  { title: 'Contact', to: 'comments' }
+  { title: 'Privacy', to: 'privacy' },
+  { title: 'Security', to: 'security' },
+  { title: 'Documentation', to: 'documentation' },
+  { title: 'Contact', to: 'contact' }
 ]
 </script>
 

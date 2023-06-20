@@ -9,9 +9,13 @@ useHead({
 </script>
 
 <template>
-  <LandingPrivacy />
+  <LandingPrivacy
+    id="privacy"
+  />
 
-  <LandingSecurity />
+  <LandingSecurity
+    id="security"
+  />
 
   <div
     class="
@@ -29,10 +33,10 @@ useHead({
       2xl:max-w-[1440px]
     "
   >
-    <LandingDocumentation />
+    <LandingDocumentation id="documentation"/>
 
     <LandingCommunity />
   </div>
 
-  <LandingTouch />
+  <LandingTouch id="contact"/>
 </template>

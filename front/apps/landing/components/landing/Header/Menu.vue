@@ -22,7 +22,7 @@ const moveTo = (id: string) => {
   const offset = elemRect.top - bodyRect.top
 
   scrollTo({
-    top: offset - 74,
+    top: offset - 100,
     behavior: 'smooth'
   })
 }
@@ -38,6 +38,7 @@ const moveTo = (id: string) => {
           lg:font-[200] lg:text-[16px] lg:leading-[24px]
           font-title
           text-white
+          hover:opacity-80
         "
         role="button"
         @click="moveTo(item.to)"

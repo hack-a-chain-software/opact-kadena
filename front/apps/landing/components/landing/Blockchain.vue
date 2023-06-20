@@ -69,12 +69,12 @@ const chains = {
 
 <style scoped>
 .opact-blockchain__text {
-  transition: width 1s ease-out
+  transition: width 1s ease-out;
 }
 .opact-blockchain {
-  transition-delay: 1s
+  transition-delay: 1s;
 }
 .opact-blockchain:hover {
-  transition-delay: 0s
+  transition-delay: 0s;
 }
 </style>
