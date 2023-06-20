@@ -61,6 +61,7 @@
       </p>
 
       <LandingButton
+        withIcon
         variant="secondary"
         text="Opact Documentation"
       />

@@ -9,8 +9,9 @@ export default defineAppConfig({
       close: 'Close',
       github: 'Github',
       kadena: 'Kadena',
+      twitter: 'Twitter',
       discord: 'Discord',
-      twitter: 'Twitter'
+      opactLogo: 'OpactLogo',
     }
   }
 })

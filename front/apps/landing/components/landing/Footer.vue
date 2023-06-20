@@ -13,13 +13,13 @@
       xl:pt-[170px]
     "
   >
-    <img
-      src="/opact-logo.svg"
+    <Icon
+      name="opactLogo"
       class="
-        sm:w-[128px]
-        md:w-[165px]
-        lg:w-[128px]
-        xl:w-[162px]
+        h-[32px]
+        w-[100px]
+        md:h-[50px]
+        md:w-[155.72px]
       "
     />
 
