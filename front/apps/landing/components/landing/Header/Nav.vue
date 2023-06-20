@@ -41,7 +41,7 @@ const navigation: NavigationItem[] = [
         xl:items-center
       "
     >
-      <LandingLogo/>
+      <LandingLogo />
 
       <LandingHeaderMenu :navigation="navigation" />
 
