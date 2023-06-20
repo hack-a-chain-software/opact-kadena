@@ -163,7 +163,7 @@ const tag = computed(() =>
   <div
     :class="
       twMerge(
-        'text-white rounded-[100px] xl:w-max group opact-button relative max-w-max overflow-hidden',
+        'text-white rounded-[100px] xl:w-max group opact-button relative max-w-max overflow-hidden cursor-pointer',
         variants[variant].parent
       )
     "
@@ -196,8 +196,9 @@ const tag = computed(() =>
           {{ text }}
         </span>
 
-        <LandingAssetsArrow
+        <Icon
           v-if="withIcon"
+          name="arrow"
           class="
             group-hover:rotate-[45deg]
             duration-[0.4s]

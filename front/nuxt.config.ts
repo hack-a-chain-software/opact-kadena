@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   extends: ['./apps/landing'],
   modules: [
+    'nuxt-icon',
     '@pinia/nuxt',
     '@nuxt/image',
     '@vueuse/nuxt',

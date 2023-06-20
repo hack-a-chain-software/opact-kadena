@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import Eth from './Assets/Eth.vue'
-import Near from './Assets/Near.vue'
-import Kadena from './Assets/Kadena.vue'
-
 defineProps<{
   chain: 'eth' | 'near' | 'kadena';
 }>()
@@ -10,15 +6,15 @@ defineProps<{
 const chains = {
   eth: {
     label: 'Ethereum',
-    icon: Eth
+    icon: 'eth'
   },
   near: {
     label: 'Near',
-    icon: Near
+    icon: 'near'
   },
   kadena: {
     label: 'Kadena',
-    icon: Kadena
+    icon: 'kadena'
   }
 }
 </script>
@@ -43,8 +39,8 @@ const chains = {
       opact-blockchain
     "
   >
-    <component
-      :is="chains[chain].icon"
+    <Icon
+      :name="chains[chain].icon"
       class="shrink-0 w-[24px]"
     />
 

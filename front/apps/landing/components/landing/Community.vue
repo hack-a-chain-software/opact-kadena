@@ -101,7 +101,9 @@
             lg:h-[40px]
           "
         >
-          <LandingAssetsGithub />
+          <Icon
+            name="github"
+          />
 
           <div class="hidden sm:block">
             <p
@@ -144,7 +146,9 @@
             lg:h-[40px]
           "
         >
-          <LandingAssetsDiscord />
+          <Icon
+            name="discord"
+          />
 
           <div class="hidden sm:block">
             <p
@@ -189,7 +193,9 @@
             lg:h-[40px]
           "
         >
-          <LandingAssetsTwitter />
+          <Icon
+            name="twitter"
+          />
 
           <div class="hidden sm:block">
             <p
