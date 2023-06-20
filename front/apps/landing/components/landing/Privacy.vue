@@ -14,6 +14,8 @@
       xl:mb-[84px]
       xl:flex-row-reverse
       xl:justify-between
+
+      2xl:mb-[30px]
     "
   >
     <figure class="md:mb-[18px] lg:mr-[-80px] xl:mr-0">

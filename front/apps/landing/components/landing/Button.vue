@@ -37,7 +37,6 @@ const variants: Variants = {
       p-[2px]
       h-[36px] md:h-[40px] lg:h-[39px] xl:h-[39px]
       inline-flex items-center justify-center sm:font-[500] sm:text-[16px] sm:leading-[20px]
-      hover:bg-opact-gradient
     `,
     children: `
       bg-white text-dark-blue w-full h-full flex items-center justify-center
@@ -85,14 +84,12 @@ const variants: Variants = {
         xl:text-[18px]
         xl:font-[500]
         xl:leading-[27px]
-        group-hover:bg-opact-gradient
       `
   },
   'hero-secondary': {
     parent: `
       bg-white
       p-[2px]
-      hover:bg-opact-gradient
       h-[36px] md:h-[51px] xl:mt-[1.6rem]
       inline-flex items-center justify-center sm:font-[500] sm:text-[16px] sm:leading-[20px]
     `,
@@ -100,8 +97,6 @@ const variants: Variants = {
         xl:text-[18px]
         xl:leading-[20px]
         xl:font-[400]
-        group-hover:bg-opact-gradient
-        group-hover:text-white
       `
   },
   'hero-tertiary': {
@@ -168,7 +163,7 @@ const tag = computed(() =>
   <div
     :class="
       twMerge(
-        'text-white rounded-[100px] xl:w-max group hover:bg-opact-gradient',
+        'text-white rounded-[100px] xl:w-max group opact-button relative max-w-max overflow-hidden',
         variants[variant].parent
       )
     "
@@ -190,7 +185,6 @@ const tag = computed(() =>
         xl:w-max
         lg:px-[18px]
         xl:px-[24px]
-        group-hover:bg-opact-gradient
         group-hover:text-white
       `,
           variants[variant].children
@@ -198,30 +192,17 @@ const tag = computed(() =>
       "
     >
       <div class="flex items-center font-title">
-        <span>
+        <span
+          class="relative z-[2]"
+        >
           {{ text }}
         </span>
 
         <LandingAssetsArrow
           v-if="withIcon"
-          class="group-hover:hidden"
+          class="group-hover:rotate-[45deg] duration-[0.4s] relative z-[2]"
           :class="
             variant === 'hero-primary'
-              ? `
-              lg:w-[28px]
-              lg:scale-[1.2]
-              ml-[10px] mr-[-8px] sm:mr-[-12px]
-            `
-              : `
-              ml-[8px] mr-[-8px] sm:mr-[-12px] lg:ml-[8px] lg:mr-[-12px]
-            `
-          "
-        />
-
-        <LandingAssetsArrowRight
-          class="hidden group-hover:block"
-          :class="
-            variant.includes('hero')
               ? `
               lg:w-[28px]
               lg:scale-[1.2]
@@ -236,3 +217,23 @@ const tag = computed(() =>
     </component>
   </div>
 </template>
+
+<style scoped>
+.opact-button:hover::after {
+  right: 0%;
+  transition: right 0.4s ease-out;
+}
+.opact-button::after {
+  left: -40px;
+  z-index: 0;
+  content: "";
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  min-width: 40px;
+  right: 100%;
+  border-radius: 100px;
+  background: linear-gradient(264.6deg, #AD51FF 12.18%, #1A92FF 91.42%);
+}
+</style>
