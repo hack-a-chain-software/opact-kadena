@@ -46,7 +46,8 @@ const chains = {
 
     <span
       class="
-        hidden group-hover:inline
+        hidden
+        group-hover:inline
         text-[16px]
         font-[500]
         leading-[24px]
@@ -54,7 +55,7 @@ const chains = {
         pl-[8px]
       "
     >
-      {{  chains[chain].label }}
+      {{ chains[chain].label }}
     </span>
   </div>
 </template>

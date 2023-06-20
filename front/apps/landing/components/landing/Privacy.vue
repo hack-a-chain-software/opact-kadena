@@ -40,11 +40,7 @@
       />
     </figure>
 
-    <div
-      class="
-        flex-1
-      "
-    >
+    <div class="flex-1">
       <div
         class="
           flex flex-col
@@ -120,7 +116,6 @@
           2xl:leading-[64.8px]
           2xl:mb-[23px]
           2xl:tracking-normal
-
           2xl:min-w-[600px]
         "
       >
@@ -148,8 +143,7 @@
           xl:leading-[30px]
           xl:font-[500]
           lg:text-[20px] lg:leading-[30px] lg:font-[500]
-          2xl:mb-[50px]
-          2xl:min-w-[600px]
+          2xl:mb-[50px] 2xl:min-w-[600px]
         "
       >
         Blockchains are transparent and everything you do
