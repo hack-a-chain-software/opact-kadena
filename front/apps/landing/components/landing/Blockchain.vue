@@ -9,7 +9,7 @@ defineProps<{
 
 const chains = {
   eth: {
-    label: 'Eth',
+    label: 'Ethereum',
     icon: Eth
   },
   near: {
@@ -26,6 +26,10 @@ const chains = {
 <template>
   <div
     class="
+      group
+      hover:w-auto
+      cursor-pointer
+      hover:px-[12px]
       w-[40px]
       h-[40px]
       overflow-hidden
@@ -39,5 +43,18 @@ const chains = {
     "
   >
     <component :is="chains[chain].icon" />
+
+    <span
+      class="
+        hidden group-hover:inline
+        text-[16px]
+        font-[500]
+        leading-[24px]
+        text-white
+        pl-[8px]
+      "
+    >
+      {{  chains[chain].label }}
+    </span>
   </div>
 </template>

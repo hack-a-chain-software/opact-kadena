@@ -61,7 +61,6 @@
       </p>
 
       <LandingButton
-        :with-icon="true"
         variant="secondary"
         text="Opact Documentation"
       />

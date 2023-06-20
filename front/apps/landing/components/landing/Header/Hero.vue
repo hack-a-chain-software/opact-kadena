@@ -20,6 +20,7 @@
         items-center
         mb-[22px]
         sm:pt-[50px] sm:mb-0
+        md:mb-[13px]
         lg:items-start
         lg:relative
         lg:overflow-visible
@@ -124,11 +125,13 @@
           text="Louch App"
           :with-icon="true"
           variant="hero-primary"
+          class="w-full lg:w-auto"
         />
 
         <LandingButton
           variant="tertiary"
           text="Documentation"
+          class="w-full lg:w-auto"
         />
       </div>
 

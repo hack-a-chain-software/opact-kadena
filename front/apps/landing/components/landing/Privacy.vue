@@ -32,19 +32,17 @@
           xl:max-w-[520px]
           xl:translate-y-[0px]
           xl:translate-x-[-30px]
+          2xl:max-w-[648px]
         "
         loading="lazy"
-        sizes="xs:328px sm:510px md:622px lg:502px"
+        sizes="xs:328px sm:510px md:622px lg:502px 2xl:648px"
         alt="Illustrative image of the marijuana plant"
       />
     </figure>
 
     <div
       class="
-        max-w-[569px]
-        lg:min-w-[500px]
-        xl:min-w-auto xl:max-w-[569px]
-        2xl:max-w-[648px]
+        flex-1
       "
     >
       <div
@@ -122,6 +120,8 @@
           2xl:leading-[64.8px]
           2xl:mb-[23px]
           2xl:tracking-normal
+
+          2xl:min-w-[600px]
         "
       >
         Protect your
@@ -149,6 +149,7 @@
           xl:font-[500]
           lg:text-[20px] lg:leading-[30px] lg:font-[500]
           2xl:mb-[50px]
+          2xl:min-w-[600px]
         "
       >
         Blockchains are transparent and everything you do
