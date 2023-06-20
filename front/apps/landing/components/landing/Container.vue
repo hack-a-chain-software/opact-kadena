@@ -12,7 +12,7 @@ withDefaults(
     cta: '',
     tag: '',
     text: '',
-    title: '',
+    title: ''
   }
 )
 
@@ -33,7 +33,7 @@ const sizes = {
       text-[16px] leading-[24px]
       sm:text-[20px] sm:font-[500] sm:leading-[30px]
       lg:text-[20px] lg:font-[500] lg:leading-[30px]
-    `,
+    `
   },
   lg: {
     tag: `
@@ -50,7 +50,7 @@ const sizes = {
     text: `
       sm:text-[20px] sm:font-[500] sm:leading-[30px]
       lg:text-[20px] lg:font-[500] lg:leading-[30px]
-    `,
+    `
   }
 }
 </script>
@@ -78,17 +78,18 @@ const sizes = {
         lg:pt-[52px] lg:pb-[56px] lg:px-[40px]
       "
     >
-      <slot
-        name="before"
-      />
+      <slot name="before" />
 
       <h3
         :class="sizes[size].tag"
-        class="bg-opact-gradient bg-clip-text text-transparent uppercase w-max"
+        class="
+          bg-opact-gradient bg-clip-text
+          text-transparent
+          uppercase
+          w-max
+        "
       >
-        <slot
-          name="tag"
-        >
+        <slot name="tag">
           {{ tag }}
         </slot>
       </h3>
@@ -97,28 +98,19 @@ const sizes = {
         :class="sizes[size].title"
         class="text-white font-title"
       >
-        <slot
-          name="title"
-        >
+        <slot name="title">
           {{ title }}
         </slot>
       </h2>
 
-      <p
-        :class="sizes[size].text"
-        class="text-[#BDBDBD]"
-      >
-        <slot
-          name="text"
-        >
+      <p :class="sizes[size].text" class="text-[#BDBDBD]">
+        <slot name="text">
           {{ text }}
         </slot>
       </p>
 
       <div>
-        <slot
-          name="cta"
-        >
+        <slot name="cta">
           <LandingButton
             withIcon
             variant="secondary"

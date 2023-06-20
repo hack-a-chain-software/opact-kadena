@@ -2,13 +2,8 @@
   <LandingSection
     class="mb-[40px] md:mb-[60px] lg:mb-[79px] xl:mb-[80px]"
   >
-    <LandingContainer
-      cta="Learn more"
-      size="xl"
-    >
-      <template
-        v-slot:before
-      >
+    <LandingContainer cta="Learn more" size="xl">
+      <template v-slot:before>
         <div
           class="
             z-[2]
@@ -69,24 +64,15 @@
         </div>
       </template>
 
-      <template
-        v-slot:tag
-      >
+      <template v-slot:tag>
         <span
-          class="
-            block
-            mb-[12px]
-            sm:mb-[24px]
-            lg:mb-[24px]
-          "
+          class="block mb-[12px] sm:mb-[24px] lg:mb-[24px]"
         >
-            Security
+          Security
         </span>
       </template>
 
-      <template
-        v-slot:title
-      >
+      <template v-slot:title>
         <span
           class="
             block
@@ -96,7 +82,8 @@
             xl:w-[493px]
           "
         >
-          Secure and <br class="hidden lg:inline xl:hidden" />
+          Secure and
+          <br class="hidden lg:inline xl:hidden" />
           Compliant <br class="lg:hidden xl:inline" />
           Privacy <br class="hidden lg:inline xl:hidden" />
           with
@@ -111,9 +98,7 @@
         </span>
       </template>
 
-      <template
-        v-slot:text
-      >
+      <template v-slot:text>
         <span
           class="
             block
@@ -123,12 +108,12 @@
             lg:mb-[46px]
           "
         >
-          Many privacy apps have been used by malicious actors
-          for illicit financial activities, such as money
-          laundering. Opact has been designed to block
-          malicious actors while still keeping user’s privacy.
+          Many privacy apps have been used by malicious
+          actors for illicit financial activities, such as
+          money laundering. Opact has been designed to block
+          malicious actors while still keeping user’s
+          privacy.
         </span>
-
       </template>
     </LandingContainer>
   </LandingSection>

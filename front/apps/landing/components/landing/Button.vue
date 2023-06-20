@@ -200,8 +200,10 @@ const tag = computed(() =>
           v-if="withIcon"
           name="arrow"
           class="
+            h-[20px]
+            w-[20px]
             group-hover:rotate-[45deg]
-            duration-[0.4s]
+            duration-[0.3s]
             relative
             z-[2]
           "
@@ -217,6 +219,23 @@ const tag = computed(() =>
             `
           "
         />
+
+        <Icon
+          v-else
+          name="arrow"
+          class="
+            w-0
+            z-[2]
+            h-[20px]
+            relative
+            shrkink-0
+            rotate-[45deg]
+            lg:scale-[1.2]
+            duration-[0.3s]
+            group-hover:w-[20px]
+            group-hover:pl-[8px]
+          "
+        />
       </div>
     </component>
   </div>
@@ -225,7 +244,7 @@ const tag = computed(() =>
 <style scoped>
 .opact-button:hover::after {
   right: 0%;
-  transition: right 0.4s ease-out;
+  transition: right 0.3s ease-out;
 }
 .opact-button::after {
   left: -40px;

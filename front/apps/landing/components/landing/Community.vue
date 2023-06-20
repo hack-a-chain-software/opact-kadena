@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const config = useAppConfig()
+</script>
+
 <template>
   <LandingSection
     class="
@@ -9,30 +13,20 @@
     "
   >
     <LandingContainer>
-      <template
-        v-slot:tag
-      >
+      <template v-slot:tag>
         <span
-          class="
-            block
-            mb-[10px]
-            sm:mb-[18px]
-            lg:mb-[18px]
-          "
+          class="block mb-[10px] sm:mb-[18px] lg:mb-[18px]"
         >
           Community
         </span>
       </template>
 
-      <template
-        v-slot:title
-      >
+      <template v-slot:title>
         <span
           class="
             block
             mb-[6px]
-            lg:max-w-full
-            lg:mb-[10px]
+            lg:max-w-full lg:mb-[10px]
             xl:mb-[6px]
             2xl:max-w-[455px]
           "
@@ -43,9 +37,7 @@
         </span>
       </template>
 
-      <template
-        v-slot:text
-      >
+      <template v-slot:text>
         <span
           class="
             block
@@ -59,9 +51,7 @@
         </span>
       </template>
 
-      <template
-        v-slot:cta
-      >
+      <template v-slot:cta>
         <div
           class="
             flex
@@ -72,138 +62,13 @@
             xl:flex-nowrap
           "
         >
-          <div
-            class="
-              w-[40px]
-              h-[40px]
-              bg-white
-              rounded-full
-              flex
-              items-center
-              justify-center
-              text-dark-blue
-              sm:w-auto
-              sm:pl-[16px]
-              sm:pr-[24px]
-              sm:space-x-[8px]
-              lg:mr-[24px]
-              xl:mr-0
-              lg:pl-[16px]
-              lg:pr-[24px]
-              lg:space-x-[8px]
-              lg:h-[40px]
-            "
-          >
-            <Icon name="github" />
-
-            <div class="hidden sm:block">
-              <p
-                class="
-                  text-[16px]
-                  font-[500]
-                  leading-[24px]
-                  text-dark-blue
-                  font-title
-                  lg:text-[14px]
-                  lg:font-[500]
-                  lg:leading-[24px]
-                  xl:text-[16px]
-                  xl:font-[500]
-                  xl:leading-[24px]
-                "
-              >
-                Github
-              </p>
-            </div>
-          </div>
-
-          <div
-            class="
-              w-[40px]
-              h-[40px]
-              bg-white
-              rounded-full
-              flex
-              items-center
-              justify-center
-              text-dark-blue
-              sm:w-auto
-              sm:pl-[16px]
-              sm:pr-[24px]
-              sm:space-x-[8px]
-              lg:pl-[16px]
-              lg:pr-[24px]
-              lg:space-x-[8px]
-              lg:h-[40px]
-            "
-          >
-            <Icon name="discord" />
-
-            <div class="hidden sm:block">
-              <p
-                class="
-                  text-[16px]
-                  font-[500]
-                  leading-[24px]
-                  text-dark-blue
-                  font-title
-                  lg:text-[14px]
-                  lg:font-[500]
-                  lg:leading-[24px]
-                  xl:text-[16px]
-                  xl:font-[500]
-                  xl:leading-[24px]
-                "
-              >
-                Discord
-              </p>
-            </div>
-          </div>
-
-          <div
-            class="
-              w-[40px]
-              h-[40px]
-              bg-white
-              rounded-full
-              flex
-              items-center
-              justify-center
-              text-dark-blue
-              sm:w-auto
-              sm:pl-[16px]
-              sm:pr-[24px]
-              sm:space-x-[8px]
-              lg:mt-[24px]
-              xl:mt-0
-              lg:pl-[16px]
-              lg:pr-[24px]
-              lg:space-x-[8px]
-              lg:h-[40px]
-            "
-          >
-            <Icon name="twitter" />
-
-            <div class="hidden sm:block">
-              <p
-                class="
-                  text-[16px]
-                  font-[500]
-                  leading-[24px]
-                  text-dark-blue
-                  font-title
-                  lg:text-[14px]
-                  lg:font-[500]
-                  lg:leading-[24px]
-                  xl:text-[16px]
-                  xl:font-[500]
-                  xl:leading-[24px]
-                "
-              >
-                Twitter
-              </p>
-            </div>
-          </div>
+          <LandingIconButton
+            :to="to"
+            :text="title"
+            :icon="icon"
+            :key="to"
+            v-for="{ icon, title, to } in config.community"
+          />
         </div>
       </template>
     </LandingContainer>

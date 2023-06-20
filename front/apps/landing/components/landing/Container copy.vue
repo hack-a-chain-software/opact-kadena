@@ -10,7 +10,7 @@ withDefaults(
     cta: '',
     tag: '',
     text: '',
-    title: '',
+    title: ''
   }
 )
 </script>

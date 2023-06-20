@@ -1,34 +1,20 @@
 <template>
-  <LandingSection
-    class="mb-[40px] md:mb-[60px] lg:!px-0"
-  >
-    <LandingContainer
-      cta="Opact Documentation"
-    >
-      <template
-        v-slot:tag
-      >
+  <LandingSection class="mb-[40px] md:mb-[60px] lg:!px-0">
+    <LandingContainer cta="Opact Documentation">
+      <template v-slot:tag>
         <span
-          class="
-            block
-            mb-[10px]
-            sm:mb-[18px]
-            lg:mb-[18px]
-          "
+          class="block mb-[10px] sm:mb-[18px] lg:mb-[18px]"
         >
           Documentation
         </span>
       </template>
 
-      <template
-        v-slot:title
-      >
+      <template v-slot:title>
         <span
           class="
             block
             mb-[8px]
-            lg:max-[501px]
-            lg:mb-[8px]
+            lg:max-[501px] lg:mb-[8px]
             xl:max-w-full
           "
         >
@@ -36,9 +22,7 @@
         </span>
       </template>
 
-      <template
-        v-slot:text
-      >
+      <template v-slot:text>
         <span
           class="
             block

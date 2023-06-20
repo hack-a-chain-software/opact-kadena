@@ -13,6 +13,6 @@
 
 <style>
 body {
-  background-color: #060A0F;
+  background-color: #060a0f;
 }
 </style>
