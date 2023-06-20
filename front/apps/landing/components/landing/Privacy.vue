@@ -14,7 +14,6 @@
       xl:mb-[84px]
       xl:flex-row-reverse
       xl:justify-between
-
       2xl:mb-[30px]
     "
   >

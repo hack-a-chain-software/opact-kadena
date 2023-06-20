@@ -192,15 +192,18 @@ const tag = computed(() =>
       "
     >
       <div class="flex items-center font-title">
-        <span
-          class="relative z-[2]"
-        >
+        <span class="relative z-[2]">
           {{ text }}
         </span>
 
         <LandingAssetsArrow
           v-if="withIcon"
-          class="group-hover:rotate-[45deg] duration-[0.4s] relative z-[2]"
+          class="
+            group-hover:rotate-[45deg]
+            duration-[0.4s]
+            relative
+            z-[2]
+          "
           :class="
             variant === 'hero-primary'
               ? `
@@ -226,7 +229,7 @@ const tag = computed(() =>
 .opact-button::after {
   left: -40px;
   z-index: 0;
-  content: "";
+  content: '';
   height: 100%;
   position: absolute;
   bottom: 0;
@@ -234,6 +237,10 @@ const tag = computed(() =>
   min-width: 40px;
   right: 100%;
   border-radius: 100px;
-  background: linear-gradient(264.6deg, #AD51FF 12.18%, #1A92FF 91.42%);
+  background: linear-gradient(
+    264.6deg,
+    #ad51ff 12.18%,
+    #1a92ff 91.42%
+  );
 }
 </style>
