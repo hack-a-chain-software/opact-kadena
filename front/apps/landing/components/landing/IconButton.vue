@@ -67,7 +67,7 @@ withDefaults(
 
 <style scoped>
 .opact-icon-button:hover::after {
-  right: 0%;
+  right: -2px;
   transition: right 0.3s ease-out;
 }
 .opact-icon-button::after {

@@ -191,7 +191,7 @@ const tag = computed(() =>
         )
       "
     >
-      <div class="flex items-center font-title">
+      <div class="flex items-center justify-center font-title">
         <span class="relative z-[2]">
           {{ text }}
         </span>
@@ -226,13 +226,11 @@ const tag = computed(() =>
           class="
             w-0
             z-[2]
-            h-[20px]
+            h-full
             relative
-            shrkink-0
             rotate-[45deg]
-            lg:scale-[1.2]
             duration-[0.3s]
-            group-hover:w-[20px] group-hover:pl-[8px]
+            group-hover:w-[30px] group-hover:pl-[8px]
           "
         />
       </div>
