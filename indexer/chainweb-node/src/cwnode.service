@@ -2,7 +2,7 @@
 Description=This service starts cwnode
 
 [Service]
-WorkingDirectory=/root/chainweb-node
+WorkingDirectory=/home/ubuntu/chainweb-node
 ExecStart=docker compose up -d
 Restart=always
 

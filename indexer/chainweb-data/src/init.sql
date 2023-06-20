@@ -179,17 +179,12 @@ FOR EACH ROW
 WHEN (pg_trigger_depth() < 1)
 EXECUTE PROCEDURE skip_write();
 
-CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON events
-FOR EACH ROW
-WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE skip_write();
-
 -- Add trigger on events table
 
 CREATE OR REPLACE FUNCTION check_opact_event()
     RETURNS trigger AS $BODY$
 BEGIN
-IF strpos('free.crankk01', new.module) > 0 THEN
+IF new.module LIKE '%crankk01%' THEN
     INSERT INTO events VALUES (
         new.block,
         new.chainid,
@@ -220,7 +215,7 @@ EXECUTE PROCEDURE check_opact_event();
 CREATE OR REPLACE FUNCTION check_opact_transactions()
     RETURNS trigger AS $BODY$
 BEGIN
-IF strpos('free.hello-world', new.module) > 0 THEN
+IF new.code LIKE '%free.hello%' THEN
     INSERT INTO transactions VALUES (
         new.badresult,
         new.block,
@@ -254,7 +249,7 @@ $BODY$
 
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE TRIGGER check_opact_transactions BEFORE INSERT OR UPDATE ON events
+CREATE OR REPLACE TRIGGER check_opact_transactions BEFORE INSERT OR UPDATE ON transactions
 FOR EACH ROW
 WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE check_opact_event();
+EXECUTE PROCEDURE check_opact_transactions();

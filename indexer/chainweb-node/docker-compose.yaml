@@ -20,7 +20,7 @@ services:
       - .env
     environment:
       KADENA_NETWORK: ${KADENA_NETWORK:-mainnet01}
-      SERVER: ${DB_SYNC_SERVER}
+      SERVER: ${DB_SYNC_SERVER:-us-w1.chainweb.com}
     entrypoint: "/bin/sh"
     command:
       - "-c"
@@ -70,6 +70,22 @@ services:
           headerStream: true
           throttling:
             global: 1000
+          version: ${KADENA_NETWORK}
+          onlySyncPact: true
+          validateHashesOnReplay: true
+          p2p:
+            peer:
+              interface: localhost
+              hostaddress:
+                port: 4445
+            private: true
+            ignoreBootstrapNodes: true
+          transactionIndex:
+            enabled: false
+          mempoolP2p:
+            enabled: false
+          cuts:
+            pruneChainDatabase: headers-checked
 
         logging:
           telemetryBackend:
@@ -89,22 +105,25 @@ services:
 
           filter:
             rules:
-              - key: component
-                value: cut-monitor
-                level: info
-              - key: component
-                value: pact-tx-replay
-                level: info
-              - key: component
-                value: connection-manager
-                level: info
-              - key: component
-                value: miner
-                level: info
-              - key: component
-                value: local-handler
-                level: info
-            default: error
+            - value: mempool
+              key: component
+              level: warn
+            - value: connection-manager
+              key: component
+              level: warn
+            - value: sync
+              key: sub-component
+              level: warn
+            - value: MempoolAccess
+              key: sub-component
+              level: warn
+            - value: PactService
+              key: logger
+              level: warn
+            - value: Checkpointer
+              key: logger
+              level: warn
+            default: info
         EOF
 
   # Shut down chainweb-node before running this.

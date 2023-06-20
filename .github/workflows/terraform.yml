@@ -28,6 +28,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
 
+      - name: Install Dependencies
+        uses: pnpm install
+
+      - name: Install Dependencies
+        uses: pnpm indexer api package
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
@@ -50,7 +56,7 @@ jobs:
           echo "" >> ./terraform/.tfvars
 
       - name: Terraform Init
-        run: pnpm terraform install
+        run: pnpm terraform init-terraform
         env:
           AWS_PROFILE: "digitalocean"
 
