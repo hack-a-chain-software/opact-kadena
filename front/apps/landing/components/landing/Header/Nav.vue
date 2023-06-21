@@ -36,7 +36,6 @@ const navigation: NavigationItem[] = [
         max-w-[1900px]
         sm:px-8
         lg:h-[80px] lg:px-[30px]
-        xl:px-[60px]
         lg:items-center
         xl:items-center
       "

@@ -31,7 +31,7 @@
           lg:translate-x-[-30px]
           xl:h-auto
           xl:max-w-[520px]
-          xl:translate-y-[0px]
+          xl:translate-y-[40px]
           xl:translate-x-[-30px]
           2xl:max-w-[648px]
         "
@@ -62,7 +62,7 @@
             font-[500]
             uppercase
             mb-[12px]
-            md:mb-0
+            md:mb-1
             sm:leading-[33px] sm:text-[22px] sm:font-[900]
             lg:text-[22px] lg:leading-[33px] lg:font-[700]
           "
@@ -106,7 +106,7 @@
           lg:leading-[57.6px]
           lg:mb-[22px]
           lg:max-w-[441px]
-          xl:max-w-auto
+          xl:min-w-[569px]
           xl:font-[600]
           xl:text-[50px]
           xl:leading-[60px]
@@ -143,6 +143,7 @@
           xl:text-[20px]
           xl:leading-[30px]
           xl:font-[500]
+          xl:min-w-[570px]
           lg:text-[20px] lg:leading-[30px] lg:font-[500]
           2xl:mb-[50px] 2xl:min-w-[600px]
         "

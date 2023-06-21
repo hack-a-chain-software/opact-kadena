@@ -7,7 +7,7 @@ const config = useAppConfig()
     class="
       mb-[40px]
       md:mb-[60px]
-      lg:mb-[70px]
+      lg:mb-[78px]
       xl:mb-[80px]
       lg:!px-0
     "
@@ -26,6 +26,8 @@ const config = useAppConfig()
           class="
             block
             mb-[6px]
+            md:max-w-[640px]
+            md:mb-[12px]
             lg:max-w-full lg:mb-[10px]
             xl:mb-[6px]
             2xl:max-w-[455px]
@@ -55,9 +57,7 @@ const config = useAppConfig()
         <div
           class="
             flex
-            space-x-[24px]
-            lg:space-x-0
-            xl:space-x-[24px]
+            gap-[24px]
             lg:flex-wrap
             xl:flex-nowrap
           "

@@ -24,7 +24,8 @@ const chains = {
     class="
       group
       hover:w-[200px]
-      px-[12px]
+      px-[8px]
+      md:px-[12px]
       max-w-max
       cursor-pointer
       w-[40px]
@@ -41,7 +42,7 @@ const chains = {
   >
     <Icon
       :name="chains[chain].icon"
-      class="shrink-0 w-[24px]"
+      class="shrink-0 w-[24px] md:w-[24px]"
     />
 
     <span
@@ -53,6 +54,7 @@ const chains = {
         group-hover:w-[78px]
         text-[16px]
         font-[500]
+        pl-[8px]
         leading-[24px]
         text-white
         overflow-hidden

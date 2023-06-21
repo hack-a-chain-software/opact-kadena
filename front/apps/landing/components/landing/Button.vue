@@ -1,4 +1,4 @@
-<script setup lang="ts">
+ b<script setup lang="ts">
 import { twMerge } from 'tailwind-merge'
 import { computed } from 'vue'
 import type { PropType } from 'vue'
@@ -9,6 +9,7 @@ export interface Variant {
 }
 
 export interface Variants {
+  nav: Variant;
   primary: Variant;
   secondary: Variant;
   tertiary: Variant;
@@ -18,6 +19,19 @@ export interface Variants {
 }
 
 const variants: Variants = {
+  nav: {
+    parent:
+      'bg-opact-gradient p-[2px] inline-flex items-center justify-center lg:h-[28px] xl:h-[36px]',
+    children: `bg-dark-blue w-full h-full flex items-center justify-center
+        lg:text-[13px]
+        lg:leading-[20px]
+        lg:font-[400]
+
+        xl:text-[16px]
+        xl:leading-[24px]
+        xl:font-[400]
+      `
+  },
   primary: {
     parent:
       'bg-opact-gradient p-[2px] inline-flex items-center justify-center lg:h-[28px] xl:h-[36px]',
@@ -47,7 +61,7 @@ const variants: Variants = {
   },
   tertiary: {
     parent:
-      'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[44px] lg:h-[49px] xl:h-[49px]',
+      'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[44px] md:h-[50px]',
     children: `bg-inverted-card-gradient w-full h-full flex items-center justify-center
 
         sm:text-[18px]
@@ -65,10 +79,11 @@ const variants: Variants = {
   },
   'hero-primary': {
     parent: `
+      w-full md:w-auto
       bg-opact-gradient
       p-[2px]
       inline-flex items-center justify-center
-      h-[44px] lg:h-[49px]
+      h-[44px] md:h-[50px]
     `,
     children: `bg-dark-blue w-full h-full flex items-center justify-center
         lg:px-[22px]
@@ -126,6 +141,7 @@ const props = defineProps({
   },
   variant: {
     type: String as PropType<
+      | 'nav'
       | 'primary'
       | 'secondary'
       | 'tertiary'
@@ -136,6 +152,7 @@ const props = defineProps({
     default: 'primary',
     validator: (v: string) =>
       [
+        'nav',
         'primary',
         'secondary',
         'tertiary',
@@ -191,7 +208,9 @@ const tag = computed(() =>
         )
       "
     >
-      <div class="flex items-center justify-center font-title">
+      <div
+        class="flex items-center justify-center font-title"
+      >
         <span class="relative z-[2]">
           {{ text }}
         </span>

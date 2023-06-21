@@ -42,9 +42,9 @@ const moveTo = (id: string) => {
       as="div"
       class="flex items-center justify-center h-full"
     >
-      <Icon name="close" v-if="open" />
+      <Icon name="close" class="w-[24px] h-[24px]" v-if="open" />
 
-      <Icon v-else name="menu" />
+      <Icon v-else name="menu" class="w-[24px] h-[24px]" />
     </MenuButton>
 
     <MenuItems

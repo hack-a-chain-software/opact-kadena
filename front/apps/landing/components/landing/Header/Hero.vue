@@ -20,7 +20,7 @@
         items-center
         mb-[22px]
         sm:pt-[50px] sm:mb-0
-        md:mb-[13px]
+        md:mb-[0px]
         lg:items-start
         lg:relative
         lg:overflow-visible
@@ -125,13 +125,13 @@
           text="Louch App"
           :with-icon="true"
           variant="hero-primary"
-          class="w-full lg:w-auto"
+          class="w-full lg:w-auto max-w-full md:max-w-max"
         />
 
         <LandingButton
           variant="tertiary"
           text="Documentation"
-          class="w-full lg:w-auto"
+          class="w-full lg:w-auto max-w-full md:max-w-max"
         />
       </div>
 
@@ -146,8 +146,9 @@
           justify-center
           sm:order-3 sm:mt-[-16%]
           w-[466px]
+          translate-x-[12px]
           sm:w-[874px]
-          md:mt-[-90px] md:translate-x-[18px]
+          md:mt-[-84px] md:translate-x-[22px]
           lg:bottom-auto
           lg:top-[-4rem]
           lg:absolute
@@ -155,12 +156,14 @@
           lg:right-[-10rem]
           lg:w-[861px]
           xl:bottom-auto
-          xl:top-[-5rem]
+          xl:top-[-4rem]
           xl:absolute
           xl:mt-0
           xl:right-[-9rem]
+          select-none
+          pointer-events-none
           xl:w-[970px]
-          2xl:w-[1057px] 2xl:top-[-6rem] 2xl:right-[-8rem]
+          2xl:w-[1057px] 2xl:top-[-4rem] 2xl:right-[-8rem]
         "
       >
         <figure class="rotate-[-8.05deg] lg:rotate-0">
@@ -209,7 +212,7 @@
           class="
             flex
             space-x-[16px]
-            lg:space-x-[12px]
+            lg:space-x-[18px]
             xl:space-x-[16px]
           "
         >

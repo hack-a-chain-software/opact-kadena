@@ -1,11 +1,11 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    tag: string;
-    title: string;
-    text: string;
-    cta: string;
-    size: 'lg' | 'xl';
+    tag?: string;
+    title?: string;
+    text?: string;
+    cta?: string;
+    size?: 'lg' | 'xl';
   }>(),
   {
     size: 'lg',

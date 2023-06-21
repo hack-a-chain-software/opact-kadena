@@ -3,10 +3,10 @@
     <Icon
       name="logo"
       class="
-        w-full
-        max-w-[142.17px]
-        md:max-w-[200px]
-        xl:w-[192.94px] xl:h-[55px]
+        w-[142.17px]
+        h-[28px]
+        md:w-[192.94px]
+        md:h-[38px]
         cursor-pointer
       "
       alt="Opact Wallet Logo"

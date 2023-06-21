@@ -59,7 +59,7 @@ withDefaults(
         relative
         rotate-[45deg]
         duration-[0.3s]
-        group-hover:w-[20px]
+        md:group-hover:w-[20px]
       "
     />
   </div>

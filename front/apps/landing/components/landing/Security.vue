@@ -37,10 +37,11 @@
               w-full
               z-[2]
               sm:top-[-160px] sm:w-[580px]
-              md:w-[950px]
+              md:w-[765px]
               md:translate-x-0
-              md:top-[-170px]
-              md:left-[-100px]
+              md:top-[-140px]
+              md:left-[-120px]
+              md:rotate-[-20deg]
               lg:rotate-[-26deg]
               lg:top-[-140px]
               lg:left-[130px]
@@ -48,7 +49,7 @@
               xl:rotate-0
               xl:top-[-140px]
               xl:left-[0px]
-              xl:max-w-[891px]
+              xl:max-w-[891.5px]
               2xl:min-w-[1011px]
               2xl:top-[-200px]
               2xl:left-[-90px]
@@ -57,7 +58,7 @@
             <nuxt-img
               src="/security.png"
               class="scale-x-[-1] lg:scale-x-[1]"
-              sizes="xs:429px md:765px lg:891px xl:891px 2xl:1011px"
+              sizes="xs:429px md:765px lg:891.5px xl:891px 2xl:1011px"
               alt="Illustrative image of the marijuana plant"
             />
           </figure>
