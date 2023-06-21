@@ -1,5 +1,11 @@
 <template>
-  <div class="scrollbar scrollbar-thumb-red-600 scrollbar-track-red-600">
+  <div
+    class="
+      scrollbar
+      scrollbar-thumb-red-600
+      scrollbar-track-red-600
+    "
+  >
     <header>
       <LandingHeaderNav />
 
@@ -23,7 +29,7 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-thumb {
   border-radius: 4px !important;
-  background-color: rgba(250,250,250,.2) !important;
-  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5) !important;
+  background-color: rgba(250, 250, 250, 0.2) !important;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5) !important;
 }
 </style>
