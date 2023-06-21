@@ -210,6 +210,7 @@ module.exports = {
     extend: {}
   },
   plugins: [
+    require('tailwind-scrollbar'),
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio')

@@ -217,6 +217,9 @@ importers:
       swiper:
         specifier: ^9.3.2
         version: 9.3.2
+      tailwind-scrollbar:
+        specifier: ^3.0.4
+        version: 3.0.4(tailwindcss@3.3.2)
       tailwindcss:
         specifier: ^3.3.2
         version: 3.3.2
@@ -3246,11 +3249,11 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/kit-edge@3.6.0-28121378.b57d8416:
-    resolution: {integrity: sha512-8dNkuaE6DfwjjsZZSGqtTgLt68mq8DwLCsCD0rGHh/Zs5THimFVnycGDW8YWrSqyZdxQSMXrZoieCrP5+L+Nhg==}
+  /@nuxt/kit-edge@3.6.0-28122379.bd34a8c1:
+    resolution: {integrity: sha512-hXFAsNAhSsU9aQXnTqE7RjIB+J2Mxspq2/uEbs/rXGB40f2mhG3kTIgFY8xcfZTFnHjHW5sYrHMJJY3pSKMSSQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
-      '@nuxt/schema': /@nuxt/schema-edge@3.6.0-28121378.b57d8416
+      '@nuxt/schema': /@nuxt/schema-edge@3.6.0-28122379.bd34a8c1
       c12: 1.4.1
       consola: 3.1.0
       defu: 6.1.2
@@ -3366,8 +3369,8 @@ packages:
       - webpack
     dev: true
 
-  /@nuxt/schema-edge@3.6.0-28121378.b57d8416:
-    resolution: {integrity: sha512-6aQbwfe6o+SqW/qoGe1qzQ+pKkVZMzbeqGZZmkbVVWuLktsrklE45U055ts4VvPFZKdIhHFFDjYauaGsueBABQ==}
+  /@nuxt/schema-edge@3.6.0-28122379.bd34a8c1:
+    resolution: {integrity: sha512-eWfPFbVmGnXzS8KadasWiAJ7VqGvevAeM55Mt3aglNMWz3RPRtXwzJPORBGvRjXUQ3BEWBWkWwBizqB4UqoYcQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
       defu: 6.1.2
@@ -12525,7 +12528,7 @@ packages:
   /nuxt-use-motion@2.0.0-beta.11(vue@3.3.4):
     resolution: {integrity: sha512-O5UrB7q+A2dWhxxcXdCWH1QJgROIhUcQzwVxIZT2vleTpi6RMi39oPt4ZNWmtU/1Z39pTbAOnwUGZcTGdqRL9g==}
     dependencies:
-      '@nuxt/kit': /@nuxt/kit-edge@3.6.0-28121378.b57d8416
+      '@nuxt/kit': /@nuxt/kit-edge@3.6.0-28122379.bd34a8c1
       '@vueuse/motion': 2.0.0-beta.4(vue@3.3.4)
       defu: 5.0.1
       vue-demi: 0.12.5(vue@3.3.4)
@@ -15494,6 +15497,15 @@ packages:
   /tailwind-merge@1.13.1:
     resolution: {integrity: sha512-tRtRN22TDokGi2TuYSvuHQuuW6BJ/zlUEG+iYpAQ9i66msc/0eU/+HPccbPnNNH0mCPp0Ob8thaC8Uy9CxHitQ==}
     dev: false
+
+  /tailwind-scrollbar@3.0.4(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-X/QBsn/C5u9x6/YvTc1Zo7b09Gqs5BfDe0UK/8LDQUv8IEBKF+p2ISTRwvAr50MH0hn/wTyCEOann7uXoa1/2Q==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      tailwindcss: 3.x
+    dependencies:
+      tailwindcss: 3.3.2
+    dev: true
 
   /tailwind-variants@0.1.5(tailwindcss@3.3.2):
     resolution: {integrity: sha512-/dQnADaHlt/3xSDcOYnTvTwvgDFpz+Nq++XNw3mCfIkBFoJhRJ4x3WG2ZQ9cWUqAFjVaRfdlG3KVYqs9bKlIhg==}

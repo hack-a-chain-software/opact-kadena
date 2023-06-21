@@ -22,8 +22,8 @@ withDefaults(
       items-center
       justify-center
       text-dark-blue
-      sm:w-auto sm:pl-[16px] sm:pr-[24px] sm:space-x-[8px]
-      lg:pl-[16px] lg:pr-[24px] lg:space-x-[8px] lg:h-[40px]
+      sm:w-auto sm:pl-[16px] sm:pr-[16px] sm:space-x-[8px]
+      lg:pl-[16px] lg:pr-[16px] lg:space-x-[8px] lg:h-[40px]
       hover:text-white
       opact-icon-button
       group
@@ -59,6 +59,7 @@ withDefaults(
         relative
         rotate-[45deg]
         duration-[0.3s]
+        translate-y-[-5%]
         md:group-hover:w-[20px]
       "
     />

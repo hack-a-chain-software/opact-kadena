@@ -49,8 +49,9 @@ const moveTo = (id: string) => {
 
     <LandingButton
       withIcon
+      variant="nav"
       text="Louch App"
-      class="!h-[32px]"
+      class="!h-[36px]"
     />
   </div>
 </template>

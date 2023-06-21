@@ -136,12 +136,9 @@ const moveTo = (id: string) => {
             <LandingButton
               :with-icon="true"
               variant="primary"
-              class="sm:h-[36px]"
-            >
-              <span> Louch App </span>
-
-              <Icon name="Arrow" />
-            </LandingButton>
+              class="!h-[36px]"
+              text="Louch App"
+            />
           </div>
         </MenuItem>
       </div>
