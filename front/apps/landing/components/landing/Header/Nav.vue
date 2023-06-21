@@ -35,8 +35,7 @@ const navigation: NavigationItem[] = [
         justify-between
         max-w-[1900px]
         sm:px-8
-        lg:h-[80px] lg:px-[30px]
-        lg:items-center
+        lg:h-[80px] lg:px-[30px] lg:items-center
         xl:items-center
       "
     >

@@ -26,8 +26,7 @@ const config = useAppConfig()
           class="
             block
             mb-[6px]
-            md:max-w-[640px]
-            md:mb-[12px]
+            md:max-w-[640px] md:mb-[12px]
             lg:max-w-full lg:mb-[10px]
             xl:mb-[6px]
             2xl:max-w-[455px]
