@@ -17,7 +17,13 @@
       2xl:mb-[70px]
     "
   >
-    <figure class="md:mb-[26px] lg:mb-[18px] lg:mr-[-80px] xl:mr-0">
+    <figure
+      class="
+        md:mb-[26px]
+        lg:mb-[18px] lg:mr-[-80px]
+        xl:mr-0
+      "
+    >
       <nuxt-img
         src="/privacy.webp"
         class="
@@ -33,8 +39,7 @@
           xl:max-w-[520px]
           xl:translate-y-[20px]
           xl:translate-x-[-30px]
-          2xl:max-w-[602px]
-          2xl:translate-x-[-30px]
+          2xl:max-w-[602px] 2xl:translate-x-[-30px]
         "
         loading="lazy"
         sizes="xs:328px sm:510px md:622px lg:435px 2xl:602px"

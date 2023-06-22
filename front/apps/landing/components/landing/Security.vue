@@ -36,7 +36,8 @@
               min-w-[429px]
               w-full
               z-[2]
-              sm:top-[-140px] sm:w-[600px]
+              sm:top-[-140px]
+              sm:w-[600px]
               sm:rotate-[-10deg]
               sm:translate-x-[-55%]
               md:w-[765px]

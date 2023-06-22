@@ -34,105 +34,109 @@
         2xl:pt-[102px]
       "
     >
-      <h1
-        class="
-          z-[2]
-          pb-[8px]
-          relative
-          font-title
-          mx-auto
-          text-3xl-poppins-xs text-white text-center
-          max-w-[290px]
-          sm:text-[48px] sm:max-w-[490px] sm:pb-[22px]
-          md:font-[700]
-          md:leading-[62.4px]
-          md:max-w-full
-          md:tracking-[0.05rem]
-          lg:text-left
-          lg:max-w-[410px]
-          lg:mx-0
-          lg:pb-[26px]
-          lg:font-[600]
-          lg:text-[50px]
-          lg:leading-[65px]
-          lg:tracking-[0.09rem]
-          xl:text-left
-          xl:max-w-[499px]
-          xl:mx-0
-          xl:pb-[22px]
-          xl:font-[700]
-          xl:text-[54px]
-          xl:leading-[70.2px]
-          xl:tracking-[0.06rem]
-        "
-      >
-        On-chain Private And Compliant Transactions
-      </h1>
-
-      <h2
-        class="
-          text-white
-          font-normal
-          text-center text-sm-hero
-          z-[2]
-          relative
-          mx-auto
-          max-w-[290px]
-          sm:max-w-[440px]
-          sm:font-[400]
-          sm:text-[20px]
-          sm:leading-[30px]
-          md:max-w-[620px]
-          lg:text-left
-          lg:max-w-[450px]
-          lg:mx-0
-          lg:text-[20px]
-          lg:leading-[30px]
-          xl:text-left
-          xl:max-w-[499px]
-          xl:mx-0
-          xl:font-[400]
-          xl:text-[20px]
-          xl:leading-[30px]
-        "
-      >
-        Opact Wallet allows you to perform anonymous
-        transactions on the Blockchain by creating private
-        accounts powered by Zero Knowledge.
-      </h2>
-
       <div
-        class="
-          order-3
-          w-full
-          z-[2]
-          space-y-[16px]
-          mt-[-28px]
-          sm:flex
-          sm:mt-0
-          sm:space-y-0
-          sm:max-w-max
-          sm:mx-auto
-          sm:space-x-[24px]
-          sm:order-2
-          sm:pt-[32px]
-          md:pt-[34px] md:mt-0
-          lg:text-left lg:max-w-[499px] lg:mx-0 lg:pt-[31px]
-          xl:text-left xl:pt-[34px] xl:max-w-[499px] xl:mx-0
-        "
+        v-motion-slide-visible-once-bottom
       >
-        <LandingButton
-          text="Louch App"
-          :with-icon="true"
-          variant="hero-primary"
-          class="w-full lg:w-auto max-w-full md:max-w-max"
-        />
+        <h1
+          class="
+            z-[2]
+            pb-[8px]
+            relative
+            font-title
+            mx-auto
+            text-3xl-poppins-xs text-white text-center
+            max-w-[290px]
+            sm:text-[48px] sm:max-w-[490px] sm:pb-[22px]
+            md:font-[700]
+            md:leading-[62.4px]
+            md:max-w-full
+            md:tracking-[0.05rem]
+            lg:text-left
+            lg:max-w-[410px]
+            lg:mx-0
+            lg:pb-[26px]
+            lg:font-[600]
+            lg:text-[50px]
+            lg:leading-[65px]
+            lg:tracking-[0.09rem]
+            xl:text-left
+            xl:max-w-[499px]
+            xl:mx-0
+            xl:pb-[22px]
+            xl:font-[700]
+            xl:text-[54px]
+            xl:leading-[70.2px]
+            xl:tracking-[0.06rem]
+          "
+        >
+          On-chain Private And Compliant Transactions
+        </h1>
 
-        <LandingButton
-          variant="tertiary"
-          text="Documentation"
-          class="w-full lg:w-auto max-w-full md:max-w-max"
-        />
+        <h2
+          class="
+            text-white
+            font-normal
+            text-center text-sm-hero
+            z-[2]
+            relative
+            mx-auto
+            max-w-[290px]
+            sm:max-w-[440px]
+            sm:font-[400]
+            sm:text-[20px]
+            sm:leading-[30px]
+            md:max-w-[620px]
+            lg:text-left
+            lg:max-w-[450px]
+            lg:mx-0
+            lg:text-[20px]
+            lg:leading-[30px]
+            xl:text-left
+            xl:max-w-[499px]
+            xl:mx-0
+            xl:font-[400]
+            xl:text-[20px]
+            xl:leading-[30px]
+          "
+        >
+          Opact Wallet allows you to perform anonymous
+          transactions on the Blockchain by creating private
+          accounts powered by Zero Knowledge.
+        </h2>
+
+        <div
+          class="
+            order-3
+            w-full
+            z-[2]
+            space-y-[16px]
+            mt-[-28px]
+            sm:flex
+            sm:mt-0
+            sm:space-y-0
+            sm:max-w-max
+            sm:mx-auto
+            sm:space-x-[24px]
+            sm:order-2
+            sm:pt-[32px]
+            md:pt-[34px] md:mt-0
+            lg:text-left lg:max-w-[499px] lg:mx-0 lg:pt-[31px]
+            xl:text-left xl:pt-[34px] xl:max-w-[499px] xl:mx-0
+          "
+        >
+          <LandingButton
+            text="Louch App"
+            :with-icon="true"
+            variant="hero-primary"
+            class="w-full lg:w-auto max-w-full md:max-w-max"
+          />
+
+          <LandingButton
+            variant="tertiary"
+            text="Documentation"
+            class="w-full lg:w-auto max-w-full md:max-w-max"
+          />
+        </div>
       </div>
 
       <div
@@ -188,6 +192,7 @@
           xl:mt-0
           lg:space-x-[24px]
         "
+        v-motion-fade-visible-once
       >
         <span
           class="
