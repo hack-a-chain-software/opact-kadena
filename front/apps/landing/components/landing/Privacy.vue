@@ -14,10 +14,10 @@
       xl:mb-[84px]
       xl:flex-row-reverse
       xl:justify-between
-      2xl:mb-[38px]
+      2xl:mb-[70px]
     "
   >
-    <figure class="md:mb-[18px] lg:mr-[-80px] xl:mr-0">
+    <figure class="md:mb-[26px] lg:mb-[18px] lg:mr-[-80px] xl:mr-0">
       <nuxt-img
         src="/privacy.webp"
         class="
@@ -26,17 +26,18 @@
           sm:h-auto sm:max-w-[510px]
           md:max-w-[622px]
           mx-auto
-          lg:h-[354px]
-          lg:translate-y-[50px]
-          lg:translate-x-[-30px]
+          lg:max-w-[435px]
+          lg:translate-y-[55px]
+          lg:translate-x-[-80px]
           xl:h-auto
           xl:max-w-[520px]
           xl:translate-y-[20px]
           xl:translate-x-[-30px]
-          2xl:max-w-[648px]
+          2xl:max-w-[602px]
+          2xl:translate-x-[-30px]
         "
         loading="lazy"
-        sizes="xs:328px sm:510px md:622px lg:502px 2xl:648px"
+        sizes="xs:328px sm:510px md:622px lg:435px 2xl:602px"
         alt="Illustrative image of the marijuana plant"
       />
     </figure>
@@ -145,7 +146,7 @@
           xl:font-[500]
           xl:min-w-[570px]
           lg:text-[20px] lg:leading-[30px] lg:font-[500]
-          2xl:mb-[50px] 2xl:min-w-[600px]
+          2xl:mb-[50px] 2xl:min-w-[570px]
         "
       >
         Blockchains are transparent and everything you do
