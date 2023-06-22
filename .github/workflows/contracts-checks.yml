@@ -47,3 +47,6 @@ jobs:
 
       - name: Run generate-poseidon
         run: pnpm contracts generate-poseidon
+      
+      - name: Run test-poseidon
+        run: pnpm contracts test-poseidon
