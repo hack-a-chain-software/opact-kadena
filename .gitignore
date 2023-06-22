@@ -25,3 +25,4 @@ lib.repl
 **/.env
 **/node_modules
 pact
+scripts

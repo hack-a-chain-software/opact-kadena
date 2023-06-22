@@ -1,4 +1,4 @@
-(module plonk MODULE_ADMIN
+(module poseidon MODULE_ADMIN
     (defcap MODULE_ADMIN () true)
 
     (defun sigma(in:integer)
