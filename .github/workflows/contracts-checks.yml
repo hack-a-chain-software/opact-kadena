@@ -44,3 +44,6 @@ jobs:
 
       - name: Run generate-merkle
         run: pnpm contracts generate-merkle
+
+      - name: Run generate-poseidon
+        run: pnpm contracts generate-poseidon

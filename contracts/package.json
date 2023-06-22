@@ -6,7 +6,8 @@
 		"generate-groth16": "pnpm ejs ./groth16-verifier/src/ejs/lib.ejs.repl -f ./groth16-verifier/src/ejs/sample.verifier.json -o ./groth16-verifier/src/lib.repl",
 		"test-plonk": "pact plonk-verifier/tests/plonk-tests.repl",
 		"test-groth16": "pact groth16-verifier/tests/groth16-tests.repl",
-		"generate-merkle": "pnpm ejs ./merkle-tree/src/ejs/lib.ejs.repl -f ./merkle-tree/src/ejs/data.json -o ./merkle-tree/src/lib.repl"
+		"generate-merkle": "pnpm ejs ./merkle-tree/src/ejs/lib.ejs.repl -f ./merkle-tree/src/ejs/data.json -o ./merkle-tree/src/lib.repl",
+		"generate-poseidon": "pnpm ejs ./poseidon/src/ejs/lib.ejs.repl -f ./poseidon/src/ejs/data.json -o ./poseidon/src/lib.repl"
 	},
 	"dependencies": {
 		"ejs": "^3.1.9"

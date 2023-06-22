@@ -24,3 +24,4 @@ lib.repl
 *.env
 **/.env
 **/node_modules
+pact
