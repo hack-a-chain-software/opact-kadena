@@ -34,9 +34,7 @@
         2xl:pt-[102px]
       "
     >
-      <div
-        v-motion-slide-visible-once-bottom
-      >
+      <div v-motion-slide-visible-once-bottom>
         <h1
           class="
             z-[2]
@@ -120,8 +118,14 @@
             sm:order-2
             sm:pt-[32px]
             md:pt-[34px] md:mt-0
-            lg:text-left lg:max-w-[499px] lg:mx-0 lg:pt-[31px]
-            xl:text-left xl:pt-[34px] xl:max-w-[499px] xl:mx-0
+            lg:text-left
+            lg:max-w-[499px]
+            lg:mx-0
+            lg:pt-[31px]
+            xl:text-left
+            xl:pt-[34px]
+            xl:max-w-[499px]
+            xl:mx-0
           "
         >
           <LandingButton
