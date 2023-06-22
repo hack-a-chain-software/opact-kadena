@@ -27,7 +27,7 @@
     >
       <LandingLogo />
 
-      <LandingHeaderMenu/>
+      <LandingHeaderMenu />
 
       <LandingHeaderMenuMobile />
     </div>

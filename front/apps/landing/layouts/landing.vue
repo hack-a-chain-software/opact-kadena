@@ -1,19 +1,22 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive } from 'vue'
 
 const data = reactive({
-  showFixedNavbar: false,
-});
+  showFixedNavbar: false
+})
 
 onMounted(() => {
   window.onscroll = () => {
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 250) {
-      data.showFixedNavbar = true;
+    if (
+      document.body.scrollTop > 300 ||
+      document.documentElement.scrollTop > 250
+    ) {
+      data.showFixedNavbar = true
 
-      return;
+      return
     }
 
-    data.showFixedNavbar = false;
+    data.showFixedNavbar = false
   }
 })
 </script>

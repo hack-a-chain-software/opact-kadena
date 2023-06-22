@@ -25,7 +25,10 @@ const moveTo = (id: string) => {
   <div
     class="hidden lg:flex lg:space-x-[40px] items-center"
   >
-    <template v-for="item in config.routes" :key="item.title">
+    <template
+      v-for="item in config.routes"
+      :key="item.title"
+    >
       <NuxtLink
         class="
           lg:font-[200] lg:text-[16px] lg:leading-[24px]
