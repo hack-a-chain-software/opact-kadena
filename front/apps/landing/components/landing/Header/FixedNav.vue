@@ -1,10 +1,14 @@
 <template>
   <div
     class="
-      absolute
+      fixed
       top-0
       left-0
       right-0
+      z-[999]
+      bg-[rgba(16,_20,_24,_0.88)]
+      backdrop-blur-[4px]
+      lg:bg-dark-blue/[0.42] lg:backdrop-blur-[6px]
     "
   >
     <div
@@ -23,7 +27,7 @@
     >
       <LandingLogo />
 
-      <LandingHeaderMenu />
+      <LandingHeaderMenu/>
 
       <LandingHeaderMenuMobile />
     </div>

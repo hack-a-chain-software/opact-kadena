@@ -6,14 +6,7 @@ import {
   MenuItem
 } from '@headlessui/vue'
 
-interface NavigationItem {
-  to: string;
-  title: string;
-}
-
-defineProps<{
-  navigation: NavigationItem[];
-}>()
+const config = useAppConfig()
 
 const moveTo = (id: string) => {
   const element = document.getElementById(id)
@@ -87,7 +80,7 @@ const moveTo = (id: string) => {
           "
         >
           <MenuItem
-            v-for="{ title, to } in navigation"
+            v-for="{ title, to } in config.routes"
             :key="`mobile-menu-item-${to}`"
             as="div"
             class="

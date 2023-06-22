@@ -168,7 +168,7 @@
       >
         <figure class="rotate-[-8.05deg] lg:rotate-0">
           <nuxt-img
-            src="/hero.png"
+            src="/hero.webp"
             alt="Hero illustration"
             sizes="xs:466px sm:874px lg:861px xl:970px 2xl:1057px"
           />

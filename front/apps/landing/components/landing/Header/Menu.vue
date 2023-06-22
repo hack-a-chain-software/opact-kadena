@@ -1,12 +1,5 @@
 <script setup lang="ts">
-interface NavigationItem {
-  to: string;
-  title: string;
-}
-
-defineProps<{
-  navigation: NavigationItem[];
-}>()
+const config = useAppConfig()
 
 const moveTo = (id: string) => {
   const element = document.getElementById(id)
@@ -32,7 +25,7 @@ const moveTo = (id: string) => {
   <div
     class="hidden lg:flex lg:space-x-[40px] items-center"
   >
-    <template v-for="item in navigation" :key="item.title">
+    <template v-for="item in config.routes" :key="item.title">
       <NuxtLink
         class="
           lg:font-[200] lg:text-[16px] lg:leading-[24px]

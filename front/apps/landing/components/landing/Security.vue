@@ -18,7 +18,7 @@
         >
           <figure class="h-[238px] md:h-[482px]">
             <nuxt-img
-              src="/security-blur.png"
+              src="/security-blur.webp"
               loading="lazy"
               class="w-full h-full"
               alt="Illustrative image of the marijuana plant"
@@ -56,7 +56,7 @@
             "
           >
             <nuxt-img
-              src="/security.png"
+              src="/security.webp"
               class="scale-x-[-1] lg:scale-x-[1]"
               sizes="xs:429px md:765px lg:891.5px xl:891px 2xl:1011px"
               alt="Illustrative image of the marijuana plant"

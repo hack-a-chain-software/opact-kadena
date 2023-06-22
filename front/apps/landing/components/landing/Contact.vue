@@ -34,7 +34,7 @@
           "
         >
           <nuxt-img
-            src="/touch-bg.png"
+            src="/touch-bg.webp"
             class="w-full h-full"
             loading="lazy"
             alt="Hero illustration"

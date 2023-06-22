@@ -14,12 +14,12 @@
       xl:mb-[84px]
       xl:flex-row-reverse
       xl:justify-between
-      2xl:mb-[30px]
+      2xl:mb-[38px]
     "
   >
     <figure class="md:mb-[18px] lg:mr-[-80px] xl:mr-0">
       <nuxt-img
-        src="/privacy.png"
+        src="/privacy.webp"
         class="
           max-w-[328px]
           h-[244px]
@@ -31,7 +31,7 @@
           lg:translate-x-[-30px]
           xl:h-auto
           xl:max-w-[520px]
-          xl:translate-y-[40px]
+          xl:translate-y-[20px]
           xl:translate-x-[-30px]
           2xl:max-w-[648px]
         "

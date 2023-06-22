@@ -198,7 +198,8 @@ module.exports = {
       },
 
       screens: {
-        xs: '520px'
+        xs: '520px',
+        '2xl': '1440px'
       },
 
       minHeight: {
