@@ -3,11 +3,11 @@
 
     (defschema FilledSubtreesSchema
         "Schema for the filledSubtrees table"
-        value:string)
+        value:integer)
       
     (defschema RootsSchema
         "Schema for the roots table"
-        value:string)
+        value:integer)
 
     (defschema StateSchema
         "Schema for the config table"
@@ -31,14 +31,14 @@
     (defun set-next-index (next_index:integer)
         (update state "0" {"next_index": next_index}))
 
-    (defun set-filled-subtrees (key:string value:string)
+    (defun set-filled-subtrees (key:string value:integer)
         (write filledSubtrees key { "value": value }))
 
-    (defun insert-root (key:string value:string)
+    (defun insert-root (key:string value:integer)
         (write roots key { "value": value }))
 
-    (defun my-hash (left:string right:string)
-        (hash (+ left right)))
+    (defun poseidon-hash (left:integer right:integer)
+        (poseidon.poseidon [left right]))
 
     (defun initialize()
         <% for (let i = 0; i < level; i++) { %>
@@ -55,18 +55,18 @@
 
     (defun zeros (i:integer)
         (if (= i 0)
-            "D9kjyl5yGMS6PDgBwmphfs2_2uu5x2zi7KFm54Ve-7g" ; (hash "0")
+            3193090221241211970002919215846211184824251841300455796635909287157453409439 ; (hash "0") zeroElement
             (if (= i 1)
-                "s1sm9e2GFnqacffSdC5KpjHwqIzD2Ocr5pGGpgktnJk" ; (hash (+ "D9kjyl5yGMS6PDgBwmphfs2_2uu5x2zi7KFm54Ve" "D9kjyl5yGMS6PDgBwmphfs2_2uu5x2zi7KFm54Ve"))
+                5537318983262243501092567777293783139848264067255984381952191910128890964680 ; (hash (+ "3193090221241211970002919215846211184824251841300455796635909287157453409439" "3193090221241211970002919215846211184824251841300455796635909287157453409439"))
                 (if (= i 2)
-                    "-yuQcXs9Wr_GOZTpN6UG1RhjBULGWEL22v_9jyVZ_ss" ; (hash (+ "s1sm9e2GFnqacffSdC5KpjHwqIzD2Ocr5pGGpgktnJk" "s1sm9e2GFnqacffSdC5KpjHwqIzD2Ocr5pGGpgktnJk"))
+                    7303590454072865666193218918548579953037841327389857351908320529561587029886 ; (hash (+ "5537318983262243501092567777293783139848264067255984381952191910128890964680" "5537318983262243501092567777293783139848264067255984381952191910128890964680"))
                     ""
                 )
             )  
         )
     )
 
-    (defun insert-leaf (leaf:string)
+    (defun insert-leaf (leaf:integer)
         (
             let*
             (
@@ -80,7 +80,7 @@
                     (filled_subtrees (at 'value (read filledSubtrees "<%= i - 1 %>")))
 
                     (lr_<%= i %> (if (= (mod current_index 2) 0)
-                        {"left": current_level_hash, "right": (zeros <%= i -1 %>)}
+                        {"left": current_level_hash, "right": (zeros <%= i - 1 %>)}
                         {"left": filled_subtrees, "right": current_level_hash}
                     ))
 
@@ -89,7 +89,7 @@
                         (list (zeros <%= i - 1 %>)))
                     ))
 
-                    (current_level_hash (my-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
+                    (current_level_hash (poseidon-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
 
                     (current_index (/ current_index 2))
                 <% } %>
@@ -107,13 +107,7 @@
                 (set-filled-subtrees "<%= i %>" (at <%= i %> hashes))
             )
         <% } %>
-            {
-                "root": current_level_hash,
-                "state": {
-                    "current_root_index": new_root_index,
-                    "next_index": (+ next-index 1)
-                }
-            }
+            current_level_hash
         )
     )
 )

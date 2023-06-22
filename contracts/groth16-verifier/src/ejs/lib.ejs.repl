@@ -1,4 +1,4 @@
-(module plonk MODULE_ADMIN
+(module groth16 MODULE_ADMIN
     (defcap MODULE_ADMIN () true)
 
     (defschema G1Point
