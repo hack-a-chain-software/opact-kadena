@@ -185,6 +185,7 @@
     </LandingSection>
 
     <LandingSection
+      v-motion-slide-visible-once-bottom
       class="z-[1] space-y-[16px] relative md:pb-[46px]"
     >
       <div
