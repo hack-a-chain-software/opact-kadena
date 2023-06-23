@@ -156,6 +156,12 @@ const config = useAppConfig()
           lg:w-[861px]
           xl:w-[970px]
           2xl:w-[1057px]
+
+          h-[387.95px]
+          sm:h-[716.81px]
+          lg:h-[717px]
+          xl:h-[807.57px]
+          2xl:h-[880px]
         "
       >
         <figure class="rotate-[-8.05deg] lg:rotate-0">
