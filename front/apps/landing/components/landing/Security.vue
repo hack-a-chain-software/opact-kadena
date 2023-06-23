@@ -1,8 +1,15 @@
 <template>
   <LandingSection
-    class="mb-[40px] md:mb-[60px] lg:mb-[79px] xl:mb-[80px]"
+    id="security"
+    class="pt-[40px] md:pt-[60px] lg:pt-[80px]"
   >
-    <LandingContainer cta="Learn more" size="xl">
+    <LandingContainer
+      v-motion
+      :initial="{ opacity: 0.5, scale: 0.97 }"
+      :visible="{ opacity: 1, scale: 1 }"
+      :delay="200"
+      cta="Learn more" size="xl"
+    >
       <template v-slot:before>
         <div
           class="

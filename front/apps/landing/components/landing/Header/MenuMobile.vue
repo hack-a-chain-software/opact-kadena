@@ -36,12 +36,12 @@ const moveTo = (id: string) => {
       class="flex items-center justify-center h-full"
     >
       <Icon
-        name="close"
-        class="w-[24px] h-[24px]"
         v-if="open"
+        name="close"
+        class="w-6 h-6"
       />
 
-      <Icon v-else name="menu" class="w-[24px] h-[24px]" />
+      <Icon v-else name="menu" class="w-6 h-6" />
     </MenuButton>
 
     <MenuItems
@@ -94,11 +94,10 @@ const moveTo = (id: string) => {
           >
             <a
               role="button"
+              v-text="title"
               class="text-base-xs font-title text-white"
               @click="moveTo(to)"
-            >
-              {{ title }}
-            </a>
+            />
           </MenuItem>
         </div>
 

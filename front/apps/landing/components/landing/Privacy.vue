@@ -1,76 +1,48 @@
 <template>
   <LandingSection
+    id="privacy"
     class="
-      mb-[40px]
-      sm:mb-[50px]
-      md:mb-[60px]
-      overflow-hidden
-      relative
-      lg:flex
-      lg:mb-[84px]
-      lg:flex-row-reverse
-      lg:justify-between
-      xl:flex
-      xl:mb-[84px]
-      xl:flex-row-reverse
-      xl:justify-between
-      2xl:mb-[70px]
+      pt-[40px] md:pt-[30px] lg:pt-[115px] xl:pt-[18.2px] 2xl:pt-[38px]
+      relative overflow-hidden
+      lg:flex lg:flex-row-reverse lg:justify-between
     "
   >
     <figure
-      class="
-        md:mb-[26px]
-        lg:mb-[18px] lg:mr-[-80px]
-        xl:mr-0
-      "
+      class="md:mb-[39px] lg:mb-[18px] lg:mr-[-80px] xl:mr-0"
     >
       <nuxt-img
-        src="/privacy.webp"
-        class="
-          max-w-[328px]
-          h-[244px]
-          sm:h-auto sm:max-w-[510px]
-          md:max-w-[622px]
-          mx-auto
-          lg:max-w-[435px]
-          lg:translate-y-[55px]
-          lg:translate-x-[-80px]
-          xl:h-auto
-          xl:max-w-[520px]
-          xl:translate-y-[20px]
-          xl:translate-x-[-30px]
-          2xl:max-w-[602px] 2xl:translate-x-[-30px]
-        "
         loading="lazy"
+        src="/privacy.webp"
+        alt="Illustrative image"
         sizes="xs:328px sm:510px md:622px lg:435px 2xl:602px"
-        alt="Illustrative image of the marijuana plant"
+        class="
+          h-[244px] sm:h-auto mx-auto
+          lg:translate-y-[55px] xl:translate-y-[20px]
+          lg:translate-x-[-80px] xl:translate-x-[-30px] 2xl:translate-x-[-30px]
+          max-w-[328px] sm:max-w-[510px] md:max-w-[622px] lg:max-w-[435px] xl:max-w-[520px] 2xl:max-w-[602px]
+        "
       />
     </figure>
 
     <div class="flex-1">
       <div
         class="
-          flex flex-col
-          md:flex-row
-          md:items-center
           md:space-x-[24px]
-          md:mb-[25px]
-          lg:mb-[28px]
-          xl:mb-[25px]
+          md:mb-[25px] lg:mb-[28px] xl:mb-[25px]
+          flex flex-col md:flex-row md:items-center
         "
       >
         <h3
+          v-motion
+          :initial="{ opacity: 0, x: -15 }"
+          :visibleOnce="{ opacity: 1, x: 0 }"
           class="
-            bg-opact-gradient bg-clip-text
-            text-transparent
-            w-max
-            text-sm
-            font-[500]
-            uppercase
-            mb-[12px]
-            md:mb-1
-            sm:leading-[33px] sm:text-[22px] sm:font-[900]
-            lg:text-[22px] lg:leading-[33px] lg:font-[700]
+            w-max uppercase
+            pb-[12px] md:pb-0
+            sm:leading-[33px] lg:leading-[33px]
+            text-sm sm:text-[22px] lg:text-[22px]
+            font-[500] sm:font-[900] lg:font-[700]
+            text-transparent bg-opact-gradient bg-clip-text
           "
         >
           Privacy
@@ -79,16 +51,25 @@
         <div
           class="
             flex
-            space-x-[13px]
-            mb-[16px]
-            md:mb-0 md:space-x-[8px]
+            mb-[16px] md:mb-0
+            space-x-[13px] md:space-x-[8px]
           "
         >
-          <LandingBadge>
+          <LandingBadge
+            v-motion
+            :initial="{ opacity: 0, x: -15 }"
+            :visibleOnce="{ opacity: 1, x: 0 }"
+            :delay="150"
+          >
             P2P Private transactions
           </LandingBadge>
 
-          <LandingBadge>
+          <LandingBadge
+            v-motion
+            :initial="{ opacity: 0, x: -15 }"
+            :visibleOnce="{ opacity: 1, x: 0 }"
+            :delay="300"
+          >
             DeFi Private transactions
           </LandingBadge>
         </div>
@@ -96,35 +77,18 @@
 
       <h2
         class="
-          font-[600]
-          text-2xl-poppins text-[30px]
-          font-title
-          text-white
-          tracking-[-0.05rem]
-          mb-[12px]
-          max-w-[330px]
-          sm:mb-[20px]
-          sm:max-w-full
-          sm:tracking-normal
-          sm:text-4xl-poppins-md
-          lg:font-[600]
-          lg:text-[48px]
-          lg:leading-[57.6px]
-          lg:mb-[22px]
-          lg:max-w-[441px]
-          xl:min-w-[569px]
-          xl:font-[600]
-          xl:text-[50px]
-          xl:leading-[60px]
-          xl:mb-[23px]
-          xl:tracking-normal
-          2xl:font-[600]
-          2xl:text-[54px]
-          2xl:leading-[64.8px]
-          2xl:mb-[23px]
-          2xl:tracking-normal
-          2xl:min-w-[600px]
+          font-title text-white font-[600]
+          xl:min-w-[569px] 2xl:min-w-[600px]
+          sm:tracking-normal tracking-[-0.05rem]
+          max-w-[330px] sm:max-w-full lg:max-w-[441px]
+          lg:leading-[57.6px] xl:leading-[60px] 2xl:leading-[64.8px]
+          mb-[12px] sm:mb-[20px] lg:mb-[22px] xl:mb-[23px] 2xl:mb-[23px]
+          text-2xl-poppins text-[30px] sm:text-4xl-poppins-md lg:text-[48px]  xl:text-[50px] 2xl:text-[54px]
         "
+        v-motion
+        :initial="{ opacity: 0, x: -15 }"
+        :visibleOnce="{ opacity: 1, x: 0 }"
+        :delay="600"
       >
         Protect your
         <br class="hidden lg:inline xl:hidden" />
@@ -133,25 +97,19 @@
       </h2>
 
       <p
+        v-motion
+        :initial="{ opacity: 0, x: -15 }"
+        :visibleOnce="{ opacity: 1, x: 0 }"
+        :delay="700"
         class="
-          text-lg-xs text-[#BDBDBD]
-          mb-[32px]
-          sm:text-[20px]
-          sm:leading-[30px]
+          text-[#BDBDBD]
           sm:font-[500]
-          sm:mb-[42px]
           lg:tracking-[0.005rem]
-          lg:mb-[48px]
-          lg:max-w-[441px]
-          xl:max-w-auto
-          xl:tracking-[0.005rem]
-          xl:mb-[47px]
-          xl:text-[20px]
-          xl:leading-[30px]
-          xl:font-[500]
-          xl:min-w-[570px]
-          lg:text-[20px] lg:leading-[30px] lg:font-[500]
-          2xl:mb-[50px] 2xl:min-w-[570px]
+          lg:max-w-[441px] xl:max-w-auto
+          xl:min-w-[570px] 2xl:min-w-[570px]
+          sm:leading-[30px] lg:leading-[30px] xl:leading-[30px]
+          text-lg-xs sm:text-[20px] lg:text-[20px] xl:text-[20px]
+          mb-[32px] sm:mb-[42px] lg:mb-[48px] xl:mb-[47px] 2xl:mb-[50px]
         "
       >
         Blockchains are transparent and everything you do
@@ -161,10 +119,14 @@
       </p>
 
       <LandingButton
+        :delay="800"
         :with-icon="true"
-        variant="secondary"
         text="Learn more"
+        variant="secondary"
         class="lg:h-[32px] xl:h-[39px]"
+        v-motion
+        :initial="{ opacity: 0, x: -15 }"
+        :visibleOnce="{ opacity: 1, x: 0 }"
       />
     </div>
   </LandingSection>

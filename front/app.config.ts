@@ -1,4 +1,6 @@
 export default defineAppConfig({
+  title: 'On-chain Private And Compliant Transactions',
+  subtitle: 'Opact Wallet allows you to perform anonymous transactions on the Blockchain by creating private accounts powered by Zero Knowledge.',
   nuxtIcon: {
     aliases: {
       eth: 'Eth',
@@ -31,6 +33,20 @@ export default defineAppConfig({
       title: 'Contact',
       to: 'contact'
     }
+  ],
+  blockchains: [
+    {
+      icon: 'kadena',
+      name: 'Kadena',
+    },
+    {
+      icon: 'near',
+      name: 'Near',
+    },
+    {
+      icon: 'eth',
+      name: 'Ethereum',
+    },
   ],
   community: [
     {

@@ -1,177 +1,89 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useAppConfig();
+</script>
 
 <template>
   <div
     class="
-      pt-[52px]
-      md:pt-[60px]
-      mb-[40px]
-      lg:mb-[74px]
-      xl:mb-[90px]
-      2xl:mb-[110px]
-      overflow-x-clip
       max-w-screen
+      overflow-x-clip
+      pt-[52px] md:pt-[60px]
+      h-[790px] sm:h-[1097.2px] lg:h-[717px] xl:h-[807.57px] 2xl:h-[880px]
     "
   >
     <LandingSection
       class="
-        pt-[24px]
         flex flex-col
-        items-center
-        mb-[22px]
-        sm:pt-[50px] sm:mb-0
-        md:mb-[0px]
-        lg:items-start
-        lg:relative
-        lg:overflow-visible
-        lg:pt-[108px]
-        lg:mb-[40px]
-        xl:items-start
-        xl:relative
-        xl:overflow-visible
-        xl:pt-[107px]
-        xl:mb-[65px]
-        2xl:pt-[102px]
+        lg:relative lg:overflow-visible
+        items-center lg:items-start xl:items-start
+        mb-[22px] sm:mb-0 md:mb-[0px] lg:mb-[40px] xl:mb-[65px]
+        pt-[24px] sm:pt-[50px] lg:pt-[108px] xl:pt-[107px] 2xl:pt-[102px]
       "
     >
-      <div v-motion-slide-visible-once-bottom>
-        <h1
-          class="
-            z-[2]
-            pb-[8px]
-            relative
-            font-title
-            mx-auto
-            text-3xl-poppins-xs text-white text-center
-            max-w-[290px]
-            sm:text-[48px] sm:max-w-[490px] sm:pb-[22px]
-            md:font-[700]
-            md:leading-[62.4px]
-            md:max-w-full
-            md:tracking-[0.05rem]
-            lg:text-left
-            lg:max-w-[410px]
-            lg:mx-0
-            lg:pb-[26px]
-            lg:font-[600]
-            lg:text-[50px]
-            lg:leading-[65px]
-            lg:tracking-[0.09rem]
-            xl:text-left
-            xl:max-w-[499px]
-            xl:mx-0
-            xl:pb-[22px]
-            xl:font-[700]
-            xl:text-[54px]
-            xl:leading-[70.2px]
-            xl:tracking-[0.06rem]
-          "
-        >
-          On-chain Private And Compliant Transactions
-        </h1>
+      <h1
+        v-text="config.title"
+        class="
+          relative z-[2] -xs
+          mx-auto lg:mx-0 xl:mx-0
+          text-white text-center lg:text-left
+          font-title xl:font-[700] lg:font-[600]
+          pb-[8px] sm:pb-[22px] xl:pb-[22px] lg:pb-[26px]
+          md:leading-[62.4px] lg:leading-[65px] xl:leading-[70.2px]
+          md:tracking-[0.05rem] lg:tracking-[0.09rem] xl:tracking-[0.06rem]
+          text-3xl-poppins-xs sm:text-[48px] md:font-[700] lg:text-[50px] xl:text-[54px]
+          max-w-[290px] sm:max-w-[490px] md:max-w-full lg:max-w-[410px] xl:max-w-[499px]
+        "
+      />
 
-        <h2
-          class="
-            text-white
-            font-normal
-            text-center text-sm-hero
-            z-[2]
-            relative
-            mx-auto
-            max-w-[290px]
-            sm:max-w-[440px]
-            sm:font-[400]
-            sm:text-[20px]
-            sm:leading-[30px]
-            md:max-w-[620px]
-            lg:text-left
-            lg:max-w-[450px]
-            lg:mx-0
-            lg:text-[20px]
-            lg:leading-[30px]
-            xl:text-left
-            xl:max-w-[499px]
-            xl:mx-0
-            xl:font-[400]
-            xl:text-[20px]
-            xl:leading-[30px]
-          "
-        >
-          Opact Wallet allows you to perform anonymous
-          transactions on the Blockchain by creating private
-          accounts powered by Zero Knowledge.
-        </h2>
+      <h2
+        class="
+          relative z-[2]
+          mx-auto lg:mx-0
+          sm:text-[20px] lg:text-[20px]
+          sm:leading-[30px] lg:leading-[30px]
+          text-sm-hero text-white text-center lg:text-left
+          max-w-[290px] sm:max-w-[440px] md:max-w-[620px] lg:max-w-[450px] xl:max-w-[499px]
+        "
+        v-text="config.subtitle"
+      />
 
-        <div
-          class="
-            order-3
-            w-full
-            z-[2]
-            space-y-[16px]
-            mt-[-28px]
-            sm:flex
-            sm:mt-0
-            sm:space-y-0
-            sm:max-w-max
-            sm:mx-auto
-            sm:space-x-[24px]
-            sm:order-2
-            sm:pt-[32px]
-            md:pt-[34px] md:mt-0
-            lg:text-left
-            lg:max-w-[499px]
-            lg:mx-0
-            lg:pt-[31px]
-            xl:text-left
-            xl:pt-[34px]
-            xl:max-w-[499px]
-            xl:mx-0
-          "
-        >
-          <LandingButton
-            text="Louch App"
-            :with-icon="true"
-            variant="hero-primary"
-            class="w-full lg:w-auto max-w-full md:max-w-max"
-          />
+      <div
+        class="
+          lg:text-left
+          sm:flex z-[2] w-full
+          order-3 sm:order-2
+          mt-[-28px] sm:mt-0
+          sm:mx-auto lg:mx-0
+          sm:space-x-6 space-y-4 sm:space-y-0
+          sm:max-w-max lg:max-w-[499px] xl:max-w-[499px]
+          sm:pt-[32px] md:pt-[34px] lg:pt-[31px] xl:pt-[34px]
+        "
+      >
+        <LandingButton
+          text="Louch App"
+          :with-icon="true"
+          variant="hero-primary"
+          class="w-full lg:w-auto max-w-full md:max-w-max"
+        />
 
-          <LandingButton
-            variant="tertiary"
-            text="Documentation"
-            class="w-full lg:w-auto max-w-full md:max-w-max"
-          />
-        </div>
+        <LandingButton
+          variant="tertiary"
+          text="Documentation"
+          class="w-full lg:w-auto max-w-full md:max-w-max"
+        />
       </div>
 
       <div
         class="
-          z-[0]
-          order-2
-          mt-[-40px]
-          overflow-y-clip
-          flex
-          items-center
-          justify-center
-          sm:order-3 sm:mt-[-16%]
-          w-[466px]
-          translate-x-[12px]
-          sm:w-[874px]
-          md:mt-[-84px] md:translate-x-[22px]
-          lg:bottom-auto
           lg:top-[-4rem]
-          lg:absolute
-          lg:mt-0
-          lg:right-[-10rem]
-          lg:w-[861px]
-          xl:bottom-auto
-          xl:top-[-4rem]
-          xl:absolute
-          xl:mt-0
-          xl:right-[-9rem]
-          select-none
-          pointer-events-none
-          xl:w-[970px]
-          2xl:w-[1057px] 2xl:top-[-4rem] 2xl:right-[-8rem]
+          z-[0] sm:order-3 order-2
+          lg:absolute lg:bottom-auto
+          flex items-center justify-center
+          translate-x-[12px] md:translate-x-[22px]
+          mt-[-40px] sm:mt-[-16%] md:mt-[-84px] lg:mt-0
+          select-none pointer-events-none overflow-y-clip
+          lg:right-[-10rem] xl:right-[-9rem] 2xl:right-[-8rem]
+          w-[466px] sm:w-[874px] lg:w-[861px] xl:w-[970px] 2xl:w-[1057px]
         "
       >
         <figure class="rotate-[-8.05deg] lg:rotate-0">
@@ -185,66 +97,39 @@
     </LandingSection>
 
     <LandingSection
-      v-motion-slide-visible-once-bottom
-      class="z-[1] space-y-[16px] relative md:pb-[46px]"
+      class="z-[1] space-y-4 relative"
     >
       <div
         class="
-          flex flex-col
-          sm:flex-row sm:items-center sm:space-x-[24px]
-          md:mt-[-30px]
-          lg:mt-0
-          xl:mt-0
-          lg:space-x-[24px]
+          md:space-x-6
+          md:mt-[-30px] lg:mt-0
+          flex flex-col sm:flex-row sm:items-center
         "
-        v-motion-fade-visible-once
       >
         <span
           class="
             text-white
-            mb-[8px]
-            tracking-[0.05rem]
-            font-[600]
-            sm:mb-0
-            sm:text-lg
-            sm:text-[20px]
-            sm:leading-[30px]
-            lg:mb-0 lg:text-[20px] lg:leading-[30px]
-            xl:mb-0
-            lg:text-lg
+            mb-[8px] sm:mb-0
+            font-[600] tracking-[0.05rem]
+            lg:text-[20px] lg:leading-[30px]
             xl:text-[20px] xl:leading-[30px]
+            sm:text-lg sm:text-[20px] sm:leading-[30px]
           "
         >
           Building on
         </span>
 
         <div
-          class="
-            flex
-            space-x-[16px]
-            lg:space-x-[18px]
-            xl:space-x-[16px]
-          "
+          class="flex space-x-[16px] lg:space-x-[18px] xl:space-x-[16px]"
         >
-          <LandingBlockchain chain="kadena" />
-
-          <LandingBlockchain chain="near" />
-
-          <LandingBlockchain chain="eth" />
+          <LandingBlockchain
+            :icon="icon"
+            :name="name"
+            :key="`landing-blockchain-label-${name}`"
+            v-for="{ icon, name } in config.blockchains"
+          />
         </div>
       </div>
     </LandingSection>
   </div>
 </template>
-
-<style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-</style>

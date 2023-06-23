@@ -1,5 +1,8 @@
 <template>
-  <LandingSection>
+  <LandingSection
+    id="contact"
+    class="py-[40px] md:py-[60px] lg:py-[80px]"
+  >
     <div
       class="
         p-[2px]

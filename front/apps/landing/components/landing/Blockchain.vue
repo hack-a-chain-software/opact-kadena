@@ -1,22 +1,8 @@
 <script setup lang="ts">
 defineProps<{
-  chain: 'eth' | 'near' | 'kadena';
+  icon: string;
+  name: string;
 }>()
-
-const chains = {
-  eth: {
-    label: 'Ethereum',
-    icon: 'eth'
-  },
-  near: {
-    label: 'Near',
-    icon: 'near'
-  },
-  kadena: {
-    label: 'Kadena',
-    icon: 'kadena'
-  }
-}
 </script>
 
 <template>
@@ -41,7 +27,7 @@ const chains = {
     "
   >
     <Icon
-      :name="chains[chain].icon"
+      :name="icon"
       class="shrink-0 w-[24px] md:w-[24px]"
     />
 
@@ -60,7 +46,7 @@ const chains = {
         overflow-hidden
       "
     >
-      {{ chains[chain].label }}
+      {{ name }}
     </span>
   </div>
 </template>

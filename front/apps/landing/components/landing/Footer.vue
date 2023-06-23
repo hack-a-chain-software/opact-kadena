@@ -1,16 +1,13 @@
 <template>
   <div
     class="
-      pt-[78px]
       opact-footer
       flex flex-col
       items-center
       justify-center
       space-y-[12px]
       pb-[16px]
-      md:pt-[124px]
-      lg:pt-[135px]
-      xl:pt-[170px]
+      pt-[50px]
     "
   >
     <Icon
