@@ -60,7 +60,7 @@ const config = useAppConfig()
               duration: 420,
             },
           }"
-          :visibleOnce="{
+          :visible="{
             opacity: 1,
             x: 0,
             transition: {

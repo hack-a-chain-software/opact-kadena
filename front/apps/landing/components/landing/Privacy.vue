@@ -5,7 +5,7 @@
       pt-[40px]
       md:pt-[30px]
       lg:pt-[115px]
-      xl:pt-[18.2px]
+      xl:pt-[33.52px]
       2xl:pt-[38px]
       relative
       overflow-hidden

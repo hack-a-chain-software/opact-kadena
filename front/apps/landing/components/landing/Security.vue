@@ -3,7 +3,10 @@
     id="security"
     class="pt-[40px] md:pt-[60px] lg:pt-[80px]"
   >
-    <LandingContainer cta="Learn more" size="xl">
+    <LandingContainer
+      cta="Learn more"
+      size="xl"
+    >
       <template v-slot:before>
         <div
           class="
@@ -58,10 +61,6 @@
               2xl:top-[-200px]
               2xl:left-[-90px]
             "
-            v-motion
-            :initial="{ opacity: 0.5, scale: 0.96 }"
-            :visibleOnce="{ opacity: 1, scale: 1 }"
-            :delay="300"
           >
             <nuxt-img
               src="/security.webp"
