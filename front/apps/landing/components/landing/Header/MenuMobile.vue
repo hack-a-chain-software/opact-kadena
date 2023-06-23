@@ -35,11 +35,7 @@ const moveTo = (id: string) => {
       as="div"
       class="flex items-center justify-center h-full"
     >
-      <Icon
-        v-if="open"
-        name="close"
-        class="w-6 h-6"
-      />
+      <Icon v-if="open" name="close" class="w-6 h-6" />
 
       <Icon v-else name="menu" class="w-6 h-6" />
     </MenuButton>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const config = useAppConfig();
+const config = useAppConfig()
 </script>
 
 <template>
@@ -7,42 +7,88 @@ const config = useAppConfig();
     class="
       max-w-screen
       overflow-x-clip
-      pt-[52px] md:pt-[60px]
-      h-[790px] sm:h-[1097.2px] lg:h-[717px] xl:h-[807.57px] 2xl:h-[880px]
+      pt-[52px]
+      md:pt-[60px]
+      h-[790px]
+      sm:h-[1097.2px]
+      lg:h-[717px]
+      xl:h-[807.57px]
+      2xl:h-[880px]
     "
   >
     <LandingSection
       class="
         flex flex-col
         lg:relative lg:overflow-visible
-        items-center lg:items-start xl:items-start
-        mb-[22px] sm:mb-0 md:mb-[0px] lg:mb-[40px] xl:mb-[65px]
-        pt-[24px] sm:pt-[50px] lg:pt-[108px] xl:pt-[107px] 2xl:pt-[102px]
+        items-center
+        lg:items-start
+        xl:items-start
+        mb-[22px]
+        sm:mb-0
+        md:mb-[0px]
+        lg:mb-[40px]
+        xl:mb-[65px]
+        pt-[24px]
+        sm:pt-[50px]
+        lg:pt-[108px]
+        xl:pt-[107px]
+        2xl:pt-[102px]
       "
     >
       <h1
         v-text="config.title"
         class="
-          relative z-[2] -xs
-          mx-auto lg:mx-0 xl:mx-0
-          text-white text-center lg:text-left
-          font-title xl:font-[700] lg:font-[600]
-          pb-[8px] sm:pb-[22px] xl:pb-[22px] lg:pb-[26px]
-          md:leading-[62.4px] lg:leading-[65px] xl:leading-[70.2px]
-          md:tracking-[0.05rem] lg:tracking-[0.09rem] xl:tracking-[0.06rem]
-          text-3xl-poppins-xs sm:text-[48px] md:font-[700] lg:text-[50px] xl:text-[54px]
-          max-w-[290px] sm:max-w-[490px] md:max-w-full lg:max-w-[410px] xl:max-w-[499px]
+          relative
+          z-[2]
+          -xs
+          mx-auto
+          lg:mx-0
+          xl:mx-0
+          text-white text-center
+          lg:text-left
+          font-title
+          xl:font-[700]
+          lg:font-[600]
+          pb-[8px]
+          sm:pb-[22px]
+          xl:pb-[22px]
+          lg:pb-[26px]
+          md:leading-[62.4px]
+          lg:leading-[65px]
+          xl:leading-[70.2px]
+          md:tracking-[0.05rem]
+          lg:tracking-[0.09rem]
+          xl:tracking-[0.06rem]
+          text-3xl-poppins-xs
+          sm:text-[48px]
+          md:font-[700]
+          lg:text-[50px]
+          xl:text-[54px]
+          max-w-[290px]
+          sm:max-w-[490px]
+          md:max-w-full
+          lg:max-w-[410px]
+          xl:max-w-[499px]
         "
       />
 
       <h2
         class="
-          relative z-[2]
-          mx-auto lg:mx-0
-          sm:text-[20px] lg:text-[20px]
-          sm:leading-[30px] lg:leading-[30px]
-          text-sm-hero text-white text-center lg:text-left
-          max-w-[290px] sm:max-w-[440px] md:max-w-[620px] lg:max-w-[450px] xl:max-w-[499px]
+          relative
+          z-[2]
+          mx-auto
+          lg:mx-0
+          sm:text-[20px]
+          lg:text-[20px]
+          sm:leading-[30px]
+          lg:leading-[30px]
+          text-sm-hero text-white text-center
+          lg:text-left
+          max-w-[290px]
+          sm:max-w-[440px]
+          md:max-w-[620px]
+          lg:max-w-[450px]
+          xl:max-w-[499px]
         "
         v-text="config.subtitle"
       />
@@ -50,13 +96,23 @@ const config = useAppConfig();
       <div
         class="
           lg:text-left
-          sm:flex z-[2] w-full
-          order-3 sm:order-2
-          mt-[-28px] sm:mt-0
-          sm:mx-auto lg:mx-0
-          sm:space-x-6 space-y-4 sm:space-y-0
-          sm:max-w-max lg:max-w-[499px] xl:max-w-[499px]
-          sm:pt-[32px] md:pt-[34px] lg:pt-[31px] xl:pt-[34px]
+          sm:flex
+          z-[2]
+          w-full
+          order-3
+          sm:order-2
+          mt-[-28px]
+          sm:mt-0 sm:mx-auto
+          lg:mx-0
+          sm:space-x-6
+          space-y-4
+          sm:space-y-0 sm:max-w-max
+          lg:max-w-[499px]
+          xl:max-w-[499px]
+          sm:pt-[32px]
+          md:pt-[34px]
+          lg:pt-[31px]
+          xl:pt-[34px]
         "
       >
         <LandingButton
@@ -76,14 +132,30 @@ const config = useAppConfig();
       <div
         class="
           lg:top-[-4rem]
-          z-[0] sm:order-3 order-2
+          z-[0]
+          sm:order-3
+          order-2
           lg:absolute lg:bottom-auto
-          flex items-center justify-center
-          translate-x-[12px] md:translate-x-[22px]
-          mt-[-40px] sm:mt-[-16%] md:mt-[-84px] lg:mt-0
-          select-none pointer-events-none overflow-y-clip
-          lg:right-[-10rem] xl:right-[-9rem] 2xl:right-[-8rem]
-          w-[466px] sm:w-[874px] lg:w-[861px] xl:w-[970px] 2xl:w-[1057px]
+          flex
+          items-center
+          justify-center
+          translate-x-[12px]
+          md:translate-x-[22px]
+          mt-[-40px]
+          sm:mt-[-16%]
+          md:mt-[-84px]
+          lg:mt-0
+          select-none
+          pointer-events-none
+          overflow-y-clip
+          lg:right-[-10rem]
+          xl:right-[-9rem]
+          2xl:right-[-8rem]
+          w-[466px]
+          sm:w-[874px]
+          lg:w-[861px]
+          xl:w-[970px]
+          2xl:w-[1057px]
         "
       >
         <figure class="rotate-[-8.05deg] lg:rotate-0">
@@ -96,21 +168,22 @@ const config = useAppConfig();
       </div>
     </LandingSection>
 
-    <LandingSection
-      class="z-[1] space-y-4 relative"
-    >
+    <LandingSection class="z-[1] space-y-4 relative">
       <div
         class="
-          md:space-x-6
-          md:mt-[-30px] lg:mt-0
-          flex flex-col sm:flex-row sm:items-center
+          md:space-x-6 md:mt-[-30px]
+          lg:mt-0
+          flex flex-col
+          sm:flex-row sm:items-center
         "
       >
         <span
           class="
             text-white
-            mb-[8px] sm:mb-0
-            font-[600] tracking-[0.05rem]
+            mb-[8px]
+            sm:mb-0
+            font-[600]
+            tracking-[0.05rem]
             lg:text-[20px] lg:leading-[30px]
             xl:text-[20px] xl:leading-[30px]
             sm:text-lg sm:text-[20px] sm:leading-[30px]
@@ -120,7 +193,12 @@ const config = useAppConfig();
         </span>
 
         <div
-          class="flex space-x-[16px] lg:space-x-[18px] xl:space-x-[16px]"
+          class="
+            flex
+            space-x-[16px]
+            lg:space-x-[18px]
+            xl:space-x-[16px]
+          "
         >
           <LandingBlockchain
             :icon="icon"

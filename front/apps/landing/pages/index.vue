@@ -13,7 +13,7 @@ useHead({
 
   <LandingSecurity />
 
-  <LandingCommuniDocs/>
+  <LandingCommuniDocs />
 
   <LandingContact />
 </template>

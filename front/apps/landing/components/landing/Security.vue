@@ -8,7 +8,8 @@
       :initial="{ opacity: 0.5, scale: 0.97 }"
       :visible="{ opacity: 1, scale: 1 }"
       :delay="200"
-      cta="Learn more" size="xl"
+      cta="Learn more"
+      size="xl"
     >
       <template v-slot:before>
         <div

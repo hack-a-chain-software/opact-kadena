@@ -2,13 +2,22 @@
   <LandingSection
     id="privacy"
     class="
-      pt-[40px] md:pt-[30px] lg:pt-[115px] xl:pt-[18.2px] 2xl:pt-[38px]
-      relative overflow-hidden
+      pt-[40px]
+      md:pt-[30px]
+      lg:pt-[115px]
+      xl:pt-[18.2px]
+      2xl:pt-[38px]
+      relative
+      overflow-hidden
       lg:flex lg:flex-row-reverse lg:justify-between
     "
   >
     <figure
-      class="md:mb-[39px] lg:mb-[18px] lg:mr-[-80px] xl:mr-0"
+      class="
+        md:mb-[39px]
+        lg:mb-[18px] lg:mr-[-80px]
+        xl:mr-0
+      "
     >
       <nuxt-img
         loading="lazy"
@@ -16,10 +25,20 @@
         alt="Illustrative image"
         sizes="xs:328px sm:510px md:622px lg:435px 2xl:602px"
         class="
-          h-[244px] sm:h-auto mx-auto
-          lg:translate-y-[55px] xl:translate-y-[20px]
-          lg:translate-x-[-80px] xl:translate-x-[-30px] 2xl:translate-x-[-30px]
-          max-w-[328px] sm:max-w-[510px] md:max-w-[622px] lg:max-w-[435px] xl:max-w-[520px] 2xl:max-w-[602px]
+          h-[244px]
+          sm:h-auto
+          mx-auto
+          lg:translate-y-[55px]
+          xl:translate-y-[20px]
+          lg:translate-x-[-80px]
+          xl:translate-x-[-30px]
+          2xl:translate-x-[-30px]
+          max-w-[328px]
+          sm:max-w-[510px]
+          md:max-w-[622px]
+          lg:max-w-[435px]
+          xl:max-w-[520px]
+          2xl:max-w-[602px]
         "
       />
     </figure>
@@ -27,9 +46,11 @@
     <div class="flex-1">
       <div
         class="
-          md:space-x-[24px]
-          md:mb-[25px] lg:mb-[28px] xl:mb-[25px]
-          flex flex-col md:flex-row md:items-center
+          md:space-x-[24px] md:mb-[25px]
+          lg:mb-[28px]
+          xl:mb-[25px]
+          flex flex-col
+          md:flex-row md:items-center
         "
       >
         <h3
@@ -37,12 +58,20 @@
           :initial="{ opacity: 0, x: -15 }"
           :visibleOnce="{ opacity: 1, x: 0 }"
           class="
-            w-max uppercase
-            pb-[12px] md:pb-0
-            sm:leading-[33px] lg:leading-[33px]
-            text-sm sm:text-[22px] lg:text-[22px]
-            font-[500] sm:font-[900] lg:font-[700]
-            text-transparent bg-opact-gradient bg-clip-text
+            w-max
+            uppercase
+            pb-[12px]
+            md:pb-0
+            sm:leading-[33px]
+            lg:leading-[33px]
+            text-sm
+            sm:text-[22px]
+            lg:text-[22px]
+            font-[500]
+            sm:font-[900]
+            lg:font-[700]
+            text-transparent
+            bg-opact-gradient bg-clip-text
           "
         >
           Privacy
@@ -51,8 +80,10 @@
         <div
           class="
             flex
-            mb-[16px] md:mb-0
-            space-x-[13px] md:space-x-[8px]
+            mb-[16px]
+            md:mb-0
+            space-x-[13px]
+            md:space-x-[8px]
           "
         >
           <LandingBadge
@@ -77,13 +108,28 @@
 
       <h2
         class="
-          font-title text-white font-[600]
-          xl:min-w-[569px] 2xl:min-w-[600px]
-          sm:tracking-normal tracking-[-0.05rem]
-          max-w-[330px] sm:max-w-full lg:max-w-[441px]
-          lg:leading-[57.6px] xl:leading-[60px] 2xl:leading-[64.8px]
-          mb-[12px] sm:mb-[20px] lg:mb-[22px] xl:mb-[23px] 2xl:mb-[23px]
-          text-2xl-poppins text-[30px] sm:text-4xl-poppins-md lg:text-[48px]  xl:text-[50px] 2xl:text-[54px]
+          font-title
+          text-white
+          font-[600]
+          xl:min-w-[569px]
+          2xl:min-w-[600px]
+          sm:tracking-normal
+          tracking-[-0.05rem]
+          max-w-[330px]
+          sm:max-w-full
+          lg:max-w-[441px] lg:leading-[57.6px]
+          xl:leading-[60px]
+          2xl:leading-[64.8px]
+          mb-[12px]
+          sm:mb-[20px]
+          lg:mb-[22px]
+          xl:mb-[23px]
+          2xl:mb-[23px]
+          text-2xl-poppins text-[30px]
+          sm:text-4xl-poppins-md
+          lg:text-[48px]
+          xl:text-[50px]
+          2xl:text-[54px]
         "
         v-motion
         :initial="{ opacity: 0, x: -15 }"
@@ -104,12 +150,21 @@
         class="
           text-[#BDBDBD]
           sm:font-[500]
-          lg:tracking-[0.005rem]
-          lg:max-w-[441px] xl:max-w-auto
-          xl:min-w-[570px] 2xl:min-w-[570px]
-          sm:leading-[30px] lg:leading-[30px] xl:leading-[30px]
-          text-lg-xs sm:text-[20px] lg:text-[20px] xl:text-[20px]
-          mb-[32px] sm:mb-[42px] lg:mb-[48px] xl:mb-[47px] 2xl:mb-[50px]
+          lg:tracking-[0.005rem] lg:max-w-[441px]
+          xl:max-w-auto xl:min-w-[570px]
+          2xl:min-w-[570px]
+          sm:leading-[30px]
+          lg:leading-[30px]
+          xl:leading-[30px]
+          text-lg-xs
+          sm:text-[20px]
+          lg:text-[20px]
+          xl:text-[20px]
+          mb-[32px]
+          sm:mb-[42px]
+          lg:mb-[48px]
+          xl:mb-[47px]
+          2xl:mb-[50px]
         "
       >
         Blockchains are transparent and everything you do

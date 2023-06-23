@@ -3,10 +3,7 @@ const config = useAppConfig()
 </script>
 
 <template>
-  <LandingContainer
-    id="community"
-    class="flex-1"
-  >
+  <LandingContainer id="community" class="flex-1">
     <template v-slot:tag>
       <span
         class="block mb-[10px] sm:mb-[18px] lg:mb-[18px]"
@@ -48,12 +45,7 @@ const config = useAppConfig()
 
     <template v-slot:cta>
       <div
-        class="
-          flex
-          gap-[24px]
-          lg:flex-wrap
-          xl:flex-nowrap
-        "
+        class="flex gap-[24px] lg:flex-wrap xl:flex-nowrap"
       >
         <LandingIconButton
           :to="to"
