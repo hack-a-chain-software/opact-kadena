@@ -53,16 +53,24 @@ const config = useAppConfig()
           :icon="icon"
           :key="to"
           v-motion
-          :initial="{ opacity: 0, x: -15,
-          transition: {
-            duration: 420,
-          }, }"
-          :visibleOnce="{ opacity: 1, x: 0,
-          transition: {
-            duration: 420,
-          }, }"
+          :initial="{
+            opacity: 0,
+            x: -15,
+            transition: {
+              duration: 420,
+            },
+          }"
+          :visibleOnce="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 420,
+            },
+          }"
           :delay="150 * i"
-          v-for="({ icon, title, to }, i) in config.community"
+          v-for="(
+            { icon, title, to }, i
+          ) in config.community"
         />
       </div>
     </template>
