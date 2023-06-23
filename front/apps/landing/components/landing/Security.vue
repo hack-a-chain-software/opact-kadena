@@ -4,10 +4,6 @@
     class="pt-[40px] md:pt-[60px] lg:pt-[80px]"
   >
     <LandingContainer
-      v-motion
-      :initial="{ opacity: 0.5, scale: 0.97 }"
-      :visible="{ opacity: 1, scale: 1 }"
-      :delay="200"
       cta="Learn more"
       size="xl"
     >
@@ -65,6 +61,10 @@
               2xl:top-[-200px]
               2xl:left-[-90px]
             "
+            v-motion
+            :initial="{ opacity: 0.5, scale: 0.96 }"
+            :visible="{ opacity: 1, scale: 1 }"
+            :delay="400"
           >
             <nuxt-img
               src="/security.webp"
