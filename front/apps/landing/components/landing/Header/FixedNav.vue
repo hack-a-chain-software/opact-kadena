@@ -16,7 +16,7 @@
         py-3
         px-4
         mx-auto
-        w-screen
+        w-full
         flex
         justify-between
         max-w-[1900px]

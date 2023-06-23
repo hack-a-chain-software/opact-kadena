@@ -176,7 +176,8 @@ const config = useAppConfig()
     <LandingSection class="z-[1] space-y-4 relative">
       <div
         class="
-          sm:space-x-6 md:mt-[-30px]
+          sm:space-x-6
+          md:mt-[-30px]
           lg:mt-0
           flex flex-col
           sm:flex-row sm:items-center

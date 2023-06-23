@@ -132,8 +132,14 @@
           2xl:text-[54px]
         "
         v-motion
-        :initial="{ opacity: 0, x: -15 }"
-        :visibleOnce="{ opacity: 1, x: 0 }"
+        :initial="{ opacity: 0, x: -15,
+        transition: {
+          duration: 420,
+        }, }"
+        :visibleOnce="{ opacity: 1, x: 0,
+        transition: {
+          duration: 420,
+        }, }"
         :delay="600"
       >
         Protect your
@@ -144,8 +150,14 @@
 
       <p
         v-motion
-        :initial="{ opacity: 0, x: -15 }"
-        :visibleOnce="{ opacity: 1, x: 0 }"
+        :initial="{ opacity: 0, x: -15,
+        transition: {
+          duration: 420,
+        }, }"
+        :visibleOnce="{ opacity: 1, x: 0,
+        transition: {
+          duration: 420,
+        }, }"
         :delay="700"
         class="
           text-[#BDBDBD]
@@ -180,8 +192,14 @@
         variant="secondary"
         class="lg:h-[32px] xl:h-[39px]"
         v-motion
-        :initial="{ opacity: 0, x: -15 }"
-        :visibleOnce="{ opacity: 1, x: 0 }"
+        :initial="{ opacity: 0, x: -15,
+        transition: {
+          duration: 420,
+        }, }"
+        :visibleOnce="{ opacity: 1, x: 0,
+        transition: {
+          duration: 420,
+        }, }"
       />
     </div>
   </LandingSection>
