@@ -10,7 +10,7 @@ defineProps<{
     class="
       group
       hover:w-[200px]
-      md:px-[12px]
+      px-[12px]
       max-w-max
       cursor-pointer
       h-[40px]
@@ -20,14 +20,19 @@ defineProps<{
       flex
       items-center
       border border-white
-      sm:h-[48px]
-      sm:w-[48px]
+      sm:h-[48px] sm:w-[48px]
       opact-blockchain
     "
   >
     <Icon
       :name="icon"
-      class="opact-blockchain__icon shrink-0 w-[24px] md:w-[20px] md:h-[20px] mr-[8px]"
+      class="
+        opact-blockchain__icon
+        shrink-0
+        w-[24px]
+        md:w-[20px] md:h-[20px]
+        mr-[8px]
+      "
     />
 
     <span
