@@ -10,25 +10,24 @@ defineProps<{
     class="
       group
       hover:w-[200px]
-      px-[8px]
       md:px-[12px]
       max-w-max
       cursor-pointer
-      w-[40px]
       h-[40px]
+      w-[40px]
       overflow-hidden
       rounded-full
       flex
       items-center
-      border border-[#F4F4F5]
-      sm:w-[48px] sm:h-[48px]
-      lg:min-w-[48px] lg:h-[48px]
+      border border-white
+      sm:h-[48px]
+      sm:w-[48px]
       opact-blockchain
     "
   >
     <Icon
       :name="icon"
-      class="shrink-0 w-[24px] md:w-[24px]"
+      class="opact-blockchain__icon shrink-0 w-[24px] md:w-[20px] md:h-[20px] mr-[8px]"
     />
 
     <span
@@ -40,9 +39,9 @@ defineProps<{
         group-hover:w-[78px]
         text-[16px]
         font-[500]
-        pl-[8px]
         leading-[24px]
         text-white
+        relative
         overflow-hidden
       "
     >
@@ -53,10 +52,10 @@ defineProps<{
 
 <style scoped>
 .opact-blockchain__text {
-  transition: width 1s ease-out;
+  transition: width 0.42s ease-out;
 }
 .opact-blockchain {
-  transition-delay: 1s;
+  transition-delay: 0.42s;
 }
 .opact-blockchain:hover {
   transition-delay: 0s;
