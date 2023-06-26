@@ -21,3 +21,5 @@ wip
 *.env
 **/.env
 **/node_modules
+.vercel/project.json
+.vercel/README.txt
