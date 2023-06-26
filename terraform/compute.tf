@@ -118,9 +118,10 @@ resource "aws_instance" "chainweb_node" {
       "sudo apt-get install -y jq",
       "echo \"DB_SYNC_SERVER=${var.db_sync_server}\" | sudo tee ./chainweb-node/.env",
       "echo \"KADENA_NETWORK=${var.kadena_network}\" | sudo tee -a ./chainweb-node/.env",
-      # "sudo systemctl daemon-reload",
-      # "sudo systemctl enable cwnode.service",
-      # "sudo systemctl start cwnode.service"
+      "cd chainweb-node",
+      "sudo systemctl daemon-reload",
+      "sudo systemctl enable cwnode.service",
+      "sudo systemctl start cwnode.service"
     ]
   }
 }

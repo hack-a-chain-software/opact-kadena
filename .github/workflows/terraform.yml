@@ -51,8 +51,9 @@ jobs:
 
       - name: Create .tfvars file
         run: |
-          echo "do_token=\"${{ secrets.DO_TOKEN }}\"" >> ./terraform/.tfvars
-          echo "project_id=\"${{ secrets.DO_PROJECT_ID }}\"" >> ./terraform/.tfvars
+          echo "db_password=\"${{ secrets.DB_PASSWORD }}\"" >> ./terraform/.tfvars
+          echo "aws_access_key=\"${{ secrets.AWS_ACCESS_KEY }}\"" >> ./terraform/.tfvars
+          echo "aws_secret_key=\"${{ secrets.AWS_SECRET_KEY }}\"" >> ./terraform/.tfvars
           echo "" >> ./terraform/.tfvars
 
       - name: Terraform Init
