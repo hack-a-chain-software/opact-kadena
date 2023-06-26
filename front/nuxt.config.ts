@@ -1,5 +1,7 @@
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
+
 export default defineNuxtConfig({
-  extends: ['./apps/landing'],
+  extends: ['./apps/landing', './apps/wallet'],
   modules: [
     'nuxt-icon',
     '@pinia/nuxt',
@@ -10,6 +12,22 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxtjs/google-fonts'
   ],
+  vite: {
+    logLevel: 'info',
+    resolve: {
+      alias: {
+        stream: 'stream-browserify'
+      }
+    },
+    optimizeDeps: {
+      esbuildOptions: {
+        define: {
+          global: 'globalThis' // fix nuxt3 global
+        },
+        plugins: [NodeGlobalsPolyfillPlugin()]
+      }
+    }
+  },
   motion: {
     directives: {
       'pop-bottom': {

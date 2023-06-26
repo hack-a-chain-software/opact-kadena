@@ -3,10 +3,7 @@
     id="security"
     class="pt-[40px] md:pt-[60px] lg:pt-[80px]"
   >
-    <LandingContainer
-      cta="Learn more"
-      size="xl"
-    >
+    <LandingContainer cta="Learn more" size="xl">
       <template v-slot:before>
         <div
           class="
