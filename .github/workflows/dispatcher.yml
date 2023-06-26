@@ -15,5 +15,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           reaction-token: ${{ secrets.GITHUB_TOKEN }}
           issue-type: pull-request
-          commands: |
-            terraform-sync
+          commands: terraform-sync
