@@ -1,7 +1,6 @@
 # The "aws_vpc", "aws_subnet", "aws_db_subnet_group", "aws_internet_gateway", "aws_route_table",
 # "aws_route_table_association", and "aws_network_acl" blocks create and configure a VPC, subnets,
 # a database subnet group, an internet gateway, a route table, and a network access control list (ACL) for the VPC.
-
 resource "aws_vpc" "indexer" {
   enable_dns_support = true
 
@@ -30,7 +29,6 @@ resource "aws_subnet" "indexer" {
 
 resource "aws_subnet" "indexer-b" {
   cidr_block = "10.0.2.0/24"
-
   availability_zone = "us-east-1b"
 
   vpc_id = "${aws_vpc.indexer.id}"
@@ -89,30 +87,21 @@ resource "aws_network_acl" "indexer" {
   subnet_ids = "${aws_subnet.indexer.*.id}"
 
   ingress {
-    protocol   = "tcp"
-    rule_no    = 101
+    protocol   = "-1"
+    rule_no    = 100
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 1789
-    to_port    = 1789
+    from_port  = 0
+    to_port    = 0
   }
 
-  ingress {
-    protocol   = "tcp"
-    rule_no    = 102
+  egress {
+    protocol   = "-1"
+    rule_no    = 100
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 443
-    to_port    = 443
-  }
-
-  ingress {
-    protocol   = "tcp"
-    rule_no    = 103
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 80
-    to_port    = 80
+    from_port  = 0
+    to_port    = 0
   }
 
   tags = {
