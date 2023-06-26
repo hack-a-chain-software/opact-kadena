@@ -29,10 +29,10 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install Dependencies
-        uses: pnpm install
+        run: pnpm install
 
       - name: Install Dependencies
-        uses: pnpm indexer api package
+        run: pnpm indexer api package
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
