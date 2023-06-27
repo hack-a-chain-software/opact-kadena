@@ -1,5 +1,16 @@
 <template>
-  <div class="absolute left-0 top-0 w-full z-[1]">
+  <div
+    class="
+      fixed
+      top-0
+      left-0
+      right-0
+      z-[999]
+      bg-[rgba(16,_20,_24,_0.88)]
+      backdrop-blur-[4px]
+      lg:bg-dark-blue/[0.42] lg:backdrop-blur-[6px]
+    "
+  >
     <div
       class="
         py-3
@@ -14,11 +25,11 @@
         xl:items-center
       "
     >
-      <LandingLogo />
+      <DynamicLogo />
 
-      <LandingHeaderMenu />
+      <HeaderMenu />
 
-      <LandingHeaderMenuMobile />
+      <HeaderMenuMobile />
     </div>
   </div>
 </template>

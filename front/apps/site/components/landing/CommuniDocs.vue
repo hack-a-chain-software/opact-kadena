@@ -1,5 +1,5 @@
 <template>
-  <LandingSection
+  <Section
     class="
       pt-[40px]
       md:pt-[60px]
@@ -12,5 +12,5 @@
     <LandingDocumentation />
 
     <LandingCommunity />
-  </LandingSection>
+  </Section>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <LandingSection
+  <Section
     id="contact"
     class="py-[40px] md:py-[60px] lg:py-[80px]"
   >
@@ -98,7 +98,7 @@
             </p>
           </div>
 
-          <LandingButton
+          <Button
             variant="hero-secondary"
             text="Send a Message"
             class="lg:mt-[42px] xl:mt-0"
@@ -106,5 +106,5 @@
         </div>
       </div>
     </div>
-  </LandingSection>
+  </Section>
 </template>

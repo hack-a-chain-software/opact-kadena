@@ -1,10 +1,10 @@
 <template>
-  <LandingContainer
-    cta="Opact Documentation"
+  <Container
     id="documentation"
+    cta="Opact Documentation"
     class="flex-1"
   >
-    <template v-slot:tag>
+    <template #tag>
       <span
         class="block mb-[10px] sm:mb-[18px] lg:mb-[18px]"
       >
@@ -12,7 +12,7 @@
       </span>
     </template>
 
-    <template v-slot:title>
+    <template #title>
       <span
         class="
           block
@@ -25,7 +25,7 @@
       </span>
     </template>
 
-    <template v-slot:text>
+    <template #text>
       <span
         class="
           block
@@ -38,5 +38,5 @@
         Explore the inner workings of Opact.
       </span>
     </template>
-  </LandingContainer>
+  </Container>
 </template>

@@ -111,7 +111,7 @@ const sizes = {
 
       <div>
         <slot name="cta">
-          <LandingButton
+          <Button
             withIcon
             variant="secondary"
             :text="cta"

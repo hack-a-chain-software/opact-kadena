@@ -3,8 +3,8 @@ const config = useAppConfig()
 </script>
 
 <template>
-  <LandingContainer id="community" class="flex-1">
-    <template v-slot:tag>
+  <Container id="community" class="flex-1">
+    <template #tag>
       <span
         class="block mb-[10px] sm:mb-[18px] lg:mb-[18px]"
       >
@@ -12,7 +12,7 @@ const config = useAppConfig()
       </span>
     </template>
 
-    <template v-slot:title>
+    <template #title>
       <span
         class="
           block
@@ -29,7 +29,7 @@ const config = useAppConfig()
       </span>
     </template>
 
-    <template v-slot:text>
+    <template #text>
       <span
         class="
           block
@@ -43,16 +43,19 @@ const config = useAppConfig()
       </span>
     </template>
 
-    <template v-slot:cta>
+    <template #cta>
       <div
         class="flex gap-[24px] lg:flex-wrap xl:flex-nowrap"
       >
-        <LandingIconButton
+        <IconButton
+          v-for="(
+            { icon, title, to }, i
+          ) in config.community"
+          :key="to"
+          v-motion
           :to="to"
           :text="title"
           :icon="icon"
-          :key="to"
-          v-motion
           :initial="{
             opacity: 0,
             x: -15,
@@ -68,11 +71,8 @@ const config = useAppConfig()
             },
           }"
           :delay="150 * i"
-          v-for="(
-            { icon, title, to }, i
-          ) in config.community"
         />
       </div>
     </template>
-  </LandingContainer>
+  </Container>
 </template>

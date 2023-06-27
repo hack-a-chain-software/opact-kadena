@@ -43,10 +43,10 @@ const moveTo = (id: string) => {
       </NuxtLink>
     </template>
 
-    <LandingButton
+    <Button
       withIcon
       variant="nav"
-      text="Louch App"
+      text="Lauch App"
       class="!h-[36px]"
     />
   </div>

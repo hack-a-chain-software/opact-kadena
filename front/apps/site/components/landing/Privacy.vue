@@ -1,5 +1,5 @@
 <template>
-  <LandingSection
+  <Section
     id="privacy"
     class="
       pt-[40px]
@@ -86,27 +86,28 @@
             md:space-x-[8px]
           "
         >
-          <LandingBadge
+          <Badge
             v-motion
             :initial="{ opacity: 0, x: -15 }"
-            :visibleOnce="{ opacity: 1, x: 0 }"
+            :visible-once="{ opacity: 1, x: 0 }"
             :delay="150"
           >
             P2P Private transactions
-          </LandingBadge>
+          </Badge>
 
-          <LandingBadge
+          <Badge
             v-motion
             :initial="{ opacity: 0, x: -15 }"
-            :visibleOnce="{ opacity: 1, x: 0 }"
+            :visible-once="{ opacity: 1, x: 0 }"
             :delay="300"
           >
             DeFi Private transactions
-          </LandingBadge>
+          </Badge>
         </div>
       </div>
 
       <h2
+        v-motion
         class="
           font-title
           text-white
@@ -131,7 +132,6 @@
           xl:text-[50px]
           2xl:text-[54px]
         "
-        v-motion
         :initial="{
           opacity: 0,
           x: -15,
@@ -149,7 +149,7 @@
         :delay="600"
       >
         Protect your
-        <br class="hidden lg:inline xl:hidden" />
+        <br class="hidden lg:inline xl:hidden">
         privacy on-chain with Opact
         <span class="hidden md:inline">Wallet</span>
       </h2>
@@ -197,13 +197,13 @@
         mainstream adoption as a financial system.
       </p>
 
-      <LandingButton
+      <Button
+        v-motion
         :delay="800"
         :with-icon="true"
         text="Learn more"
         variant="secondary"
         class="lg:h-[32px] xl:h-[39px]"
-        v-motion
         :initial="{
           opacity: 0,
           x: -15,
@@ -211,7 +211,7 @@
             duration: 420,
           },
         }"
-        :visibleOnce="{
+        :visible-once="{
           opacity: 1,
           x: 0,
           transition: {
@@ -220,5 +220,5 @@
         }"
       />
     </div>
-  </LandingSection>
+  </Section>
 </template>

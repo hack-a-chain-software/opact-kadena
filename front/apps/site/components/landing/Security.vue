@@ -1,13 +1,13 @@
 <template>
-  <LandingSection
+  <Section
     id="security"
     class="pt-[40px] md:pt-[60px] lg:pt-[80px]"
   >
-    <LandingContainer
+    <Container
       cta="Learn more"
       size="xl"
     >
-      <template v-slot:before>
+      <template #before>
         <div
           class="
             z-[2]
@@ -72,7 +72,7 @@
         </div>
       </template>
 
-      <template v-slot:tag>
+      <template #tag>
         <span
           class="block mb-[12px] sm:mb-[24px] lg:mb-[24px]"
         >
@@ -80,7 +80,7 @@
         </span>
       </template>
 
-      <template v-slot:title>
+      <template #title>
         <span
           class="
             block
@@ -91,9 +91,9 @@
           "
         >
           Secure and
-          <br class="hidden lg:inline xl:hidden" />
-          Compliant <br class="lg:hidden xl:inline" />
-          Privacy <br class="hidden lg:inline xl:hidden" />
+          <br class="hidden lg:inline xl:hidden">
+          Compliant <br class="lg:hidden xl:inline">
+          Privacy <br class="hidden lg:inline xl:hidden">
           with
           <span
             class="
@@ -101,12 +101,11 @@
               sm:bg-clip-text
               sm:text-transparent
             "
-            >Opact</span
-          >
+          >Opact</span>
         </span>
       </template>
 
-      <template v-slot:text>
+      <template #text>
         <span
           class="
             block
@@ -123,6 +122,6 @@
           privacy.
         </span>
       </template>
-    </LandingContainer>
-  </LandingSection>
+    </Container>
+  </Section>
 </template>

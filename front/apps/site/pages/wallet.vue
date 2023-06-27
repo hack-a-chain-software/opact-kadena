@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'landing'
+  layout: 'site'
 })
 
 useHead({
@@ -9,6 +9,8 @@ useHead({
 </script>
 
 <template>
+  <LandingHero />
+
   <LandingPrivacy />
 
   <LandingSecurity />

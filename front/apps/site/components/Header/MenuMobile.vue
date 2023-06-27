@@ -121,11 +121,11 @@ const moveTo = (id: string) => {
               <Icon name="github" />
             </div>
 
-            <LandingButton
+            <Button
               :with-icon="true"
               variant="primary"
               class="!h-[36px]"
-              text="Louch App"
+              text="Lauch App"
             />
           </div>
         </MenuItem>

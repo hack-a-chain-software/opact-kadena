@@ -16,7 +16,7 @@ const config = useAppConfig()
       2xl:h-[880px]
     "
   >
-    <LandingSection
+    <Section
       class="
         flex flex-col
         lg:relative lg:overflow-visible
@@ -115,14 +115,14 @@ const config = useAppConfig()
           xl:pt-[34px]
         "
       >
-        <LandingButton
-          text="Louch App"
+        <Button
+          text="Lauch App"
           :with-icon="true"
           variant="hero-primary"
           class="w-full lg:w-auto max-w-full md:max-w-max"
         />
 
-        <LandingButton
+        <Button
           variant="tertiary"
           text="Documentation"
           class="w-full lg:w-auto max-w-full md:max-w-max"
@@ -171,9 +171,9 @@ const config = useAppConfig()
           />
         </figure>
       </div>
-    </LandingSection>
+    </Section>
 
-    <LandingSection class="z-[1] space-y-4 relative">
+    <Section class="z-[1] space-y-4 relative">
       <div
         class="
           sm:space-x-6
@@ -214,6 +214,6 @@ const config = useAppConfig()
           />
         </div>
       </div>
-    </LandingSection>
+    </Section>
   </div>
 </template>

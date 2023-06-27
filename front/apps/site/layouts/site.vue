@@ -22,27 +22,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <header>
-      <LandingHeaderNav />
+  <header>
+    <HeaderNav />
 
-      <LandingHeaderFixedNav
-        v-motion
-        :initial="{
-          y: -50,
-        }"
-        :enter="{
-          y: 0,
-        }"
-        v-if="data.showFixedNavbar"
-      />
+    <HeaderFixedNav
+      v-motion
+      :initial="{
+        y: -50,
+      }"
+      :enter="{
+        y: 0,
+      }"
+      v-if="data.showFixedNavbar"
+    />
+  </header>
+  <slot />
 
-      <LandingHeaderHero />
-    </header>
-    <slot />
-
-    <LandingFooter />
-  </div>
+  <Footer />
 </template>
 
 <style>

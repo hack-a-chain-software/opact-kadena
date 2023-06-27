@@ -1,5 +1,9 @@
 <template>
-  <NuxtLink>
+  <a
+    href="/"
+    role="button"
+    class="cursor-pointer"
+  >
     <Icon
       name="logo"
       class="
@@ -10,5 +14,5 @@
       "
       alt="Opact Wallet Logo"
     />
-  </NuxtLink>
+  </a>
 </template>
