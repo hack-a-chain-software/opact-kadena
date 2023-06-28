@@ -4,7 +4,12 @@
     @mouseout="toggleMenuDropdown()"
   >
     <nav
-      class="mb-[8px] flex flex-col items-center justify-center"
+      class="
+        mb-[8px]
+        flex flex-col
+        items-center
+        justify-center
+      "
       @mouseout.stop
     >
       <div

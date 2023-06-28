@@ -7,11 +7,11 @@ const showFixedNavbar = useFixedNavbar()
     class="!fixed"
     v-if="showFixedNavbar"
     v-motion
-      :initial="{
-        y: -50,
-      }"
-      :enter="{
-        y: 0,
-      }"
+    :initial="{
+      y: -50,
+    }"
+    :enter="{
+      y: 0,
+    }"
   />
 </template>

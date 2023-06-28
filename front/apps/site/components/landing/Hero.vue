@@ -36,7 +36,7 @@ const config = useAppConfig()
       "
     >
       <h1
-        v-text="(config.wallet.title)"
+        v-text="config.wallet.title"
         class="
           relative
           z-[2]

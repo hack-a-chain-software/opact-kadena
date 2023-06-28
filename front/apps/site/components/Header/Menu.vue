@@ -10,14 +10,15 @@ const toggleDropdown = (flag: boolean, key?: string) => {
 </script>
 
 <template>
-  <div
-    class="hidden lg:flex px-[40px]"
-  >
-    <div
-      class="flex space-x-[40px] items-center"
-    >
+  <div class="hidden lg:flex px-[40px]">
+    <div class="flex space-x-[40px] items-center">
       <template
-        v-for="{ label, to, subroutes, key } in config.routes"
+        v-for="{
+          label,
+          to,
+          subroutes,
+          key,
+        } in config.routes"
         :key="key"
       >
         <NuxtLink
@@ -62,7 +63,10 @@ const toggleDropdown = (flag: boolean, key?: string) => {
               duration-[0.3s]
               translate-y-[-13%]
             "
-            :class="key === currentDropdown && '!ml-[8px] !w-[16px]'"
+            :class="
+              key === currentDropdown &&
+              '!ml-[8px] !w-[16px]'
+            "
           />
         </div>
       </template>

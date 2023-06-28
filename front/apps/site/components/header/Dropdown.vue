@@ -6,7 +6,9 @@ const current = useCurrentDropdown()
 const showMenuDropdown = useMenuDropdown()
 
 const route = computed(() => {
-  return config.routes.find(({ key }) => key === current.value)
+  return config.routes.find(
+    ({ key }) => key === current.value
+  )
 })
 </script>
 
@@ -37,8 +39,7 @@ const route = computed(() => {
         :to="to"
         class="
           text-[16px]
-          font-title
-          font-[500]
+          font-title font-[500]
           leading-[150%]
         "
         v-text="label"
