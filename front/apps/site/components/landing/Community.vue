@@ -50,7 +50,7 @@ const config = useAppConfig()
         <IconButton
           v-for="(
             { icon, title, to }, i
-          ) in config.community"
+          ) in config.networks"
           :key="to"
           v-motion
           :to="to"

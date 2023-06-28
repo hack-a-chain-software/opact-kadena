@@ -36,7 +36,7 @@ const config = useAppConfig()
       "
     >
       <h1
-        v-text="config.title"
+        v-text="(config.wallet.title)"
         class="
           relative
           z-[2]
@@ -90,7 +90,7 @@ const config = useAppConfig()
           lg:max-w-[450px]
           xl:max-w-[499px]
         "
-        v-text="config.subtitle"
+        v-text="config.wallet.subtitle"
       />
 
       <div
@@ -210,7 +210,7 @@ const config = useAppConfig()
             :icon="icon"
             :name="name"
             :key="`landing-blockchain-label-${name}`"
-            v-for="{ icon, name } in config.blockchains"
+            v-for="{ icon, name } in config.chains"
           />
         </div>
       </div>

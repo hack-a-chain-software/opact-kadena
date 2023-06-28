@@ -149,7 +149,7 @@
         :delay="600"
       >
         Protect your
-        <br class="hidden lg:inline xl:hidden">
+        <br class="hidden lg:inline xl:hidden" />
         privacy on-chain with Opact
         <span class="hidden md:inline">Wallet</span>
       </h2>

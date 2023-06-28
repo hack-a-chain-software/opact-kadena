@@ -1,9 +1,5 @@
 <template>
-  <a
-    href="/"
-    role="button"
-    class="cursor-pointer"
-  >
+  <a href="/" role="button" class="cursor-pointer">
     <Icon
       name="logo"
       class="

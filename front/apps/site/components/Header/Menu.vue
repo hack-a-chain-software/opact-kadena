@@ -1,53 +1,71 @@
 <script setup lang="ts">
 const config = useAppConfig()
+const showMenuDropdown = useMenuDropdown()
+const currentDropdown = useCurrentDropdown()
 
-const moveTo = (id: string) => {
-  const element = document.getElementById(id)
-
-  if (!element) {
-    return
-  }
-
-  const bodyRect = document.body.getBoundingClientRect()
-
-  const elemRect = element.getBoundingClientRect()
-
-  const offset = elemRect.top - bodyRect.top
-
-  scrollTo({
-    top: offset - 100,
-    behavior: 'smooth'
-  })
+const toggleDropdown = (flag: boolean, key?: string) => {
+  currentDropdown.value = key || ''
+  showMenuDropdown.value = flag
 }
 </script>
 
 <template>
   <div
-    class="hidden lg:flex lg:space-x-[40px] items-center"
+    class="hidden lg:flex px-[40px]"
   >
-    <template
-      v-for="item in config.routes"
-      :key="item.title"
+    <div
+      class="flex space-x-[40px] items-center"
     >
-      <NuxtLink
-        class="
-          lg:font-[200] lg:text-[16px] lg:leading-[24px]
-          font-title
-          text-white
-          hover:opacity-80
-        "
-        role="button"
-        @click="moveTo(item.to)"
+      <template
+        v-for="{ label, to, subroutes, key } in config.routes"
+        :key="key"
       >
-        {{ item.title }}
-      </NuxtLink>
-    </template>
+        <NuxtLink
+          v-if="!subroutes"
+          class="
+            lg:font-[200] lg:text-[16px] lg:leading-[24px]
+            font-title
+            text-white
+            hover:opacity-80
+          "
+          :to="to"
+          @mouseenter="showMenuDropdown = false"
+        >
+          {{ label }}
+        </NuxtLink>
 
-    <Button
-      withIcon
-      variant="nav"
-      text="Lauch App"
-      class="!h-[36px]"
-    />
+        <div
+          v-else
+          :class="key === currentDropdown && 'opacity-80'"
+        >
+          <a
+            class="
+              lg:font-[200] lg:text-[16px] lg:leading-[24px]
+              font-title
+              text-white
+            "
+            role="button"
+            @mouseenter="toggleDropdown(true, key)"
+          >
+            {{ label }}
+          </a>
+
+          <Icon
+            name="chevron"
+            class="
+              text-white
+              h-[16px]
+              w-0
+              shrink-0
+              z-[2]
+              relative
+              duration-[0.3s]
+              translate-y-[-13%]
+            "
+            :class="key === currentDropdown && '!ml-[8px] !w-[16px]'"
+          />
+        </div>
+      </template>
+    </div>
   </div>
 </template>

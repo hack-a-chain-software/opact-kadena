@@ -1,41 +1,28 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { onMounted } from 'vue'
 
-const data = reactive({
-  showFixedNavbar: false
-})
+const showFixedNavbar = useFixedNavbar()
 
 onMounted(() => {
   window.onscroll = () => {
     if (
-      document.body.scrollTop > 300 ||
-      document.documentElement.scrollTop > 250
+      document.body.scrollTop > 500 ||
+      document.documentElement.scrollTop > 550
     ) {
-      data.showFixedNavbar = true
+      showFixedNavbar.value = true
 
       return
     }
 
-    data.showFixedNavbar = false
+    showFixedNavbar.value = false
   }
 })
 </script>
 
 <template>
-  <header>
-    <HeaderNav />
+  <HeaderNav />
 
-    <HeaderFixedNav
-      v-motion
-      :initial="{
-        y: -50,
-      }"
-      :enter="{
-        y: 0,
-      }"
-      v-if="data.showFixedNavbar"
-    />
-  </header>
+  <HeaderFixedNav />
   <slot />
 
   <Footer />

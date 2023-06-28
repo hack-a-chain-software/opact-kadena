@@ -3,10 +3,7 @@
     id="security"
     class="pt-[40px] md:pt-[60px] lg:pt-[80px]"
   >
-    <Container
-      cta="Learn more"
-      size="xl"
-    >
+    <Container cta="Learn more" size="xl">
       <template #before>
         <div
           class="
@@ -91,9 +88,9 @@
           "
         >
           Secure and
-          <br class="hidden lg:inline xl:hidden">
-          Compliant <br class="lg:hidden xl:inline">
-          Privacy <br class="hidden lg:inline xl:hidden">
+          <br class="hidden lg:inline xl:hidden" />
+          Compliant <br class="lg:hidden xl:inline" />
+          Privacy <br class="hidden lg:inline xl:hidden" />
           with
           <span
             class="
@@ -101,7 +98,8 @@
               sm:bg-clip-text
               sm:text-transparent
             "
-          >Opact</span>
+            >Opact</span
+          >
         </span>
       </template>
 
