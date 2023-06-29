@@ -2,10 +2,16 @@
 const config = useAppConfig()
 const showMenuDropdown = useMenuDropdown()
 const currentDropdown = useCurrentDropdown()
+const currentMenuElement = useCurrentMenuElement()
 
-const toggleDropdown = (flag: boolean, key?: string) => {
+const toggleDropdown = (height: number, width: number, order: number, flag: boolean, key?: string) => {
   currentDropdown.value = key || ''
   showMenuDropdown.value = flag
+  currentMenuElement.value = {
+    width,
+    height,
+    order
+  }
 }
 </script>
 
@@ -17,17 +23,23 @@ const toggleDropdown = (flag: boolean, key?: string) => {
           label,
           to,
           subroutes,
+          component,
           key,
+          height,
+          width,
+          order,
         } in config.routes"
         :key="key"
       >
         <NuxtLink
-          v-if="!subroutes"
+          v-if="!subroutes && !component"
           class="
-            lg:font-[200] lg:text-[16px] lg:leading-[24px]
             font-title
             text-white
             hover:opacity-80
+            text-[16px]
+            font-[400]
+            leading-[150%]
           "
           :to="to"
           @mouseenter="showMenuDropdown = false"
@@ -41,12 +53,15 @@ const toggleDropdown = (flag: boolean, key?: string) => {
         >
           <a
             class="
-              lg:font-[200] lg:text-[16px] lg:leading-[24px]
               font-title
               text-white
+              hover:opacity-80
+              text-[16px]
+              font-[400]
+              leading-[150%]
             "
             role="button"
-            @mouseenter="toggleDropdown(true, key)"
+            @mouseenter="toggleDropdown(height || 0, width || 0, order || 0, true, key)"
           >
             {{ label }}
           </a>

@@ -1,6 +1,9 @@
 export const useCurrentDropdown = () =>
   useState<string>('current-dropdown', () => '')
 
+export const useCurrentMenuElement = () =>
+  useState<any>('current-menu-element', () => null)
+
 export const useMobileMenu = () =>
   useState<boolean>('mobile-menu', () => false)
 export const useMenuDropdown = () =>

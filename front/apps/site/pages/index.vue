@@ -4,10 +4,12 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Opact Wallet'
+  title: 'Opact'
 })
 </script>
 
 <template>
   <SiteHero />
+
+  <SiteOpactWallet />
 </template>

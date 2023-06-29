@@ -5,9 +5,11 @@ withDefaults(
     title?: string;
     text?: string;
     cta?: string;
+    center?: boolean;
     size?: 'lg' | 'xl';
   }>(),
   {
+    center: false,
     size: 'lg',
     cta: '',
     tag: '',
@@ -109,7 +111,15 @@ const sizes = {
         </slot>
       </p>
 
-      <div>
+      <div
+        class="
+          z-[3]
+          relative
+          w-full
+          flex
+        "
+        :class="center && 'justify-center'"
+      >
         <slot name="cta">
           <Button
             withIcon
@@ -118,6 +128,9 @@ const sizes = {
           />
         </slot>
       </div>
+
+
+      <slot name="after" />
     </div>
   </div>
 </template>
