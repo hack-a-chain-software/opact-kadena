@@ -4,7 +4,13 @@ const showMenuDropdown = useMenuDropdown()
 const currentDropdown = useCurrentDropdown()
 const currentMenuElement = useCurrentMenuElement()
 
-const toggleDropdown = (height: number, width: number, order: number, flag: boolean, key?: string) => {
+const toggleDropdown = (
+  height: number,
+  width: number,
+  order: number,
+  flag: boolean,
+  key?: string
+) => {
   currentDropdown.value = key || ''
   showMenuDropdown.value = flag
   currentMenuElement.value = {
@@ -61,7 +67,15 @@ const toggleDropdown = (height: number, width: number, order: number, flag: bool
               leading-[150%]
             "
             role="button"
-            @mouseenter="toggleDropdown(height || 0, width || 0, order || 0, true, key)"
+            @mouseenter="
+              toggleDropdown(
+                height || 0,
+                width || 0,
+                order || 0,
+                true,
+                key
+              )
+            "
           >
             {{ label }}
           </a>

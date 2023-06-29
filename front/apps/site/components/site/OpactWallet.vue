@@ -2,9 +2,7 @@
   <Section
     class="flex flex-col items-center justify-center"
   >
-    <div
-      class="pb-[16px]"
-    >
+    <div class="pb-[16px]">
       <h3
         class="
           w-max
@@ -27,9 +25,7 @@
       </h3>
     </div>
 
-    <div
-      class="pb-[60px]"
-    >
+    <div class="pb-[60px]">
       <h2
         class="
           text-[#FAFAFA]
@@ -43,7 +39,11 @@
       </h2>
     </div>
 
-    <Container class="w-full mb-[80px]" cta="Learn more" size="xl">
+    <Container
+      class="w-full mb-[80px]"
+      cta="Learn more"
+      size="xl"
+    >
       <template #before>
         <div
           class="
@@ -54,7 +54,12 @@
             translate-x-[16px]
             md:mb-0 md:ml-0 md:translate-x-0 md:w-[704px]
             lg:absolute lg:top-0 lg:right-0 lg:w-auto
-            xl:absolute xl:top-0 xl:right-0 xl:w-auto xl:bottom-0 xl:left-0
+            xl:absolute
+            xl:top-0
+            xl:right-0
+            xl:w-auto
+            xl:bottom-0
+            xl:left-0
           "
         >
           <figure class="h-[238px] md:h-[482px]">
@@ -134,15 +139,21 @@
             lg:mb-[48px]
           "
         >
-          Perform anonymous transactions on the transparent blockchain ecosystem, all through smart contracts. The first private wallet with a decentralized & modular AML.
+          Perform anonymous transactions on the transparent
+          blockchain ecosystem, all through smart contracts.
+          The first private wallet with a decentralized &
+          modular AML.
         </span>
       </template>
     </Container>
 
-    <div
-      class="flex space-x-[32px] w-full"
-    >
-      <Container center class="w-full" cta="Learn more" size="xl">
+    <div class="flex space-x-[32px] w-full">
+      <Container
+        center
+        class="w-full"
+        cta="Learn more"
+        size="xl"
+      >
         <template #after>
           <div
             class="
@@ -154,19 +165,14 @@
               md:mb-0 md:ml-0 md:translate-x-0
               w-full
               h-[374px]
-
               absolute
               bottom-0
               left-0
-
               pointer-events-none
             "
           >
             <figure
-              class="
-                h-[700px] w-full
-                absolute bottom-0
-              "
+              class="h-[700px] w-full absolute bottom-0"
             >
               <nuxt-img
                 src="/bg-left-blue.png"
@@ -178,11 +184,7 @@
             </figure>
 
             <figure
-              class="
-                absolute
-                translate-x-[110px]
-                bottom-0
-              "
+              class="absolute translate-x-[110px] bottom-0"
             >
               <nuxt-img
                 src="/puzzle-1.png"
@@ -211,7 +213,8 @@
               mx-auto
             "
           >
-            Bring private and compliant accounts to your blockchain
+            Bring private and compliant accounts to your
+            blockchain
           </span>
         </template>
 
@@ -234,7 +237,12 @@
               2xl:w-[532px]
             "
           >
-            Opact Wallet can be implemented into different blockchain ecosystems, and our team has the expertise to develop it in Solidity, Rust, Ink!, Pact, and other languages and frameworks. If you want private transactions on your blockchain, reach out to us!
+            Opact Wallet can be implemented into different
+            blockchain ecosystems, and our team has the
+            expertise to develop it in Solidity, Rust, Ink!,
+            Pact, and other languages and frameworks. If you
+            want private transactions on your blockchain,
+            reach out to us!
           </span>
         </template>
 
@@ -248,7 +256,12 @@
         </template>
       </Container>
 
-      <Container center class="w-full" cta="Learn more" size="xl">
+      <Container
+        center
+        class="w-full"
+        cta="Learn more"
+        size="xl"
+      >
         <template #after>
           <div
             class="
@@ -260,19 +273,14 @@
               md:mb-0 md:ml-0 md:translate-x-0
               w-full
               h-[374px]
-
               absolute
               bottom-0
               left-0
-
               pointer-events-none
             "
           >
             <figure
-              class="
-                h-[700px] w-full
-                absolute bottom-0
-              "
+              class="h-[700px] w-full absolute bottom-0"
             >
               <nuxt-img
                 src="/bg-left-blue.png"
@@ -284,11 +292,7 @@
             </figure>
 
             <figure
-              class="
-                absolute
-                translate-x-[110px]
-                bottom-0
-              "
+              class="absolute translate-x-[110px] bottom-0"
             >
               <nuxt-img
                 src="/puzzle-1.png"
@@ -318,7 +322,8 @@
               2xl:w-full
             "
           >
-            Integrate private and compliant accounts to your application
+            Integrate private and compliant accounts to your
+            application
           </span>
         </template>
 
@@ -341,7 +346,10 @@
               2xl:w-[532px]
             "
           >
-            Allow the users to perform anonymous transactions on your dApp by integrating Opact Wallet, e.g., perform trades on a DEX in a private manner.
+            Allow the users to perform anonymous
+            transactions on your dApp by integrating Opact
+            Wallet, e.g., perform trades on a DEX in a
+            private manner.
           </span>
         </template>
 

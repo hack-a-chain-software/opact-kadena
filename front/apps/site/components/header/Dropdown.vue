@@ -12,17 +12,21 @@ const route = computed(() => {
 })
 
 const items = computed(() => {
-  return config.routes.filter(({ subroutes, component }) => !!subroutes || !!component)
+  return config.routes.filter(
+    ({ subroutes, component }) => !!subroutes || !!component
+  )
 })
 
 const left = computed(() => {
-  return items.value.slice(0, currentMenuElement.value.order - 1).reduce(
-    (sum, curr) => {
-      const width = (curr.width || 0)
+  return (
+    items.value
+      .slice(0, currentMenuElement.value.order - 1)
+      .reduce((sum, curr) => {
+        const width = curr.width || 0
 
-      return sum + width
-    }, 0
-  ) + 'px'
+        return sum + width
+      }, 0) + 'px'
+  )
 })
 </script>
 
@@ -45,7 +49,13 @@ const left = computed(() => {
     @mouseleave="toggleMenuDropdown()"
   >
     <div
-      v-for="{ width, height, component, subroutes, key } in items"
+      v-for="{
+        width,
+        height,
+        component,
+        subroutes,
+        key,
+      } in items"
       :key="'subroutes:key:' + key"
       class="relative flex transition-all duration-[300ms]"
       :style="`transform: translateX(-${left})`"
@@ -57,7 +67,13 @@ const left = computed(() => {
       >
         <div
           v-for="({ label, to }, i) in subroutes"
-          :key="'menu-dropdown-current-' + current + to + i + key"
+          :key="
+            'menu-dropdown-current-' +
+            current +
+            to +
+            i +
+            key
+          "
         >
           <NuxtLink
             :to="to"
@@ -74,10 +90,7 @@ const left = computed(() => {
         </div>
       </div>
 
-      <HeaderBlogMenu
-        key="foo"
-        v-if="component"
-      />
+      <HeaderBlogMenu key="foo" v-if="component" />
     </div>
   </div>
 </template>

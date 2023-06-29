@@ -112,12 +112,7 @@ const sizes = {
       </p>
 
       <div
-        class="
-          z-[3]
-          relative
-          w-full
-          flex
-        "
+        class="z-[3] relative w-full flex"
         :class="center && 'justify-center'"
       >
         <slot name="cta">
@@ -128,7 +123,6 @@ const sizes = {
           />
         </slot>
       </div>
-
 
       <slot name="after" />
     </div>
