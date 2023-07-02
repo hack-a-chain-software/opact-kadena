@@ -1,44 +1,18 @@
 <script setup lang="ts">
 const config = useAppConfig()
-const showMenuDropdown = useMenuDropdown()
-const currentDropdown = useCurrentDropdown()
-const currentMenuElement = useCurrentMenuElement()
-
-const toggleDropdown = (
-  height: number,
-  width: number,
-  order: number,
-  flag: boolean,
-  key?: string
-) => {
-  currentDropdown.value = key || ''
-  showMenuDropdown.value = flag
-  currentMenuElement.value = {
-    width,
-    height,
-    order
-  }
-}
+const showMenu = useShowMenu()
+const currentMenu = useCurrentMenu()
 </script>
 
 <template>
   <div class="hidden lg:flex px-[40px]">
     <div class="flex space-x-[40px] items-center">
       <template
-        v-for="{
-          label,
-          to,
-          subroutes,
-          component,
-          key,
-          height,
-          width,
-          order,
-        } in config.routes"
-        :key="key"
+        v-for="route in config.routes"
+        :key="route.key"
       >
         <NuxtLink
-          v-if="!subroutes && !component"
+          v-if="route.type === 'link'"
           class="
             font-title
             text-white
@@ -47,15 +21,17 @@ const toggleDropdown = (
             font-[400]
             leading-[150%]
           "
-          :to="to"
-          @mouseenter="showMenuDropdown = false"
+          :to="route.to"
+          @mouseenter="showMenu = false"
         >
-          {{ label }}
+          {{ route.label }}
         </NuxtLink>
 
         <div
           v-else
-          :class="key === currentDropdown && 'opacity-80'"
+          :class="
+            route.key === currentMenu?.key && 'opacity-80'
+          "
         >
           <a
             class="
@@ -67,17 +43,9 @@ const toggleDropdown = (
               leading-[150%]
             "
             role="button"
-            @mouseenter="
-              toggleDropdown(
-                height || 0,
-                width || 0,
-                order || 0,
-                true,
-                key
-              )
-            "
+            @mouseenter="handleMenuState(route, true)"
           >
-            {{ label }}
+            {{ route.label }}
           </a>
 
           <Icon
@@ -93,7 +61,7 @@ const toggleDropdown = (
               translate-y-[-13%]
             "
             :class="
-              key === currentDropdown &&
+              route.key === currentMenu?.key &&
               '!ml-[8px] !w-[16px]'
             "
           />

@@ -1,12 +1,12 @@
 <script setup>
-const showFixedNavbar = useFixedNavbar()
+const showFixedNavbar = useShowFixedHeader()
 </script>
 
 <template>
-  <HeaderNav
-    class="!fixed"
+  <NavHeader
     v-if="showFixedNavbar"
     v-motion
+    class="!fixed"
     :initial="{
       y: -50,
     }"

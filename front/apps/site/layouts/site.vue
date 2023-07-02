@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 
-const showFixedNavbar = useFixedNavbar()
+const showFixedNavbar = useShowFixedHeader()
 
 onMounted(() => {
   window.onscroll = () => {
@@ -20,9 +20,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderNav />
+  <NavHeader />
 
-  <HeaderFixedNav />
+  <NavFixedHeader />
   <slot />
 
   <Footer />

@@ -14,9 +14,9 @@
   >
     <div class="flex justify-between">
       <div
-        class="flex flex-col max-w-[230px]"
         v-for="n in 3"
         :key="'blog-post-n-' + n"
+        class="flex flex-col max-w-[230px]"
       >
         <div
           class="

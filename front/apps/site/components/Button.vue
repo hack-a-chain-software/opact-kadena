@@ -140,6 +140,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
   variant: {
     type: String as PropType<
       | 'nav'
@@ -181,8 +185,9 @@ const tag = computed(() =>
   <div
     :class="
       twMerge(
-        'text-white rounded-[100px] xl:w-max group opact-button relative md:max-w-max overflow-hidden cursor-pointer',
-        variants[variant].parent
+        'text-white rounded-[100px] xl:w-max group relative md:max-w-max overflow-hidden cursor-pointer',
+        variants[variant].parent,
+        !disabled && 'opact-button'
       )
     "
   >
@@ -205,7 +210,8 @@ const tag = computed(() =>
         xl:px-[24px]
         group-hover:text-white
       `,
-          variants[variant].children
+          variants[variant].children,
+          disabled && '!cursor-not-allowed'
         )
       "
     >
@@ -216,48 +222,50 @@ const tag = computed(() =>
           {{ text }}
         </span>
 
-        <Icon
-          v-if="withIcon"
-          name="arrow"
-          class="
-            h-[20px]
-            w-[20px]
-            group-hover:rotate-[45deg]
-            duration-[0.3s]
-            relative
-            z-[2]
-          "
-          :class="
-            variant === 'hero-primary'
-              ? `
-              lg:w-[28px]
-              lg:scale-[1.2]
-              ml-[10px] mr-[-8px] sm:mr-[-12px]
-            `
-              : `
-              ml-[8px] mr-[-8px] sm:mr-[-12px] lg:ml-[8px] lg:mr-[-12px]
-            `
-          "
-        />
+        <template v-if="!disabled">
+          <Icon
+            v-if="withIcon"
+            name="arrow"
+            class="
+              h-[20px]
+              w-[20px]
+              group-hover:rotate-[45deg]
+              duration-[0.3s]
+              relative
+              z-[2]
+            "
+            :class="
+              variant === 'hero-primary'
+                ? `
+                lg:w-[28px]
+                lg:scale-[1.2]
+                ml-[10px] mr-[-8px] sm:mr-[-12px]
+              `
+                : `
+                ml-[8px] mr-[-8px] sm:mr-[-12px] lg:ml-[8px] lg:mr-[-12px]
+              `
+            "
+          />
 
-        <Icon
-          v-else
-          name="arrow"
-          class="
-            w-0
-            z-[2]
-            h-full
-            relative
-            rotate-[45deg]
-            duration-[0.3s]
-            translate-y-[-13%]
-            group-hover:w-[30px]
-            group-hover:pl-[8px]
-            group-hover:mr-[-8px]
-            group-hover:sm:mr-[-12px]
-            group-hover:lg:mr-[-12px]
-          "
-        />
+          <Icon
+            v-else
+            name="arrow"
+            class="
+              w-0
+              z-[2]
+              h-full
+              relative
+              rotate-[45deg]
+              duration-[0.3s]
+              translate-y-[-13%]
+              group-hover:w-[30px]
+              group-hover:pl-[8px]
+              group-hover:mr-[-8px]
+              group-hover:sm:mr-[-12px]
+              group-hover:lg:mr-[-12px]
+            "
+          />
+        </template>
       </div>
     </component>
   </div>

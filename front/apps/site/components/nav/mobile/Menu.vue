@@ -8,24 +8,24 @@ import {
 
 const config = useAppConfig()
 
-const moveTo = (id: string) => {
-  const element = document.getElementById(id)
+// const moveTo = (id: string) => {
+//   const element = document.getElementById(id)
 
-  if (!element) {
-    return
-  }
+//   if (!element) {
+//     return
+//   }
 
-  const bodyRect = document.body.getBoundingClientRect()
+//   const bodyRect = document.body.getBoundingClientRect()
 
-  const elemRect = element.getBoundingClientRect()
+//   const elemRect = element.getBoundingClientRect()
 
-  const offset = elemRect.top - bodyRect.top
+//   const offset = elemRect.top - bodyRect.top
 
-  scrollTo({
-    top: offset - 74,
-    behavior: 'smooth'
-  })
-}
+//   scrollTo({
+//     top: offset - 74,
+//     behavior: 'smooth'
+//   })
+// }
 </script>
 
 <template>
@@ -42,58 +42,49 @@ const moveTo = (id: string) => {
 
     <MenuItems
       class="
-        p-4
-        px-0
         left-1/2
         -translate-x-1/2
         top-[100%]
         absolute
         w-full
+        pt-[6px]
         rounded-b-[12px]
         outline-none
         bg-[rgba(16,_20,_24,_0.88)]
         backdrop-blur-[4px]
         lg:bg-dark-blue/[0.42] lg:backdrop-blur-[6px]
+        px-[16px]
+        sm:px-[32px]
+        pb-[24px]
       "
     >
       <div
         class="
-          px-4
           mx-auto
           w-screen
-          max-w-[420px]
-          sm:max-w-[640px] sm:px-8
-          md:max-w-[768px]
           divide-y divide-white/[0.32]
         "
       >
         <div
           class="
             mb-4
-            max-h-[104px]
-            flex flex-wrap
-            sm:space-x-[12px]
+            space-y-[24px]
+            flex flex-wrap flex-col
           "
         >
           <MenuItem
-            v-for="{ title, to } in config.routes"
-            :key="`mobile-menu-item-${to}`"
+            v-for="route in config.routes"
+            :key="`mobile-menu-item-${route.to}`"
             as="div"
             class="
               max-w-[130px]
               sm:max-w-max
-              h-[24px]
               w-full
               mb-4
               sm:mb-0
             "
           >
-            <a
-              role="button"
-              v-text="title"
-              class="text-base-xs font-title text-white"
-              @click="moveTo(to)"
-            />
+            <NavMobileItem :route="route" />
           </MenuItem>
         </div>
 
@@ -104,9 +95,9 @@ const moveTo = (id: string) => {
           <div class="flex flex-col">
             <h3
               class="
-                text-xs-poppins
-                sm:text-base-xs
+                text-[12px]
                 font-title
+                leading-[150%]
                 mb-3
               "
             >
@@ -114,18 +105,19 @@ const moveTo = (id: string) => {
             </h3>
 
             <div class="flex space-x-4 mb-6">
-              <Icon name="twitter" />
+              <Icon name="twitter" class="w-6 h-6" />
 
-              <Icon name="discord" />
+              <Icon name="discord" class="w-6 h-6" />
 
-              <Icon name="github" />
+              <Icon name="github" class="w-6 h-6" />
             </div>
 
             <Button
+              disabled
               :with-icon="true"
               variant="primary"
               class="!h-[36px]"
-              text="Lauch App"
+              text="Coming soon"
             />
           </div>
         </MenuItem>

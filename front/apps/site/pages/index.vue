@@ -12,4 +12,8 @@ useHead({
   <SiteHero />
 
   <SiteOpactWallet />
+
+  <SiteZK />
+
+  <SiteContact />
 </template>

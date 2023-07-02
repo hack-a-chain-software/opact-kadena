@@ -1,11 +1,11 @@
 export const chains = [
   {
-    icon: 'kadena',
-    name: 'Kadena'
-  },
-  {
     icon: 'near',
     name: 'Near'
+  },
+  {
+    icon: 'kadena',
+    name: 'Kadena'
   },
   {
     icon: 'eth',

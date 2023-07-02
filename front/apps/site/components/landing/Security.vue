@@ -22,7 +22,7 @@
               src="/security-blur.webp"
               loading="lazy"
               class="w-full h-full"
-              alt="Illustrative image of the marijuana plant"
+              alt="Illustrative image"
               sizes="xs:328px md:704px"
             />
           </figure>
@@ -63,7 +63,7 @@
               src="/security.webp"
               class="scale-x-[-1] lg:scale-x-[1]"
               sizes="xs:429px sm:600px md:765px lg:891.5px xl:891.5px 2xl:1011px"
-              alt="Illustrative image of the marijuana plant"
+              alt="Illustrative image"
             />
           </figure>
         </div>

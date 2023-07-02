@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="pt-[261px] h-[880px]">
+  <div class="pt-[203px] xl:pt-[261px] h-[880px]">
     <NuxtImg
       src="/site-bg.png"
       class="
@@ -16,10 +16,18 @@
     />
 
     <div
-      class="text-white max-w-[1096px] mx-auto text-center"
       v-motion-pop-visible-once
+      class="text-white max-w-[1096px] mx-auto text-center"
     >
-      <div class="mb-[24px] text-center">
+      <div
+        class="
+          mx-auto
+          lg:max-w-[867px]
+          xl:max-w-full
+          mb-[24px]
+          text-center
+        "
+      >
         <h1
           class="
             text-[60px]
@@ -32,7 +40,7 @@
         </h1>
       </div>
 
-      <div class="mb-[48px]">
+      <div class="mb-[48px] xl:mb-[22px]">
         <h2 class="font-[500] text-[24px] leading-[150%]">
           Try out our ZK products or implement cutting edge
           ZK tech for your business.
@@ -41,7 +49,7 @@
 
       <div>
         <Button
-          variant="secondary"
+          variant="hero-secondary"
           text="Meet our solutions"
         />
       </div>

@@ -1,14 +1,25 @@
+<script setup lang="ts">
+const config = useAppConfig()
+</script>
+
 <template>
   <Section
-    class="flex flex-col items-center justify-center"
+    class="
+      pt-[55px]
+      xl:pt-0
+      flex flex-col
+      items-center
+      justify-center
+    "
   >
-    <div class="pb-[16px]">
+    <div class="pb-1 xl:pb-[16px]">
       <h3
         class="
           w-max
           uppercase
           pb-[12px]
-          md:pb-0
+          xl:pb-[3px]
+          2xl:pb-0
           sm:leading-[33px]
           lg:leading-[33px]
           text-sm
@@ -64,10 +75,10 @@
         >
           <figure class="h-[238px] md:h-[482px]">
             <nuxt-img
-              src="/wallet-color-bg.png"
+              src="/wallet/blue-inverted.png"
               loading="lazy"
               class="w-full h-full"
-              alt="Illustrative image of the marijuana plant"
+              alt="Illustrative image"
               sizes="xs:328px md:704px"
             />
           </figure>
@@ -75,58 +86,66 @@
           <figure
             class="
               absolute
-              top-[-70px]
-              left-1/2
-              translate-x-[-60%]
-              rotate-[-21.72deg]
-              min-w-[429px]
-              w-full
               z-[2]
-              sm:top-[-140px]
-              sm:w-[600px]
-              sm:rotate-[-10deg]
-              sm:translate-x-[-55%]
-              md:w-[765px]
-              md:translate-x-0
-              md:top-[-140px]
-              md:left-[-120px]
-              md:rotate-[-20deg]
-              lg:rotate-[-26deg]
-              lg:top-[-140px]
-              lg:left-[130px]
-              lg:min-w-[891px]
-              xl:rotate-0
-              xl:top-[-130px]
-              xl:left-[-10px]
-              xl:min-w-[891.5px]
-              2xl:min-w-[1189.79px]
-              2xl:top-[-236px]
-              2xl:left-[535px]
+              w-full
+              rotate-[28deg]
+              lg:max-w-[800px]
+              lg:top-[-20px]
+              lg:left-[330px]
+              xl:rotate-[17deg]
+              xl:max-w-[960px]
+              xl:top-[-146px]
+              xl:left-[430px]
+              2xl:rotate-0
+              2xl:max-w-[1189.79px]
+              2xl:top-[-240px]
+              2xl:left-[490px]
             "
           >
             <nuxt-img
-              src="/wallet-container.png"
+              src="/wallet/figures/connections.png"
               class="scale-x-[-1] lg:scale-x-[1]"
               sizes="2xl:1189.79px"
-              alt="Illustrative image of the marijuana plant"
+              alt="Illustrative image"
             />
           </figure>
         </div>
       </template>
 
       <template #title>
-        <span
+        <div
           class="
-            block
             mb-[6px]
             md:mb-[24px]
-            lg:mb-[24px]
+            lg:mb-[8px]
             xl:w-[493px]
-            leading-[3.1rem]
+            relative
           "
         >
-          Decentralized Private Accounts
-        </span>
+          <div class="flex space-x-[16px] mb-[24px]">
+            <Badge
+              v-for="({ name, icon }, i) in config.chains"
+              :delay="150 * (i + 1)"
+              :key="`opact-wallet:chain:${name}`"
+              v-motion
+              :initial="{ opacity: 0, x: -15 }"
+              :visibleOnce="{ opacity: 1, x: 0 }"
+              class="!h-[36px]"
+            >
+              <div class="flex items-center space-x-[6px]">
+                <Icon :name="icon" />
+
+                <span>
+                  {{ name }}
+                </span>
+              </div>
+            </Badge>
+          </div>
+
+          <div class="lg:max-w-[399px] xl:max-w-full">
+            <span> Decentralized Private Accounts </span>
+          </div>
+        </div>
       </template>
 
       <template #text>
@@ -136,7 +155,7 @@
             mb-[32px]
             lg:w-[400px]
             xl:w-[493px]
-            lg:mb-[48px]
+            lg:mb-[40px]
           "
         >
           Perform anonymous transactions on the transparent
@@ -175,22 +194,26 @@
               class="h-[700px] w-full absolute bottom-0"
             >
               <nuxt-img
-                src="/bg-left-blue.png"
+                src="/wallet/blue.png"
                 loading="lazy"
                 class="w-full h-full"
-                alt="Illustrative image of the marijuana plant"
+                alt="Illustrative image"
                 sizes="xs:328px md:704px"
               />
             </figure>
 
             <figure
-              class="absolute translate-x-[110px] bottom-0"
+              class="
+                absolute
+                lg:translate-x-[46px] lg:bottom-[-40px]
+                xl:translate-x-[70px] xl:bottom-[-70px]
+                2xl:translate-x-[93px] 2xl:bottom-[-119px]
+              "
             >
-              <nuxt-img
-                src="/puzzle-1.png"
-                class="scale-x-[-1] lg:scale-x-[1]"
-                sizes="2xl:468px"
-                alt="Illustrative image of the marijuana plant"
+              <NuxtImg
+                alt="Illustrative image"
+                src="/wallet/figures/bring.png"
+                sizes="xl:342px 2xl:416px xxl:480px"
               />
             </figure>
           </div>
@@ -202,11 +225,13 @@
               block
               mb-[6px]
               md:mb-[24px]
-              lg:mb-[24px]
+              lg:mb-[16px]
               xl:w-[493px]
               text-center
               z-[3]
               relative
+              lg:text-[32px] lg:font-[600] lg:leading-[150%]
+              xl:text-[32px] xl:font-[600] xl:leading-[150%]
               2xl:text-[34px]
               2xl:font-[600]
               2xl:leading-[150%]
@@ -223,16 +248,12 @@
             class="
               block
               mb-[32px]
-              lg:w-[400px]
-              xl:w-[493px]
-              lg:mb-[48px]
-              2xl:mb-[21px]
+              lg:mb-[21px]
               text-center
               z-[3]
               relative
-              2xl:text-[18px]
-              2xl:font-[500]
-              2xl:leading-[150%]
+              lg:text-[18px] lg:font-[500] lg:leading-[150%]
+              xl:text-[18px] xl:font-[500] xl:leading-[150%]
               mx-auto
               2xl:w-[532px]
             "
@@ -248,10 +269,14 @@
 
         <template #cta>
           <Button
-            withIcon
+            with-icon
             variant="secondary"
             text="Read more"
-            class="mb-[298px]"
+            class="
+              lg:mb-[230px]
+              xl:mb-[281px]
+              2xl:mb-[302px]
+            "
           />
         </template>
       </Container>
@@ -283,22 +308,26 @@
               class="h-[700px] w-full absolute bottom-0"
             >
               <nuxt-img
-                src="/bg-left-blue.png"
+                src="/wallet/blue.png"
                 loading="lazy"
                 class="w-full h-full"
-                alt="Illustrative image of the marijuana plant"
+                alt="Illustrative image"
                 sizes="xs:328px md:704px"
               />
             </figure>
 
             <figure
-              class="absolute translate-x-[110px] bottom-0"
+              class="
+                absolute
+                lg:translate-x-[48px] lg:bottom-[-63px]
+                xl:translate-x-[70px] xl:bottom-[-65px]
+                2xl:translate-x-[93px] 2xl:bottom-[-90px]
+              "
             >
               <nuxt-img
-                src="/puzzle-1.png"
-                class="scale-x-[-1] lg:scale-x-[1]"
-                sizes="2xl:468px"
-                alt="Illustrative image of the marijuana plant"
+                sizes="xl:342px 2xl:416px xxl:480px"
+                src="/wallet/figures/integrate.png"
+                alt="Illustrative image"
               />
             </figure>
           </div>
@@ -310,11 +339,13 @@
               block
               mb-[6px]
               md:mb-[24px]
-              lg:mb-[24px]
+              lg:mb-[16px]
               xl:w-[493px]
               text-center
               z-[3]
               relative
+              lg:text-[29px] lg:font-[600] lg:leading-[150%]
+              xl:text-[29px] xl:font-[600] xl:leading-[150%]
               2xl:text-[34px]
               2xl:font-[600]
               2xl:leading-[150%]
@@ -332,16 +363,16 @@
             class="
               block
               mb-[32px]
-              lg:w-[400px]
+              lg:w-[340px]
               xl:w-[493px]
-              lg:mb-[48px]
+              lg:mb-[116px]
+              xl:mb-[58px]
               2xl:mb-[38px]
               text-center
               z-[3]
               relative
-              2xl:text-[18px]
-              2xl:font-[500]
-              2xl:leading-[150%]
+              lg:text-[18px] lg:font-[500] lg:leading-[150%]
+              xl:text-[18px] xl:font-[500] xl:leading-[150%]
               mx-auto
               2xl:w-[532px]
             "
@@ -355,10 +386,10 @@
 
         <template #cta>
           <Button
-            withIcon
+            with-icon
             variant="secondary"
             text="Read more"
-            class="mb-[310px]"
+            class="mb-[228px] xl:mb-[307px] 2xl:mb-[313px]"
           />
         </template>
       </Container>

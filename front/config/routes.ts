@@ -1,61 +1,101 @@
-export const routes = [
+export type RouteType = 'widget' | 'link' | 'subroute';
+
+export type RouteWidget = 'blog' | 'subroutes';
+
+export interface BaseRoute {
+  to: string;
+  key: string;
+  label: string;
+}
+
+export interface LinkRoute extends BaseRoute {
+  type: 'link';
+}
+
+export interface WidgetRoute extends BaseRoute {
+  type: 'widget';
+  width: number;
+  order: number;
+  height: number;
+  widget: RouteWidget;
+}
+
+export interface Subroute extends WidgetRoute {
+  subroutes: BaseRoute[];
+}
+
+export type Route = WidgetRoute | LinkRoute | Subroute;
+
+export const routes: Route[] = [
   {
-    to: '#',
-    key: 'opact-wallet',
-    label: 'Opact Wallet',
+    order: 1,
     width: 355,
     height: 57,
-    order: 1,
+    to: '/wallet',
+    type: 'widget',
+    widget: 'subroutes',
+    label: 'Opact Wallet',
+    key: 'route:widget:Subroutes:opact-wallet',
     subroutes: [
       {
-        to: '#',
+        key: 'zk-tools-Privacy-zk',
+        to: 'https://tinyman.org/',
         label: 'Privacy'
       },
       {
-        to: '#',
-        label: 'Security'
+        key: 'zk-tools-Documentation-zk',
+        label: 'Documentation',
+        to: 'https://tinyman.org/'
       },
       {
-        label: 'Documentation',
-        to: '#'
+        key: 'zk-tools-Security-zk',
+        to: 'https://tinyman.org/',
+        label: 'Security'
       }
     ]
   },
   {
-    to: '#',
-    key: 'opact232i4932wallet',
-    label: 'Blog',
+    order: 2,
     width: 800,
     height: 260,
-    order: 2,
-    component: 'blogMenu'
+    label: 'Blog',
+    type: 'widget',
+    widget: 'blog',
+    key: 'menu:widget:blog',
+    to: 'https://tinyman.org/'
   },
   {
-    to: '#',
-    key: 'opact2-1312321432',
-    label: 'ZK Tools',
+    order: 3,
     width: 300,
     height: 57,
-    order: 3,
+    type: 'widget',
+    label: 'ZK Tools',
+    widget: 'subroutes',
+    to: 'https://tinyman.org/',
+    key: 'route:widget:subroutes:zk-tools',
     subroutes: [
       {
-        to: '#',
+        key: 'zk-tools-subroute-zk',
+        to: 'https://tinyman.org/',
         label: 'ZK Tool'
       },
       {
-        to: '#',
+        key: 'zk-tools-subroute-happy',
+        to: 'https://tinyman.org/',
         label: 'Happy'
       },
       {
+        key: 'zk-tools-subroute-link',
         label: 'How Works',
-        to: '#'
+        to: 'https://tinyman.org/'
       }
     ]
   },
   {
-    to: '#',
+    type: 'link',
     key: 'contact',
-    label: 'Contact'
+    label: 'Contact',
+    to: 'https://tinyman.org/'
   }
 ]
 
