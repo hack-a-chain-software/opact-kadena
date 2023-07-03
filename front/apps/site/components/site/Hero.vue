@@ -63,8 +63,7 @@
           class="
             mx-auto
             max-w-[290px]
-            sm:max-w-full
-            sm:font-medium sm:text-xl
+            sm:max-w-full sm:font-medium sm:text-xl
             lg:text-2xl
           "
         >

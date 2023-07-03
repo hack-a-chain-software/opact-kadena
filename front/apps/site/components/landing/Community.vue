@@ -5,9 +5,7 @@ const config = useAppConfig()
 <template>
   <Container id="community" class="flex-1">
     <template #tag>
-      <span
-        class="block mb-2.5 sm:mb-[18px] lg:mb-[18px]"
-      >
+      <span class="block mb-2.5 sm:mb-[18px] lg:mb-[18px]">
         Community
       </span>
     </template>
@@ -44,9 +42,7 @@ const config = useAppConfig()
     </template>
 
     <template #cta>
-      <div
-        class="flex gap-6 lg:flex-wrap xl:flex-nowrap"
-      >
+      <div class="flex gap-6 lg:flex-wrap xl:flex-nowrap">
         <IconButton
           v-for="(
             { icon, title, to }, i

@@ -65,13 +65,7 @@ const config = useAppConfig()
           divide-y divide-white/[0.32]
         "
       >
-        <div
-          class="
-            mb-4
-            space-y-6
-            flex flex-wrap flex-col
-          "
-        >
+        <div class="mb-4 space-y-6 flex flex-wrap flex-col">
           <MenuItem
             v-for="route in config.routes"
             :key="`mobile-menu-item-${route.to}`"

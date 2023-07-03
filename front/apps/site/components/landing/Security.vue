@@ -70,22 +70,11 @@
       </template>
 
       <template #tag>
-        <span
-          class="block mb-3 sm:mb-6"
-        >
-          Security
-        </span>
+        <span class="block mb-3 sm:mb-6"> Security </span>
       </template>
 
       <template #title>
-        <span
-          class="
-            block
-            mb-[6px]
-            md:mb-6
-            xl:w-[493px]
-          "
-        >
+        <span class="block mb-[6px] md:mb-6 xl:w-[493px]">
           Secure and
           <br class="hidden lg:inline xl:hidden" />
           Compliant <br class="lg:hidden xl:inline" />

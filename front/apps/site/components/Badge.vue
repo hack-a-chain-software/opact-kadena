@@ -1,12 +1,5 @@
 <template>
-  <div
-    class="
-      h-8
-      p-[1px]
-      rounded-[8px]
-      bg-opact-gradient
-    "
-  >
+  <div class="h-8 p-[1px] rounded-[8px] bg-opact-gradient">
     <div
       class="
         h-full

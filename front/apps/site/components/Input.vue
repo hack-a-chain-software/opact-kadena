@@ -23,5 +23,5 @@ withDefaults(
       placeholder:text-dark-blue
     "
     :placeholder="placeholder"
-  >
+  />
 </template>

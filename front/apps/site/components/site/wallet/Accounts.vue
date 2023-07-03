@@ -14,22 +14,10 @@ const config = useAppConfig()
 
     <template #title>
       <div
-        class="
-          mb-2.5
-          sm:mb-3
-          lg:mb-7
-          xl:w-[493px]
-          relative
-        "
+        class="mb-2.5 sm:mb-3 lg:mb-7 xl:w-[493px] relative"
       >
         <div
-          class="
-            flex
-            space-x-4
-            mb-2.5
-            sm:mb-[13px]
-            lg:mb-6
-          "
+          class="flex space-x-4 mb-2.5 sm:mb-[13px] lg:mb-6"
         >
           <Badge
             v-for="({ name, icon }, i) in config.chains"

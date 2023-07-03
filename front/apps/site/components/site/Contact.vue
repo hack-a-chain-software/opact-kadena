@@ -1,12 +1,7 @@
 <template>
   <Section
     id="contact"
-    class="
-      pt-[90px]
-      pb-10
-      md:!py-[120px]
-      lg:!py-[140px]
-    "
+    class="pt-[90px] pb-10 md:!py-[120px] lg:!py-[140px]"
   >
     <div
       class="
@@ -38,13 +33,7 @@
       </div>
 
       <div class="pb-[38px] md:pb-8">
-        <h3
-          class="
-            font-medium
-            leading-normal
-            md:text-xl
-          "
-        >
+        <h3 class="font-medium leading-normal md:text-xl">
           Like our ZK solutions or need a different one?
           Let’s chat!
         </h3>
@@ -61,18 +50,12 @@
               pb-6
             "
           >
-            <Input
-              placeholder="Name"
-            />
+            <Input placeholder="Name" />
 
-            <Input
-              placeholder="E-mail"
-            />
+            <Input placeholder="E-mail" />
           </div>
 
-          <TextArea
-            placeholder="Leave your message"
-          />
+          <TextArea placeholder="Leave your message" />
 
           <Button
             variant="hero-secondary"
