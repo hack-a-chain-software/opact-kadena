@@ -25,9 +25,7 @@
       />
     </figure>
 
-    <figure
-      class="h-[700px] w-full absolute bottom-0"
-    >
+    <figure class="h-[700px] w-full absolute bottom-0">
       <nuxt-img
         src="/wallet/purple.png"
         loading="lazy"

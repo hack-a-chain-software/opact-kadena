@@ -50,8 +50,8 @@
         blockchain ecosystems, and our team has the
         expertise to develop it in Solidity, Rust, Ink!,
         Pact, and other languages and frameworks. If you
-        want private transactions on your blockchain,
-        reach out to us!
+        want private transactions on your blockchain, reach
+        out to us!
       </span>
     </template>
 

@@ -10,9 +10,7 @@
     "
   >
     <div class="pb-1 xl:pb-[16px]">
-      <Tag>
-        Our Products
-      </Tag>
+      <Tag> Our Products </Tag>
     </div>
 
     <div class="pb-[24px] sm:pb-[38px] lg:pb-[60px]">

@@ -1,7 +1,12 @@
 <template>
   <Section
     id="contact"
-    class="pt-[90px] pb-[40px] md:!py-[120px] lg:!py-[140px]"
+    class="
+      pt-[90px]
+      pb-[40px]
+      md:!py-[120px]
+      lg:!py-[140px]
+    "
   >
     <div
       class="
@@ -70,7 +75,7 @@
                 placeholder:text-dark-blue
               "
               placeholder="Nome"
-            >
+            />
 
             <input
               class="
@@ -84,7 +89,7 @@
                 placeholder:text-dark-blue
               "
               placeholder="E-mail"
-            >
+            />
           </div>
 
           <textarea

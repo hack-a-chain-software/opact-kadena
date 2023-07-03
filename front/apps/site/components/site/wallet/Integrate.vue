@@ -59,10 +59,9 @@
           2xl:w-[532px]
         "
       >
-        Allow the users to perform anonymous
-        transactions on your dApp by integrating Opact
-        Wallet, e.g., perform trades on a DEX in a
-        private manner.
+        Allow the users to perform anonymous transactions on
+        your dApp by integrating Opact Wallet, e.g., perform
+        trades on a DEX in a private manner.
       </span>
     </template>
 

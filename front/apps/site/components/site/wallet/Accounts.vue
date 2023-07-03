@@ -15,21 +15,21 @@ const config = useAppConfig()
     <template #title>
       <div
         class="
-            mb-[10px]
-            sm:mb-[12px]
-            lg:mb-[28px]
-            xl:w-[493px]
-            relative
-          "
+          mb-[10px]
+          sm:mb-[12px]
+          lg:mb-[28px]
+          xl:w-[493px]
+          relative
+        "
       >
         <div
           class="
-              flex
-              space-x-[16px]
-              mb-[10px]
-              sm:mb-[13px]
-              lg:mb-[24px]
-            "
+            flex
+            space-x-[16px]
+            mb-[10px]
+            sm:mb-[13px]
+            lg:mb-[24px]
+          "
         >
           <Badge
             v-for="({ name, icon }, i) in config.chains"
@@ -66,12 +66,12 @@ const config = useAppConfig()
     <template #text>
       <span
         class="
-            block
-            mb-[32px]
-            lg:w-[400px]
-            xl:w-[493px]
-            lg:mb-[40px]
-          "
+          block
+          mb-[32px]
+          lg:w-[400px]
+          xl:w-[493px]
+          lg:mb-[40px]
+        "
       >
         Perform anonymous transactions on the transparent
         blockchain ecosystem, all through smart contracts.

@@ -3,13 +3,14 @@
     class="
       z-[2]
       mt-[-48px]
-      mb-[68px] sm:mb-[10px]
-      ml-[-32px] sm:ml-0
-      translate-x-[16px] sm:translate-x-0
-      sm:w-[704px]
+      mb-[68px]
+      sm:mb-[10px]
+      ml-[-32px]
+      sm:ml-0
+      translate-x-[16px]
+      sm:translate-x-0 sm:w-[704px]
       lg:absolute lg:top-0 lg:right-0 lg:w-auto
-      xl:bottom-0
-      xl:left-0
+      xl:bottom-0 xl:left-0
     "
   >
     <figure class="h-[238px] sm:h-[482px]">
