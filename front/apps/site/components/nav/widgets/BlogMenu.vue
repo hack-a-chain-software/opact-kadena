@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useAppConfig()
+</script>
 
 <template>
   <div
@@ -45,6 +47,7 @@
             <Button
               variant="secondary"
               text="know the tools"
+              to="https://opact.ghost.io/opact-reshaping-the-future-of-blockchain-with-zero-knowledge-technology/"
             />
           </div>
         </div>
@@ -52,7 +55,7 @@
     </div>
 
     <div class="flex justify-end">
-      <a class="ml-auto cursor-pointer hover:opacity-[0.8]">
+      <a target="_blank" :href="config.blog.ctaTo" class="ml-auto cursor-pointer hover:opacity-[0.8]">
         <span> Learn about ZK for free on our blog </span>
 
         <Icon name="arrow" />

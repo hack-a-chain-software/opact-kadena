@@ -38,18 +38,18 @@ export const routes: Route[] = [
     key: 'route:widget:Subroutes:opact-wallet',
     subroutes: [
       {
-        key: 'zk-tools-Privacy-zk',
-        to: 'https://tinyman.org/',
+        key: 'wallet:privacy:link',
+        to: '/wallet#privacy',
         label: 'Privacy'
       },
       {
-        key: 'zk-tools-Documentation-zk',
+        key: 'wallet:documentation:link',
         label: 'Documentation',
-        to: 'https://tinyman.org/'
+        to: '/wallet#documentation'
       },
       {
-        key: 'zk-tools-Security-zk',
-        to: 'https://tinyman.org/',
+        key: 'wallet:security:link',
+        to: '/wallet#security',
         label: 'Security'
       }
     ]
@@ -62,40 +62,40 @@ export const routes: Route[] = [
     type: 'widget',
     widget: 'blog',
     key: 'menu:widget:blog',
-    to: 'https://tinyman.org/'
+    to: 'https://opact.ghost.io/'
   },
-  {
-    order: 3,
-    width: 300,
-    height: 57,
-    type: 'widget',
-    label: 'ZK Tools',
-    widget: 'subroutes',
-    to: 'https://tinyman.org/',
-    key: 'route:widget:subroutes:zk-tools',
-    subroutes: [
-      {
-        key: 'zk-tools-subroute-zk',
-        to: 'https://tinyman.org/',
-        label: 'ZK Tool'
-      },
-      {
-        key: 'zk-tools-subroute-happy',
-        to: 'https://tinyman.org/',
-        label: 'Happy'
-      },
-      {
-        key: 'zk-tools-subroute-link',
-        label: 'How Works',
-        to: 'https://tinyman.org/'
-      }
-    ]
-  },
+  // {
+  //   order: 3,
+  //   width: 300,
+  //   height: 57,
+  //   type: 'widget',
+  //   label: 'ZK Tools',
+  //   widget: 'subroutes',
+  //   to: 'https://tinyman.org/',
+  //   key: 'route:widget:subroutes:zk-tools',
+  //   subroutes: [
+  //     {
+  //       key: 'zk-tools-subroute-zk',
+  //       to: 'https://tinyman.org/',
+  //       label: 'ZK Tool'
+  //     },
+  //     {
+  //       key: 'zk-tools-subroute-happy',
+  //       to: 'https://tinyman.org/',
+  //       label: 'Happy'
+  //     },
+  //     {
+  //       key: 'zk-tools-subroute-link',
+  //       label: 'How Works',
+  //       to: 'https://tinyman.org/'
+  //     }
+  //   ]
+  // },
   {
     type: 'link',
     key: 'contact',
     label: 'Contact',
-    to: 'https://tinyman.org/'
+    to: '#contact'
   }
 ]
 

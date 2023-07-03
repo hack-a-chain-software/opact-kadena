@@ -42,6 +42,7 @@ const currentMenu = useCurrentMenu()
               font-[400]
               leading-[150%]
             "
+            :href="route.to"
             role="button"
             @mouseenter="handleMenuState(route, true)"
           >

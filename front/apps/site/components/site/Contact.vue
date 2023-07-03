@@ -1,5 +1,6 @@
 <template>
   <Section
+    id="contact"
     class="
       pt-[90px]
       pb-[40px]
