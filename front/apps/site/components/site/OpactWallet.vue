@@ -46,9 +46,7 @@ const config = useAppConfig()
           text-[32px]
           font-[600]
           leading-[120%]
-          md:text-[56px]
-          md:font-[600]
-          md:leading-[120%]
+          md:text-[56px] md:font-[600] md:leading-[120%]
         "
       >
         Opact Wallet
@@ -68,7 +66,10 @@ const config = useAppConfig()
             mb-[68px]
             ml-[-32px]
             translate-x-[16px]
-            md:mb-[10px] md:ml-0 md:translate-x-0 md:w-[704px]
+            md:mb-[10px]
+            md:ml-0
+            md:translate-x-0
+            md:w-[704px]
             lg:absolute lg:top-0 lg:right-0 lg:w-auto
             xl:absolute
             xl:top-0
@@ -92,7 +93,8 @@ const config = useAppConfig()
             class="
               absolute
               z-[2]
-              scale-x-[-1] lg:scale-x-[1]
+              scale-x-[-1]
+              lg:scale-x-[1]
               rotate-[-30deg]
               top-[-110px]
               left-[-120px]
@@ -135,7 +137,15 @@ const config = useAppConfig()
             relative
           "
         >
-          <div class="flex space-x-[16px] mb-[10px] md:mb-[13px] lg:mb-[24px]">
+          <div
+            class="
+              flex
+              space-x-[16px]
+              mb-[10px]
+              md:mb-[13px]
+              lg:mb-[24px]
+            "
+          >
             <Badge
               v-for="({ name, icon }, i) in config.chains"
               :delay="150 * (i + 1)"
@@ -155,7 +165,14 @@ const config = useAppConfig()
             </Badge>
           </div>
 
-          <div class="!leading-[30px] md:!leading-[54px] lg:!leading-[52px] lg:max-w-[399px] xl:max-w-full">
+          <div
+            class="
+              !leading-[30px]
+              md:!leading-[54px]
+              lg:!leading-[52px] lg:max-w-[399px]
+              xl:max-w-full
+            "
+          >
             <span> Decentralized Private Accounts </span>
           </div>
         </div>
@@ -181,8 +198,13 @@ const config = useAppConfig()
 
     <div
       class="
-        flex-col lg:flex-row space-y-[40px] md:space-y-[60px]
-        flex lg:space-y-0 lg:space-x-[32px] w-full
+        flex-col
+        lg:flex-row
+        space-y-[40px]
+        md:space-y-[60px]
+        flex
+        lg:space-y-0 lg:space-x-[32px]
+        w-full
       "
     >
       <Container
@@ -219,7 +241,8 @@ const config = useAppConfig()
             <figure
               class="
                 absolute
-                translate-x-[23px] bottom-[-70px]
+                translate-x-[23px]
+                bottom-[-70px]
                 md:translate-x-[108px] md:bottom-[-100px]
                 lg:translate-x-[46px] lg:bottom-[-40px]
                 xl:translate-x-[70px] xl:bottom-[-70px]
@@ -334,7 +357,8 @@ const config = useAppConfig()
             <figure
               class="
                 absolute
-                translate-x-[20px] bottom-[-60px]
+                translate-x-[20px]
+                bottom-[-60px]
                 md:translate-x-[130px] md:bottom-[-96px]
                 lg:translate-x-[48px] lg:bottom-[-63px]
                 xl:translate-x-[70px] xl:bottom-[-65px]
@@ -363,7 +387,9 @@ const config = useAppConfig()
               relative
               pt-[8px]
               md:pt-0
-              md:text-[40px] md:font-[600] md:leading-[150%]
+              md:text-[40px]
+              md:font-[600]
+              md:leading-[150%]
               lg:text-[29px] lg:font-[600] lg:leading-[150%]
               xl:text-[29px] xl:font-[600] xl:leading-[150%]
               2xl:text-[34px]
@@ -394,7 +420,9 @@ const config = useAppConfig()
               relative
               px-4
               md:px-0
-              text-[18px] font-[500] leading-[150%]
+              text-[18px]
+              font-[500]
+              leading-[150%]
               md:text-[18px] md:font-[500] md:leading-[150%]
               lg:text-[18px] lg:font-[500] lg:leading-[150%]
               xl:text-[18px] xl:font-[500] xl:leading-[150%]
@@ -414,7 +442,12 @@ const config = useAppConfig()
             with-icon
             variant="secondary"
             text="Read more"
-            class="mb-[190px] lg:mb-[228px] xl:mb-[307px] 2xl:mb-[313px]"
+            class="
+              mb-[190px]
+              lg:mb-[228px]
+              xl:mb-[307px]
+              2xl:mb-[313px]
+            "
           />
         </template>
       </Container>

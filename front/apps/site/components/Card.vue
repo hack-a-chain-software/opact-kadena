@@ -16,7 +16,14 @@ const figureClasses = {
 </script>
 
 <template>
-  <div class="w-[340px] lg:w-[285px] xl:w-[371px] 2xl:w-[424px]">
+  <div
+    class="
+      w-[340px]
+      lg:w-[285px]
+      xl:w-[371px]
+      2xl:w-[424px]
+    "
+  >
     <div
       class="
         p-[2px]

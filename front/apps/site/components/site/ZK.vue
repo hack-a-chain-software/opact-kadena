@@ -21,7 +21,6 @@ const config = useAppConfig()
           text-[30px]
           font-[600]
           leading-[120%]
-
           md:font-title
           md:text-[54px]
           md:font-[600]
@@ -37,9 +36,8 @@ const config = useAppConfig()
         class="
           text-white text-[18px]
           font-[400]
-          leading-[150%] md:text-[22px]
-          md:font-[500]
-          md:leading-[150%]
+          leading-[150%]
+          md:text-[22px] md:font-[500] md:leading-[150%]
         "
       >
         Easy to use SDKs for zero knowledge implementation
@@ -48,7 +46,11 @@ const config = useAppConfig()
 
     <div
       class="
-        w-full flex justify-between flex-wrap lg:flex-nowrap
+        w-full
+        flex
+        justify-between
+        flex-wrap
+        lg:flex-nowrap
         gap-[24px]
       "
     >
