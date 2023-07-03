@@ -185,7 +185,7 @@ const tag = computed(() =>
   <div
     :class="
       twMerge(
-        'text-white rounded-[100px] xl:w-max group relative md:max-w-max overflow-hidden cursor-pointer',
+        'text-white rounded-[100px] xl:w-max group/button relative md:max-w-max overflow-hidden cursor-pointer',
         variants[variant].parent,
         !disabled && 'opact-button'
       )
@@ -208,7 +208,7 @@ const tag = computed(() =>
         xl:w-max
         lg:px-[18px]
         xl:px-[24px]
-        group-hover:text-white
+        group-hover/button:text-white
       `,
           variants[variant].children,
           disabled && '!cursor-not-allowed'
@@ -229,7 +229,7 @@ const tag = computed(() =>
             class="
               h-[20px]
               w-[20px]
-              group-hover:rotate-[45deg]
+              group-hover/button:rotate-[45deg]
               duration-[0.3s]
               relative
               z-[2]
@@ -258,11 +258,11 @@ const tag = computed(() =>
               rotate-[45deg]
               duration-[0.3s]
               translate-y-[-13%]
-              group-hover:w-[30px]
-              group-hover:pl-[8px]
-              group-hover:mr-[-8px]
-              group-hover:sm:mr-[-12px]
-              group-hover:lg:mr-[-12px]
+              group-hover/button:w-[30px]
+              group-hover/button:pl-[8px]
+              group-hover/button:mr-[-8px]
+              group-hover/button:sm:mr-[-12px]
+              group-hover/button:lg:mr-[-12px]
             "
           />
         </template>

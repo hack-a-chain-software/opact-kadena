@@ -38,7 +38,7 @@ const config = useAppConfig()
       </h3>
     </div>
 
-    <div class="pb-[24px] md:pb-[38px] lg:pb-[60px]">
+    <div class="pb-[24px] sm:pb-[38px] lg:pb-[60px]">
       <h2
         class="
           text-[#FAFAFA]
@@ -46,7 +46,7 @@ const config = useAppConfig()
           text-[32px]
           font-[600]
           leading-[120%]
-          md:text-[56px] md:font-[600] md:leading-[120%]
+          sm:text-[56px] sm:font-[600] sm:leading-[120%]
         "
       >
         Opact Wallet
@@ -66,10 +66,10 @@ const config = useAppConfig()
             mb-[68px]
             ml-[-32px]
             translate-x-[16px]
-            md:mb-[10px]
-            md:ml-0
-            md:translate-x-0
-            md:w-[704px]
+            sm:mb-[10px]
+            sm:ml-0
+            sm:translate-x-0
+            sm:w-[704px]
             lg:absolute lg:top-0 lg:right-0 lg:w-auto
             xl:absolute
             xl:top-0
@@ -79,7 +79,7 @@ const config = useAppConfig()
             xl:left-0
           "
         >
-          <figure class="h-[238px] md:h-[482px]">
+          <figure class="h-[238px] sm:h-[482px]">
             <nuxt-img
               src="/wallet/blue-inverted.png"
               loading="lazy"
@@ -99,6 +99,10 @@ const config = useAppConfig()
               top-[-110px]
               left-[-120px]
               min-w-[600px]
+              sm:rotate-[-20deg]
+              sm:top-[-240px]
+              sm:left-[-140px]
+              sm:min-w-[1000px]
               md:rotate-[-14deg]
               md:top-[-300px]
               md:left-[-240px]
@@ -120,7 +124,7 @@ const config = useAppConfig()
             <nuxt-img
               src="/wallet/figures/connections.png"
               class="scale-x-[-1] lg:scale-x-[1]"
-              sizes="md:600px lg:1200px 2xl:1189.79px"
+              sizes="sm:600px lg:1200px 2xl:1189.79px"
               alt="Illustrative image"
             />
           </figure>
@@ -131,7 +135,7 @@ const config = useAppConfig()
         <div
           class="
             mb-[10px]
-            md:mb-[12px]
+            sm:mb-[12px]
             lg:mb-[28px]
             xl:w-[493px]
             relative
@@ -142,7 +146,7 @@ const config = useAppConfig()
               flex
               space-x-[16px]
               mb-[10px]
-              md:mb-[13px]
+              sm:mb-[13px]
               lg:mb-[24px]
             "
           >
@@ -168,7 +172,7 @@ const config = useAppConfig()
           <div
             class="
               !leading-[30px]
-              md:!leading-[54px]
+              sm:!leading-[54px]
               lg:!leading-[52px] lg:max-w-[399px]
               xl:max-w-full
             "
@@ -201,7 +205,7 @@ const config = useAppConfig()
         flex-col
         lg:flex-row
         space-y-[40px]
-        md:space-y-[60px]
+        sm:space-y-[60px]
         flex
         lg:space-y-0 lg:space-x-[32px]
         w-full
@@ -217,15 +221,24 @@ const config = useAppConfig()
           <div
             class="
               z-[3]
-              md:mb-0 md:ml-0 md:translate-x-0
+              sm:mb-0 sm:ml-0 sm:translate-x-0
               w-full
-              h-[374px]
+              h-full
               absolute
               bottom-0
               left-0
               pointer-events-none
             "
           >
+            <figure
+              class="opacity-0 group-hover/container:opacity-100 transition-all duration-700"
+            >
+              <nuxt-img
+                src="/wallet/blue-hover.png"
+                class="absolute inset-0 w-full h-full z-[-1]"
+              />
+            </figure>
+
             <figure
               class="h-[700px] w-full absolute bottom-0"
             >
@@ -234,7 +247,7 @@ const config = useAppConfig()
                 loading="lazy"
                 class="w-full h-full"
                 alt="Illustrative image"
-                sizes="xs:704px md:704px"
+                sizes="xs:704px sm:704px"
               />
             </figure>
 
@@ -243,7 +256,7 @@ const config = useAppConfig()
                 absolute
                 translate-x-[23px]
                 bottom-[-70px]
-                md:translate-x-[108px] md:bottom-[-100px]
+                sm:translate-x-[108px] sm:bottom-[-100px]
                 lg:translate-x-[46px] lg:bottom-[-40px]
                 xl:translate-x-[70px] xl:bottom-[-70px]
                 2xl:translate-x-[93px] 2xl:bottom-[-119px]
@@ -252,7 +265,7 @@ const config = useAppConfig()
               <NuxtImg
                 alt="Illustrative image"
                 src="/wallet/figures/bring.png"
-                sizes="md:279px lg:490px xl:342px 2xl:416px xxl:480px"
+                sizes="sm:279px lg:490px xl:342px 2xl:416px xxl:480px"
               />
             </figure>
           </div>
@@ -263,12 +276,12 @@ const config = useAppConfig()
             class="
               block
               mb-[16px]
-              md:mb-[24px]
+              sm:mb-[24px]
               lg:mb-[16px]
               xl:w-[493px]
               text-center
               pt-[6px]
-              md:pt-0
+              sm:pt-0
               z-[3]
               relative
               lg:text-[32px] lg:font-[600] lg:leading-[150%]
@@ -291,7 +304,7 @@ const config = useAppConfig()
               mb-[24px]
               lg:mb-[21px]
               text-center
-              z-[3]
+              z-[10]
               relative
               lg:text-[18px] lg:font-[500] lg:leading-[150%]
               xl:text-[18px] xl:font-[500] xl:leading-[150%]
@@ -333,15 +346,24 @@ const config = useAppConfig()
           <div
             class="
               z-[3]
-              md:mb-0 md:ml-0 md:translate-x-0
+              sm:mb-0 sm:ml-0 sm:translate-x-0
               w-full
-              h-[374px]
+              h-full
               absolute
               bottom-0
               left-0
               pointer-events-none
             "
           >
+            <figure
+              class="opacity-0 group-hover/container:opacity-100 transition-all duration-700"
+            >
+              <nuxt-img
+                src="/wallet/purple-hover.png"
+                class="absolute inset-0 z-[-1]"
+              />
+            </figure>
+
             <figure
               class="h-[700px] w-full absolute bottom-0"
             >
@@ -350,7 +372,7 @@ const config = useAppConfig()
                 loading="lazy"
                 class="w-full h-full"
                 alt="Illustrative image"
-                sizes="xs:328px md:704px"
+                sizes="xs:328px sm:704px"
               />
             </figure>
 
@@ -359,7 +381,7 @@ const config = useAppConfig()
                 absolute
                 translate-x-[20px]
                 bottom-[-60px]
-                md:translate-x-[130px] md:bottom-[-96px]
+                sm:translate-x-[130px] sm:bottom-[-96px]
                 lg:translate-x-[48px] lg:bottom-[-63px]
                 xl:translate-x-[70px] xl:bottom-[-65px]
                 2xl:translate-x-[93px] 2xl:bottom-[-90px]
@@ -379,17 +401,17 @@ const config = useAppConfig()
             class="
               block
               mb-[18px]
-              md:mb-[10px]
+              sm:mb-[10px]
               lg:mb-[16px]
               xl:w-[493px]
               text-center
               z-[3]
               relative
               pt-[8px]
-              md:pt-0
-              md:text-[40px]
-              md:font-[600]
-              md:leading-[150%]
+              sm:pt-0
+              sm:text-[40px]
+              sm:font-[600]
+              sm:leading-[150%]
               lg:text-[29px] lg:font-[600] lg:leading-[150%]
               xl:text-[29px] xl:font-[600] xl:leading-[150%]
               2xl:text-[34px]
@@ -411,19 +433,19 @@ const config = useAppConfig()
               mb-[22px]
               lg:w-[340px]
               xl:w-[493px]
-              md:mb-[42px]
+              sm:mb-[42px]
               lg:mb-[116px]
               xl:mb-[58px]
               2xl:mb-[38px]
               text-center
-              z-[3]
+              z-[4]
               relative
               px-4
-              md:px-0
+              sm:px-0
               text-[18px]
               font-[500]
               leading-[150%]
-              md:text-[18px] md:font-[500] md:leading-[150%]
+              sm:text-[18px] sm:font-[500] sm:leading-[150%]
               lg:text-[18px] lg:font-[500] lg:leading-[150%]
               xl:text-[18px] xl:font-[500] xl:leading-[150%]
               mx-auto

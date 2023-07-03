@@ -4,24 +4,30 @@
   <div
     class="
       pt-[170px]
-      md:pt-[235px]
+      sm:pt-[235px]
       lg:pt-[203px]
       xl:pt-[261px]
       h-[595px]
-      md:h-[880px]
+      sm:h-[880px]
+      w-full
+      overflow-x-clip
+      relative
     "
   >
     <NuxtImg
       src="/site-bg.png"
       class="
         absolute
-        top-0
+        top-[-190px]
+        sm:top-[-40px]
+        2xl:top-0
         left-1/2
         z-[-1]
-        w-[1364px]
-        h-[880px]
+        min-w-[1364px]
+        min-h-[880px]
         -translate-x-1/2
       "
+      sizes="xs:1364px"
     />
 
     <div
@@ -32,7 +38,7 @@
         class="
           mx-auto
           px-4
-          md:px-0
+          sm:px-0
           lg:max-w-[867px]
           xl:max-w-full
           mb-[24px]
@@ -46,7 +52,7 @@
             font-[700]
             leading-[130%]
             tracking-[0.64px]
-            md:text-[52px] md:font-[700] md:leading-[180%]
+            sm:text-[52px] sm:font-[700] sm:leading-[180%]
             lg:text-[60px] lg:font-[700] lg:leading-[180%]
           "
         >
@@ -58,12 +64,12 @@
       <div
         class="
           px-4
-          md:px-0
+          sm:px-0
           mx-auto
           max-w-[568px]
           lg:max-w-full
           mb-[36px]
-          md:mb-[48px]
+          sm:mb-[48px]
           xl:mb-[22px]
         "
       >
@@ -71,11 +77,11 @@
           class="
             mx-auto
             max-w-[290px]
-            md:max-w-full
+            sm:max-w-full
             font-[400]
             text-[16px]
             leading-[150%]
-            md:font-[500] md:text-[20px] md:leading-[150%]
+            sm:font-[500] sm:text-[20px] sm:leading-[150%]
             lg:font-[500] lg:text-[24px] lg:leading-[150%]
           "
         >

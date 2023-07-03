@@ -75,6 +75,7 @@ const sizes = {
         pb-[22px]
         rounded-[12px]
         overflow-hidden
+        group/container
         bg-inverted-card-gradient
         md:pb-[42px] md:px-[40px] md:pt-[48px]
         lg:pt-[52px] lg:pb-[56px] lg:px-[40px]
@@ -98,7 +99,7 @@ const sizes = {
 
       <h2
         :class="sizes[size].title"
-        class="text-white font-title"
+        class="text-white font-title z-[4] relative"
       >
         <slot name="title">
           {{ title }}
@@ -112,7 +113,7 @@ const sizes = {
       </p>
 
       <div
-        class="z-[3] relative w-full flex"
+        class="z-[4] relative w-full flex"
         :class="center && 'justify-center'"
       >
         <slot name="cta">

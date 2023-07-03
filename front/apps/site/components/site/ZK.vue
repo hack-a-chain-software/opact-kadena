@@ -6,7 +6,7 @@ const config = useAppConfig()
   <Section
     class="
       pt-[80px]
-      md:pt-[130px]
+      sm:pt-[130px]
       lg:pt-[140px]
       flex flex-col
       justify-center
@@ -21,23 +21,23 @@ const config = useAppConfig()
           text-[30px]
           font-[600]
           leading-[120%]
-          md:font-title
-          md:text-[54px]
-          md:font-[600]
-          md:leading-[120%]
+          sm:font-title
+          sm:text-[54px]
+          sm:font-[600]
+          sm:leading-[120%]
         "
       >
         ZK Tooling
       </h2>
     </div>
 
-    <div class="pb-[40px] md:pb-[60px] text-center">
+    <div class="pb-[40px] sm:pb-[60px] text-center">
       <h3
         class="
           text-white text-[18px]
           font-[400]
           leading-[150%]
-          md:text-[22px] md:font-[500] md:leading-[150%]
+          sm:text-[22px] sm:font-[500] sm:leading-[150%]
         "
       >
         Easy to use SDKs for zero knowledge implementation
@@ -48,8 +48,12 @@ const config = useAppConfig()
       class="
         w-full
         flex
-        justify-between
         flex-wrap
+        items-center
+        flex-col
+        md:items-start
+        md:flex-row
+        md:justify-between
         lg:flex-nowrap
         gap-[24px]
       "
