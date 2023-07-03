@@ -2,9 +2,9 @@
   <div
     class="
       z-[2]
-      mt-[-48px]
+      -mt-12
       mb-[68px]
-      sm:mb-[10px]
+      sm:mb-2.5
       ml-[-32px]
       sm:ml-0
       translate-x-[16px]

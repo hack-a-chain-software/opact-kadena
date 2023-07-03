@@ -42,8 +42,8 @@ defineProps<{
         flex
         max-w-max
         group-hover:w-[78px]
-        text-[16px]
-        font-[500]
+        text-base
+        font-medium
         leading-[24px]
         text-white
         relative

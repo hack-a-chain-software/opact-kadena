@@ -5,7 +5,7 @@ const config = useAppConfig()
 <template>
   <Section
     class="
-      pt-[80px]
+      pt-20
       sm:pt-[130px]
       lg:pt-[140px]
       flex flex-col
@@ -13,13 +13,13 @@ const config = useAppConfig()
       items-center
     "
   >
-    <div class="pb-[16px]">
+    <div class="pb-4">
       <h2
         class="
           text-[#FAFAFA]
           font-title
-          text-[30px]
-          font-[600]
+          text-3xl
+          font-semibold
           leading-[120%]
           sm:text-[54px]
         "
@@ -28,13 +28,13 @@ const config = useAppConfig()
       </h2>
     </div>
 
-    <div class="pb-[40px] sm:pb-[60px] text-center">
+    <div class="pb-10 sm:pb-[60px] text-center">
       <h3
         class="
-          text-white text-[18px]
-          font-[400]
-          leading-[150%]
-          sm:text-[22px] sm:font-[500]
+          text-white text-lg
+          font-normal
+          leading-normal
+          sm:text-[22px] sm:font-medium
         "
       >
         Easy to use SDKs for zero knowledge implementation
@@ -49,10 +49,10 @@ const config = useAppConfig()
         flex-col
         md:items-start md:flex-row md:justify-between
         lg:flex-nowrap
-        gap-[24px]
+        gap-6
       "
     >
-      <Card
+      <BlogCard
         v-for="(blog, i) in config.blog.posts"
         v-bind="blog"
         :key="`blog:post:id:${i}`"

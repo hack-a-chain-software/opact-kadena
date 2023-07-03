@@ -5,8 +5,8 @@ const currentMenu = useCurrentMenu()
 </script>
 
 <template>
-  <div class="hidden lg:flex px-[40px]">
-    <div class="flex space-x-[40px] items-center">
+  <div class="hidden lg:flex px-10">
+    <div class="flex space-x-10 items-center">
       <template
         v-for="route in config.routes"
         :key="route.key"
@@ -17,9 +17,9 @@ const currentMenu = useCurrentMenu()
             font-title
             text-white
             hover:opacity-80
-            text-[16px]
-            font-[400]
-            leading-[150%]
+            text-base
+            font-normal
+            leading-normal
           "
           :to="route.to"
           @mouseenter="showMenu = false"
@@ -38,9 +38,9 @@ const currentMenu = useCurrentMenu()
               font-title
               text-white
               hover:opacity-80
-              text-[16px]
-              font-[400]
-              leading-[150%]
+              text-base
+              font-normal
+              leading-normal
             "
             :href="route.to"
             role="button"

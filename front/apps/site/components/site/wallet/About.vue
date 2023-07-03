@@ -13,16 +13,16 @@
       <span
         class="
           block
-          mb-[16px]
-          sm:mb-[24px]
-          lg:mb-[16px]
+          mb-4
+          sm:mb-6
+          lg:mb-4
           xl:w-[493px]
           text-center
           pt-[6px]
           sm:pt-0
           z-[3]
           relative
-          lg:text-[32px] lg:font-[600] lg:leading-[150%]
+          lg:text-[32px] lg:font-semibold lg:leading-normal
           2xl:text-[34px]
           mx-auto
         "
@@ -36,12 +36,12 @@
       <span
         class="
           block
-          mb-[24px]
+          mb-6
           lg:mb-[21px]
           text-center
           z-[10]
           relative
-          lg:text-[18px] lg:font-[500] lg:leading-[150%]
+          lg:text-lg lg:font-medium lg:leading-normal
           mx-auto
           2xl:w-[532px]
         "

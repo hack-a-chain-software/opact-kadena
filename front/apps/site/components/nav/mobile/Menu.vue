@@ -55,7 +55,7 @@ const config = useAppConfig()
         lg:bg-dark-blue/[0.42] lg:backdrop-blur-[6px]
         px-[16px]
         sm:px-[32px]
-        pb-[24px]
+        pb-6
       "
     >
       <div
@@ -68,7 +68,7 @@ const config = useAppConfig()
         <div
           class="
             mb-4
-            space-y-[24px]
+            space-y-6
             flex flex-wrap flex-col
           "
         >
@@ -97,7 +97,7 @@ const config = useAppConfig()
               class="
                 text-[12px]
                 font-title
-                leading-[150%]
+                leading-normal
                 mb-3
               "
             >

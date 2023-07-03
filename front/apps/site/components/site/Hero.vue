@@ -27,7 +27,7 @@
           sm:px-0
           lg:max-w-[867px]
           xl:max-w-full
-          mb-[24px]
+          mb-6
           text-center
         "
       >
@@ -39,7 +39,7 @@
             leading-[130%]
             tracking-[0.64px]
             sm:text-[52px] sm:leading-[180%]
-            lg:text-[60px]
+            lg:text-6xl
           "
         >
           Zero Knowledge for enhanced privacy and compliance
@@ -54,8 +54,8 @@
           mx-auto
           max-w-[568px]
           lg:max-w-full
-          mb-[36px]
-          sm:mb-[48px]
+          mb-9
+          sm:mb-12
           xl:mb-[22px]
         "
       >
@@ -64,11 +64,8 @@
             mx-auto
             max-w-[290px]
             sm:max-w-full
-            font-[400]
-            text-[16px]
-            leading-[150%]
-            sm:font-[500] sm:text-[20px]
-            lg:text-[24px]
+            sm:font-medium sm:text-xl
+            lg:text-2xl
           "
         >
           Try out our ZK products or implement cutting edge

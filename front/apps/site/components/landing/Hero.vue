@@ -25,8 +25,8 @@ const config = useAppConfig()
         xl:items-start
         mb-[22px]
         sm:mb-0
-        md:mb-[0px]
-        lg:mb-[40px]
+        md:mb-0
+        lg:mb-10
         xl:mb-[65px]
         pt-[24px]
         sm:pt-[50px]
@@ -48,7 +48,7 @@ const config = useAppConfig()
           lg:text-left
           font-title
           xl:font-[700]
-          lg:font-[600]
+          lg:font-semibold
           pb-[8px]
           sm:pb-[22px]
           xl:pb-[22px]
@@ -78,8 +78,8 @@ const config = useAppConfig()
           z-[2]
           mx-auto
           lg:mx-0
-          sm:text-[20px]
-          lg:text-[20px]
+          sm:text-xl
+          lg:text-xl
           sm:leading-[30px]
           lg:leading-[30px]
           text-sm-hero text-white text-center
@@ -188,11 +188,11 @@ const config = useAppConfig()
             text-white
             mb-[8px]
             sm:mb-0
-            font-[600]
+            font-semibold
             tracking-[0.05rem]
-            lg:text-[20px] lg:leading-[30px]
-            xl:text-[20px] xl:leading-[30px]
-            sm:text-lg sm:text-[20px] sm:leading-[30px]
+            lg:text-xl lg:leading-[30px]
+            xl:text-xl xl:leading-[30px]
+            sm:text-lg sm:text-xl sm:leading-[30px]
           "
         >
           Building on
@@ -201,9 +201,9 @@ const config = useAppConfig()
         <div
           class="
             flex
-            space-x-[16px]
+            space-x-4
             lg:space-x-[18px]
-            xl:space-x-[16px]
+            xl:space-x-4
           "
         >
           <LandingBlockchain

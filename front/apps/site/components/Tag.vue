@@ -12,7 +12,7 @@
       sm:text-[22px]
       lg:text-[22px]
       font-[900]
-      text-[16px]
+      text-base
       sm:font-[900]
       lg:font-[700]
       text-transparent

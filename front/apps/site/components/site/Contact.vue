@@ -3,7 +3,7 @@
     id="contact"
     class="
       pt-[90px]
-      pb-[40px]
+      pb-10
       md:!py-[120px]
       lg:!py-[140px]
     "
@@ -14,22 +14,22 @@
         lg:w-[630px]
         mx-auto
         px-4
-        md:px-[40px]
+        md:px-10
         py-6
-        md:py-[48px]
-        lg:py-[56px]
+        md:py-12
+        lg:py-14
         text-white
         bg-[length:100%_100%]
-        rounded-[16px]
+        rounded-2xl
         bg-[url('/contact/gradient.png')]
       "
     >
       <div class="pb-[0px] md:pb-[8px]">
         <h2
           class="
-            font-title font-[600]
-            leading-[150%]
-            text-[24px]
+            font-title font-semibold
+            leading-normal
+            text-2xl
             md:text-[42px]
           "
         >
@@ -37,13 +37,12 @@
         </h2>
       </div>
 
-      <div class="pb-[38px] md:pb-[32px]">
+      <div class="pb-[38px] md:pb-8">
         <h3
           class="
-            text-[16px]
-            font-[500]
-            leading-[150%]
-            md:text-[20px]
+            font-medium
+            leading-normal
+            md:text-xl
           "
         >
           Like our ZK solutions or need a different one?
@@ -57,72 +56,37 @@
             class="
               flex flex-col
               md:flex-row
-              space-y-[24px]
-              md:space-y-0 md:space-x-[24px]
-              pb-[24px]
+              space-y-6
+              md:space-y-0 md:space-x-6
+              pb-6
             "
           >
-            <input
-              class="
-                w-full
-                px-[20px]
-                py-[18px]
-                rounded-[8px]
-                text-[16px]
-                font-title
-                leading-[20px]
-                text-dark-blue
-                placeholder:text-dark-blue
-              "
-              placeholder="Nome"
+            <Input
+              placeholder="Name"
             />
 
-            <input
-              class="
-                w-full
-                px-[20px]
-                py-[18px]
-                rounded-[8px]
-                text-[16px]
-                font-title
-                leading-[20px]
-                placeholder:text-dark-blue
-              "
+            <Input
               placeholder="E-mail"
             />
           </div>
 
-          <textarea
-            class="
-              px-[20px]
-              py-[18px]
-              rounded-[8px]
-              text-[16px]
-              font-title
-              leading-[20px]
-              mb-[21px]
-              min-h-[110px]
-              text-dark-blue
-              placeholder:text-dark-blue
-            "
+          <TextArea
             placeholder="Leave your message"
           />
 
           <Button
             variant="hero-secondary"
             text="Send a Message"
-            class="mb-[32px]"
+            class="mb-8"
           />
 
           <div>
             <p
               class="
-                font-[500]
-                text-[18px]
-                leading-[150%]
-                md:font-[500]
-                md:text-[20px]
-                md:leading-[150%]
+                font-medium
+                text-lg
+                leading-normal
+                md:text-xl
               "
             >
               Or get in touch with us on Telegram

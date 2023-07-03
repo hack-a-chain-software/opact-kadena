@@ -6,7 +6,7 @@
   >
     <template #tag>
       <span
-        class="block mb-[10px] sm:mb-[18px] lg:mb-[18px]"
+        class="block mb-2.5 sm:mb-[18px] lg:mb-[18px]"
       >
         Documentation
       </span>

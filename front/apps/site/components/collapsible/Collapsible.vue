@@ -63,9 +63,9 @@ function toggle () {
           class="
             text-white
             font-tile
-            text-[18px]
-            font-[500]
-            leading-[150%]
+            text-lg
+            font-medium
+            leading-normal
             opacity-[0.8999999761581421]
           "
         >
@@ -97,9 +97,9 @@ function toggle () {
             <span
               class="
                 font-title
-                text-[16px]
-                font-[500]
-                leading-[150%]
+                text-base
+                font-medium
+                leading-normal
                 opacity-[0.8999999761581421]
               "
             >

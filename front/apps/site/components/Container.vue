@@ -21,37 +21,33 @@ withDefaults(
 const sizes = {
   xl: {
     tag: `
-      text-sm font-[500]
+      text-sm font-medium
       sm:text-[22px] sm:font-[900] sm:leading-[33px]
-      lg:text-[22px] lg:font-[700] lg:leading-[33px]
+      lg:font-[700]
     `,
     title: `
-      text-[24px] font-[500] leading-[36px] tracking-[-0.05rem]
+      text-2xl font-medium leading-[36px] tracking-[-0.05rem]
       sm:text-[32px] sm:leading-[40px]
-      md:text-[42px] md:font-[600] md:leading-[63px] md:tracking-normal
-      lg:text-[42px] lg:font-[600] lg:leading-[63px]
+      md:text-[42px] md:font-semibold md:leading-[63px] md:tracking-normal
     `,
     text: `
-      text-[16px] leading-[24px]
-      sm:text-[20px] sm:font-[500] sm:leading-[30px]
-      lg:text-[20px] lg:font-[500] lg:leading-[30px]
+      text-base leading-[24px]
+      sm:text-xl sm:font-medium sm:leading-[30px]
     `
   },
   lg: {
     tag: `
-      text-sm font-[500]
-      sm:text-[18px] sm:font-[900] sm:leading-[27px]
-      lg:text-[18px] lg:font-[900] lg:leading-[27px]
+      text-sm font-medium
+      sm:text-lg sm:font-[900] sm:leading-[27px]
     `,
     title: `
       text-2xl-poppins
       sm:text-[32px] sm:leading-[40px]
-      md:text-[40px] md:font-[600] md:leading-[60px]
-      lg:text-[32px] lg:font-[600] lg:leading-[48px]
+      md:text-[40px] md:font-semibold md:leading-[60px]
+      lg:text-[32px] lg:leading-[48px]
     `,
     text: `
-      sm:text-[20px] sm:font-[500] sm:leading-[30px]
-      lg:text-[20px] lg:font-[500] lg:leading-[30px]
+      sm:text-xl sm:font-medium sm:leading-[30px]
     `
   }
 }
@@ -77,8 +73,8 @@ const sizes = {
         overflow-hidden
         group/container
         bg-inverted-card-gradient
-        md:pb-[42px] md:px-[40px] md:pt-[48px]
-        lg:pt-[52px] lg:pb-[56px] lg:px-[40px]
+        md:pb-[42px] md:px-10 md:pt-[48px]
+        lg:pt-[52px] lg:pb-[56px] lg:px-10
       "
     >
       <slot name="before" />

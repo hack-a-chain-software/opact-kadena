@@ -14,18 +14,18 @@
         class="
           block
           mb-[18px]
-          sm:mb-[10px]
-          lg:mb-[16px]
+          sm:mb-2.5
+          lg:mb-4
           xl:w-[493px]
           text-center
           z-[3]
           relative
-          pt-[8px]
+          pt-2
           sm:pt-0
           sm:text-[40px]
-          sm:font-[600]
-          sm:leading-[150%]
-          lg:text-[29px] lg:font-[600] lg:leading-[150%]
+          sm:font-semibold
+          sm:leading-normal
+          lg:text-[29px]
           2xl:text-[34px]
           mx-auto
           2xl:w-full
@@ -52,9 +52,9 @@
           relative
           px-4
           sm:px-0
-          text-[18px]
-          font-[500]
-          leading-[150%]
+          text-lg
+          font-medium
+          leading-normal
           mx-auto
           2xl:w-[532px]
         "

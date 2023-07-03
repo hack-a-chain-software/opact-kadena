@@ -28,9 +28,9 @@ defineProps<{
           font-title
           text-white
           hover:opacity-80
-          text-[16px]
-          font-[400]
-          leading-[150%]
+          text-base
+          font-normal
+          leading-normal
         "
         v-text="label"
       />

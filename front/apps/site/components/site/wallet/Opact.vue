@@ -9,17 +9,17 @@
       justify-center
     "
   >
-    <div class="pb-1 xl:pb-[16px]">
+    <div class="pb-1 xl:pb-4">
       <Tag> Our Products </Tag>
     </div>
 
-    <div class="pb-[24px] sm:pb-[38px] lg:pb-[60px]">
+    <div class="pb-6 sm:pb-[38px] lg:pb-[60px]">
       <h2
         class="
           text-[#FAFAFA]
           font-title
           text-[32px]
-          font-[600]
+          font-semibold
           leading-[120%]
           sm:text-[56px]
         "
@@ -34,10 +34,10 @@
       class="
         flex-col
         lg:flex-row
-        space-y-[40px]
+        space-y-10
         sm:space-y-[60px]
         flex
-        lg:space-y-0 lg:space-x-[32px]
+        lg:space-y-0 lg:space-x-8
         w-full
       "
     >

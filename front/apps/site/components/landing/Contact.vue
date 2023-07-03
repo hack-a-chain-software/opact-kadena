@@ -21,8 +21,8 @@
           rounded-[12px]
           overflow-hidden
           bg-inverted-card-gradient
-          md:pb-[42px] md:px-[40px] md:pt-[48px]
-          lg:pt-[52px] lg:pb-[56px] lg:px-[40px]
+          md:pb-[42px] md:px-10 md:pt-[48px]
+          lg:pt-[52px] lg:pb-[56px] lg:px-10
         "
       >
         <figure
@@ -64,12 +64,12 @@
                 mb-[8px]
                 sm:text-[32px] sm:leading-[40px]
                 md:text-[38px]
-                md:font-[600]
+                md:font-semibold
                 md:leading-[57px]
-                md:mb-[12px]
+                md:mb-3
                 lg:mb-[18px]
                 lg:text-[42px]
-                lg:font-[600]
+                lg:font-semibold
                 lg:leading-[57px]
               "
             >
@@ -79,17 +79,17 @@
             <p
               class="
                 text-base-xs text-[#BDBDBD]
-                mb-[32px]
-                sm:font-[500]
-                sm:text-[20px]
+                mb-8
+                sm:font-medium
+                sm:text-xl
                 sm:leading-[30px]
                 sm:max-w-[600px]
                 sm:mb-[43px]
                 xl:max-w-full
                 lg:mb-0
                 lg:max-w-[554px]
-                lg:text-[20px]
-                lg:font-[500]
+                lg:text-xl
+                lg:font-medium
                 lg:leading-[30px]
               "
             >

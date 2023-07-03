@@ -46,8 +46,8 @@
     <div class="flex-1">
       <div
         class="
-          md:space-x-[24px] md:mb-[25px]
-          lg:mb-[28px]
+          md:space-x-6 md:mb-[25px]
+          lg:mb-7
           xl:mb-[25px]
           flex flex-col
           md:flex-row md:items-center
@@ -67,7 +67,7 @@
             text-sm
             sm:text-[22px]
             lg:text-[22px]
-            font-[500]
+            font-medium
             sm:font-[900]
             lg:font-[700]
             text-transparent
@@ -80,7 +80,7 @@
         <div
           class="
             flex
-            mb-[16px]
+            mb-4
             md:mb-0
             space-x-[13px]
             md:space-x-[8px]
@@ -111,7 +111,7 @@
         class="
           font-title
           text-white
-          font-[600]
+          font-semibold
           xl:min-w-[569px]
           2xl:min-w-[600px]
           sm:tracking-normal
@@ -121,12 +121,12 @@
           lg:max-w-[441px] lg:leading-[57.6px]
           xl:leading-[60px]
           2xl:leading-[64.8px]
-          mb-[12px]
+          mb-3
           sm:mb-[20px]
           lg:mb-[22px]
           xl:mb-[23px]
           2xl:mb-[23px]
-          text-2xl-poppins text-[30px]
+          text-2xl-poppins text-3xl
           sm:text-4xl-poppins-md
           lg:text-[48px]
           xl:text-[50px]
@@ -173,7 +173,7 @@
         :delay="700"
         class="
           text-[#BDBDBD]
-          sm:font-[500]
+          sm:font-medium
           lg:tracking-[0.005rem] lg:max-w-[441px]
           xl:max-w-auto xl:min-w-[570px]
           2xl:min-w-[570px]
@@ -181,12 +181,12 @@
           lg:leading-[30px]
           xl:leading-[30px]
           text-lg-xs
-          sm:text-[20px]
-          lg:text-[20px]
-          xl:text-[20px]
-          mb-[32px]
+          sm:text-xl
+          lg:text-xl
+          xl:text-xl
+          mb-8
           sm:mb-[42px]
-          lg:mb-[48px]
+          lg:mb-12
           xl:mb-[47px]
           2xl:mb-[50px]
         "
@@ -203,7 +203,7 @@
         :with-icon="true"
         text="Learn more"
         variant="secondary"
-        class="lg:h-[32px] xl:h-[39px]"
+        class="lg:h-8 xl:h-[39px]"
         :initial="{
           opacity: 0,
           x: -15,

@@ -26,11 +26,11 @@ const variants: Variants = {
     children: `bg-dark-blue w-full h-full flex items-center justify-center
         lg:text-[13px]
         lg:leading-[20px]
-        lg:font-[400]
+        lg:font-normal
 
-        xl:text-[16px]
+        xl:text-base
         xl:leading-[24px]
-        xl:font-[400]
+        xl:font-normal
       `
   },
   primary: {
@@ -39,11 +39,10 @@ const variants: Variants = {
     children: `bg-dark-blue w-full h-full flex items-center justify-center
         lg:text-[13px]
         lg:leading-[20px]
-        lg:font-[400]
+        lg:font-normal
 
-        xl:text-[16px]
+        xl:text-base
         xl:leading-[24px]
-        xl:font-[400]
       `
   },
   secondary: {
@@ -51,31 +50,22 @@ const variants: Variants = {
       bg-white
       p-[2px]
       h-[36px] md:h-[40px] lg:h-[39px] xl:h-[39px]
-      inline-flex items-center justify-center sm:font-[500] sm:text-[16px] sm:leading-[20px]
+      inline-flex items-center justify-center sm:font-medium sm:text-base sm:leading-[20px]
     `,
     children: `
       bg-white text-dark-blue w-full h-full flex items-center justify-center
-      lg:text-[16px]
+      lg:text-base
       lg:leading-[20px]
-      lg:font-[500]
+      lg:font-medium
     `
   },
   tertiary: {
     parent:
       'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[44px] md:h-[50px]',
     children: `bg-inverted-card-gradient w-full h-full flex items-center justify-center
-
-        sm:text-[18px]
-        sm:font-[500]
+        sm:text-lg
+        sm:font-medium
         sm:leading-[27px]
-
-        lg:text-[18px]
-        lg:font-[500]
-        lg:leading-[27px]
-
-        xl:text-[18px]
-        xl:font-[500]
-        xl:leading-[27px]
       `
   },
   'hero-primary': {
@@ -89,17 +79,9 @@ const variants: Variants = {
     children: `bg-dark-blue w-full h-full flex items-center justify-center
         lg:px-[22px]
 
-        sm:text-[18px]
-        sm:font-[500]
+        sm:text-lg
+        sm:font-medium
         sm:leading-[27px]
-
-        lg:text-[18px]
-        lg:font-[400]
-        lg:leading-[27px]
-
-        xl:text-[18px]
-        xl:font-[500]
-        xl:leading-[27px]
       `
   },
   'hero-secondary': {
@@ -107,12 +89,12 @@ const variants: Variants = {
       bg-white
       p-[2px]
       h-[36px] md:h-[51px] xl:mt-[1.6rem]
-      inline-flex items-center justify-center sm:font-[500] sm:text-[16px] sm:leading-[20px]
+      inline-flex items-center justify-center sm:font-medium sm:text-base sm:leading-[20px]
     `,
     children: `bg-white text-dark-blue w-full h-full flex items-center justify-center
-        xl:text-[18px]
+        xl:text-lg
         xl:leading-[20px]
-        xl:font-[400]
+        xl:font-normal
       `
   },
   'hero-tertiary': {
@@ -202,8 +184,8 @@ const tag = computed(() =>
         px-[22px]
         rounded-[100px]
         sm:px-[24px]
-        sm:text-[18px]
-        sm:font-[500]
+        sm:text-lg
+        sm:font-medium
         sm:leading-[27px]
         xl:w-max
         lg:px-[18px]

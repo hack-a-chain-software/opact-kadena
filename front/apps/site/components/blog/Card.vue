@@ -41,7 +41,7 @@ const figureClasses = {
           h-full
           w-full
           px-[20px]
-          pb-[32px]
+          pb-8
           flex
           items-end
           z-[4]
@@ -72,9 +72,9 @@ const figureClasses = {
             class="
               text-white
               font-title
-              text-[24px]
-              leading-[150%]
-              font-[600]
+              text-2xl
+              leading-normal
+              font-semibold
               max-w-[280px]
             "
           >
@@ -88,8 +88,8 @@ const figureClasses = {
       <div class="pb-[20px]">
         <p
           class="
-            text-[#BDBDBD] text-[16px]
-            font-[500]
+            text-[#BDBDBD] text-base
+            font-medium
             leading-[120%]
           "
         >

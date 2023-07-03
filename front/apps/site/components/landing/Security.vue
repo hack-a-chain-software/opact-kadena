@@ -1,15 +1,15 @@
 <template>
   <Section
     id="security"
-    class="pt-[40px] md:pt-[60px] lg:pt-[80px]"
+    class="pt-[40px] md:pt-[60px] lg:pt-20"
   >
     <Container cta="Learn more" size="xl">
       <template #before>
         <div
           class="
             z-[2]
-            mt-[-48px]
-            mb-[24px]
+            -mt-12
+            mb-6
             ml-[-32px]
             translate-x-[16px]
             md:mb-0 md:ml-0 md:translate-x-0 md:w-[704px]
@@ -71,7 +71,7 @@
 
       <template #tag>
         <span
-          class="block mb-[12px] sm:mb-[24px] lg:mb-[24px]"
+          class="block mb-3 sm:mb-6"
         >
           Security
         </span>
@@ -82,8 +82,7 @@
           class="
             block
             mb-[6px]
-            md:mb-[24px]
-            lg:mb-[24px]
+            md:mb-6
             xl:w-[493px]
           "
         >
@@ -107,7 +106,7 @@
         <span
           class="
             block
-            mb-[32px]
+            mb-8
             lg:w-[400px]
             xl:w-[493px]
             lg:mb-[46px]

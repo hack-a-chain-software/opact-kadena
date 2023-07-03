@@ -1,12 +1,10 @@
 <template>
   <div
     class="
-      h-[32px]
+      h-8
       p-[1px]
       rounded-[8px]
       bg-opact-gradient
-      md:h-[30px]
-      lg:h-[32px]
     "
   >
     <div
@@ -20,7 +18,7 @@
         items-center
         justify-center
         sm:text-[14px]
-        sm:font-[500]
+        sm:font-medium
         sm:leading-[20px]
         sm:tracking-[0.1px]
         sm:px-[16px]

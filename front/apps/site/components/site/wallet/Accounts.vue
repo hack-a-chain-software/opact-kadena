@@ -15,9 +15,9 @@ const config = useAppConfig()
     <template #title>
       <div
         class="
-          mb-[10px]
-          sm:mb-[12px]
-          lg:mb-[28px]
+          mb-2.5
+          sm:mb-3
+          lg:mb-7
           xl:w-[493px]
           relative
         "
@@ -25,10 +25,10 @@ const config = useAppConfig()
         <div
           class="
             flex
-            space-x-[16px]
-            mb-[10px]
+            space-x-4
+            mb-2.5
             sm:mb-[13px]
-            lg:mb-[24px]
+            lg:mb-6
           "
         >
           <Badge
@@ -40,7 +40,7 @@ const config = useAppConfig()
             :visibleOnce="{ opacity: 1, x: 0 }"
             class="!h-[36px]"
           >
-            <div class="flex items-center space-x-[6px]">
+            <div class="flex items-center space-x-1.5">
               <Icon :name="icon" />
 
               <span>
@@ -67,10 +67,10 @@ const config = useAppConfig()
       <span
         class="
           block
-          mb-[32px]
+          mb-8
           lg:w-[400px]
           xl:w-[493px]
-          lg:mb-[40px]
+          lg:mb-10
         "
       >
         Perform anonymous transactions on the transparent

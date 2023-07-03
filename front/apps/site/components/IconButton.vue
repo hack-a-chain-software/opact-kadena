@@ -37,13 +37,13 @@ withDefaults(
     <div class="hidden sm:block z-[1]">
       <p
         class="
-          text-[16px]
-          font-[500]
+          text-base
+          font-medium
           leading-[24px]
           text-current
           font-title
-          lg:text-[14px] lg:font-[500] lg:leading-[24px]
-          xl:text-[16px] xl:font-[500] xl:leading-[24px]
+          lg:text-[14px] lg:font-medium lg:leading-[24px]
+          xl:text-base xl:font-medium xl:leading-[24px]
         "
       >
         {{ text }}

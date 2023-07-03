@@ -28,13 +28,13 @@ const config = useAppConfig()
             rounded-lg
           "
         >
-          <h2 class="mb-[16px]">Near ZK tools</h2>
+          <h2 class="mb-4">Near ZK tools</h2>
 
-          <div class="mb-[12px]">
+          <div class="mb-3">
             <p
               class="
-                text-[#BDBDBD] text-[16px]
-                font-[500]
+                text-[#BDBDBD] text-base
+                font-medium
                 leading-[120%]
               "
             >

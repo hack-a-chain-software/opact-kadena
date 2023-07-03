@@ -29,9 +29,9 @@ defineProps<{
         class="
           text-white
           font-tile
-          text-[18px]
-          font-[500]
-          leading-[150%]
+          text-lg
+          font-medium
+          leading-normal
           opacity-[0.8999999761581421]
         "
         href="#"

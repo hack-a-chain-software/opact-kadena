@@ -30,7 +30,7 @@
         loading="lazy"
         class="w-full h-full"
         alt="Illustrative image"
-        sizes="xs:704px sm:704px"
+        sizes="xxl:704px"
       />
     </figure>
 
