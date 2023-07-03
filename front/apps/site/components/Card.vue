@@ -8,15 +8,15 @@ defineProps<{
 }>()
 
 const figureClasses = {
-  hexa: 'lg:bottom-[-45px] lg:right-[-55px] xl:bottom-[-110px] xl:right-[-70px] 2xl:bottom-[-90px] 2xl:right-[-47px]',
-  gear: 'lg:bottom-[-50px] lg:right-[-70px] xl:bottom-[-95px] xl:right-[-100px] 2xl:bottom-[-90px] 2xl:right-[-47px]',
+  hexa: 'bottom-[-45px] right-[-55px] lg:bottom-[-45px] lg:right-[-55px] xl:bottom-[-110px] xl:right-[-70px] 2xl:bottom-[-90px] 2xl:right-[-47px]',
+  gear: 'bottom-[-45px] right-[-55px] lg:bottom-[-50px] lg:right-[-70px] xl:bottom-[-95px] xl:right-[-100px] 2xl:bottom-[-90px] 2xl:right-[-47px]',
   square:
-    'lg:bottom-[-61px] lg:right-[-55px] xl:bottom-[-120px] xl:right-[-135px] 2xl:bottom-[-110px] 2xl:right-[-90px]'
+    'bottom-[-45px] right-[-55px] lg:bottom-[-61px] lg:right-[-55px] xl:bottom-[-120px] xl:right-[-135px] 2xl:bottom-[-110px] 2xl:right-[-90px]'
 } as any
 </script>
 
 <template>
-  <div class="lg:w-[285px] xl:w-[371px] 2xl:w-[424px]">
+  <div class="w-[340px] lg:w-[285px] xl:w-[371px] 2xl:w-[424px]">
     <div
       class="
         p-[2px]
@@ -54,7 +54,7 @@ const figureClasses = {
           >
             <NuxtImg
               class="w-full h-full"
-              sizes="lg:272px xl:312px 2xl:344px"
+              sizes="lg:284px xl:272px xxl:312px xxxl:344px"
               :src="`/blog/figures/${figure}.png`"
             />
           </figure>
@@ -77,7 +77,7 @@ const figureClasses = {
       </div>
     </div>
 
-    <div class="pt-[16px] flex flex-col px-[20px]">
+    <div class="pt-[16px] flex flex-col md:px-[20px]">
       <div class="pb-[20px]">
         <p
           class="
