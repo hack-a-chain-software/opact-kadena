@@ -286,6 +286,7 @@ const tag = computed(() =>
   top: 0;
   min-width: 40px;
   right: 100%;
+  overflow: hidden;
   border-radius: 100px;
   background: linear-gradient(
     264.6deg,

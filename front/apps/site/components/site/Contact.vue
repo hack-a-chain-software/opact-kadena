@@ -1,12 +1,7 @@
 <template>
   <Section
     id="contact"
-    class="
-      pt-[90px]
-      pb-[40px]
-      md:pt-[120px] md:pb-[120px]
-      lg:pt-[140px] lg:pb-[140px]
-    "
+    class="pt-[90px] pb-[40px] md:!py-[120px] lg:!py-[140px]"
   >
     <div
       class="
@@ -30,7 +25,7 @@
             font-title font-[600]
             leading-[150%]
             text-[24px]
-            md:font-[600] md:leading-[150%] md:text-[42px]
+            md:text-[42px]
           "
         >
           Get in Touch with Opact
@@ -43,7 +38,7 @@
             text-[16px]
             font-[500]
             leading-[150%]
-            md:text-[20px] md:font-[500] md:leading-[150%]
+            md:text-[20px]
           "
         >
           Like our ZK solutions or need a different one?
@@ -75,7 +70,7 @@
                 placeholder:text-dark-blue
               "
               placeholder="Nome"
-            />
+            >
 
             <input
               class="
@@ -89,7 +84,7 @@
                 placeholder:text-dark-blue
               "
               placeholder="E-mail"
-            />
+            >
           </div>
 
           <textarea

@@ -14,21 +14,7 @@
       relative
     "
   >
-    <NuxtImg
-      src="/site-bg.png"
-      class="
-        absolute
-        top-[-190px]
-        sm:top-[-40px]
-        2xl:top-0
-        left-1/2
-        z-[-1]
-        min-w-[1364px]
-        min-h-[880px]
-        -translate-x-1/2
-      "
-      sizes="xs:1364px"
-    />
+    <SiteFigureHero />
 
     <div
       v-motion-pop-visible-once
@@ -52,8 +38,8 @@
             font-[700]
             leading-[130%]
             tracking-[0.64px]
-            sm:text-[52px] sm:font-[700] sm:leading-[180%]
-            lg:text-[60px] lg:font-[700] lg:leading-[180%]
+            sm:text-[52px] sm:leading-[180%]
+            lg:text-[60px]
           "
         >
           Zero Knowledge for enhanced privacy and compliance
@@ -81,8 +67,8 @@
             font-[400]
             text-[16px]
             leading-[150%]
-            sm:font-[500] sm:text-[20px] sm:leading-[150%]
-            lg:font-[500] lg:text-[24px] lg:leading-[150%]
+            sm:font-[500] sm:text-[20px]
+            lg:text-[24px]
           "
         >
           Try out our ZK products or implement cutting edge

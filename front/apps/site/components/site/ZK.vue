@@ -21,10 +21,7 @@ const config = useAppConfig()
           text-[30px]
           font-[600]
           leading-[120%]
-          sm:font-title
           sm:text-[54px]
-          sm:font-[600]
-          sm:leading-[120%]
         "
       >
         ZK Tooling
@@ -37,7 +34,7 @@ const config = useAppConfig()
           text-white text-[18px]
           font-[400]
           leading-[150%]
-          sm:text-[22px] sm:font-[500] sm:leading-[150%]
+          sm:text-[22px] sm:font-[500]
         "
       >
         Easy to use SDKs for zero knowledge implementation
@@ -47,13 +44,10 @@ const config = useAppConfig()
     <div
       class="
         w-full
-        flex
-        flex-wrap
+        flex flex-wrap
         items-center
         flex-col
-        md:items-start
-        md:flex-row
-        md:justify-between
+        md:items-start md:flex-row md:justify-between
         lg:flex-nowrap
         gap-[24px]
       "

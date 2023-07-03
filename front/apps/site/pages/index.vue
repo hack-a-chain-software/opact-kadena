@@ -11,7 +11,7 @@ useHead({
 <template>
   <SiteHero />
 
-  <SiteOpactWallet />
+  <SiteWalletOpact />
 
   <SiteZK />
 
