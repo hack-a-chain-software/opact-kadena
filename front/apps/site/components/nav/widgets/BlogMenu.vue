@@ -55,7 +55,11 @@ const config = useAppConfig()
     </div>
 
     <div class="flex justify-end">
-      <a target="_blank" :href="config.blog.ctaTo" class="ml-auto cursor-pointer hover:opacity-[0.8]">
+      <a
+        target="_blank"
+        :href="config.blog.ctaTo"
+        class="ml-auto cursor-pointer hover:opacity-[0.8]"
+      >
         <span> Learn about ZK for free on our blog </span>
 
         <Icon name="arrow" />
