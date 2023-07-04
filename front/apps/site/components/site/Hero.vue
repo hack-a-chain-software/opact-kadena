@@ -25,7 +25,8 @@
           mx-auto
           px-4
           sm:px-0
-          max-w-[700px]
+          max-w-[500px]
+          sm:max-w-[700px]
           lg:max-w-[867px]
           xl:max-w-full
           mb-6
