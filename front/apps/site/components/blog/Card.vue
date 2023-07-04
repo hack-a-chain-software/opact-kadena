@@ -48,7 +48,16 @@ const figureClasses = {
           z-[4]
         "
       >
-        <div class="absolute inset-0 flex items-end pointer-events-none select-none">
+        <div
+          class="
+            absolute
+            inset-0
+            flex
+            items-end
+            pointer-events-none
+            select-none
+          "
+        >
           <figure>
             <NuxtImg
               class="w-full h-full"

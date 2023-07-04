@@ -153,7 +153,13 @@ const config = useAppConfig()
           disabled
           :with-icon="true"
           variant="hero-primary"
-          class="w-full lg:w-auto max-w-full md:max-w-max opacity-0"
+          class="
+            w-full
+            lg:w-auto
+            max-w-full
+            md:max-w-max
+            opacity-0
+          "
           v-motion
           :initial="{
             opacity: 0,
@@ -176,7 +182,13 @@ const config = useAppConfig()
           variant="tertiary"
           text="Documentation"
           disabled
-          class="w-full lg:w-auto max-w-full md:max-w-max opacity-0"
+          class="
+            w-full
+            lg:w-auto
+            max-w-full
+            md:max-w-max
+            opacity-0
+          "
           v-motion
           :initial="{
             opacity: 0,
@@ -225,7 +237,8 @@ const config = useAppConfig()
           sm:h-[716.81px]
           lg:h-[717px]
           xl:h-[807.57px]
-          pointer-events-none select-none
+          pointer-events-none
+          select-none
           2xl:h-[880px]
         "
       >

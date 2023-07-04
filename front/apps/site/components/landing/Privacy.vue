@@ -16,7 +16,9 @@
       class="
         md:mb-[39px]
         lg:mb-[18px] lg:mr-[-80px]
-        xl:mr-0 pointer-events-none select-none
+        xl:mr-0
+        pointer-events-none
+        select-none
       "
     >
       <nuxt-img
@@ -38,7 +40,9 @@
           md:max-w-[622px]
           lg:max-w-[435px]
           xl:max-w-[520px]
-          2xl:max-w-[602px] pointer-events-none select-none
+          2xl:max-w-[602px]
+          pointer-events-none
+          select-none
         "
       />
     </figure>
@@ -83,13 +87,9 @@
             md:space-x-[8px]
           "
         >
-          <Badge>
-            P2P Private transactions
-          </Badge>
+          <Badge> P2P Private transactions </Badge>
 
-          <Badge>
-            DeFi Private transactions
-          </Badge>
+          <Badge> DeFi Private transactions </Badge>
         </div>
       </div>
 

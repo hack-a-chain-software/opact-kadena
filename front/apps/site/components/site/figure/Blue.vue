@@ -7,7 +7,8 @@
       h-full
       absolute
       bottom-0
-      pointer-events-none select-none
+      pointer-events-none
+      select-none
     "
   >
     <figure

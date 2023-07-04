@@ -30,7 +30,10 @@ withDefaults(
       overflow-hidden
       cursor-not-allowed
     "
-    :class="!disabled && 'hover:text-white opact-icon-button group'"
+    :class="
+      !disabled &&
+      'hover:text-white opact-icon-button group'
+    "
   >
     <Icon :name="icon" class="w-5 h-5 relative z-[1]" />
 

@@ -9,7 +9,9 @@
         left-1/2
         z-[-1]
         min-w-[1364px] min-h-[880px]
-        -translate-x-1/2 pointer-events-none select-none
+        -translate-x-1/2
+        pointer-events-none
+        select-none
       "
       sizes="2560:1364px"
     />

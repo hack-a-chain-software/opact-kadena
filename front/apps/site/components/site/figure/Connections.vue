@@ -10,7 +10,9 @@
       translate-x-[16px]
       sm:translate-x-0 sm:w-[704px]
       lg:absolute lg:top-0 lg:right-0 lg:w-auto
-      xl:bottom-0 xl:left-0 pointer-events-none select-none
+      xl:bottom-0 xl:left-0
+      pointer-events-none
+      select-none
     "
   >
     <figure class="h-[238px] sm:h-[482px]">

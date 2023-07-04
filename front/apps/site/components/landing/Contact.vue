@@ -33,7 +33,9 @@
             right-[-4px]
             bottom-[-4px]
             z-[0]
-            rounded-[12px] pointer-events-none select-none
+            rounded-[12px]
+            pointer-events-none
+            select-none
           "
         >
           <nuxt-img

@@ -14,7 +14,9 @@
             translate-x-[16px]
             md:mb-0 md:ml-0 md:translate-x-0 md:w-[704px]
             lg:absolute lg:top-0 lg:right-0 lg:w-auto
-            xl:absolute xl:top-0 xl:right-0 xl:w-auto pointer-events-none select-none
+            xl:absolute xl:top-0 xl:right-0 xl:w-auto
+            pointer-events-none
+            select-none
           "
         >
           <figure class="h-[238px] md:h-[482px]">
