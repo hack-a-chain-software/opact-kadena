@@ -13,13 +13,12 @@
       "
     >
       <figure>
-        <NuxtImg
+        <nuxt-img
           quality="100"
           alt="Illustrative image"
-          src="/wallet/figures/bring3x.webp"
+          src="/wallet/figures/bring-4x.webp"
           sizes="lg:800px 2xl:1472px"
-          class="nuxt-img-blue"
-          densities="x1 x2"
+          densities="1x 2x"
         />
       </figure>
     </div>
