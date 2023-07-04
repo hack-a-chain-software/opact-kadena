@@ -6,6 +6,7 @@ const config = useAppConfig()
   <Container
     class="w-full mb-[60px] lg:mb-[80px]"
     cta="Learn more"
+    to="/wallet"
     size="xl"
   >
     <template #before>
@@ -21,7 +22,7 @@ const config = useAppConfig()
         >
           <Badge
             v-for="({ name, icon }, i) in config.chains"
-            :key="`opact-wallet:chain:${name}`"
+            :key="name"
             v-motion
             :delay="150 * (i + 1)"
             :initial="{ opacity: 0, x: -15 }"

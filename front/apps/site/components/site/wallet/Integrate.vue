@@ -1,9 +1,10 @@
 <template>
   <Container
     center
-    class="w-full"
+    class="w-full h-[568px] sm:h-[740px] md:h-[757px] lg:h-[752px] xl:h-[700px]"
     cta="Learn more"
     size="xl"
+    to="#contact"
   >
     <template #after>
       <SiteFigurePurple />
@@ -46,7 +47,7 @@
           sm:mb-[42px]
           lg:mb-[116px]
           xl:mb-[58px]
-          2xl:mb-[38px]
+          2xl:mb-[47px]
           text-center
           z-[4]
           relative
@@ -70,12 +71,6 @@
         with-icon
         variant="secondary"
         text="Read more"
-        class="
-          mb-[190px]
-          lg:mb-[228px]
-          xl:mb-[307px]
-          2xl:mb-[313px]
-        "
       />
     </template>
   </Container>

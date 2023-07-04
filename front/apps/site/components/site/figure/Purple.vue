@@ -17,11 +17,12 @@
         group-hover/container:opacity-100
         transition-all
         duration-700
+        bg-white
       "
     >
       <nuxt-img
         src="/wallet/purple-hover.png"
-        class="absolute inset-0 z-[-1]"
+        class="absolute h-full w-full z-[-1]"
       />
     </figure>
 
@@ -40,16 +41,18 @@
         absolute
         translate-x-[20px]
         bottom-[-60px]
-        sm:translate-x-[130px] sm:bottom-[-96px]
+        sm:translate-x-[50px] sm:bottom-[-96px]
+        md:translate-x-[110px] md:bottom-[-96px]
         lg:translate-x-[48px] lg:bottom-[-63px]
         xl:translate-x-[70px] xl:bottom-[-65px]
-        2xl:translate-x-[93px] 2xl:bottom-[-90px]
+        2xl:translate-x-[85px] 2xl:bottom-[-94px]
       "
     >
       <nuxt-img
-        sizes="md:290px lg:490px xl:342px xxl:416px xxxl:480px"
+        sizes="639:302px 1023:500px 1279:350px 1439:430px 2560:468px"
         src="/wallet/figures/integrate.png"
         alt="Illustrative image"
+        class="2xl:w-[468px]"
       />
     </figure>
   </div>

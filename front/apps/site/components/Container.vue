@@ -5,6 +5,7 @@ withDefaults(
     title?: string;
     text?: string;
     cta?: string;
+    to?: string;
     center?: boolean;
     size?: 'lg' | 'xl';
   }>(),
@@ -12,6 +13,7 @@ withDefaults(
     center: false,
     size: 'lg',
     cta: '',
+    to: '',
     tag: '',
     text: '',
     title: ''
@@ -69,6 +71,7 @@ const sizes = {
         px-[16px]
         pt-[24px]
         pb-[22px]
+        h-full
         rounded-[12px]
         overflow-hidden
         group/container

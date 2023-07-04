@@ -1,9 +1,10 @@
 <template>
   <Container
     center
-    class="w-full"
+    class="w-full h-[604px] sm:h-[700px] md:h-[760px] lg:h-[752px] xl:h-[700px]"
     cta="Learn more"
     size="xl"
+    to="#contact"
   >
     <template #after>
       <SiteFigureBlue />
@@ -24,6 +25,8 @@
           relative
           lg:text-[32px] lg:font-semibold lg:leading-normal
           2xl:text-[34px]
+          2xl:pt-0
+          xl:pt-1
           mx-auto
         "
       >
@@ -37,9 +40,12 @@
         class="
           block
           mb-6
+          lg:max-w-[340px]
+          xl:max-w-full
           lg:mb-[21px]
+          2xl:mb-[28px]
           text-center
-          z-[10]
+          z-[8]
           relative
           lg:text-lg lg:font-medium lg:leading-normal
           mx-auto
@@ -60,12 +66,6 @@
         with-icon
         variant="secondary"
         text="Read more"
-        class="
-          mb-[195px]
-          lg:mb-[230px]
-          xl:mb-[281px]
-          2xl:mb-[302px]
-        "
       />
     </template>
   </Container>

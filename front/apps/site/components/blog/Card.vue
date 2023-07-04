@@ -18,7 +18,8 @@ const figureClasses = {
 <template>
   <div
     class="
-      w-[340px]
+      w-[328px]
+      sm:w-[340px]
       lg:w-[285px]
       xl:w-[371px]
       2xl:w-[424px]
@@ -61,7 +62,7 @@ const figureClasses = {
           >
             <NuxtImg
               class="w-full h-full"
-              sizes="lg:284px xl:272px xxl:312px xxxl:344px"
+              sizes="lg:284px xl:272px xl:340px 2xl:344px"
               :src="`/blog/figures/${figure}.png`"
             />
           </figure>
@@ -98,7 +99,7 @@ const figureClasses = {
       </div>
 
       <div>
-        <Button :text="button" variant="secondary" />
+        <!-- <Button :text="button" variant="secondary" /> -->
       </div>
     </div>
   </div>

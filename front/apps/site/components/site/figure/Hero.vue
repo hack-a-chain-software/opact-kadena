@@ -6,7 +6,6 @@
         absolute
         top-[-190px]
         sm:top-[-40px]
-        2xl:top-0
         left-1/2
         z-[-1]
         min-w-[1364px] min-h-[880px]

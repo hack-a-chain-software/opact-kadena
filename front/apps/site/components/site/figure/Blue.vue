@@ -39,16 +39,17 @@
         absolute
         translate-x-[23px]
         bottom-[-70px]
-        sm:translate-x-[108px] sm:bottom-[-100px]
+        sm:translate-x-[50px] sm:bottom-[-100px]
+        md:translate-x-[100px] md:bottom-[-100px]
         lg:translate-x-[46px] lg:bottom-[-40px]
-        xl:translate-x-[70px] xl:bottom-[-70px]
-        2xl:translate-x-[93px] 2xl:bottom-[-119px]
+        xl:translate-x-[68px] xl:bottom-[-80px]
+        2xl:translate-x-[93px] 2xl:bottom-[-125px]
       "
     >
       <nuxt-img
         alt="Illustrative image"
         src="/wallet/figures/bring.png"
-        sizes="sm:279px lg:490px xl:342px 2xl:468px"
+        sizes="639:290px 1023:500px 1279:350px 1439:440px 2560:500px"
       />
     </figure>
   </div>

@@ -2,6 +2,7 @@
   <Section
     class="
       pt-[125px]
+      md:pt-[134px]
       lg:pt-[55px]
       xl:pt-0
       flex flex-col

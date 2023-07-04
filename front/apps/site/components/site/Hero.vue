@@ -25,6 +25,7 @@
           mx-auto
           px-4
           sm:px-0
+          max-w-[700px]
           lg:max-w-[867px]
           xl:max-w-full
           mb-6
@@ -40,6 +41,7 @@
             tracking-[0.64px]
             sm:text-[52px] sm:leading-[180%]
             lg:text-6xl
+            lg:leading-[110px]
           "
         >
           Zero Knowledge for enhanced privacy and compliance
