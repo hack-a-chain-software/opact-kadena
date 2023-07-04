@@ -246,6 +246,7 @@ const config = useAppConfig()
           <nuxt-img
             src="/hero.webp"
             alt="Hero illustration"
+            quality="100"
             sizes="md:466px lg:874px xl:861px xxl:1057px"
           />
         </figure>

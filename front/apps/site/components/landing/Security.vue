@@ -21,6 +21,7 @@
         >
           <figure class="h-[238px] md:h-[482px]">
             <nuxt-img
+              quality="100"
               src="/security-blur.webp"
               loading="lazy"
               class="w-full h-full"
@@ -62,6 +63,7 @@
             "
           >
             <nuxt-img
+              quality="100"
               src="/security.webp"
               class="scale-x-[-1] lg:scale-x-[1]"
               sizes="xs:429px sm:600px md:765px lg:891.5px xl:891.5px 2xl:1011px"

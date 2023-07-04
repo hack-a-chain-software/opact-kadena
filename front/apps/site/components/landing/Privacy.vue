@@ -22,6 +22,7 @@
       "
     >
       <nuxt-img
+        quality="100"
         loading="lazy"
         src="/privacy.webp"
         alt="Illustrative image"

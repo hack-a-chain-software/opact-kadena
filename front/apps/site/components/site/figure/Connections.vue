@@ -17,6 +17,7 @@
   >
     <figure class="h-[238px] sm:h-[482px]">
       <nuxt-img
+        quality="100"
         src="/wallet/blue-inverted.webp"
         loading="lazy"
         class="w-full h-full"
@@ -58,6 +59,7 @@
       "
     >
       <nuxt-img
+        quality="100"
         src="/wallet/figures/connections.webp"
         class="scale-x-[-1] lg:scale-x-[1]"
         sizes="sm:600px lg:1200px 2xl:1189.79px"

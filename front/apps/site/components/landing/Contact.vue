@@ -39,6 +39,7 @@
           "
         >
           <nuxt-img
+            quality="100"
             src="/touch-bg.webp"
             class="w-full h-full"
             loading="lazy"
