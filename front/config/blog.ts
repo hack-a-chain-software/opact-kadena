@@ -1,6 +1,6 @@
 export const blog = {
   cta: 'Learn about ZK for free on our blog',
-  ctaTo: 'https://opact.ghost.io/',
+  ctaTo: 'https://blog.opact.io/',
   posts: [
     {
       color: 'purple',
