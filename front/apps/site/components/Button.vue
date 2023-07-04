@@ -126,6 +126,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  onClick: {
+    type: Function,
+    default: () => {}
+  },
   variant: {
     type: String as PropType<
       | 'nav'
@@ -196,6 +200,7 @@ const tag = computed(() =>
           disabled && '!cursor-not-allowed'
         )
       "
+      @click="onClick"
     >
       <div
         class="flex items-center justify-center font-title"
@@ -259,6 +264,7 @@ const tag = computed(() =>
   transition: right 0.3s ease-out;
 }
 .opact-button::after {
+  pointer-events: none;
   left: -40px;
   z-index: 0;
   content: '';

@@ -1,3 +1,79 @@
+<script setup lang="ts">
+// import { useForm } from 'vee-validate'
+// import { object, string } from 'yup'
+import { reactive } from 'vue'
+
+const baseForm = {
+  name: '',
+  email: '',
+  message: ''
+}
+
+const state = reactive({
+  sending: false,
+  form: {
+    ...baseForm
+  }
+})
+
+// const { handleSubmit } = useForm({
+//   validationSchema: object({
+//     name: string().label('name'),
+//     email: string().label('email')
+//     // message: string().required().label('Message')
+//   })
+// })
+
+// const data = reactive()
+
+// const onSubmit = handleSubmit(async (values) => {
+//   console.log('fooooo')
+//   console.log(values)
+
+// const { data } = await useFetch(
+//   'https://formsubmit.co/ajax/mateus@opact.io',
+//   {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(values)
+//   }
+// )
+
+// console.log(data)
+// })
+
+const onSubmit = async () => {
+  if (state.sending) {
+    return
+  }
+
+  state.sending = true
+
+  try {
+    const { data } = await useFetch(
+      'https://formsubmit.co/ajax/mateus@opact.io',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(state.form)
+      }
+    )
+
+    state.form = { ...baseForm }
+
+    console.log(data)
+  } catch (e) {
+    console.warn(e)
+  } finally {
+    state.sending = false
+  }
+}
+</script>
+
 <template>
   <Section
     id="contact"
@@ -39,7 +115,9 @@
         </h3>
       </div>
 
-      <form>
+      <form
+        @submit.prevent="onSubmit"
+      >
         <div class="flex flex-col">
           <div
             class="
@@ -50,18 +128,18 @@
               pb-6
             "
           >
-            <Input placeholder="Name" />
+            <Input v-model="state.form.name" :disabled="state.sending" placeholder="Name" name="Name" />
 
-            <Input placeholder="E-mail" />
+            <Input v-model="state.form.email" :disabled="state.sending" placeholder="E-mail" name="Email" />
           </div>
 
-          <TextArea placeholder="Leave your message" />
+          <TextArea v-model="state.form.message" :disabled="state.sending" placeholder="Leave your message" />
 
           <Button
-            disabled
             variant="hero-secondary"
             text="Send a Message"
             class="mb-8"
+            tag="button"
           />
 
           <div>
