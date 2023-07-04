@@ -11,7 +11,7 @@ const figureClasses = {
   hexa: 'bottom-[-45px] right-[-55px] lg:bottom-[-45px] lg:right-[-55px] xl:bottom-[-110px] xl:right-[-70px] 2xl:bottom-[-90px] 2xl:right-[-47px]',
   gear: 'bottom-[-45px] right-[-55px] lg:bottom-[-50px] lg:right-[-70px] xl:bottom-[-95px] xl:right-[-100px] 2xl:bottom-[-90px] 2xl:right-[-47px]',
   square:
-    'bottom-[-45px] right-[-55px] lg:bottom-[-61px] lg:right-[-55px] xl:bottom-[-120px] xl:right-[-135px] 2xl:bottom-[-110px] 2xl:right-[-90px]'
+    'bottom-[-45px] right-[-55px] lg:bottom-[-61px] lg:right-[-55px] xl:bottom-[-105px] xl:right-[-110px] 2xl:bottom-[-110px] 2xl:right-[-90px]'
 } as any
 </script>
 

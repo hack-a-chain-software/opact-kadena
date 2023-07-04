@@ -45,8 +45,8 @@
         bottom-[-60px]
         sm:translate-x-[50px] sm:bottom-[-96px]
         md:translate-x-[110px] md:bottom-[-96px]
-        lg:translate-x-[48px] lg:bottom-[-63px]
-        xl:translate-x-[70px] xl:bottom-[-65px]
+        lg:translate-x-[48px] lg:bottom-[-44px]
+        xl:translate-x-[80px] xl:bottom-[-53px]
         2xl:translate-x-[85px] 2xl:bottom-[-94px]
       "
     >

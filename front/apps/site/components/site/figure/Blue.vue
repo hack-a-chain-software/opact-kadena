@@ -44,9 +44,9 @@
         bottom-[-70px]
         sm:translate-x-[50px] sm:bottom-[-100px]
         md:translate-x-[100px] md:bottom-[-100px]
-        lg:translate-x-[46px] lg:bottom-[-40px]
-        xl:translate-x-[68px] xl:bottom-[-80px]
-        2xl:translate-x-[93px] 2xl:bottom-[-125px]
+        lg:translate-x-[46px] lg:bottom-[-50px]
+        xl:translate-x-[65px] xl:bottom-[-89px]
+        2xl:translate-x-[80px] 2xl:bottom-[-140px]
       "
     >
       <nuxt-img
