@@ -1,7 +1,7 @@
 <template>
   <figure>
     <NuxtImg
-      src="/site-bg.png"
+      src="/site-bg.webp"
       class="
         absolute
         top-[-190px]

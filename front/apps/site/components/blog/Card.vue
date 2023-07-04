@@ -61,7 +61,7 @@ const figureClasses = {
           <figure>
             <NuxtImg
               class="w-full h-full"
-              :src="`/blog/${color}.png`"
+              :src="`/blog/${color}.webp`"
             />
           </figure>
 
@@ -72,7 +72,7 @@ const figureClasses = {
             <NuxtImg
               class="w-full h-full"
               sizes="1023:284px 1279:272px 1439:340px 2560:344px"
-              :src="`/blog/figures/${figure}.png`"
+              :src="`/blog/figures/${figure}.webp`"
             />
           </figure>
         </div>

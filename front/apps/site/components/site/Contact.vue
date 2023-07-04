@@ -92,7 +92,7 @@ const onSubmit = async () => {
         text-white
         bg-[length:100%_100%]
         rounded-2xl
-        bg-[url('/contact/gradient.png')]
+        bg-[url('/contact/gradient.webp')]
       "
     >
       <div class="pb-[0px] md:pb-[8px]">

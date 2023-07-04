@@ -21,14 +21,14 @@
       "
     >
       <nuxt-img
-        src="/wallet/purple-hover.png"
+        src="/wallet/purple-hover.webp"
         class="absolute h-full w-full z-[-1]"
       />
     </figure>
 
     <figure class="h-[700px] w-full absolute bottom-0">
       <nuxt-img
-        src="/wallet/purple.png"
+        src="/wallet/purple.webp"
         loading="lazy"
         class="w-full h-full"
         alt="Illustrative image"
@@ -50,7 +50,7 @@
     >
       <nuxt-img
         sizes="639:302px 1023:500px 1279:350px 1439:430px 2560:468px"
-        src="/wallet/figures/integrate.png"
+        src="/wallet/figures/integrate.webp"
         alt="Illustrative image"
         class="2xl:w-[468px]"
       />
