@@ -9,9 +9,9 @@
         left-1/2
         z-[-1]
         min-w-[1364px] min-h-[880px]
-        -translate-x-1/2
+        -translate-x-1/2 pointer-events-none select-none
       "
-      sizes="xs:1364px"
+      sizes="2560:1364px"
     />
   </figure>
 </template>

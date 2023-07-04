@@ -33,7 +33,7 @@
             right-[-4px]
             bottom-[-4px]
             z-[0]
-            rounded-[12px]
+            rounded-[12px] pointer-events-none select-none
           "
         >
           <nuxt-img
@@ -99,6 +99,7 @@
           </div>
 
           <Button
+            disabled
             variant="hero-secondary"
             text="Send a Message"
             class="lg:mt-[42px] xl:mt-0"

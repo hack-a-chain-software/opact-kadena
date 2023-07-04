@@ -69,6 +69,7 @@
 
     <template #cta>
       <Button
+        disabled
         with-icon
         variant="secondary"
         text="Read more"

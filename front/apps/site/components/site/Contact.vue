@@ -58,6 +58,7 @@
           <TextArea placeholder="Leave your message" />
 
           <Button
+            disabled
             variant="hero-secondary"
             text="Send a Message"
             class="mb-8"

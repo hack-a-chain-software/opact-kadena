@@ -3,8 +3,10 @@ withDefaults(
   defineProps<{
     text: string;
     icon: string;
+    disabled?: boolean;
   }>(),
   {
+    disabled: true,
     text: '',
     icon: ''
   }
@@ -24,13 +26,11 @@ withDefaults(
       text-dark-blue
       sm:w-auto sm:pl-[16px] sm:pr-[16px] sm:space-x-[8px]
       lg:pl-[16px] lg:pr-[16px] lg:space-x-[8px] lg:h-[40px]
-      hover:text-white
-      opact-icon-button
-      group
       relative
       overflow-hidden
-      cursor-pointer
+      cursor-not-allowed
     "
+    :class="!disabled && 'hover:text-white opact-icon-button group'"
   >
     <Icon :name="icon" class="w-5 h-5 relative z-[1]" />
 

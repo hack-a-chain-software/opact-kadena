@@ -8,7 +8,7 @@
       absolute
       bottom-0
       left-0
-      pointer-events-none
+      pointer-events-none select-none
     "
   >
     <figure
@@ -17,7 +17,6 @@
         group-hover/container:opacity-100
         transition-all
         duration-700
-        bg-white
       "
     >
       <nuxt-img

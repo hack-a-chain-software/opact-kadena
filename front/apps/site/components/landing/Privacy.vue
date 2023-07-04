@@ -16,7 +16,7 @@
       class="
         md:mb-[39px]
         lg:mb-[18px] lg:mr-[-80px]
-        xl:mr-0
+        xl:mr-0 pointer-events-none select-none
       "
     >
       <nuxt-img
@@ -38,7 +38,7 @@
           md:max-w-[622px]
           lg:max-w-[435px]
           xl:max-w-[520px]
-          2xl:max-w-[602px]
+          2xl:max-w-[602px] pointer-events-none select-none
         "
       />
     </figure>
@@ -54,9 +54,6 @@
         "
       >
         <h3
-          v-motion
-          :initial="{ opacity: 0, x: -15 }"
-          :visibleOnce="{ opacity: 1, x: 0 }"
           class="
             w-max
             uppercase
@@ -86,28 +83,17 @@
             md:space-x-[8px]
           "
         >
-          <Badge
-            v-motion
-            :initial="{ opacity: 0, x: -15 }"
-            :visible-once="{ opacity: 1, x: 0 }"
-            :delay="150"
-          >
+          <Badge>
             P2P Private transactions
           </Badge>
 
-          <Badge
-            v-motion
-            :initial="{ opacity: 0, x: -15 }"
-            :visible-once="{ opacity: 1, x: 0 }"
-            :delay="300"
-          >
+          <Badge>
             DeFi Private transactions
           </Badge>
         </div>
       </div>
 
       <h2
-        v-motion
         class="
           font-title
           text-white
@@ -132,21 +118,6 @@
           xl:text-[50px]
           2xl:text-[54px]
         "
-        :initial="{
-          opacity: 0,
-          x: -15,
-          transition: {
-            duration: 420,
-          },
-        }"
-        :visibleOnce="{
-          opacity: 1,
-          x: 0,
-          transition: {
-            duration: 420,
-          },
-        }"
-        :delay="600"
       >
         Protect your
         <br class="hidden lg:inline xl:hidden" />
@@ -155,22 +126,6 @@
       </h2>
 
       <p
-        v-motion
-        :initial="{
-          opacity: 0,
-          x: -15,
-          transition: {
-            duration: 420,
-          },
-        }"
-        :visibleOnce="{
-          opacity: 1,
-          x: 0,
-          transition: {
-            duration: 420,
-          },
-        }"
-        :delay="700"
         class="
           text-[#BDBDBD]
           sm:font-medium
@@ -198,26 +153,11 @@
       </p>
 
       <Button
-        v-motion
-        :delay="800"
+        disabled
         :with-icon="true"
         text="Learn more"
         variant="secondary"
         class="lg:h-8 xl:h-[39px]"
-        :initial="{
-          opacity: 0,
-          x: -15,
-          transition: {
-            duration: 420,
-          },
-        }"
-        :visible-once="{
-          opacity: 1,
-          x: 0,
-          transition: {
-            duration: 420,
-          },
-        }"
       />
     </div>
   </Section>

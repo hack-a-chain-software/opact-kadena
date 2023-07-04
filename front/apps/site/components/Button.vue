@@ -167,9 +167,9 @@ const tag = computed(() =>
   <div
     :class="
       twMerge(
-        'text-white rounded-[100px] xl:w-max group/button relative md:max-w-max overflow-hidden cursor-pointer',
+        'text-white rounded-[100px] xl:w-max relative md:max-w-max overflow-hidden cursor-pointer',
         variants[variant].parent,
-        !disabled && 'opact-button'
+        !disabled && 'opact-button group/button'
       )
     "
   >

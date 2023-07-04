@@ -117,6 +117,7 @@ const sizes = {
       >
         <slot name="cta">
           <Button
+            disabled
             withIcon
             variant="secondary"
             :text="cta"

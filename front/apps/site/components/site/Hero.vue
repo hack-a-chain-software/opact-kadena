@@ -75,6 +75,7 @@
 
       <div>
         <Button
+          disabled
           variant="hero-secondary"
           text="Meet our solutions"
         />

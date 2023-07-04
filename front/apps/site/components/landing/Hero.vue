@@ -36,7 +36,21 @@ const config = useAppConfig()
       "
     >
       <h1
-        v-text="config.wallet.title"
+        v-motion
+        :initial="{
+          opacity: 0,
+          x: -30,
+          transition: {
+            duration: 320,
+          },
+        }"
+        :enter="{
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: 320,
+          },
+        }"
         class="
           relative
           z-[2]
@@ -44,6 +58,7 @@ const config = useAppConfig()
           mx-auto
           lg:mx-0
           xl:mx-0
+          opacity-0
           text-white text-center
           lg:text-left
           font-title
@@ -70,6 +85,7 @@ const config = useAppConfig()
           lg:max-w-[410px]
           xl:max-w-[499px]
         "
+        v-text="config.wallet.title"
       />
 
       <h2
@@ -79,6 +95,7 @@ const config = useAppConfig()
           mx-auto
           lg:mx-0
           sm:text-xl
+          opacity-0
           lg:text-xl
           sm:leading-[30px]
           lg:leading-[30px]
@@ -90,6 +107,22 @@ const config = useAppConfig()
           lg:max-w-[450px]
           xl:max-w-[499px]
         "
+        v-motion
+        :initial="{
+          opacity: 0,
+          x: -15,
+          transition: {
+            duration: 320,
+          },
+        }"
+        :visibleOnce="{
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: 320,
+          },
+        }"
+        :delay="150"
         v-text="config.wallet.subtitle"
       />
 
@@ -116,16 +149,50 @@ const config = useAppConfig()
         "
       >
         <Button
-          text="Lauch App"
+          text="Coming soon"
+          disabled
           :with-icon="true"
           variant="hero-primary"
-          class="w-full lg:w-auto max-w-full md:max-w-max"
+          class="w-full lg:w-auto max-w-full md:max-w-max opacity-0"
+          v-motion
+          :initial="{
+            opacity: 0,
+            x: -15,
+            transition: {
+              duration: 320,
+            },
+          }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 320,
+            },
+          }"
+          :delay="300"
         />
 
         <Button
           variant="tertiary"
           text="Documentation"
-          class="w-full lg:w-auto max-w-full md:max-w-max"
+          disabled
+          class="w-full lg:w-auto max-w-full md:max-w-max opacity-0"
+          v-motion
+          :initial="{
+            opacity: 0,
+            x: -15,
+            transition: {
+              duration: 320,
+            },
+          }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 320,
+            },
+          }"
+          :delay="450"
         />
       </div>
 
@@ -145,8 +212,6 @@ const config = useAppConfig()
           sm:mt-[-16%]
           md:mt-[-84px]
           lg:mt-0
-          select-none
-          pointer-events-none
           overflow-y-clip
           lg:right-[-10rem]
           xl:right-[-9rem]
@@ -160,6 +225,7 @@ const config = useAppConfig()
           sm:h-[716.81px]
           lg:h-[717px]
           xl:h-[807.57px]
+          pointer-events-none select-none
           2xl:h-[880px]
         "
       >
@@ -175,12 +241,29 @@ const config = useAppConfig()
 
     <Section class="z-[1] space-y-4 relative">
       <div
+        v-motion
+        :initial="{
+          opacity: 0,
+          x: -15,
+          transition: {
+            duration: 320,
+          },
+        }"
+        :enter="{
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: 320,
+          },
+        }"
+        :delay="450"
         class="
           sm:space-x-6
           md:mt-[-30px]
           lg:mt-0
           flex flex-col
           sm:flex-row sm:items-center
+          opacity-0
         "
       >
         <span
@@ -207,10 +290,10 @@ const config = useAppConfig()
           "
         >
           <LandingBlockchain
+            v-for="{ icon, name } in config.chains"
+            :key="`landing-blockchain-label-${name}`"
             :icon="icon"
             :name="name"
-            :key="`landing-blockchain-label-${name}`"
-            v-for="{ icon, name } in config.chains"
           />
         </div>
       </div>
