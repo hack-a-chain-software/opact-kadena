@@ -1,0 +1,53 @@
+name: Production Deploy
+
+# on: pull_request
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  production_deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+      GTM_TAG: ${{ vars.GTM_TAG }}
+      IS_PROD: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install Vercel CLI
+        run: npm i -g vercel
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Pull vercel setup
+        run: vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        env:
+          NITRO_PRESET: vercel
+        run: vercel build --prod
+
+      - name: Deploy Project Artifacts to Vercel
+        run: >
+          vercel
+          deploy
+          --prod
+          --prebuilt
+          --token=${{ secrets.VERCEL_TOKEN }}
