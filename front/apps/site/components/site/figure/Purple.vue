@@ -53,7 +53,7 @@
       <nuxt-img
         quality="100"
         sizes="639:302px 1023:500px 1279:350px 1439:430px 2560:468px"
-        src="/wallet/figures/integrate.webp"
+        src="/wallet/figures/integrate.png"
         alt="Illustrative image"
         class="2xl:w-[468px]"
       />

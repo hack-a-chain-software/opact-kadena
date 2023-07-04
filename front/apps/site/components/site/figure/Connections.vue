@@ -60,7 +60,7 @@
     >
       <nuxt-img
         quality="100"
-        src="/wallet/figures/connections.webp"
+        src="/wallet/figures/connections.png"
         class="scale-x-[-1] lg:scale-x-[1]"
         sizes="sm:600px lg:1200px 2xl:1189.79px"
         alt="Illustrative image"
