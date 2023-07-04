@@ -1,6 +1,5 @@
 export * from './site'
 export * from './blog'
-export * from './image'
 export * from './wallet'
 export * from './routes'
 export * from './chains'
