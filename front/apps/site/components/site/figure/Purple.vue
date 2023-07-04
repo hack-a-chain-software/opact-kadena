@@ -10,7 +10,6 @@
       left-0
     "
   >
-
     <figure
       class="
         absolute
