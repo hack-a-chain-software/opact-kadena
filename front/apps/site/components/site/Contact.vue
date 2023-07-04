@@ -115,9 +115,7 @@ const onSubmit = async () => {
         </h3>
       </div>
 
-      <form
-        @submit.prevent="onSubmit"
-      >
+      <form @submit.prevent="onSubmit">
         <div class="flex flex-col">
           <div
             class="
@@ -128,12 +126,26 @@ const onSubmit = async () => {
               pb-6
             "
           >
-            <Input v-model="state.form.name" :disabled="state.sending" placeholder="Name" name="Name" />
+            <Input
+              v-model="state.form.name"
+              :disabled="state.sending"
+              placeholder="Name"
+              name="Name"
+            />
 
-            <Input v-model="state.form.email" :disabled="state.sending" placeholder="E-mail" name="Email" />
+            <Input
+              v-model="state.form.email"
+              :disabled="state.sending"
+              placeholder="E-mail"
+              name="Email"
+            />
           </div>
 
-          <TextArea v-model="state.form.message" :disabled="state.sending" placeholder="Leave your message" />
+          <TextArea
+            v-model="state.form.message"
+            :disabled="state.sending"
+            placeholder="Leave your message"
+          />
 
           <Button
             variant="hero-secondary"

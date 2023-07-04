@@ -29,8 +29,7 @@ const handleInput = (e: any) => {
       leading-[20px]
       mb-[21px]
       min-h-[110px]
-      disabled:cursor-not-allowed
-      disabled:opacity-[0.4]
+      disabled:cursor-not-allowed disabled:opacity-[0.4]
       text-dark-blue
       placeholder:text-dark-blue
     "

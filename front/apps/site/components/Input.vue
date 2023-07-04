@@ -34,5 +34,5 @@ const handleInput = (e: any) => {
     "
     :placeholder="placeholder"
     @input="handleInput"
-  >
+  />
 </template>
