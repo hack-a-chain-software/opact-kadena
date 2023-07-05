@@ -10,6 +10,7 @@ export const nuxtIcon = {
     kadena: 'Kadena',
     twitter: 'Twitter',
     discord: 'Discord',
+    spinner: 'Spinner',
     chevron: 'Chevron',
     opactLogo: 'OpactLogo'
   }

@@ -118,7 +118,7 @@ const sizes = {
         <slot name="cta">
           <Button
             withIcon
-            :to="to"
+            :href="to"
             variant="secondary"
             :text="cta"
           />

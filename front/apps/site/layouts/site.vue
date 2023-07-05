@@ -6,8 +6,8 @@ const showFixedNavbar = useShowFixedHeader()
 onMounted(() => {
   window.onscroll = () => {
     if (
-      document.body.scrollTop > 500 ||
-      document.documentElement.scrollTop > 550
+      document.body.scrollTop > 900 ||
+      document.documentElement.scrollTop > 900
     ) {
       showFixedNavbar.value = true
 

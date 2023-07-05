@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <div
     class="
@@ -76,7 +74,7 @@
 
       <div>
         <Button
-          disabled
+          href="#opact"
           variant="hero-secondary"
           text="Meet our solutions"
         />
@@ -84,3 +82,9 @@
     </div>
   </div>
 </template>
+
+<style>
+html {
+  scroll-behavior: smooth;
+}
+</style>

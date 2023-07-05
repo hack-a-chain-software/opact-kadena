@@ -9,6 +9,8 @@ export interface Variant {
   children: string;
 }
 
+const emits = defineEmits(['click'])
+
 export interface Variants {
   nav: Variant;
   primary: Variant;
@@ -163,7 +165,7 @@ const props = defineProps({
 })
 
 const tag = computed(() =>
-  props.to ? 'nuxt-link' : props.href ? 'a' : 'button'
+  props.to ? 'a' : props.href ? 'a' : 'button'
 )
 </script>
 
@@ -176,6 +178,7 @@ const tag = computed(() =>
         !disabled && 'opact-button group/button'
       )
     "
+    @click="emits('click')"
   >
     <component
       :is="tag"
@@ -200,7 +203,6 @@ const tag = computed(() =>
           disabled && '!cursor-not-allowed'
         )
       "
-      @click="onClick"
     >
       <div
         class="flex items-center justify-center font-title"
