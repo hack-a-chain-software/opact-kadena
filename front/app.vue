@@ -5,7 +5,8 @@ useHead({
     {
       hid: 'description',
       name: 'description',
-      content: 'Opact'
+      content:
+        'Opact: exploring the power of zero-knowledge technology to create the privacy and security products of the future. Meet our solutions and get in contact for partnerships!'
     },
     {
       hid: 'robots',
