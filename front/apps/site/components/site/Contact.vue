@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { useForm } from 'vee-validate'
-// import { object, string } from 'yup'
 import { reactive } from 'vue'
 
 const baseForm = {
@@ -16,34 +14,6 @@ const state = reactive({
   }
 })
 
-// const { handleSubmit } = useForm({
-//   validationSchema: object({
-//     name: string().label('name'),
-//     email: string().label('email')
-//     // message: string().required().label('Message')
-//   })
-// })
-
-// const data = reactive()
-
-// const onSubmit = handleSubmit(async (values) => {
-//   console.log('fooooo')
-//   console.log(values)
-
-// const { data } = await useFetch(
-//   'https://formsubmit.co/ajax/mateus@opact.io',
-//   {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(values)
-//   }
-// )
-
-// console.log(data)
-// })
-
 const onSubmit = async () => {
   if (state.sending) {
     return
@@ -52,8 +22,8 @@ const onSubmit = async () => {
   state.sending = true
 
   try {
-    const { data } = await useFetch(
-      'https://formsubmit.co/ajax/rafael@opact.io',
+    await useFetch(
+      'https://formsubmit.co/ajax/mateus@opact.io',
       {
         method: 'POST',
         headers: {
@@ -64,8 +34,6 @@ const onSubmit = async () => {
     )
 
     state.form = { ...baseForm }
-
-    console.log(data)
   } catch (e) {
     console.warn(e)
   } finally {
@@ -130,29 +98,52 @@ const onSubmit = async () => {
               v-model="state.form.name"
               :disabled="state.sending"
               placeholder="Name"
-              name="Name"
+              required
             />
 
             <Input
               v-model="state.form.email"
               :disabled="state.sending"
               placeholder="E-mail"
-              name="Email"
+              type="email"
+              class="disabled:opacity-[0.4]"
+              required
             />
           </div>
 
           <TextArea
             v-model="state.form.message"
+            required
             :disabled="state.sending"
             placeholder="Leave your message"
           />
 
-          <Button
-            variant="hero-secondary"
-            text="Send a Message"
-            class="mb-8"
-            tag="button"
-          />
+          <div class="mb-8">
+            <div
+              v-if="state.sending"
+              class="
+                h-[36px]
+                md:h-[51px]
+                w-[200px]
+                rounded-[100px]
+                bg-white
+                flex
+                items-center
+                justify-center
+                xl:mt-[1.6rem]
+                opacity-[0.4]
+              "
+            >
+              <Icon name="spinner" class="animate-spin" />
+            </div>
+
+            <Button
+              v-else
+              type="submit"
+              variant="hero-secondary"
+              text="Send a Message"
+            />
+          </div>
 
           <div>
             <p
