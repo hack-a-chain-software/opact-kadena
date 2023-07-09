@@ -32,3 +32,4 @@ lib.repl
 **/node_modules
 pact
 scripts
+log

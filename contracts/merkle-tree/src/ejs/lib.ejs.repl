@@ -1,4 +1,4 @@
-(module zk-contract MODULE_ADMIN
+(module merkle MODULE_ADMIN
     (defcap MODULE_ADMIN () true)
 
     (defschema FilledSubtreesSchema
@@ -66,6 +66,16 @@
         )
     )
 
+    (defun is-known-root (root:integer)
+        (
+            let*
+            (
+                (root_value (length (select roots (where 'value (= root)))))
+            )
+            (= root_value 1)
+        )
+    )
+
     (defun insert-leaf (leaf:integer)
         (
             let*
@@ -107,8 +117,10 @@
                 (set-filled-subtrees "<%= i %>" (at <%= i %> hashes))
             )
         <% } %>
-            current_level_hash
-        )
+        {
+            "root": current_level_hash,
+            "index": new_root_index
+        })
     )
 )
 
