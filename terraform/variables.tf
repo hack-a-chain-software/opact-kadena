@@ -23,7 +23,7 @@ variable "aws_secret_key" {
 variable "aws_region" {
   description = "AWS region"
   type        = string
-  default     = "~/.ssh/id_rsa.pub"
+  default     = "us-east-1"
 }
 
 variable "db_username" {
