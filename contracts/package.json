@@ -9,7 +9,8 @@
 		"test-plonk": "pact plonk-verifier/tests/plonk-tests.repl",
 		"test-groth16": "pact groth16-verifier/tests/groth16-tests.repl",
 		"test-poseidon": "pact poseidon/tests/poseidon-tests.repl",
-		"test-merkle": "pact merkle-tree/tests/merkle-tests.repl"
+		"test-merkle": "pact merkle-tree/tests/merkle-tests.repl",
+		"test-transact": "pact transact/tests/transact-tests.repl"
 	},
 	"dependencies": {
 		"ejs": "^3.1.9"

@@ -57,3 +57,6 @@ jobs:
 
       - name: Run test-merkle
         run: pnpm contracts test-merkle
+
+      - name: Run test-transact
+        run: pnpm contracts test-transact
