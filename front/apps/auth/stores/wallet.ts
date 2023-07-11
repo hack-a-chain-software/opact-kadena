@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useExtensionStore } from './extension'
 
 export const useWalletStore = defineStore({
   id: 'opact-wallet',
@@ -47,9 +48,21 @@ export const useWalletStore = defineStore({
     },
 
     async reconnect () {
+      console.log(this.cache, 'your cache');
+
       const { node } = await recoveryWallet(this.cache)
 
       this.node = node
+
+      if (!this.cache.providers) {
+        return;
+      }
+
+      const extension = useExtensionStore()
+
+      this.cache.providers.forEach((payload: any) => {
+        extension.login(payload.chainKey, payload.providerKey)
+      })
     },
 
     persistAuth (node: any) {
@@ -58,7 +71,9 @@ export const useWalletStore = defineStore({
       this.node = node
       this.cache = node.mnemonic
 
-      store(node)
+      store({
+        phrase: node.mnemonic.phrase,
+      })
     },
 
     async newMnemonic () {
@@ -83,36 +98,11 @@ export const useWalletStore = defineStore({
       }
     },
 
-    async login (chainKey: any, providerKey: any) {
-      // newMnemonic()
-      const chain = getChainByKey(chainKey)
-
-      if (!chain) {
-        return
-      }
-
-      const provider = chain.getProvider(providerKey)
-
-      try {
-        const { account } = await provider.connect(chain)
-
-        this.address = account.account
-        this.publicKey = account.publicKey
-      } catch (e) {
-        console.log(e)
-
-        return
-      }
-
-      this.chain = chain
-      this.provider = provider
-    },
-
     logout () {
       const { clear } = useAuthStorage()
       const router = useRouter()
 
-      clear()
+      clear(['phrase', 'providers'])
 
       this.node = null
       this.cache = null
@@ -121,17 +111,5 @@ export const useWalletStore = defineStore({
         path: '/auth'
       })
     },
-
-    signPayload (message: string) {
-      return this.provider.sign(
-        {
-          chain: this.chain,
-          provider: this.provider,
-          address: this.address,
-          publicKey: this.publicKey
-        },
-        message
-      )
-    }
   }
 })

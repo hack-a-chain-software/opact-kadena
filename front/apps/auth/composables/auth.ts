@@ -1,6 +1,10 @@
 export const useAuthCurrentStep = () =>
   useState<string>('auth-current-step', () => 'connect')
 
+export interface AuthStorage {
+  phrase: '',
+}
+
 export const useAuthStorage = (
   { authWalletKey } = {
     authWalletKey: 'opact-wallet:cache'
@@ -8,17 +12,19 @@ export const useAuthStorage = (
 ) => {
   const cache = useCookie<any>(authWalletKey)
 
-  const store = (newWallet: any) => {
-    console.log(newWallet.mnemonic, 'newqepwqkopdwqkpo')
+  const store = (payload: any) => {
     cache.value = {
-      phrase: newWallet.mnemonic.phrase,
-      password: newWallet.mnemonic.password,
-      wordlist: newWallet.mnemonic.wordlist
+      ...cache.value,
+      ...payload
     }
   }
 
-  const clear = () => {
-    cache.value = null
+  const clear = (keys: string[]) => {
+    const entries = Object.entries(cache.value)
+
+    const filtered = entries.filter(([key]) => !keys.includes(key))
+
+    cache.value = Object.fromEntries(filtered)
   }
 
   return { store, clear, cache }

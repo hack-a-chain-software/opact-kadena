@@ -4,16 +4,14 @@ export default defineNuxtRouteMiddleware((to) => {
   const wallet = useWalletStore()
   const router = useRouter()
 
-  if (wallet.cache) {
+  if (wallet.cache && wallet.cache.phrase) {
     return
   }
 
-  if (!wallet.connected) {
-    return router.push({
-      path: '/auth',
-      query: {
-        next: to.path
-      }
-    })
-  }
+  return router.push({
+    path: '/auth',
+    query: {
+      next: to.path
+    }
+  })
 })

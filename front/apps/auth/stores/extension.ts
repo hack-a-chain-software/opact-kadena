@@ -25,12 +25,18 @@ export const useExtensionStore = defineStore({
 
       const provider = chain.getProvider(providerKey)
 
+      const { store } = useAuthStorage()
+
       try {
         const { account } = await provider.connect(chain)
 
         this.chain = chain
         this.account = account
         this.provider = provider
+
+        store({
+          providers: [{ chainKey, providerKey }]
+        })
       } catch (e) {
         console.log(e)
       }
@@ -42,6 +48,10 @@ export const useExtensionStore = defineStore({
       this.chain = null
       this.account = null
       this.provider = null
+
+      const { clear } = useAuthStorage()
+
+      clear(['providers'])
     },
 
     signPayload (message: string) {
