@@ -48,20 +48,23 @@ export const useWalletStore = defineStore({
     },
 
     async reconnect () {
-      console.log(this.cache, 'your cache');
+      console.log(this.cache, 'your cache')
 
       const { node } = await recoveryWallet(this.cache)
 
       this.node = node
 
       if (!this.cache.providers) {
-        return;
+        return
       }
 
       const extension = useExtensionStore()
 
       this.cache.providers.forEach((payload: any) => {
-        extension.login(payload.chainKey, payload.providerKey)
+        extension.login(
+          payload.chainKey,
+          payload.providerKey
+        )
       })
     },
 
@@ -72,7 +75,7 @@ export const useWalletStore = defineStore({
       this.cache = node.mnemonic
 
       store({
-        phrase: node.mnemonic.phrase,
+        phrase: node.mnemonic.phrase
       })
     },
 
@@ -110,6 +113,6 @@ export const useWalletStore = defineStore({
       router.push({
         path: '/auth'
       })
-    },
+    }
   }
 })

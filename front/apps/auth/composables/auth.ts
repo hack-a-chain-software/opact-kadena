@@ -2,7 +2,7 @@ export const useAuthCurrentStep = () =>
   useState<string>('auth-current-step', () => 'connect')
 
 export interface AuthStorage {
-  phrase: '',
+  phrase: '';
 }
 
 export const useAuthStorage = (
@@ -22,7 +22,9 @@ export const useAuthStorage = (
   const clear = (keys: string[]) => {
     const entries = Object.entries(cache.value)
 
-    const filtered = entries.filter(([key]) => !keys.includes(key))
+    const filtered = entries.filter(
+      ([key]) => !keys.includes(key)
+    )
 
     cache.value = Object.fromEntries(filtered)
   }
