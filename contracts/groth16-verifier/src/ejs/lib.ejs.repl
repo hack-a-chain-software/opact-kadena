@@ -26,15 +26,17 @@
 
     (defschema Proof
         "Structure representing a proof."
+        public_values: [integer]
         a: object{G1Point}
         b: object{G2Point}
         c: object{G1Point}
     )
 
-    (defun verify (input:[integer] proof:object{Proof})
+    (defun verify (proof:object{Proof})
         (
             let* 
             (
+                (input (at 'public_values proof))
                 (enforce (+ (length input) 1) "verifier-bas-input")
                 
                 (verifier_init 
