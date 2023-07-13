@@ -6,7 +6,7 @@ const currentStep = useAuthCurrentStep()
   <div class="flex flex-col space-y-[24px]">
     <div class="flex flex-col space-y-[14px] max-w-[400px]">
       <h2 class="text-white font-title text-[40px]">
-        Connect wallet
+        Connect your private address
       </h2>
 
       <p
@@ -24,7 +24,7 @@ const currentStep = useAuthCurrentStep()
 
     <div class="flex flex-col space-y-[8px]">
       <Button
-        text="Recovery Wallet"
+        text="Recover Wallet"
         class="min-w-[200px]"
         @click="currentStep = 'recovery'"
       />

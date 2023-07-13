@@ -1,7 +1,7 @@
-import { xwallet } from './adapters/xwallet'
+import usexWalletAdapter from './adapters/xwallet'
 
-export const providers = {
-  [xwallet.key]: xwallet
+export const adapters = {
+  'provider:kda:adapter:xwallet': usexWalletAdapter()
 } as any
 
-export const getProvider = (key: string) => providers[key]
+export const getAdapters = (key: string) => adapters[key]

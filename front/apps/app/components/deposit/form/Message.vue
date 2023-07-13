@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useExtensionStore } from '~/apps/auth/stores/extension'
-
 const { step } = useForm()
 
-const { provider } = storeToRefs(useExtensionStore())
+const { provider } = useExtensions()
 </script>
 
 <template>
-  <div class="text-white max-w-[450px]">
+  <div class="text-white max-w-[450px] text-white">
     <div>
       <button
         class="flex items-center space-x-[4px]"
@@ -41,6 +38,8 @@ const { provider } = storeToRefs(useExtensionStore())
         </p>
       </div>
     </div>
+
+    {{ provider.account.address }}
 
     <div>
       <Button

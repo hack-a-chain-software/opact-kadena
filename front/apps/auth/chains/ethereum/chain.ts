@@ -1,14 +1,11 @@
-import { adapters, getAdapters } from './providers'
+import { providers, getProvider } from './providers'
 
 export const eth = {
-  ttl: 600,
-
+  id: 'chain:ethereum',
   name: 'Ethereum',
 
-  key: 'chain:eth',
-
-  adapters,
-  getAdapters
+  providers,
+  getProvider
 }
 
 export default eth

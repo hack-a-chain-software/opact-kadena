@@ -1,10 +1,10 @@
 name: Production Deploy
 
-# on: pull_request
-on:
-  push:
-    branches:
-      - main
+on: pull_request
+# on:
+#   push:
+#     branches:
+#       - main
 
 concurrency:
   group: ci-${{ github.ref }}

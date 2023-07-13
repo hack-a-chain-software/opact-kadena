@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useWalletStore } from '~/apps/auth/stores/wallet'
+
 definePageMeta({
   layout: 'app',
   middleware: 'auth'
@@ -7,6 +9,10 @@ definePageMeta({
 useHead({
   title: 'App'
 })
+
+const router = useRouter()
+
+const { encrypt } = useWalletStore()
 </script>
 
 <template>
@@ -14,7 +20,7 @@ useHead({
     <div class="max-w-[580px] pt-2">
       <div>
         <h2 class="text-white font-title text-[40px]">
-          Extensions
+          Encrypt
         </h2>
       </div>
 
@@ -28,14 +34,22 @@ useHead({
             text-[#BDBDBD]
           "
         >
-          Extensions are responsible for connecting a common
-          Wallet with your Opact Wallet and bringing your
-          tokens to a secure environment.
+          Opact Wallet uses encrypted data
         </p>
       </div>
 
-      <div>
-        <!-- <Tabs /> -->
+      <div class="flex flex-col space-y-[12px]">
+        <Button
+          text="Encrypt"
+          class="!h-[32px]"
+          @click="encrypt()"
+        />
+
+        <Button
+          text="Deposit"
+          class="!h-[32px]"
+          @click="router.push('/deposit')"
+        />
       </div>
     </div>
   </div>

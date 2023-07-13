@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useExtensionStore } from './extension'
+// import { useExtensionStore } from './extension'
 
 export const useWalletStore = defineStore({
   id: 'opact-wallet',
@@ -55,17 +55,17 @@ export const useWalletStore = defineStore({
       this.node = node
 
       if (!this.cache.adapters) {
-        return
+        //
       }
 
-      const extension = useExtensionStore()
+      // const extension = useExtensionStore()
 
-      this.cache.adapters.forEach((payload: any) => {
-        extension.login(
-          payload.chainKey,
-          payload.providerKey
-        )
-      })
+      // this.cache.adapters.forEach((payload: any) => {
+      //   extension.login(
+      //     payload.chainKey,
+      //     payload.providerKey
+      //   )
+      // })
     },
 
     persistAuth (node: any) {
@@ -99,6 +99,19 @@ export const useWalletStore = defineStore({
       } catch ($e) {
         alert('Cannot copy')
       }
+    },
+
+    async encrypt () {
+      console.log(this.node)
+
+      const foo = await this.node.encrypt('password123', {
+        scrypt: {
+          // The number must be a power of 2 (default: 131072)
+          N: 64
+        }
+      })
+
+      console.log(foo)
     },
 
     logout () {

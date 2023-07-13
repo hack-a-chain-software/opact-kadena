@@ -1,4 +1,4 @@
-import { providers, getProvider } from './providers'
+import { adapters, getAdapters } from './providers'
 
 export const kadena = {
   ttl: 600,
@@ -14,8 +14,8 @@ export const kadena = {
   networkId: 'testnet04',
   network: 'https://api.testnet.chainweb.com',
 
-  providers,
-  getProvider
+  adapters,
+  getAdapters
 }
 
 export default kadena

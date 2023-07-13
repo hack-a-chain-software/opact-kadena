@@ -1,8 +1,7 @@
-import { useWalletConnectAdapter } from './adapaters/wallet-connect'
+import xWallet from './provider/wallet-connect'
 
-export const adapters = {
-  'provider:eth:adapter:wallet-connect':
-    useWalletConnectAdapter()
+export const providers = {
+  [xWallet.id]: xWallet
 } as any
 
-export const getAdapters = (key: string) => adapters[key]
+export const getProvider = (key: string) => providers[key]

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex bg-dark-blue">
+  <div class="h-screen flex bg-dark-blue text-white">
     <div class="h-full w-[316px] p-8">
       <Logo class="flex justify-center mb-5" />
     </div>

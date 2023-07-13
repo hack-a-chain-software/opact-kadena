@@ -1,57 +1,38 @@
-export const createSigningCommand = ({
-  ttl,
-  account,
-  networkId,
-  publicKey,
-  caps = [],
-  gasLimit = 15000,
-  gasPrice = 1e-5
-}: any) => ({
-  ttl,
-  pactCode: `(free.kda-coinflip.deposit-to-bank "${account}" 1)`,
-  sender: account,
-  networkId,
-  chainId: '8',
-  gasLimit,
-  gasPrice,
-  signingPubKey: publicKey,
-  caps
-})
+import { shallowRef, ref } from 'vue'
 
-export const xwallet = {
-  name: 'eckoWALLET',
+export const usexWalletAdapter = () => {
+  const account = ref<string>()
+  const provider = shallowRef<undefined>()
 
-  key: 'provider:kadena-xwallet',
+  const metadata = {
+    name: 'eckoWALLET',
+    key: 'provider:kda:adapter:xwallet',
+    icon: 'ecko',
+    disabled: false
+  }
 
-  icon: 'ecko',
+  if (!process.client) {
+    return {
+      metadata,
+      provider,
+      account
+    }
+  }
 
-  connect: async function (chain: any) {
+  const connect = async (loginCallback = () => {}) => {
     const accountResult = await kadena.request({
       method: 'kda_connect',
-      networkId: chain.networkId
+      networkId: 'testnet04'
     })
 
-    console.log(accountResult, 'accountResult')
+    account.value = accountResult
 
-    return accountResult
-  },
+    loginCallback()
+  }
 
-  disconnect: async function (chain: any) {
-    return await kadena.request({
-      method: 'kda_disconnect',
-      networkId: chain.networkId
-    })
-  },
-
-  sign: async function (wallet: any) {
-    console.log(wallet)
-    console.log(
-      wallet.chain.ttl,
-      wallet.address,
-      wallet.chain.networkId,
-      wallet.publicKey
-    )
-    const networkId: any = wallet.chain.networkId
+  const signMessage = async ({ message }: any) => {
+    console.log(message)
+    const networkId: any = 'testnet04'
 
     const req = {
       method: 'kda_requestSign',
@@ -59,10 +40,10 @@ export const xwallet = {
       data: {
         networkId,
         signingCmd: {
-          ttl: wallet.chain.ttl,
+          ttl: 600,
           pactCode: '(foo)',
-          sender: wallet.address,
-          networkId: wallet.chain.networkId,
+          sender: 'foooo',
+          networkId,
           chainId: '1',
           envData: {},
           gasLimit: 15000,
@@ -74,6 +55,24 @@ export const xwallet = {
 
     return await kadena.request(req)
   }
+
+  const disconnect = async function () {
+    await kadena.request({
+      method: 'kda_disconnect',
+      networkId: 'testnet04'
+    })
+
+    account.value = ''
+  }
+
+  return {
+    provider,
+    account,
+    connect,
+    signMessage,
+    disconnect,
+    metadata
+  }
 }
 
-export default xwallet
+export default usexWalletAdapter

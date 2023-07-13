@@ -4,6 +4,7 @@ export const nuxtIcon = {
     near: 'Near',
     menu: 'Menu',
     logo: 'Logo',
+    send: 'Send',
     arrow: 'Arrow',
     close: 'Close',
     github: 'Github',
@@ -15,6 +16,8 @@ export const nuxtIcon = {
     discord: 'Discord',
     spinner: 'Spinner',
     chevron: 'Chevron',
+    airplane: 'Airplane',
+    security: 'Security',
     walletConnect: 'WalletConnect',
     opactLogo: 'OpactLogo'
   }

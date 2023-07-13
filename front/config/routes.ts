@@ -29,28 +29,23 @@ export type Route = WidgetRoute | LinkRoute | Subroute;
 export const routes: Route[] = [
   {
     order: 1,
-    width: 355,
+    width: 300,
     height: 57,
     to: '/wallet',
     type: 'widget',
     widget: 'subroutes',
-    label: 'Opact Wallet',
+    label: 'Products',
     key: 'route:widget:Subroutes:opact-wallet',
     subroutes: [
       {
         key: 'wallet:privacy:link',
-        to: '/wallet#privacy',
-        label: 'Privacy'
+        to: '/wallet',
+        label: 'Opact Wallet'
       },
       {
         key: 'wallet:documentation:link',
-        label: 'Documentation',
-        to: '/wallet#documentation'
-      },
-      {
-        key: 'wallet:security:link',
-        to: '/wallet#security',
-        label: 'Security'
+        label: 'Opact Tickets',
+        to: '/tickets'
       }
     ]
   },

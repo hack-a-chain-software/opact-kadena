@@ -77,6 +77,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/wallet': { prerender: true },
+    '/tickets': { prerender: true },
     '/auth': { prerender: false }
   }
 })

@@ -7,8 +7,6 @@ const wallet = useWalletStore()
 
 const { connected, truncatedAddress } = storeToRefs(wallet)
 
-// const showLoader = useAppShowLoader
-
 onBeforeMount(() => {
   if (!connected.value) {
     wallet.reconnect()
