@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/apps/auth/stores/wallet'
 
@@ -9,7 +9,7 @@ const { connected, truncatedAddress } = storeToRefs(wallet)
 
 // const showLoader = useAppShowLoader
 
-onMounted(() => {
+onBeforeMount(() => {
   if (!connected.value) {
     wallet.reconnect()
   }

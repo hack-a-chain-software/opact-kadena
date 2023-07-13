@@ -15,6 +15,7 @@ export const nuxtIcon = {
     discord: 'Discord',
     spinner: 'Spinner',
     chevron: 'Chevron',
+    walletConnect: 'WalletConnect',
     opactLogo: 'OpactLogo'
   }
 }

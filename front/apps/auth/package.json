@@ -1,5 +1,5 @@
 {
-  "name": "front-wallet",
+  "name": "front-auth",
   "private": true,
   "scripts": {
     "build": "nuxt build",

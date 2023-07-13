@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import Connect from '../components/auth/form/Connect.vue'
-import Create from '../components/auth/form/Create.vue'
-import Recovery from '../components/auth/form/Recovery.vue'
-import Method from '../components/auth/form/Method.vue'
-import Mnemonic from '../components/auth/form/Mnemonic.vue'
-import Verify from '../components/auth/form/Verify.vue'
+import form from '../components/auth/form'
 
 definePageMeta({
-  layout: 'auth',
+  layout: 'form',
   middleware: 'guest'
 })
 
@@ -15,22 +10,13 @@ useHead({
   title: 'Auth'
 })
 
-const steps = {
-  create: Create,
-  connect: Connect,
-  recovery: Recovery,
-  method: Method,
-  mnemonic: Mnemonic,
-  verify: Verify
-}
-
 const currentStep = useAuthCurrentStep()
 </script>
 
 <template>
   <div class="my-auto mt-[calc((100vh-650px)/2)]">
     <Transition name="fade" mode="out-in">
-      <component :is="steps[currentStep]" />
+      <component :is="form[currentStep]" />
     </Transition>
   </div>
 </template>

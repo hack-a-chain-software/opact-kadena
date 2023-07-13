@@ -1,5 +1,5 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
-// import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 
 export default defineNuxtConfig({
   extends: ['./apps/site', './apps/auth', './apps/app'],
@@ -13,19 +13,20 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxtjs/google-fonts'
   ],
+  // plugins: ['~/plugins/myplugin.client.js'],
   vite: {
-    logLevel: 'info',
-    resolve: {
-      alias: {
-        stream: 'stream-browserify'
-      }
-    },
     optimizeDeps: {
       esbuildOptions: {
         define: {
-          global: 'globalThis' // fix nuxt3 global
+          global: 'globalThis'
         },
-        plugins: [NodeGlobalsPolyfillPlugin()]
+        plugins: [
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true
+          }),
+          NodeModulesPolyfillPlugin()
+        ]
       }
     }
   },

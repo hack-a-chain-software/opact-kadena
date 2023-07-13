@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useExtensionStore } from '~/apps/auth/stores/extension'
 import {
   TabGroup,
   TabList,
@@ -8,10 +6,17 @@ import {
   TabPanels,
   TabPanel
 } from '@headlessui/vue'
+import { useExtensionStore } from '~/apps/auth/stores/extension'
 
 const extension = useExtensionStore()
 
-const { provider: exProvider } = storeToRefs(extension)
+const chains = getChains()
+
+const { step } = useForm()
+
+const loginCallback = () => {
+  step.value = 'message'
+}
 </script>
 
 <template>
@@ -27,10 +32,10 @@ const { provider: exProvider } = storeToRefs(extension)
         "
       >
         <Tab
-          v-for="{ name } in chains()"
-          as="template"
+          v-for="{ name } in chains"
           :key="'tab:' + name"
           v-slot="{ selected }"
+          as="template"
         >
           <button
             :class="[
@@ -46,51 +51,52 @@ const { provider: exProvider } = storeToRefs(extension)
 
       <TabPanels class="pt-[24px]">
         <TabPanel
-          v-for="{ providers, key } in chains()"
-          :key="
-            'blockchain:providers' +
-            key +
-            JSON.stringify(exProvider)
-          "
+          v-for="({ adapters, key }, i) in chains"
+          :key="'blockchain:providers' + key + i"
           class="w-full flex"
+          as="div"
         >
           <ul class="w-full space-y-[14px]">
             <li
+              v-for="adapter in adapters"
+              :key="'extensions:' + adapter.metadata.key"
               class="w-full"
-              :key="'extensions:' + provider.key"
-              v-for="provider in providers"
             >
               <button
-                :disabled="provider.disabled"
-                @click.prevent="
-                  extension.login(key, provider.key)
-                "
+                :disabled="adapter.metadata.disabled"
                 :class="[
                   'w-full rounded-xl text-white p-3 text-left',
                   'border-[#ffffffcc] border-[1px] flex justify-between items-center space-x-[4px] cursor-default',
-                  provider.disabled &&
+                  adapter.metadata.disabled &&
                     '!opacity-[0.9] !cursor-not-allowed',
-                  exProvider?.key !== provider.key &&
+                  !adapter.account.value &&
                     'hover:opacity-[0.8] !cursor-pointer ',
                 ]"
+                @click.prevent="
+                  extension.login(
+                    key,
+                    adapter.metadata.key,
+                    loginCallback
+                  )
+                "
               >
                 <div class="flex items-center">
                   <Icon
-                    :name="provider.icon"
+                    :name="adapter.metadata.icon"
                     class="w-[32px]"
                   />
 
                   <span>
-                    {{ provider.name }}
+                    {{ adapter.metadata.name }}
                   </span>
                 </div>
 
-                <div v-if="provider.disabled">
+                <div v-if="adapter.metadata.disabled">
                   <span> Disabled </span>
                 </div>
 
                 <div
-                  v-if="exProvider?.key === provider.key"
+                  v-if="adapter.account.value"
                   class="flex items-center space-x-[12px]"
                 >
                   <div>

@@ -35,7 +35,7 @@ useHead({
       </div>
 
       <div>
-        <Tabs />
+        <!-- <Tabs /> -->
       </div>
     </div>
   </div>

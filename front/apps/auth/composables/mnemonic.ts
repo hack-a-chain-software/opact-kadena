@@ -1,27 +1,17 @@
-import { Buffer } from 'buffer'
+import { HDNodeWallet } from 'ethers'
 
-globalThis.Buffer = Buffer
+import 'buffer'
 
-let ethers: any
-
-export const foundWallet = async () => {
-  if (!ethers) {
-    ethers = await import('ethers')
-  }
-
-  const node = ethers.HDNodeWallet.createRandom()
+export const foundWallet = () => {
+  const node = HDNodeWallet.createRandom()
 
   return {
     node
   }
 }
 
-export const recoveryWallet = async ({ phrase }: any) => {
-  if (!ethers) {
-    ethers = await import('ethers')
-  }
-
-  const node = ethers.HDNodeWallet.fromPhrase(phrase)
+export const recoveryWallet = ({ phrase }: any) => {
+  const node = HDNodeWallet.fromPhrase(phrase)
 
   return {
     node

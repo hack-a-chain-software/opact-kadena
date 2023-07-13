@@ -54,13 +54,13 @@ export const useWalletStore = defineStore({
 
       this.node = node
 
-      if (!this.cache.providers) {
+      if (!this.cache.adapters) {
         return
       }
 
       const extension = useExtensionStore()
 
-      this.cache.providers.forEach((payload: any) => {
+      this.cache.adapters.forEach((payload: any) => {
         extension.login(
           payload.chainKey,
           payload.providerKey

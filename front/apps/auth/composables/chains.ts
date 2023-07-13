@@ -1,7 +1,6 @@
-import near from '../near/chain'
-import kadena from '../kadena/chain'
+import { chains } from '../chains'
 
-export const chains = () => [kadena, near]
+export const getChains = (): any[] => [...chains]
 
 export const getChainByKey = (chainKey: any) =>
-  chains().find(chain => chain.key === chainKey)
+  getChains().find(chain => chain.key === chainKey)

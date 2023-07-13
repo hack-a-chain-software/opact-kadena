@@ -3,9 +3,8 @@ import { defineStore } from 'pinia'
 export const useExtensionStore = defineStore({
   id: 'opact-extension',
   state: (): any => ({
-    chain: null,
-    provider: null,
-    account: null
+    account: null,
+    provider: null
   }),
 
   getters: {
@@ -15,27 +14,28 @@ export const useExtensionStore = defineStore({
   },
 
   actions: {
-    async login (chainKey: any, providerKey: any) {
-      console.log(chainKey, providerKey)
+    async login (
+      chainKey: any,
+      adapterKey: any,
+      callback = () => {}
+    ) {
       const chain = getChainByKey(chainKey)
 
       if (!chain) {
         return
       }
 
-      const provider = chain.getProvider(providerKey)
+      const provider = chain.getAdapters(adapterKey)
 
       const { store } = useAuthStorage()
 
       try {
-        const { account } = await provider.connect(chain)
+        await provider.connect(callback)
 
-        this.chain = chain
-        this.account = account
         this.provider = provider
 
         store({
-          providers: [{ chainKey, providerKey }]
+          providers: [{ chainKey, adapterKey }]
         })
       } catch (e) {
         console.log(e)
@@ -43,7 +43,7 @@ export const useExtensionStore = defineStore({
     },
 
     async logout () {
-      await this.provider.disconnect(this.chain)
+      await this.provider.disconnect()
 
       this.chain = null
       this.account = null
