@@ -1,4 +1,9 @@
-;; load dependencies
+; define namespace
+
+(define-namespace 'test (sig-keyset) (sig-keyset))
+(env-data { 'ns: 'test })
+
+; load dependencies
 
 (load "../../groth16-verifier/src/lib.repl")
 (load "../../plonk-verifier/src/lib.repl")
@@ -7,16 +12,13 @@
 
 (load "kip/0005/fungible-v2.pact")
 (load "kip/0005/fungible-v2-reference.pact")
-
-(define-namespace 'test (sig-keyset) (sig-keyset))
-(env-data { 'ns: 'test })
 (load "kip/0011/poly-fungible-v1.pact")
 (load "kip/0011/fungible-util.pact")
 (load "kip/0011/poly-fungible-reference.pact")
 
 (load "../src/contract.pact")
 
-;; test fungible tokens
+; test fungible tokens
 
 (create-table fungible-v2-reference.ledger)
 
@@ -48,12 +50,16 @@
 
 ;; transact
 
+(env-gasmodel "table")
+(env-gaslimit 10000000)
+(env-gas 0)
+
 (transact {
     "root": 20211649699328972427040417540848848882630537175401544736520822735123291360599,
     "outputCommitments":[4 5],
     "publicAmount":10.0,
     "extDataHash": "Hxmr5jiVgsNBytJrsx9T4MJUjVdXVopJNLjC7HxXmYk",
-    "tokenHash":"HzX69RGMUuEa1BJDoomVqEfbiqwJ85OApbQdTvmvF9s"
+    "tokenHash":"HtQPkqhvlRnJ3DMY7dFi1ANxnYZsYXDDYjR9cAtZ2fM"
 } {
     ; groth16 proof
     "public_values":[33],
@@ -97,6 +103,8 @@
     }
 })
 
+(print {"Total gas": (env-gas)})
+
 ; expect
 
 (expect "sender balance" 89.0 (fungible-v2-reference.get-balance "sender-address"))
@@ -128,12 +136,14 @@
 
 ;; transact
 
+(env-gas 0)
+
 (transact {
     "root": 14589546945918040263087121847548586454156665393561626829385608156234697094715,
     "outputCommitments":[4 5],
     "publicAmount":10.0,
     "extDataHash": "Hxmr5jiVgsNBytJrsx9T4MJUjVdXVopJNLjC7HxXmYk",
-    "tokenHash":"6H62n9RRjhMxkVbFr-KJBEvwqVfOi91UHYtcvU48Qmc"
+    "tokenHash":"mhOx4uq_kDc-YgTHjFu4mBM_q0qugibCmXaLnB_KGFw"
 } {
     ; groth16 proof
     "public_values":[1141433],
@@ -175,6 +185,8 @@
         "id": "1"
     }
 })
+
+(print {"Total gas": (env-gas)})
 
 (expect "sender balance" 89.0 (poly-fungible-reference.get-balance "1" "sender-address"))
 (expect "contract balance" 111.0 (poly-fungible-reference.get-balance "1" "contract-address"))
