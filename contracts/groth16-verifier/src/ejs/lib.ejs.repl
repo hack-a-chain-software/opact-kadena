@@ -1,3 +1,5 @@
+(namespace (read-msg 'ns))
+
 (module groth16 MODULE_ADMIN
     (defcap MODULE_ADMIN () true)
 

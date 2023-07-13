@@ -1,6 +1,11 @@
-; pact
+(define-namespace 'test (sig-keyset) (sig-keyset))
+(env-data { 'ns: 'test })
 
 (load "../src/lib.repl")
+
+(env-gasmodel "table")
+(env-gaslimit 150000)
+(env-gas 0)
 
 (expect "verify" {"paired": true} (verify 
     {
@@ -12,6 +17,9 @@
     }
 ))
 
+(print {"Total gas": (env-gas)})
+(env-gas 0)
+
 (expect "verify" {"paired": true} (verify 
     {
         "public_values":[1141433],
@@ -22,6 +30,9 @@
     }
 ))
 
+(print {"Total gas": (env-gas)})
+(env-gas 0)
+
 (expect "verify" {"paired": false} (verify 
     {
         "public_values":[34],
@@ -31,3 +42,5 @@
         "c":{"x":4016739862039177466188094288526125375400410920627291835204997875349870930371,"y":8109450981714180662240853592027233497894520695072849576218650369542745992730}
     }
 ))
+
+(print {"Total gas": (env-gas)})

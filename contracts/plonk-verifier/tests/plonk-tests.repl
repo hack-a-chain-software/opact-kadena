@@ -4,6 +4,10 @@
 
 (expect "check-value" true (check-value 1 2))
 
+(env-gasmodel "table")
+(env-gaslimit 10000000)
+(env-gas 0)
+
 (expect "verify" {"paired": true} (verify 
     {
         "public_values":[33],
@@ -25,6 +29,9 @@
         "wxi_w": {"x":20428034650998693167036701052503327116649320919201315012372976979614542543172,"y":14915526821693979244311978786312580321837229893719229665715812529841995366666}
     }
 ))
+
+(print {"Total gas": (env-gas)})
+(env-gas 0)
 
 (expect "verify" {"paired": true} (verify 
     {
@@ -48,6 +55,9 @@
     }
 ))
 
+(print {"Total gas": (env-gas)})
+(env-gas 0)
+
 (expect "verify" {"paired": false} (verify 
     {
         "public_values":[34],
@@ -69,3 +79,5 @@
         "wxi_w":{"x":20428034650998693167036701052503327116649320919201315012372976979614542543172,"y":14915526821693979244311978786312580321837229893719229665715812529841995366666}
     }
 ))
+
+(print {"Total gas": (env-gas)})
