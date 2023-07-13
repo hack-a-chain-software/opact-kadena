@@ -3,7 +3,7 @@
 (module poseidon MODULE_ADMIN
     (defcap MODULE_ADMIN () true)
 
-    (defun sigma(in:integer)
+    (defun sig(in:integer)
         (
             let*
             (
@@ -39,7 +39,7 @@
         (mod (+ a b) <%= p %>)
     )
 
-    (defun getConstant(i:integer)
+    (defun c(i:integer)
         (
             let*
             (
@@ -65,37 +65,32 @@
         )
     )
 
+    (defun ca(m0:integer m1:integer m2:integer j:integer i:integer)
+        (ark (mix m0 m1 m2 j) (c i))
+    )
+
     (defun poseidon(inputs:[integer])
         (
             let*
             (
-                <% for (let i = 0; i < (parseInt(nRoundsF) + parseInt(nRoundsP)); i++) {
-                    for(let j = 0; j < t; j++) {
-                        if (i == 0) {
-                            if (j < nInputs) { %>
-                            (ark_<%= i %>_out_<%= j %> (ark (at <%= j %> inputs) (getConstant <%= i %>)))
-                            <% } else { %>
-                            (ark_<%= i %>_out_<%= j %> (ark 0 (getConstant <%= i %>)))
-                            <% }
-                        } else { %>
-                            (ark_<%= i %>_in_<%= j %> (mix mix_<%= i-1 %>_in_0 mix_<%= i-1 %>_in_1 mix_<%= i-1 %>_in_2 <%=j%>))
-                            (ark_<%= i %>_out_<%= j %> (ark ark_<%= i %>_in_<%= j %> (getConstant <%= i %>)))
-                        <% }
-                    }
-                    if ((i<(parseInt(nRoundsF)/2)) || (i>= (parseInt(nRoundsP) + parseInt(nRoundsF)/2))) {
-                        for(let j = 0; j < t; j++) { %>
-                            (mix_<%= i %>_in_<%= j %> (sigma ark_<%= i %>_out_<%=j%>))
-                        <% }
-                    } else { %>
-                            (mix_<%= i %>_in_0 (sigma ark_<%= i %>_out_0))
-                        <% for(let j = 1; j < t; j++) { %> 
-                            (mix_<%= i %>_in_<%= j %> ark_<%= i %>_out_<%= j %>)
-                        <% }
-                    }
-                }
+        <% for (let i = 0; i < (parseInt(nRoundsF) + parseInt(nRoundsP)); i++) {
+    for(let j = 0; j < t; j++) {
+        if (i == 0) {
+            if (j < nInputs) { %>(a<%= j %> (ark (at <%= j %> inputs) (c <%= i %>))) <% 
+            } else { %>(a<%= j %> (ark 0 (c <%= i %>))) <% }
+            } else { %>(a<%= j %> (ca m0 m1 m2 <%=j%> <%= i %>))
+        <% }
+    }
+    if ((i<(parseInt(nRoundsF)/2)) || (i>= (parseInt(nRoundsP) + parseInt(nRoundsF)/2))) {
+        for(let j = 0; j < t; j++) {
+            %>(m<%= j %> (sig a<%= j %>)) <% 
+        }} else { 
+            %>(m0 (sig a0)) <%
+            for(let j = 1; j < t; j++) { 
+                %>(m<%= j %> a<%= j %>) <% }
+        }}
                 (roundIndex = (parseInt(nRoundsF) + (parseInt(nRoundsP) - 1))) %>
-                (mix_<%= roundIndex %>_out_0 (mix mix_<%= roundIndex %>_in_0 mix_<%= roundIndex %>_in_1 mix_<%= roundIndex %>_in_2 0))
-                (out mix_<%= roundIndex %>_out_0)
+                (out (mix m0 m1 m2 0))
             )
             out
         )
