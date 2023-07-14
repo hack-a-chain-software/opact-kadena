@@ -97,8 +97,8 @@
                     ))
 
                     (hashes (+ hashes (if (= (mod current_index 2) 0)
-                        (list current_level_hash)
-                        (list (zeros <%= i - 1 %>)))
+                        [current_level_hash]
+                        [(zeros <%= i - 1 %>)])
                     ))
 
                     (current_level_hash (poseidon-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
