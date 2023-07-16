@@ -44,7 +44,7 @@
         c: object{G1Point}
     )
 
-    (defschema Args
+    (defschema args
         "Structure representing the arguments to the transact function."
         root: integer
         outputCommitments: [integer]
@@ -53,8 +53,8 @@
         tokenHash: string
     )
 
-    (defschema ExtData
-        "Structure representing a ExtData."
+    (defschema ext-data
+        "Structure representing a ext-data."
         sender: string
         recipient: string
         extAmount: decimal
@@ -62,15 +62,20 @@
         fee: decimal
         encryptedOutput1: integer
         encryptedOutput2: integer
-        token: object{Token}
     )
 
-    (defschema Token
-        "Structure representing a token."
+    (defschema token-kip-0005
+        "Structure representing a fungible token."
         chainId: integer
         type: string
-        contract-kip-0005:module{fungible-v2}
-        contract-kip-0011:module{poly-fungible-v1}
+        contract:module{fungible-v2}
+    )
+
+    (defschema token-kip-0011
+        "Structure representing a poly-fungible token."
+        chainId: integer
+        type: string
+        contract:module{poly-fungible-v1}
         id: string
     )
 
@@ -142,7 +147,7 @@
         (at 'paired (groth16.verify proof))
     )
 
-    (defun kip-0005-deposit 
+    (defun deposit-kip-0005
         (sender:string
          recipient:string 
          amount:decimal 
@@ -152,7 +157,7 @@
         (token::transfer sender recipient amount)
     )
     
-    (defun kip-0005-withdraw 
+    (defun withdraw-kip-0005
         (sender:string 
          recipient:string 
          amount:decimal 
@@ -160,7 +165,7 @@
         (token::transfer sender recipient amount)
     )
 
-    (defun kip-0011-deposit 
+    (defun deposit-kip-0011
         (sender:string
          recipient:string 
          amount:decimal 
@@ -171,7 +176,7 @@
         (token::transfer token-id sender recipient amount)
     )
     
-    (defun kip-0011-withdraw 
+    (defun withdraw-kip-0011
         (sender:string 
          recipient:string 
          amount:decimal 
@@ -180,17 +185,25 @@
         (token::transfer token-id sender recipient amount)
     )
 
-    (defun hash-extData (extData:object{ExtData})
-        (let* ((recipient (at 'recipient extData))
-            (amount (at 'extAmount extData))
-            (fee (at 'fee extData))
+    (defun hash-ext-data (ext-data:object{ext-data})
+        (let* ((recipient (at 'recipient ext-data))
+            (amount (at 'extAmount ext-data))
+            (fee (at 'fee ext-data))
             (json-string (format "{{},{},{}}" [recipient amount fee])))
         (hash json-string))
     )
 
-    (defun hash-token (token:object{Token})
+    (defun hash-token-kip-0005 (token:object{token-kip-0005})
         (let* ((chainId (at 'chainId token))
-            (contract (at 'contract-kip-0005 token))
+            (contract (at 'contract token))
+            (type (at 'type token))
+            (json-string (format "{{},{},{}}" [chainId contract type])))
+        (hash json-string))
+    )
+
+    (defun hash-token-kip-0011 (token:object{token-kip-0011})
+        (let* ((chainId (at 'chainId token))
+            (contract (at 'contract token))
             (type (at 'type token))
             (id (at 'id token))
             (json-string (format "{{},{},{},{}}" [chainId contract type id])))
@@ -200,77 +213,93 @@
     (defun emit-event-new-nullifier (nullifier:integer)
         (emit-event (new-nullifier nullifier))
     )
-    
-    (defun transact (args:object{Args} proof:object{Proof} extData:object{ExtData})
+
+    (defun transact-kip-0005 (args:object{args} proof:object{Proof} ext-data:object{ext-data} token:object{token-kip-0005})
+        (validate-transact args proof ext-data)
         (
             let*
             (
-                (maximumDepositAmount (get-maximum-deposit-amount))
-
-                ; args
-                (root (at 'root args))
-                (tokenHash (at 'tokenHash args))
-                (extDataHash (at 'extDataHash args))
-                (outputCommitments (at 'outputCommitments args))
-
-                ; proof
-                (publicValues (at 'public_values proof))
-
-                ; extData
-                (sender (at 'sender extData))
-                (recipient (at 'recipient extData))
-                (amount (at 'extAmount extData))
-                (fee (at 'fee extData))
-                (token (at 'token extData))
-                (encryptedOutput_0 (at 'encryptedOutput1 extData))
-                (encryptedOutput_1 (at 'encryptedOutput2 extData))
-
-                (tokenHashed (hash-token token))
-                (extDataHashed (hash-extData extData))
-
-                ; extData/token
-                (tokenContractKip0005 (at 'contract-kip-0005 token))
-                (tokenContractKip0011 (at 'contract-kip-0011 token))
-                (tokenType (at 'type token))
-                (tokenId (at 'id token))
-
-                (isKnownRoot (merkle.is-known-root root))
-                (publicAmount (calculate-public-amount amount fee))
-
-                (inputNullifiers publicValues)
-
-                (wereSpent (map (is-spent) inputNullifiers))
-
-                (outputCommitment_0 (at 0 outputCommitments))
-                (outputCommitment_1 (at 1 outputCommitments))
+                (token-hash (at 'tokenHash args))
+                (token-hashed (hash-token-kip-0005 token))
+                (sender (at 'sender ext-data))
+                (recipient (at 'recipient ext-data))
+                (amount (at 'extAmount ext-data))
+                (maximum-deposit-amount (get-maximum-deposit-amount))
+                (contract (at 'contract token))
             )
-
-            ; validations
-            (enforce (= isKnownRoot true) "Invalid merkle root")
-            (map (validate-spent) wereSpent)
-            (enforce (= (at 'publicAmount args) publicAmount) "Invalid public amount")
-            (enforce (= (verify-proof proof) true) "Invalid transaction proof")
-            (enforce (= tokenHashed tokenHash) "Invalid token hash")
-            (enforce (= extDataHashed extDataHash) "Invalid extData hash")
-
-            ; actions
-            (map (set-nullifierHash) inputNullifiers)
-
-            (if (and (= tokenType "kip-0005") (> amount 0.0)) (kip-0005-deposit sender "contract-address" amount maximumDepositAmount tokenContractKip0005) "")
-            (if (and (= tokenType "kip-0005") (< amount 0.0)) (kip-0005-withdraw "contract-address" recipient (- amount) tokenContractKip0005) "")
-
-            (if (and (= tokenType "kip-0011") (> amount 0.0)) (kip-0011-deposit sender "contract-address" amount maximumDepositAmount tokenContractKip0011 tokenId) "")
-            (if (and (= tokenType "kip-0011") (< amount 0.0)) (kip-0011-withdraw "contract-address" recipient (- amount) tokenContractKip0011 tokenId) "")
-
-            ; events
-            (emit-event (new-commitment outputCommitment_0 (at 'index (merkle.insert-leaf outputCommitment_0)) encryptedOutput_0))
-            (emit-event (new-commitment outputCommitment_1 (at 'index (merkle.insert-leaf outputCommitment_1)) encryptedOutput_1))
-            (map (emit-event-new-nullifier) inputNullifiers)
-
-            { 
-                "tokenHashed": tokenHashed,
-                "extDataHash": extDataHash
+            (enforce (= token-hashed token-hash) "Invalid token hash")
+            (if (> amount 0.0) (deposit-kip-0005 sender "contract-address" amount maximum-deposit-amount contract) "")
+            (if (< amount 0.0) (withdraw-kip-0005 "contract-address" recipient (- amount) contract) "")
+            (event-transact args proof ext-data)
+            {
+                "token-hashed": token-hashed
             }
+        )
+    )
+
+    (defun transact-kip-0011 (args:object{args} proof:object{Proof} ext-data:object{ext-data} token:object{token-kip-0011})
+        (validate-transact args proof ext-data)
+        (
+            let*
+            (
+                (token-hash (at 'tokenHash args))
+                (token-hashed (hash-token-kip-0011 token))
+                (sender (at 'sender ext-data))
+                (recipient (at 'recipient ext-data))
+                (amount (at 'extAmount ext-data))
+                (maximum-deposit-amount (get-maximum-deposit-amount))
+                (contract (at 'contract token))
+                (tokenId (at 'id token))
+            )
+            (enforce (= token-hashed token-hash) "Invalid token hash")
+            (if (> amount 0.0) (deposit-kip-0011 sender "contract-address" amount maximum-deposit-amount contract tokenId) "")
+            (if (< amount 0.0) (withdraw-kip-0011 "contract-address" recipient (- amount) contract tokenId) "")
+            (event-transact args proof ext-data)
+            {
+                "token-hashed": token-hashed
+            }
+        )
+    )
+
+    (defun validate-transact (args:object{args} proof:object{Proof} ext-data:object{ext-data})
+        (
+            let*
+            (
+                (root (at 'root args))
+                (ext-data-hash (at 'extDataHash args))
+                (public-values (at 'public_values proof))
+                (amount (at 'extAmount ext-data))
+                (fee (at 'fee ext-data))
+                (ext-data-hashed (hash-ext-data ext-data))
+                (is-known-root (merkle.is-known-root root))
+                (public-amount (calculate-public-amount amount fee))
+                (input-nullifiers public-values)
+                (were-spent (map (is-spent) input-nullifiers))
+            )
+            (enforce (= is-known-root true) "Invalid merkle root")
+            (map (validate-spent) were-spent)
+            (enforce (= (at 'publicAmount args) public-amount) "Invalid public amount")
+            (enforce (= (verify-proof proof) true) "Invalid transaction proof")
+            (enforce (= ext-data-hashed ext-data-hash) "Invalid ext-data hash")
+        )
+    )
+
+    (defun event-transact (args:object{args} proof:object{Proof} ext-data:object{ext-data})
+        (
+            let*
+            (
+                (output-commitments (at 'outputCommitments args))
+                (encrypted-output_0 (at 'encryptedOutput1 ext-data))
+                (encrypted-output_1 (at 'encryptedOutput2 ext-data))
+                (public-values (at 'public_values proof))
+                (input-nullifiers public-values)
+                (output-commitment_0 (at 0 output-commitments))
+                (output-commitment_1 (at 1 output-commitments))
+            )
+            (map (set-nullifierHash) input-nullifiers)
+            (emit-event (new-commitment output-commitment_0 (at 'index (merkle.insert-leaf output-commitment_0)) encrypted-output_0))
+            (emit-event (new-commitment output-commitment_1 (at 'index (merkle.insert-leaf output-commitment_1)) encrypted-output_1))
+            (map (emit-event-new-nullifier) input-nullifiers)
         )
     )
 )
