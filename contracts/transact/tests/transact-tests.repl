@@ -54,12 +54,13 @@
 (env-gaslimit 10000000)
 (env-gas 0)
 
-(transact {
+(transact-kip-0005 {
+    ; args
     "root": 20211649699328972427040417540848848882630537175401544736520822735123291360599,
     "outputCommitments":[4 5],
     "publicAmount":10.0,
     "extDataHash": "Hxmr5jiVgsNBytJrsx9T4MJUjVdXVopJNLjC7HxXmYk",
-    "tokenHash":"HtQPkqhvlRnJ3DMY7dFi1ANxnYZsYXDDYjR9cAtZ2fM"
+    "tokenHash":"ElStEu8GYvnLjQjE9R6p_yf8ra9qV5HQIalZSz154L4"
 } {
     ; groth16 proof
     "public_values":[33],
@@ -87,20 +88,19 @@
     ;  "wxi":{"x":5595509695946005403105367107154829609022418108054829785366679176255685574920,"y":15477054259811967576869028469893720205508998794930707711330785388539769050158},
     ;  "wxi_w":{"x":20428034650998693167036701052503327116649320919201315012372976979614542543172,"y":14915526821693979244311978786312580321837229893719229665715812529841995366666}
 } {
+    ; extData
     "sender": "sender-address",
     "recipient":"recipient-address",
     "extAmount":11.0,
     "relayer":1,
     "fee":1.0,
     "encryptedOutput1":1,
-    "encryptedOutput2":1,
-    "token": {
-        "chainId": 1,
-        "type": "kip-0005",
-        "contract-kip-0005": fungible-v2-reference,
-        "contract-kip-0011": poly-fungible-reference,
-        "id": "0"
-    }
+    "encryptedOutput2":1
+} {
+    ; token
+    "chainId": 1,
+    "type": "kip-0005",
+    "contract": fungible-v2-reference
 })
 
 (print {"Total gas": (env-gas)})
@@ -138,12 +138,13 @@
 
 (env-gas 0)
 
-(transact {
+(transact-kip-0011 {
+    ; args
     "root": 14589546945918040263087121847548586454156665393561626829385608156234697094715,
     "outputCommitments":[4 5],
     "publicAmount":10.0,
     "extDataHash": "Hxmr5jiVgsNBytJrsx9T4MJUjVdXVopJNLjC7HxXmYk",
-    "tokenHash":"mhOx4uq_kDc-YgTHjFu4mBM_q0qugibCmXaLnB_KGFw"
+    "tokenHash":"lmZsciRfeLWbw5aiv1vQCQqjgOV4ffInNU1Ns4VLK5w"
 } {
     ; groth16 proof
     "public_values":[1141433],
@@ -170,20 +171,20 @@
     ;  "wxi":{"x":4517535741844751155440141798017588217600298438946087392598233654683498978593,"y":4866774422976143982632827033739869017303120463629935809133735608845101970875},
     ;  "wxi_w":{"x":1751831899105570297594349026670341582584734401972451779656926218856902661541,"y":3545805221492297641433759803000602243304149071889060770775028285217052014325}
 } {
+    ; extData
     "sender": "sender-address",
     "recipient":"recipient-address",
     "extAmount":11.0,
     "relayer":1,
     "fee":1.0,
     "encryptedOutput1":1,
-    "encryptedOutput2":1,
-    "token": {
-        "chainId": 1,
-        "type": "kip-0011",
-        "contract-kip-0005": fungible-v2-reference,
-        "contract-kip-0011": poly-fungible-reference,
-        "id": "1"
-    }
+    "encryptedOutput2":1
+} {
+    ; token
+    "chainId": 1,
+    "type": "kip-0011",
+    "contract": poly-fungible-reference,
+    "id": "1"
 })
 
 (print {"Total gas": (env-gas)})
