@@ -64,18 +64,16 @@
         encryptedOutput2: integer
     )
 
-    (defschema token-kip-0005
-        "Structure representing a fungible token."
-        chainId: integer
-        type: string
-        contract:module{fungible-v2}
+    (defschema token-reference
+        "Structure representing a reference."
+        name: string
+        namespace: string
     )
 
-    (defschema token-kip-0011
-        "Structure representing a poly-fungible token."
-        chainId: integer
-        type: string
-        contract:module{poly-fungible-v1}
+    (defschema token
+        "Structure representing a fungible or poly-fungible token."
+        refName:object{token-reference}
+        refSpec:object{token-reference}
         id: string
     )
 
@@ -147,7 +145,7 @@
         (at 'paired (groth16.verify proof))
     )
 
-    (defun deposit-kip-0005
+    (defun deposit-fungible-v2
         (sender:string
          recipient:string 
          amount:decimal 
@@ -157,7 +155,7 @@
         (token::transfer sender recipient amount)
     )
     
-    (defun withdraw-kip-0005
+    (defun withdraw-fungible-v2
         (sender:string 
          recipient:string 
          amount:decimal 
@@ -165,7 +163,7 @@
         (token::transfer sender recipient amount)
     )
 
-    (defun deposit-kip-0011
+    (defun deposit-poly-fungible-v1
         (sender:string
          recipient:string 
          amount:decimal 
@@ -176,87 +174,44 @@
         (token::transfer token-id sender recipient amount)
     )
     
-    (defun withdraw-kip-0011
+    (defun withdraw-poly-fungible-v1
         (sender:string 
          recipient:string 
          amount:decimal 
          token:module{poly-fungible-v1}
          token-id:string)
         (token::transfer token-id sender recipient amount)
-    )
-
-    (defun hash-ext-data (ext-data:object{ext-data})
-        (let* ((recipient (at 'recipient ext-data))
-            (amount (at 'extAmount ext-data))
-            (fee (at 'fee ext-data))
-            (json-string (format "{{},{},{}}" [recipient amount fee])))
-        (hash json-string))
-    )
-
-    (defun hash-token-kip-0005 (token:object{token-kip-0005})
-        (let* ((chainId (at 'chainId token))
-            (contract (at 'contract token))
-            (type (at 'type token))
-            (json-string (format "{{},{},{}}" [chainId contract type])))
-        (hash json-string))
-    )
-
-    (defun hash-token-kip-0011 (token:object{token-kip-0011})
-        (let* ((chainId (at 'chainId token))
-            (contract (at 'contract token))
-            (type (at 'type token))
-            (id (at 'id token))
-            (json-string (format "{{},{},{},{}}" [chainId contract type id])))
-        (hash json-string))
     )
 
     (defun emit-event-new-nullifier (nullifier:integer)
         (emit-event (new-nullifier nullifier))
     )
 
-    (defun transact-kip-0005 (args:object{args} proof:object{Proof} ext-data:object{ext-data} token:object{token-kip-0005})
+    (defun transact (args:object{args} proof:object{Proof} ext-data:object{ext-data} token-spec:object{token})
         (validate-transact args proof ext-data)
+        (enforce (= (hash token-spec) (at 'tokenHash args)) "Invalid token hash")
         (
             let*
             (
-                (token-hash (at 'tokenHash args))
-                (token-hashed (hash-token-kip-0005 token))
                 (sender (at 'sender ext-data))
                 (recipient (at 'recipient ext-data))
                 (amount (at 'extAmount ext-data))
                 (maximum-deposit-amount (get-maximum-deposit-amount))
-                (contract (at 'contract token))
+                
+                (token-instance (read-msg 'token-instance))
+                (token-name (at 'name (at 'refSpec token-spec)))
+                (token-id (at 'id token-spec))
             )
-            (enforce (= token-hashed token-hash) "Invalid token hash")
-            (if (> amount 0.0) (deposit-kip-0005 sender "contract-address" amount maximum-deposit-amount contract) "")
-            (if (< amount 0.0) (withdraw-kip-0005 "contract-address" recipient (- amount) contract) "")
-            (event-transact args proof ext-data)
-            {
-                "token-hashed": token-hashed
-            }
-        )
-    )
 
-    (defun transact-kip-0011 (args:object{args} proof:object{Proof} ext-data:object{ext-data} token:object{token-kip-0011})
-        (validate-transact args proof ext-data)
-        (
-            let*
-            (
-                (token-hash (at 'tokenHash args))
-                (token-hashed (hash-token-kip-0011 token))
-                (sender (at 'sender ext-data))
-                (recipient (at 'recipient ext-data))
-                (amount (at 'extAmount ext-data))
-                (maximum-deposit-amount (get-maximum-deposit-amount))
-                (contract (at 'contract token))
-                (tokenId (at 'id token))
-            )
-            (enforce (= token-hashed token-hash) "Invalid token hash")
-            (if (> amount 0.0) (deposit-kip-0011 sender "contract-address" amount maximum-deposit-amount contract tokenId) "")
-            (if (< amount 0.0) (withdraw-kip-0011 "contract-address" recipient (- amount) contract tokenId) "")
+            (if (and (= token-name "fungible-v2") (> amount 0.0)) (deposit-fungible-v2 sender "contract-address" amount maximum-deposit-amount token-instance) "")
+            (if (and (= token-name "fungible-v2") (< amount 0.0)) (withdraw-fungible-v2 "contract-address" recipient (- amount) token-instance) "")
+            (if (and (= token-name "poly-fungible-v1") (> amount 0.0)) (deposit-poly-fungible-v1 sender "contract-address" amount maximum-deposit-amount token-instance token-id) "")
+            (if (and (= token-name "poly-fungible-v1") (< amount 0.0)) (withdraw-poly-fungible-v1 "contract-address" recipient (- amount) token-instance token-id) "")
+
             (event-transact args proof ext-data)
             {
-                "token-hashed": token-hashed
+                "token-hashed": (hash token-spec)
+                ,"token-hash": (at 'tokenHash args)
             }
         )
     )
@@ -270,7 +225,7 @@
                 (public-values (at 'public_values proof))
                 (amount (at 'extAmount ext-data))
                 (fee (at 'fee ext-data))
-                (ext-data-hashed (hash-ext-data ext-data))
+                (ext-data-hashed (hash ext-data))
                 (is-known-root (merkle.is-known-root root))
                 (public-amount (calculate-public-amount amount fee))
                 (input-nullifiers public-values)
