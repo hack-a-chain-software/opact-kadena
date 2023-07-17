@@ -54,13 +54,18 @@
 (env-gaslimit 10000000)
 (env-gas 0)
 
-(transact-kip-0005 {
+(env-data { 
+    "token-instance": {"refName": {"name": "fungible-v2-reference","namespace": "test"},
+                       "refSpec": [{"name": "fungible-v2","namespace": "test"}]}
+})
+
+(transact {
     ; args
     "root": 20211649699328972427040417540848848882630537175401544736520822735123291360599,
     "outputCommitments":[4 5],
     "publicAmount":10.0,
-    "extDataHash": "Hxmr5jiVgsNBytJrsx9T4MJUjVdXVopJNLjC7HxXmYk",
-    "tokenHash":"ElStEu8GYvnLjQjE9R6p_yf8ra9qV5HQIalZSz154L4"
+    "extDataHash": "PGSiheYzABVmQ--6aCKuZ_gTnAR_TXdij_TXTDiDHhg",
+    "tokenHash":"xREP4WsVRQ0HU5X-wjW1H2KhpA2RM2Qtc-T7K9XFvD0"
 } {
     ; groth16 proof
     "public_values":[33],
@@ -97,10 +102,10 @@
     "encryptedOutput1":1,
     "encryptedOutput2":1
 } {
-    ; token
-    "chainId": 1,
-    "type": "kip-0005",
-    "contract": fungible-v2-reference
+    ; token-spec
+    "id": "",
+    "refName": {"name": "fungible-v2-reference","namespace": "test"},
+    "refSpec": {"name": "fungible-v2","namespace": "test"}
 })
 
 (print {"Total gas": (env-gas)})
@@ -115,6 +120,12 @@
 
 (create-table poly-fungible-reference.ledger)
 (create-table poly-fungible-reference.supplies)
+
+(env-data 
+    { "user1" : ["user1-keys"]
+    , "user2" : ["user2-keys"]
+    , "user3" : ["user3-keys"]
+    })
 
 (poly-fungible-reference.create-account "1" "sender-address" (read-keyset "user1"))
 (poly-fungible-reference.create-account "1" "recipient-address" (read-keyset "user2"))
@@ -136,15 +147,20 @@
 
 ;; transact
 
+(env-data { 
+    "token-instance": {"refName": {"name": "poly-fungible-reference","namespace": "test"},
+                       "refSpec": [{"name": "poly-fungible-v1","namespace": "test"}]}
+})
+
 (env-gas 0)
 
-(transact-kip-0011 {
+(transact {
     ; args
     "root": 14589546945918040263087121847548586454156665393561626829385608156234697094715,
     "outputCommitments":[4 5],
     "publicAmount":10.0,
-    "extDataHash": "Hxmr5jiVgsNBytJrsx9T4MJUjVdXVopJNLjC7HxXmYk",
-    "tokenHash":"lmZsciRfeLWbw5aiv1vQCQqjgOV4ffInNU1Ns4VLK5w"
+    "extDataHash": "PGSiheYzABVmQ--6aCKuZ_gTnAR_TXdij_TXTDiDHhg",
+    "tokenHash":"Xm4yflWY21e2hUIAdw2NJtlt7UYRbOd_SJXqZMPMmhw"
 } {
     ; groth16 proof
     "public_values":[1141433],
@@ -179,12 +195,10 @@
     "fee":1.0,
     "encryptedOutput1":1,
     "encryptedOutput2":1
-} {
-    ; token
-    "chainId": 1,
-    "type": "kip-0011",
-    "contract": poly-fungible-reference,
-    "id": "1"
+} { 
+    "id": "1",
+    "refName": {"name": "poly-fungible-reference","namespace": "test"},
+    "refSpec": {"name": "poly-fungible-v1","namespace": "test"}
 })
 
 (print {"Total gas": (env-gas)})
