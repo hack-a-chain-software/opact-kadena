@@ -190,6 +190,11 @@
     (defun transact (args:object{args} proof:object{Proof} ext-data:object{ext-data} token-spec:object{token})
         (validate-transact args proof ext-data)
         (enforce (= (hash token-spec) (at 'tokenHash args)) "Invalid token hash")
+        (enforce 
+            (= 
+                (format "{}.{}" [(at 'namespace (at 'refName token-spec)) (at 'name (at 'refName token-spec))])
+                (format "{}" [(read-msg "token-instance")] )
+            ) "Invalid token instance")
         (
             let*
             (
