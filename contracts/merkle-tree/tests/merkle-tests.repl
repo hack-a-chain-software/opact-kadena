@@ -8,21 +8,21 @@
 (env-gaslimit 10000000)
 (env-gas 0)
 
-(expect "merkle" {"root": 20211649699328972427040417540848848882630537175401544736520822735123291360599, "index": 1} (insert-leaf 1))
+(expect "merkle" {"root": "OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c", "index": 1} (insert-leaf "1"))
 
 (print {"Total gas": (env-gas)})
 (env-gas 0)
 
-(expect "merkle" {"root": 10432624530112658362661942458029986103228559979322390538181807469641977050330, "index": 2} (insert-leaf 2))
+(expect "merkle" {"root": "5KDDGKjUp2r1GOeBiVPEYKn9ptA28xtScJHWvcqhm84", "index": 2} (insert-leaf "2"))
 
 (print {"Total gas": (env-gas)})
 (env-gas 0)
 
-(expect "merkle" {"root": 17673813253184655362744115372752093680139333872142827168176649842069470193038, "index": 3} (insert-leaf 3))
+(expect "merkle" {"root": "jo-KIQTxADGTCgLow3LzIVCVzQtTqXDQgdhqYzJXGfo", "index": 3} (insert-leaf "3"))
 
 (print {"Total gas": (env-gas)})
 (env-gas 0)
 
-(expect "merkle" {"root": 19902585034578372203168006768193534455972092212577590957934236606898171441729, "index": 4} (insert-leaf 4))
+(expect "merkle" {"root": "s7ykG_4DWRoM5Eq3Tci1NUqa_UV09T2jXOBuw0oxffY", "index": 4} (insert-leaf "4"))
 
 (print {"Total gas": (env-gas)})
