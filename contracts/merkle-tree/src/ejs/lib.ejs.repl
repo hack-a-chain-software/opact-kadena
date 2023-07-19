@@ -5,11 +5,11 @@
 
     (defschema FilledSubtreesSchema
         "Schema for the filledSubtrees table"
-        value:integer)
+        value:string)
       
     (defschema RootsSchema
         "Schema for the roots table"
-        value:integer)
+        value:string)
 
     (defschema StateSchema
         "Schema for the config table"
@@ -33,21 +33,24 @@
     (defun set-next-index (next_index:integer)
         (update state "0" {"next_index": next_index}))
 
-    (defun set-filled-subtrees (key:string value:integer)
+    (defun set-filled-subtrees (key:string value:string)
         (write filledSubtrees key { "value": value }))
 
-    (defun insert-root (key:string value:integer)
+    (defun insert-root (key:string value:string)
         (write roots key { "value": value }))
 
     (defun poseidon-hash (left:integer right:integer)
         (poseidon.poseidon [left right]))
 
+    (defun blake-hash (left:string right:string)
+        (hash [left right]))
+
     (defun initialize()
         <% for (let i = 0; i < level; i++) { %>
-            (set-filled-subtrees "<%= i %>" (zeros <%= i %>))
+            (set-filled-subtrees "<%= i %>" (blake-zeros <%= i %>))
         <% } %>
 
-        (insert-root "0" (zeros 0))
+        (insert-root "0" (blake-zeros 0))
 
         (insert state "0" {
             "current_root_index": 0,
@@ -55,7 +58,20 @@
         })
     )
 
-    (defun zeros (i:integer)
+    (defun blake-zeros (i:integer)
+        (if (= i 0)
+            "gU2Q4_mob4UQ6u3w7mAh9vts0iI3_pSIQUEzl2dPXKo" ; (hash "0") zeroElement
+            (if (= i 1)
+                "Il1ocCVlKjmfq4tniMxSaMdTAwof1Damh7g1SZsFd1E" ; (hash (+ "gU2Q4_mob4UQ6u3w7mAh9vts0iI3_pSIQUEzl2dPXKo" "gU2Q4_mob4UQ6u3w7mAh9vts0iI3_pSIQUEzl2dPXKo"))
+                (if (= i 2)
+                    "Br5EWetygPF7ePyxUz8J6V2txrCR_xwSDalTWmGvOfI" ; (hash (+ "Il1ocCVlKjmfq4tniMxSaMdTAwof1Damh7g1SZsFd1E" "Il1ocCVlKjmfq4tniMxSaMdTAwof1Damh7g1SZsFd1E"))
+                    ""
+                )
+            )  
+        )
+    )
+
+    (defun poseidon-zeros (i:integer)
         (if (= i 0)
             3193090221241211970002919215846211184824251841300455796635909287157453409439 ; (hash "0") zeroElement
             (if (= i 1)
@@ -68,7 +84,7 @@
         )
     )
 
-    (defun is-known-root (root:integer)
+    (defun is-known-root (root:string)
         (
             let*
             (
@@ -78,7 +94,7 @@
         )
     )
 
-    (defun insert-leaf (leaf:integer)
+    (defun insert-leaf (leaf:string)
         (
             let*
             (
@@ -92,16 +108,16 @@
                     (filled_subtrees (at 'value (read filledSubtrees "<%= i - 1 %>")))
 
                     (lr_<%= i %> (if (= (mod current_index 2) 0)
-                        {"left": current_level_hash, "right": (zeros <%= i - 1 %>)}
+                        {"left": current_level_hash, "right": (blake-zeros <%= i - 1 %>)}
                         {"left": filled_subtrees, "right": current_level_hash}
                     ))
 
                     (hashes (+ hashes (if (= (mod current_index 2) 0)
                         [current_level_hash]
-                        [(zeros <%= i - 1 %>)])
+                        [(blake-zeros <%= i - 1 %>)])
                     ))
 
-                    (current_level_hash (poseidon-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
+                    (current_level_hash (blake-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
 
                     (current_index (/ current_index 2))
                 <% } %>
@@ -114,7 +130,7 @@
             (set-current-root-index new_root_index)
             (set-next-index (+ next-index 1))
         <% for (let i = 0; i < level; i++) { %>
-            (if (= (at <%= i %> hashes) (zeros <%= i %>))
+            (if (= (at <%= i %> hashes) (blake-zeros <%= i %>))
                 ""
                 (set-filled-subtrees "<%= i %>" (at <%= i %> hashes))
             )

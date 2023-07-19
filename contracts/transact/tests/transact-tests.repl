@@ -46,7 +46,7 @@
 
 ;; merkle
 
-(merkle.insert-leaf 1) ; -> 20211649699328972427040417540848848882630537175401544736520822735123291360599
+(merkle.insert-leaf "1") ; -> OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c
 
 ;; transact
 
@@ -61,8 +61,8 @@
 
 (transact {
     ; args
-    "root": 20211649699328972427040417540848848882630537175401544736520822735123291360599,
-    "outputCommitments":[4 5],
+    "root": "OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c",
+    "outputCommitments":["4" "5"],
     "publicAmount":10.0,
     "extDataHash": "PGSiheYzABVmQ--6aCKuZ_gTnAR_TXdij_TXTDiDHhg",
     "tokenHash":"xREP4WsVRQ0HU5X-wjW1H2KhpA2RM2Qtc-T7K9XFvD0"
@@ -143,7 +143,7 @@
 
 ;; merkle
 
-(merkle.insert-leaf 1) ; -> 14589546945918040263087121847548586454156665393561626829385608156234697094715
+(merkle.insert-leaf "1") ; -> OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c
 
 ;; transact
 
@@ -156,8 +156,8 @@
 
 (transact {
     ; args
-    "root": 14589546945918040263087121847548586454156665393561626829385608156234697094715,
-    "outputCommitments":[4 5],
+    "root": "OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c",
+    "outputCommitments":["4" "5"],
     "publicAmount":10.0,
     "extDataHash": "PGSiheYzABVmQ--6aCKuZ_gTnAR_TXdij_TXTDiDHhg",
     "tokenHash":"Xm4yflWY21e2hUIAdw2NJtlt7UYRbOd_SJXqZMPMmhw"

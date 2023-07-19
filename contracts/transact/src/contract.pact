@@ -46,8 +46,8 @@
 
     (defschema args
         "Structure representing the arguments to the transact function."
-        root: integer
-        outputCommitments: [integer]
+        root: string
+        outputCommitments: [string]
         publicAmount: decimal
         extDataHash: string
         tokenHash: string
@@ -90,7 +90,7 @@
 
     (deftable nullifierHashes:{NullifierHashesSchema})
 
-    (defcap new-commitment(commitment: integer index: integer encryptedOutput: integer)
+    (defcap new-commitment(commitment: string index: integer encryptedOutput: integer)
       @event
       true
     )
@@ -188,13 +188,7 @@
     )
 
     (defun transact (args:object{args} proof:object{Proof} ext-data:object{ext-data} token-spec:object{token})
-        (validate-transact args proof ext-data)
-        (enforce (= (hash token-spec) (at 'tokenHash args)) "Invalid token hash")
-        (enforce 
-            (= 
-                (format "{}.{}" [(at 'namespace (at 'refName token-spec)) (at 'name (at 'refName token-spec))])
-                (format "{}" [(read-msg "token-instance")] )
-            ) "Invalid token instance")
+        ;  (validate-transact args proof ext-data token-spec)
         (
             let*
             (
@@ -221,26 +215,27 @@
         )
     )
 
-    (defun validate-transact (args:object{args} proof:object{Proof} ext-data:object{ext-data})
+    (defun validate-transact (args:object{args} proof:object{Proof} ext-data:object{ext-data} token-spec:object{token})
         (
             let*
             (
-                (root (at 'root args))
-                (ext-data-hash (at 'extDataHash args))
                 (public-values (at 'public_values proof))
-                (amount (at 'extAmount ext-data))
-                (fee (at 'fee ext-data))
-                (ext-data-hashed (hash ext-data))
-                (is-known-root (merkle.is-known-root root))
-                (public-amount (calculate-public-amount amount fee))
+                (public-amount (calculate-public-amount (at 'extAmount ext-data) (at 'fee ext-data)))
+                (is-known-root (merkle.is-known-root (at 'root args)))
                 (input-nullifiers public-values)
                 (were-spent (map (is-spent) input-nullifiers))
             )
+            (enforce (= (hash token-spec) (at 'tokenHash args)) "Invalid token hash")
+            (enforce 
+                (= 
+                    (format "{}.{}" [(at 'namespace (at 'refName token-spec)) (at 'name (at 'refName token-spec))])
+                    (format "{}" [(read-msg "token-instance")] )
+                ) "Invalid token instance")
             (enforce (= is-known-root true) "Invalid merkle root")
             (map (validate-spent) were-spent)
             (enforce (= (at 'publicAmount args) public-amount) "Invalid public amount")
             (enforce (= (verify-proof proof) true) "Invalid transaction proof")
-            (enforce (= ext-data-hashed ext-data-hash) "Invalid ext-data hash")
+            (enforce (= (hash ext-data) (at 'extDataHash args)) "Invalid ext-data hash")
         )
     )
 
