@@ -3,7 +3,7 @@
 (module opact-gas-station GOVERNANCE
   (defcap GOVERNANCE ()
     "makes sure only admin account can update the smart contract"
-    (enforce-guard (at 'guard (coin.details "opact-deployer-testnet")))
+    (enforce-guard (at 'guard (coin.details "opact-deployer")))
   )
 
   (implements gas-payer-v1)
@@ -22,7 +22,7 @@
     )
     (enforce (= "exec" (at "tx-type" (read-msg))) "Inside an exec")
     (enforce (= 1 (length (at "exec-code" (read-msg)))) "Tx of only one pact function")
-    (enforce (= "(free.opact." (take 12 (at 0 (at "exec-code" (read-msg))))) "only opact smart contract")
+    (enforce (= "(free.opact" (take 11 (at 0 (at "exec-code" (read-msg))))) "only opact smart contract")
     (compose-capability (ALLOW_GAS))
   )
 
@@ -37,4 +37,4 @@
     (require-capability (ALLOW_GAS))
   )
 )
-;(coin.transfer-create "opact-deployer-testnet" "opact-gas-payer" (free.opact-gas-station.create-gas-payer-guard) 2.0)
+(coin.transfer-create "opact-deployer" "opact-gas-payer" (free.opact-gas-station.create-gas-payer-guard) 2.0)
