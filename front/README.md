@@ -1,40 +1,83 @@
-# front
+[Opact](https://www.opact.com.br/)
+==========
 
-This template should help get you started developing with Vue 3 in Vite.
+## Guidelines
+* Use the present tense ("Add feature" not "Added feature") and the imperative mood ("Move class to..." not "Moves class to...") on commits and use the name issue on pull requests.
+* Pull requests must be reviewed before merged.
+* Done is better than perfect. Does it work as expected? Ship now, iterate later.
+* All contributions must have tests. Remember to verify the [Github Actions CI status](https://github.com/hack-a-chain-software/kadena-product/actions/workflows/CI.yaml).
+* Every commit is checked using [Github Actions](https://github.com/hack-a-chain-software/kadena-product/actions).
+* If the CI status are not passing, the deploy will not work.
 
-## Recommended IDE Setup
+## Coding Style
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- CSS: https://github.com/airbnb/css
+- Javascript: https://github.com/airbnb/javascript
+- Vue: https://vuejs.org/style-guide/
 
-## Type Support for `.vue` Imports in TS
+## Task Management
+* GitHub Issues is used to track all tasks that needed to be done.
+* Opact board is used to get a decent look on what's going on wright now.
+* Every two weeks all done tasks are put together in a Milestone and the current Sprint is closed.
+* Issues Board: https://github.com/orgs/hack-a-chain-software/projects/5
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Directory Structure
+In our project, Nuxt.js is used in combination with Nuxt Layer to manage various applications as individual layers. This unique structure allows us to segregate our codebase based on their functionality or scope and handle each layer as a separate Nuxt.js application.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+Here's a brief overview of the structure:
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-pnpm install
+```bash
+.
+├── apps              # Nuxt Layer
+│   └── app           # App Page
+│   └── landing       # Landing Page
+├── components        # Global Components
+├── content           # Nuxt Content
+├── layouts           # Layouts
+├── plugins           # Plugins
+├── stores            # Stores
+├── ui                # UI Component Library
+├── app.config.ts     # Application Config
 ```
 
-### Compile and Hot-Reload for Development
+Each of the applications under the apps directory is its own distinct Nuxt.js application. They are logically separated, allowing each to be developed independently. This architecture offers opportunities for code organization, separation of concerns, and flexibility.
 
-```sh
-pnpm dev
+For instance, admin contains the code for the administration panel, auth deals with authentication, blog handles the blog features, and landing manages the landing page.
+
+app.config.ts is the main configuration file for the entire application.
+
+This multi-layered architecture, powered by Nuxt.js and Nuxt Layer, provides a robust and scalable framework to build complex and efficient web applications.
+
+## Features
+- [Nuxt 3](https://v3.nuxtjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- State management with [Pinia](https://pinia.vuejs.org/)
+- Easy form validation with [vee-validate](https://vee-validate.logaretm.com/v4/)
+- Custom authentication store via [`useAuthStore`](./stores/auth.ts)
+- Modular with [Nuxt Layer](https://nuxt.com/docs/getting-started/layers)
+
+## Installation
+Opact is powered by [**Nuxt**](https://nuxt.com/).
+
+If you have any problems configuring your enviroment, remember to read the [Nuxt Documentation](https://nuxt.com/docs).
+
+-----------------
+
+#### Steps
+1) Clone the repository:
+```bash
+$ gh repo clone hack-a-chain-software/kadena-product
+$ cd kadena-product
 ```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-pnpm build
+2) Check all packages and copy the .env.example file and edit it with your environment config:
+```bash
+$ cp ./front/.env.example ./front/.env
 ```
+
+3) Install frontend dependencies via PNPM
+```bash
+$ pnpm install
+```
+
+When working on frontend, run `pnpm front dev`. Files will be compiled, concatenated and the browser will auto update.
