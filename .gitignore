@@ -29,3 +29,4 @@ lib.repl
 pact
 scripts
 log
+.deploy
