@@ -1,5 +1,5 @@
 (define-namespace 'test (sig-keyset) (sig-keyset))
-(env-data { 'ns: 'test })
+(env-data { "ns" : "test", "name" : "merkle" })
 
 (load "../../poseidon/src/lib.repl")
 (load "../src/lib.repl")

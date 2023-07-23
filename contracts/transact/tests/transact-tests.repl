@@ -12,43 +12,51 @@
 
 (load "kip/0005/fungible-v2.pact")
 (load "kip/0005/fungible-v2-reference.pact")
+(load "kip/native/coin.pact")
 (load "kip/0011/poly-fungible-v1.pact")
 (load "kip/0011/fungible-util.pact")
 (load "kip/0011/poly-fungible-reference.pact")
 
 (load "../src/contract.pact")
 
-; test fungible tokens
+; setup
 
+(create-table coin.coin-table)
 (create-table fungible-v2-reference.ledger)
 
 (env-data 
 { "user1" : ["user1-keys"]
 , "user2" : ["user2-keys"]
 , "user3" : ["user3-keys"]
+, "user4" : ["user4-keys"]
 })
 
-(env-keys ["user1-keys", "user2-keys", "user3-keys"])
+(env-keys ["user1-keys", "user2-keys", "user3-keys", "user4-keys"])
 
+(coin.create-account "sender-address" (read-keyset "user1"))
+(coin.create-account "opact-gas-payer" (read-keyset "user4"))
 (fungible-v2-reference.create-account "sender-address" (read-keyset "user1"))
 (fungible-v2-reference.create-account "recipient-address" (read-keyset "user2"))
-(fungible-v2-reference.create-account "contract-address" (read-keyset "user3"))
+(fungible-v2-reference.create-account "opact-contract" (read-keyset "user3"))
 
+(test-capability (coin.CREDIT "sender-address"))
+(test-capability (coin.CREDIT "opact-gas-payer"))
 (test-capability (fungible-v2-reference.CREDIT "sender-address"))
 (test-capability (fungible-v2-reference.CREDIT "recipient-address"))
-(test-capability (fungible-v2-reference.CREDIT "contract-address"))
-(test-capability (fungible-v2-reference.TRANSFER "sender-address" "recipient-address" 1.0))
-(test-capability (fungible-v2-reference.TRANSFER "sender-address" "contract-address" 11.0))
+(test-capability (fungible-v2-reference.CREDIT "opact-contract"))
 
+(coin.credit "sender-address" (read-keyset "user1") 100.0)
+(coin.credit "opact-gas-payer" (read-keyset "user4") 100.0)
 (fungible-v2-reference.credit "sender-address" (read-keyset "user1") 100.0)
 (fungible-v2-reference.credit "recipient-address" (read-keyset "user2") 100.0)
-(fungible-v2-reference.credit "contract-address" (read-keyset "user3") 100.0)
+(fungible-v2-reference.credit "opact-contract" (read-keyset "user3") 100.0)
 
-;; merkle
+; fungible tokens - deposit
+
+(test-capability (fungible-v2-reference.TRANSFER "sender-address" "opact-contract" 10.0))
+(test-capability (coin.TRANSFER "sender-address" "opact-gas-payer" 2.0))
 
 (merkle.insert-leaf "1") ; -> OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c
-
-;; transact
 
 (env-gasmodel "table")
 (env-gaslimit 10000000)
@@ -64,45 +72,23 @@
     "root": "OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c",
     "outputCommitments":["4" "5"],
     "publicAmount":10.0,
-    "extDataHash": "PGSiheYzABVmQ--6aCKuZ_gTnAR_TXdij_TXTDiDHhg",
+    "extDataHash": "5Q1vrajemSYJkjNavhhXrBeonRnAUJ3pMV_PEBhyyEM",
     "tokenHash":"xREP4WsVRQ0HU5X-wjW1H2KhpA2RM2Qtc-T7K9XFvD0"
-} {
-    ; groth16 proof
+} { ; groth16 proof
     "public_values":[33],
     "a":{"x":19817713765959346549871130524470948269519566174538742939036152399142416600582,"y":20982929616821238786000656044488294849631590234739190402911135613417078219455},
     "b":{"x":[8586005240412506756232549016262713541937049887946846965391911108745443737983 9587493727140983135209670127248213932838995815439324182670188972155479051173],
          "y":[3304759387246915019533575974791000179823243043816637947321468390345277807091 10323717147005767368120555592716346202516177652934252937639685195636233739862]},
     "c":{"x":4016739862039177466188094288526125375400410920627291835204997875349870930371,"y":8109450981714180662240853592027233497894520695072849576218650369542745992730}
-
-    ; plonk proof
-    ;  "public_values":[33],
-    ;  "a":{"x":9514744082385022962959940391901872466882314149252293234866779546287327558102,"y":3295523980223033454362405448139127037900967494541374484945313990281008869301},
-    ;  "b":{"x":14783428968112274488400223096133437443002359678254268313802939551343527817612,"y":15257653039942639932341203564211493006989128990226323683867735419496879196052},
-    ;  "c":{"x":17465964998359533785880836074889086974081326691567372508597998780872382586236,"y":9069052111449872843010190509722023227208774854994162217729375444539899061495},
-    ;  "z":{"x":1110272887773823817407617110824181342692702054658953562770262002265633005429,"y":17409172166938353325292731618647790812378865287489488559404553956338470862623},
-    ;  "t_1":{"x":302782936425637848167095675468560333767887670584597680336042029424273262743,"y":7126530390347871589202454281333861506001656523639986702856449523902685301879},
-    ;  "t_2":{"x":1392546234648715381055350584279671698245265887157310575446839626052483057014,"y":8637435016314395814528014766390767997473400148457719228947663602785563262120},
-    ;  "t_3":{"x":13915342936205433420477785554630181804945137352575380810987231378145476258782,"y":5377912187186430130542769925010884273823261962095692120481176191275159820164},
-    ;  "eval_a": 20748934188875179507109199712997708560293897958874286152818955509667555652472,
-    ;  "eval_b": 505956773988453059517105118275950597937569177839298795994405382325737425515,
-    ;  "eval_c": 7187229722997245640218154008070823663786791723488519939329846494931658855872,
-    ;  "eval_s1": 952934503564039637530428544501276348163911702226906797168455458619419110360,
-    ;  "eval_s2": 5226817119639275061668595194828019273176246395229482097656562525007161671470,
-    ;  "eval_zw": 3114477433254424814640715910863682398028618406857006717138706123906717043766,
-    ;  "eval_r": 8000394453525767459177250638014874802432715622533509649626808940611201904628,
-    ;  "wxi":{"x":5595509695946005403105367107154829609022418108054829785366679176255685574920,"y":15477054259811967576869028469893720205508998794930707711330785388539769050158},
-    ;  "wxi_w":{"x":20428034650998693167036701052503327116649320919201315012372976979614542543172,"y":14915526821693979244311978786312580321837229893719229665715812529841995366666}
-} {
-    ; extData
+} { ; extData
     "sender": "sender-address",
     "recipient":"recipient-address",
-    "extAmount":11.0,
+    "extAmount":10.0,
     "relayer":1,
     "fee":1.0,
     "encryptedOutput1":1,
     "encryptedOutput2":1
-} {
-    ; token-spec
+} { ; token-spec
     "id": "",
     "refName": {"name": "fungible-v2-reference","namespace": "test"},
     "refSpec": {"name": "fungible-v2","namespace": "test"}
@@ -110,99 +96,126 @@
 
 (print {"Total gas": (env-gas)})
 
-; expect
+(expect "deposit - sender balance (native)" 99.0 (coin.get-balance "sender-address"))
+(expect "deposit - gas payer balance (native)" 101.0 (coin.get-balance "opact-gas-payer"))
+(expect "deposit - sender balance (fungible)" 90.0 (fungible-v2-reference.get-balance "sender-address"))
+(expect "deposit - contract balance (fungible)" 110.0 (fungible-v2-reference.get-balance "opact-contract"))
+(expect "deposit - recipient balance (fungible)" 100.0 (fungible-v2-reference.get-balance "recipient-address"))
 
-(expect "sender balance" 89.0 (fungible-v2-reference.get-balance "sender-address"))
-(expect "contract balance" 111.0 (fungible-v2-reference.get-balance "contract-address"))
-(expect "recipient balance" 100.0 (fungible-v2-reference.get-balance "recipient-address"))
+;  ;; setup
 
-;; test poly fungible tokens
+;  (create-table poly-fungible-reference.ledger)
+;  (create-table poly-fungible-reference.supplies)
 
-(create-table poly-fungible-reference.ledger)
-(create-table poly-fungible-reference.supplies)
+;  (env-data 
+;      { "user1" : ["user1-keys"]
+;      , "user2" : ["user2-keys"]
+;      , "user3" : ["user3-keys"]
+;      })
 
-(env-data 
-    { "user1" : ["user1-keys"]
-    , "user2" : ["user2-keys"]
-    , "user3" : ["user3-keys"]
-    })
+;  (poly-fungible-reference.create-account "1" "sender-address" (read-keyset "user1"))
+;  (poly-fungible-reference.create-account "1" "recipient-address" (read-keyset "user2"))
+;  (poly-fungible-reference.create-account "1" "opact-contract" (read-keyset "user3"))
 
-(poly-fungible-reference.create-account "1" "sender-address" (read-keyset "user1"))
-(poly-fungible-reference.create-account "1" "recipient-address" (read-keyset "user2"))
-(poly-fungible-reference.create-account "1" "contract-address" (read-keyset "user3"))
+;  (test-capability (poly-fungible-reference.CREDIT "1" "sender-address"))
+;  (test-capability (poly-fungible-reference.CREDIT "1" "recipient-address"))
+;  (test-capability (poly-fungible-reference.CREDIT "1" "opact-contract"))
+;  (test-capability (poly-fungible-reference.TRANSFER "1" "sender-address" "recipient-address" 1.0))
+;  (test-capability (poly-fungible-reference.TRANSFER "1" "sender-address" "opact-contract" 11.0))
 
-(test-capability (poly-fungible-reference.CREDIT "1" "sender-address"))
-(test-capability (poly-fungible-reference.CREDIT "1" "recipient-address"))
-(test-capability (poly-fungible-reference.CREDIT "1" "contract-address"))
-(test-capability (poly-fungible-reference.TRANSFER "1" "sender-address" "recipient-address" 1.0))
-(test-capability (poly-fungible-reference.TRANSFER "1" "sender-address" "contract-address" 11.0))
+;  (poly-fungible-reference.credit "1" "sender-address" (read-keyset "user1") 100.0)
+;  (poly-fungible-reference.credit "1" "recipient-address" (read-keyset "user2") 100.0)
+;  (poly-fungible-reference.credit "1" "opact-contract" (read-keyset "user3") 100.0)
 
-(poly-fungible-reference.credit "1" "sender-address" (read-keyset "user1") 100.0)
-(poly-fungible-reference.credit "1" "recipient-address" (read-keyset "user2") 100.0)
-(poly-fungible-reference.credit "1" "contract-address" (read-keyset "user3") 100.0)
+;  ;; poly-fungible tokens - deposit
 
-;; merkle
+;  (merkle.insert-leaf "1") ; -> QtORzD3f7dXWEeDvbOLDXnnyWKujpDsBNo5EciKFGfw
 
-(merkle.insert-leaf "1") ; -> OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c
+;  (env-data { 
+;      "token-instance": {"refName": {"name": "poly-fungible-reference","namespace": "test"},
+;                         "refSpec": [{"name": "poly-fungible-v1","namespace": "test"}]}
+;  })
 
-;; transact
+;  (env-gas 0)
+
+;  (transact {
+;      ; args
+;      "root": "QtORzD3f7dXWEeDvbOLDXnnyWKujpDsBNo5EciKFGfw",
+;      "outputCommitments":["4" "5"],
+;      "publicAmount":10.0,
+;      "extDataHash": "PGSiheYzABVmQ--6aCKuZ_gTnAR_TXdij_TXTDiDHhg",
+;      "tokenHash":"Xm4yflWY21e2hUIAdw2NJtlt7UYRbOd_SJXqZMPMmhw"
+;  } { ; groth16 proof
+;      "public_values":[1141433],
+;      "a":{"x":17758346808131630550346246791959405926266116215987855687720311415390233061279,"y":9841596890253595012939177643002382360676856324792852596114091162314686062385},
+;      "b":{"x":[2123813079138679983302262487781537761378191587140304703166022526363723202552 4363831879607184469128208731669025007461869418430388828110916691451922814511],
+;           "y":[7752640082083603287246749482898424423484286106090706457076842557282700966200 4037163165778918587353231649442402356585761347199898523467629631784727377286]},
+;      "c":{"x":12696920624842071155708804937443195054540785876282266663846946663196195897306,"y":3980807484315559301805617955896672724421102193465583438132804153417765298073}
+;  } { ; extData
+;      "sender": "sender-address",
+;      "recipient":"recipient-address",
+;      "extAmount":11.0,
+;      "relayer":1,
+;      "fee":1.0,
+;      "encryptedOutput1":1,
+;      "encryptedOutput2":1
+;  } { ; token-spec
+;      "id": "1",
+;      "refName": {"name": "poly-fungible-reference","namespace": "test"},
+;      "refSpec": {"name": "poly-fungible-v1","namespace": "test"}
+;  })
+
+;  (print {"Total gas": (env-gas)})
+
+;  (expect "poly-fungible token - deposit - sender balance" 89.0 (poly-fungible-reference.get-balance "1" "sender-address"))
+;  (expect "poly-fungible token - deposit - contract balance" 111.0 (poly-fungible-reference.get-balance "1" "opact-contract"))
+;  (expect "poly-fungible token - deposit - recipient balance" 100.0 (poly-fungible-reference.get-balance "1" "recipient-address"))
+
+; fungible tokens - withdraw
+
+(test-capability (fungible-v2-reference.TRANSFER "opact-contract" "recipient-address" 10.0))
+
+(env-gasmodel "table")
+(env-gaslimit 10000000)
+(env-gas 0)
 
 (env-data { 
-    "token-instance": {"refName": {"name": "poly-fungible-reference","namespace": "test"},
-                       "refSpec": [{"name": "poly-fungible-v1","namespace": "test"}]}
+    "token-instance": {"refName": {"name": "fungible-v2-reference","namespace": "test"},
+                       "refSpec": [{"name": "fungible-v2","namespace": "test"}]}
 })
-
-(env-gas 0)
 
 (transact {
     ; args
     "root": "OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c",
     "outputCommitments":["4" "5"],
-    "publicAmount":10.0,
-    "extDataHash": "PGSiheYzABVmQ--6aCKuZ_gTnAR_TXdij_TXTDiDHhg",
-    "tokenHash":"Xm4yflWY21e2hUIAdw2NJtlt7UYRbOd_SJXqZMPMmhw"
-} {
-    ; groth16 proof
+    "publicAmount": 21888242871839275222246405745257275088548364400416034343698204186575808495627.0,
+    "extDataHash": "ycMvXYGguNryT9m7iREcHwZSWK2S4YEjaqyHpyfw4Xw",
+    "tokenHash":"xREP4WsVRQ0HU5X-wjW1H2KhpA2RM2Qtc-T7K9XFvD0"
+} { ; groth16 proof
     "public_values":[1141433],
     "a":{"x":17758346808131630550346246791959405926266116215987855687720311415390233061279,"y":9841596890253595012939177643002382360676856324792852596114091162314686062385},
     "b":{"x":[2123813079138679983302262487781537761378191587140304703166022526363723202552 4363831879607184469128208731669025007461869418430388828110916691451922814511],
-         "y":[7752640082083603287246749482898424423484286106090706457076842557282700966200 4037163165778918587353231649442402356585761347199898523467629631784727377286]},
+        "y":[7752640082083603287246749482898424423484286106090706457076842557282700966200 4037163165778918587353231649442402356585761347199898523467629631784727377286]},
     "c":{"x":12696920624842071155708804937443195054540785876282266663846946663196195897306,"y":3980807484315559301805617955896672724421102193465583438132804153417765298073}
-    ; plonk proof
-    ;  "public_values":[91],
-    ;  "a":{"x":8470562994089949408196308224998870867730818442829385576060697983139349940385,"y":601247925242856011935761368408713176708499139665918003192239283775119534994},
-    ;  "b":{"x":15061942272637806375929686990053238296142366180808791505501737450823409341432,"y":11284782115292618247720682643264018603175218050998473861706546452752226930370},
-    ;  "c":{"x":12932785917578028800899802911198130432773433048512095126973676040262419337367,"y":9733009194968953713923572377602647017866908037937227344009143954408618668686},
-    ;  "z":{"x":18937870594334823038812950342947539802277676138723881578257300578508671393305,"y":7992668696162266901977638435443296321733703705179722846806823888365425355250},
-    ;  "t_1":{"x":19340934462406043560199474346582162910802096329508777116353382289647225268829,"y":13140008751282925912162129307346557820377629676589107208698743760010165132465},
-    ;  "t_2":{"x":17224697721837923804786127021349677191674681840700881529977160354500754142682,"y":9811810149789259723880092013639771300541804540113183322435438361088055450710},
-    ;  "t_3":{"x":9776079951801121116929730142433178349947887952819369459836587940499976627609,"y":1951501749458851635756303252316198144586783512735046583049024441250833013054},
-    ;  "eval_a": 3452870499678100662635290736115185675880659736359730876861338047248006649164,
-    ;  "eval_b": 3131923501744856414293027349042450640388214114992115420121960072368743933891,
-    ;  "eval_c": 17619080467460490176916647142092792453391901885911416439678954085963288103150,
-    ;  "eval_s1": 8172224102922140092441221160833858988560547755912844908792841989912028657830,
-    ;  "eval_s2": 8559123499251221405974450634386535066170965931470335884626810012127430444995,
-    ;  "eval_zw": 14195659445551050426511000028752998223053761842220687323422188756780265000485,
-    ;  "eval_r": 11502270803013392323825746412134285907201060509379413935873616065519060932312,
-    ;  "wxi":{"x":4517535741844751155440141798017588217600298438946087392598233654683498978593,"y":4866774422976143982632827033739869017303120463629935809133735608845101970875},
-    ;  "wxi_w":{"x":1751831899105570297594349026670341582584734401972451779656926218856902661541,"y":3545805221492297641433759803000602243304149071889060770775028285217052014325}
-} {
-    ; extData
+} { ; extData
     "sender": "sender-address",
     "recipient":"recipient-address",
-    "extAmount":11.0,
+    "extAmount":-10.0,
     "relayer":1,
     "fee":1.0,
     "encryptedOutput1":1,
     "encryptedOutput2":1
-} { 
-    "id": "1",
-    "refName": {"name": "poly-fungible-reference","namespace": "test"},
-    "refSpec": {"name": "poly-fungible-v1","namespace": "test"}
+} { ; token-spec
+    "id": "",
+    "refName": {"name": "fungible-v2-reference","namespace": "test"},
+    "refSpec": {"name": "fungible-v2","namespace": "test"}
 })
 
 (print {"Total gas": (env-gas)})
 
-(expect "sender balance" 89.0 (poly-fungible-reference.get-balance "1" "sender-address"))
-(expect "contract balance" 111.0 (poly-fungible-reference.get-balance "1" "contract-address"))
-(expect "recipient balance" 100.0 (poly-fungible-reference.get-balance "1" "recipient-address"))
+(expect "withdraw - sender balance (native)" 98.0 (coin.get-balance "sender-address"))
+(expect "withdraw - gas payer balance (native)" 102.0 (coin.get-balance "opact-gas-payer"))
+
+(expect "withdraw - sender balance (fungible)" 90.0 (fungible-v2-reference.get-balance "sender-address"))
+(expect "withdraw - contract balance (fungible)" 100.0 (fungible-v2-reference.get-balance "opact-contract"))
+(expect "withdraw - recipient balance (fungible)" 110.0 (fungible-v2-reference.get-balance "recipient-address"))

@@ -118,7 +118,7 @@
         (
             let*
             (
-                (publicAmount (- amount fee))
+                (publicAmount amount)
             )
             (if (>= publicAmount 0.0)
                 publicAmount
@@ -188,29 +188,32 @@
     )
 
     (defun transact (args:object{args} proof:object{Proof} ext-data:object{ext-data} token-spec:object{token})
-        ;  (validate-transact args proof ext-data token-spec)
         (
             let*
             (
+                (valid-data (validate-transact args proof ext-data token-spec))
                 (sender (at 'sender ext-data))
                 (recipient (at 'recipient ext-data))
                 (amount (at 'extAmount ext-data))
                 (maximum-deposit-amount (get-maximum-deposit-amount))
+                (fee (at 'fee ext-data))
                 
                 (token-instance (read-msg 'token-instance))
                 (token-name (at 'name (at 'refSpec token-spec)))
                 (token-id (at 'id token-spec))
+                (public-amount (calculate-public-amount (at 'extAmount ext-data) (at 'fee ext-data)))
             )
 
-            (if (and (= token-name "fungible-v2") (> amount 0.0)) (deposit-fungible-v2 sender "contract-address" amount maximum-deposit-amount token-instance) "")
-            (if (and (= token-name "fungible-v2") (< amount 0.0)) (withdraw-fungible-v2 "contract-address" recipient (- amount) token-instance) "")
-            (if (and (= token-name "poly-fungible-v1") (> amount 0.0)) (deposit-poly-fungible-v1 sender "contract-address" amount maximum-deposit-amount token-instance token-id) "")
-            (if (and (= token-name "poly-fungible-v1") (< amount 0.0)) (withdraw-poly-fungible-v1 "contract-address" recipient (- amount) token-instance token-id) "")
+            (if (> fee 0.0) (coin.transfer sender "opact-gas-payer" fee) "")
+
+            (if (and (= token-name "fungible-v2") (> amount 0.0)) (deposit-fungible-v2 sender "opact-contract" amount maximum-deposit-amount token-instance) "")
+            (if (and (= token-name "fungible-v2") (< amount 0.0)) (withdraw-fungible-v2 "opact-contract" recipient (- amount) token-instance) "")
+            (if (and (= token-name "poly-fungible-v1") (> amount 0.0)) (deposit-poly-fungible-v1 sender "opact-contract" amount maximum-deposit-amount token-instance token-id) "")
+            (if (and (= token-name "poly-fungible-v1") (< amount 0.0)) (withdraw-poly-fungible-v1 "opact-contract" recipient (- amount) token-instance token-id) "")
 
             (event-transact args proof ext-data)
             {
-                "token-hashed": (hash token-spec)
-                ,"token-hash": (at 'tokenHash args)
+                "valid-data": valid-data
             }
         )
     )
@@ -224,8 +227,10 @@
                 (is-known-root (merkle.is-known-root (at 'root args)))
                 (input-nullifiers public-values)
                 (were-spent (map (is-spent) input-nullifiers))
+                (token-spec-hashed (hash token-spec))
+                (ext-data-hashed (hash ext-data))
             )
-            (enforce (= (hash token-spec) (at 'tokenHash args)) "Invalid token hash")
+            (enforce (= token-spec-hashed (at 'tokenHash args)) "Invalid token hash")
             (enforce 
                 (= 
                     (format "{}.{}" [(at 'namespace (at 'refName token-spec)) (at 'name (at 'refName token-spec))])
@@ -235,7 +240,12 @@
             (map (validate-spent) were-spent)
             (enforce (= (at 'publicAmount args) public-amount) "Invalid public amount")
             (enforce (= (verify-proof proof) true) "Invalid transaction proof")
-            (enforce (= (hash ext-data) (at 'extDataHash args)) "Invalid ext-data hash")
+            (enforce (= ext-data-hashed (at 'extDataHash args)) "Invalid ext-data hash")
+            {
+                "ext-data-hashed": ext-data-hashed
+                ,"token-spec-hashed": token-spec-hashed
+                ,"public-amount": public-amount
+            }
         )
     )
 
