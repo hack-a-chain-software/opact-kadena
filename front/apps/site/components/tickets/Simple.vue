@@ -2,8 +2,10 @@
   <Section
     id="privacy"
     class="
-      pt-[240px]
-      pb-[205px]
+      pt-[200px]
+      pb-[194px]
+      md:pt-[240px]
+      md:pb-[205px]
       lg:py-[260px]
       xl:py-[300px]
       relative
@@ -42,9 +44,13 @@
         <h2
           class="
             font-tile
-            text-[54px]
+            text-[30px]
             font-[600]
-            leading-[120%]
+            leading-[36px]
+            tracking-[-0.9px]
+            md:text-[54px]
+            md:font-[600]
+            md:leading-[120%]
             text-[#FAFAFA]
           "
         >
@@ -55,7 +61,10 @@
       <div class="max-w-[700px] mx-auto">
         <p
           class="
-            text-[#BDBDBD] text-[28px] text-center
+            text-[#BDBDBD] md:text-[28px] text-center
+            md:font-[500]
+            md:leading-[150%]
+            text-[18px]
             font-[500]
             leading-[150%]
           "
@@ -66,7 +75,7 @@
         </p>
       </div>
 
-      <div class="pt-[24px]">
+      <div class="pt-[2px] md:pt-[24px]">
         <Button
           withIcon
           variant="secondary"

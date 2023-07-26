@@ -2,6 +2,7 @@
   <Section
     id="security"
     class="
+      pt-[60px]
       lg:pt-[124px]
       xl:pt-[15px]
       2xl:pt-[40px]
@@ -38,9 +39,13 @@
           <figure
             class="
               absolute
-              top-[-21rem]
               shrink-0
-              left-[-8rem]
+              top-[-8rem]
+              left-[-4rem]
+              sm:top-[-12rem]
+              sm:left-[3rem]
+              md:top-[-21rem]
+              md:left-[-8rem]
               rotate-[60deg]
               lg:left-auto
               lg:rotate-[-235deg]
@@ -48,22 +53,15 @@
               lg:right-[-10rem]
               xl:rotate-0 xl:top-[-10rem] xl:right-[-9rem]
               2xl:top-[-10rem]
-              2xl:h-[1068px]
               2xl:right-[-40px]
             "
           >
             <nuxt-img
               quality="100"
-              width="1200px"
+              sizes="639:501px 767:600px 1024:1023px"
               src="/tickets/security.png"
               alt="Illustrative image"
-              class="
-                shrink-0
-                2xl:min-h-[1068px]
-                w-auto
-                scale-x-[1]
-                xl:scale-x-[1]
-              "
+              class="shrink-0 min-w-max"
             />
           </figure>
         </div>
@@ -72,17 +70,20 @@
       <template #tag>
         <span class="block mb-3 sm:mb-6"> Security </span>
       </template>
-
       <template #title>
         <span
           class="
+            text-[24px]
+            font-[500]
+            leading-[36px]
+            tracking-[-0.72px]
             block
             mb-[6px]
             md:mb-6
             lg:w-[400px]
             xl:w-[656px]
-            !text-[42px]
-            !leading-1
+            md:!text-[42px]
+            md:!leading-[63px]
           "
         >
           Protect your transactions from the eyes of
@@ -95,6 +96,7 @@
           class="
             block
             mb-8
+            leading-[30px]
             lg:w-[400px]
             xl:w-[650px]
             2xl:w-[656px]

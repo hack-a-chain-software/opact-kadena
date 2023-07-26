@@ -45,17 +45,18 @@ const colors = {
     >
       <div
         class="
-          pb-[30px]
+          md:pb-[30px]
           space-y-[18px]
           xl:pb-0 xl:space-x-0
         "
       >
         <h2
           class="
-            font-title font-[600]
+            text-[30px] font-[600] leading-[120%]
+            font-title md:font-[600]
             text-[#FAFAFA]
-            leading-[120%]
-            text-[48px]
+            md:leading-[120%]
+            md:text-[48px]
             max-w-[600px]
             lg:max-w-[788px]
           "
@@ -66,11 +67,12 @@ const colors = {
         <p
           class="
             text-[#BDBDBD]
-            font-[500]
-            text-[22px]
-            leading-[150%]
+            md:font-[500]
+            md:text-[22px]
+            md:leading-[150%]
             max-w-[800px]
             2xl:max-w-none
+            text-[18px] font-[500] leading-[27px]
           "
         >
           Tickets are “passwords” that allow you to withdraw
@@ -84,7 +86,7 @@ const colors = {
         variant="secondary"
         href="https://hideyour.cash/"
         text="Go to Opact Tickets"
-        class="lg:h-8 xl:h-[39px] mt-auto shrink-0"
+        class="lg:h-8 xl:h-[39px] mt-auto shrink-0 invisible md:visible"
       />
     </div>
 
@@ -92,7 +94,7 @@ const colors = {
       class="
         flex flex-wrap
         lg:flex-nowrap
-        pt-[60px]
+        md:pt-[60px]
         gap-[24px]
         lg:gap-0 lg:justify-between
         justify-center
@@ -107,7 +109,8 @@ const colors = {
         } in features"
         :key="key"
         class="
-          w-[340px]
+          w-full
+          md:w-[340px]
           lg:w-[280px]
           xl:w-[365px]
           2xl:w-[418px]
@@ -147,7 +150,7 @@ const colors = {
                 transition-all
               "
               :src="`/tickets/${icon}-hover.png`"
-            />
+            >
 
             <Icon
               :name="icon"
@@ -167,7 +170,7 @@ const colors = {
             class="
               pt-[12px]
               pb-[32px]
-              px-[24px]
+              px-[23px]
               space-y-[16px]
             "
           >
