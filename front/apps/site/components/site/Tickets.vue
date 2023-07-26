@@ -42,31 +42,39 @@
 
       <template #title>
         <div
-          class="mb-2.5 sm:mb-3 lg:mb-7 xl:w-[493px] relative"
+          class="
+            mb-2.5
+            sm:mb-3
+            lg:mb-7
+            xl:w-[493px]
+            relative
+          "
         >
           <div
-            class="flex space-x-4 mb-2.5 sm:mb-[13px] lg:mb-6"
+            class="
+              flex
+              space-x-4
+              mb-2.5
+              sm:mb-[13px]
+              lg:mb-6
+            "
           >
-            <Badge
-              class="!h-[36px]"
-            >
+            <Badge class="!h-[36px]">
               <div class="flex items-center space-x-1.5">
                 <Icon name="near" />
 
-                <span>
-                  Near
-                </span>
+                <span> Near </span>
               </div>
             </Badge>
           </div>
 
           <div
             class="
-            !leading-[30px]
-            sm:!leading-[54px]
-            lg:!leading-[52px] lg:max-w-[399px]
-            xl:max-w-full
-          "
+              !leading-[30px]
+              sm:!leading-[54px]
+              lg:!leading-[52px] lg:max-w-[399px]
+              xl:max-w-full
+            "
           >
             <span> Private and Compliant Payments </span>
           </div>
@@ -76,14 +84,19 @@
       <template #text>
         <span
           class="
-          block
-          mb-8
-          lg:w-[400px]
-          xl:w-[493px]
-          lg:mb-10
-        "
+            block
+            mb-8
+            lg:w-[400px]
+            xl:w-[493px]
+            lg:mb-10
+          "
         >
-          The first and simplest version of Opact. Send and receive payments without the need to showcase your wallet. Break the link between sender and receiver to hide your transaction from public eyes, while still being compliant with an innovative approach for AML.
+          The first and simplest version of Opact. Send and
+          receive payments without the need to showcase your
+          wallet. Break the link between sender and receiver
+          to hide your transaction from public eyes, while
+          still being compliant with an innovative approach
+          for AML.
         </span>
       </template>
     </Container>

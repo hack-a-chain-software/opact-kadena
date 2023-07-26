@@ -16,7 +16,7 @@
 
     <div
       v-motion-pop-visible-once
-      class="text-white max-w-[1096px] mx-auto text-center"
+      class="text-white max-w-[1200px] mx-auto text-center"
     >
       <div
         class="
@@ -42,8 +42,7 @@
             lg:text-6xl lg:leading-[110px]
           "
         >
-          Zero Knowledge for enhanced privacy and compliance
-          on-chain
+          An ecosystem of solutions to enhance privacy on the blockchain
         </h1>
       </div>
 
@@ -67,8 +66,7 @@
             lg:text-2xl
           "
         >
-          Try out our ZK products or implement cutting edge
-          ZK tech for your business.
+          Try out our products and join us on this journey!
         </h2>
       </div>
 
