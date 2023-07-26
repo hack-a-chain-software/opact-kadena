@@ -78,7 +78,8 @@ const onSubmit = async () => {
 
       <div class="pb-[38px] md:pb-8">
         <h3 class="font-medium leading-normal md:text-xl">
-          Like our solutions or need a different one? Let’s chat!
+          Like our solutions or need a different one? Let’s
+          chat!
         </h3>
       </div>
 

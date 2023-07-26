@@ -42,7 +42,8 @@
             lg:text-6xl lg:leading-[110px]
           "
         >
-          An ecosystem of solutions to enhance privacy on the blockchain
+          An ecosystem of solutions to enhance privacy on
+          the blockchain
         </h1>
       </div>
 
