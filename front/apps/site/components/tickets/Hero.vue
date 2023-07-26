@@ -12,7 +12,6 @@ const config = useAppConfig()
       h-[788px]
       sm:h-[1055px]
       lg:h-[717px]
-      !overflow-hidden
       xl:h-[807.57px]
       2xl:h-[880px]
     "
@@ -139,30 +138,25 @@ const config = useAppConfig()
           absolute
           rotate-[10deg]
           right-[-5rem]
-          bottom-[13.8rem]
-          md:right-[-7.5rem] md:bottom-[5rem]
+          bottom-[14.8rem]
+          md:right-[-10rem] md:bottom-[5rem]
           lg:top-[-4rem] lg:right-[-10.6rem] lg:bottom-auto
           xl:top-[-0rem] xl:right-0
-          2xl:top-0 2xl:right-[-4rem]
+          2xl:top-[-4rem] 2xl:right-[0.5rem]
         "
       >
-        <figure class="rotate-[-8.05deg] lg:rotate-0">
+        <figure class="rotate-[-8.05deg] shrink-0">
           <nuxt-img
             src="/tickets/hero.webp"
             alt="Hero illustration"
             quality="100"
-            sizes="360:474px"
-            class="
-              shrink-0
-              min-h-[370px] min-w-[464px]
-              max-w-min
-              md:min-h-[787px] md:min-w-[956px]
-            "
+            sizes="639:464px 1023:956px 1439:825px 2560:956px"
+            class="shrink-0"
           />
         </figure>
       </div>
 
-      <div class="mt-auto md:mt-[-28px]">
+      <div class="mt-auto md:mt-[-9px]">
         <div
           class="
             lg:text-left
