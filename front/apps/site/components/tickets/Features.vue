@@ -45,7 +45,6 @@ const colors = {
     >
       <div
         class="
-          xl:max-w-[788px]
           pb-[30px]
           space-y-[18px]
           xl:pb-0 xl:space-x-0
@@ -57,6 +56,8 @@ const colors = {
             text-[#FAFAFA]
             leading-[120%]
             text-[48px]
+            max-w-[600px]
+            lg:max-w-[788px]
           "
         >
           Tickets to do whatever you want
@@ -87,7 +88,7 @@ const colors = {
       />
     </div>
 
-    <div class="flex pt-[60px] justify-between">
+    <div class="flex flex-wrap lg:flex-nowrap pt-[60px] gap-[24px] lg:gap-0  lg:justify-between justify-center">
       <div
         v-for="{
           title,
@@ -97,7 +98,8 @@ const colors = {
         } in features"
         :key="key"
         class="
-          w-[280px]
+          w-[340px]
+          lg:w-[280px]
           xl:w-[365px]
           2xl:w-[418px]
           bg-inverted-card-gradient
@@ -136,7 +138,7 @@ const colors = {
                 transition-all
               "
               :src="`/tickets/${icon}-hover.png`"
-            />
+            >
 
             <Icon
               :name="icon"
@@ -168,7 +170,6 @@ const colors = {
                 leading-[150%]
                 flex
                 items-center
-                justify-center
                 h-[72px]
               "
               v-text="title"

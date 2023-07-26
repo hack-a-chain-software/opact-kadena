@@ -2,7 +2,9 @@
   <Section
     id="privacy"
     class="
-      py-[260px]
+      pt-[240px]
+      pb-[205px]
+      lg:py-[260px]
       xl:py-[300px]
       relative
       overflow-hidden

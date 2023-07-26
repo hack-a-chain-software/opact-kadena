@@ -10,8 +10,9 @@ const config = useAppConfig()
       pt-[52px]
       md:pt-[60px]
       h-[790px]
-      sm:h-[1097.2px]
+      sm:h-[1055px]
       lg:h-[717px]
+      !overflow-hidden
       xl:h-[807.57px]
       2xl:h-[880px]
     "
@@ -19,6 +20,7 @@ const config = useAppConfig()
     <Section
       class="
         flex flex-col
+        relative
         lg:relative lg:overflow-visible
         items-center
         lg:items-start
@@ -33,6 +35,7 @@ const config = useAppConfig()
         lg:pt-[108px]
         xl:pt-[107px]
         2xl:pt-[102px]
+        h-full
       "
     >
       <h1
@@ -89,6 +92,7 @@ const config = useAppConfig()
       />
 
       <h2
+        v-motion
         class="
           relative
           z-[2]
@@ -107,7 +111,6 @@ const config = useAppConfig()
           lg:max-w-[410px]
           xl:max-w-[499px]
         "
-        v-motion
         :initial="{
           opacity: 0,
           x: -15,
@@ -132,9 +135,8 @@ const config = useAppConfig()
           sm:flex
           z-[2]
           w-full
-          order-3
-          sm:order-2
           mt-[-28px]
+          relative
           sm:mt-0 sm:mx-auto
           lg:mx-0
           sm:space-x-6
@@ -149,6 +151,7 @@ const config = useAppConfig()
         "
       >
         <Button
+          v-motion
           text="Coming soon"
           disabled
           :with-icon="true"
@@ -160,7 +163,6 @@ const config = useAppConfig()
             md:max-w-max
             opacity-0
           "
-          v-motion
           :initial="{
             opacity: 0,
             x: -15,
@@ -179,6 +181,7 @@ const config = useAppConfig()
         />
 
         <Button
+          v-motion
           variant="tertiary"
           text="Documentation"
           disabled
@@ -189,7 +192,6 @@ const config = useAppConfig()
             md:max-w-max
             opacity-0
           "
-          v-motion
           :initial="{
             opacity: 0,
             x: -15,
@@ -210,26 +212,27 @@ const config = useAppConfig()
 
       <div
         class="
-          top-[-4rem]
-          right-[-10.6rem]
+          absolute
+          rotate-[10deg]
+          right-[-7.5rem] bottom-[5rem]
+          lg:top-[-4rem] lg:right-[-10.6rem]
           xl:top-[-0rem] xl:right-0
           2xl:top-0 2xl:right-[-4rem]
-          absolute
         "
       >
         <figure class="rotate-[-8.05deg] lg:rotate-0">
           <nuxt-img
-            src="/tickets/hero.png"
+            src="/tickets/hero.webp"
             alt="Hero illustration"
             quality="100"
-            sizes="1440:825px 2560:956px"
-            class="2xl:h-[787px]"
+            class="
+              shrink-0
+              min-h-[787px] min-w-[956px]
+            "
           />
         </figure>
       </div>
-    </Section>
 
-    <Section class="z-[1] space-y-4 relative">
       <div
         v-motion
         :initial="{
@@ -248,36 +251,38 @@ const config = useAppConfig()
         }"
         :delay="450"
         class="
-          sm:space-x-6
-          md:mt-[-30px]
-          lg:mt-0
-          flex flex-col
-          sm:flex-row sm:items-center
-          opacity-0
-        "
+            sm:space-x-6
+            mt-auto
+            w-full
+            lg:mt-[-30px]
+            lg:mt-0
+            flex flex-col
+            sm:flex-row sm:items-center
+            opacity-0
+          "
       >
         <span
           class="
-            text-white
-            mb-[8px]
-            sm:mb-0
-            font-semibold
-            tracking-[0.05rem]
-            lg:text-xl lg:leading-[30px]
-            xl:text-xl xl:leading-[30px]
-            sm:text-lg sm:text-xl sm:leading-[30px]
-          "
+              text-white
+              mb-[8px]
+              sm:mb-0
+              font-semibold
+              tracking-[0.05rem]
+              lg:text-xl lg:leading-[30px]
+              xl:text-xl xl:leading-[30px]
+              sm:text-lg sm:text-xl sm:leading-[30px]
+            "
         >
           Building on
         </span>
 
         <div
           class="
-            flex
-            space-x-4
-            lg:space-x-[18px]
-            xl:space-x-4
-          "
+              flex
+              space-x-4
+              lg:space-x-[18px]
+              xl:space-x-4
+            "
         >
           <LandingBlockchain
             v-for="{ icon, name } in config.chains.filter(
