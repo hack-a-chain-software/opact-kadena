@@ -52,11 +52,13 @@ const colors = {
       >
         <h2
           class="
-            text-[30px] font-[600] leading-[120%]
-            font-title md:font-[600]
+            text-[30px]
+            font-[600]
+            leading-[120%]
+            font-title
+            md:font-[600]
             text-[#FAFAFA]
-            md:leading-[120%]
-            md:text-[48px]
+            md:leading-[120%] md:text-[48px]
             max-w-[600px]
             lg:max-w-[788px]
           "
@@ -67,12 +69,12 @@ const colors = {
         <p
           class="
             text-[#BDBDBD]
-            md:font-[500]
-            md:text-[22px]
-            md:leading-[150%]
+            md:font-[500] md:text-[22px] md:leading-[150%]
             max-w-[800px]
             2xl:max-w-none
-            text-[18px] font-[500] leading-[27px]
+            text-[18px]
+            font-[500]
+            leading-[27px]
           "
         >
           Tickets are “passwords” that allow you to withdraw
@@ -86,7 +88,14 @@ const colors = {
         variant="secondary"
         href="https://hideyour.cash/"
         text="Go to Opact Tickets"
-        class="lg:h-8 xl:h-[39px] mt-auto shrink-0 invisible md:visible"
+        class="
+          lg:h-8
+          xl:h-[39px]
+          mt-auto
+          shrink-0
+          invisible
+          md:visible
+        "
       />
     </div>
 
@@ -150,7 +159,7 @@ const colors = {
                 transition-all
               "
               :src="`/tickets/${icon}-hover.png`"
-            >
+            />
 
             <Icon
               :name="icon"

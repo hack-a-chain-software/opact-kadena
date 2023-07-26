@@ -54,7 +54,6 @@ const config = useAppConfig()
             duration: 320,
           },
         }"
-
         class="
           relative
           z-[2]
@@ -78,7 +77,10 @@ const config = useAppConfig()
           md:tracking-[0.05rem]
           lg:tracking-[0.09rem]
           xl:tracking-[0.06rem]
-          text-[32px] font-[700] font-tile leading-[41.6px] tracking-[0.64px]
+          text-[32px]
+          font-[700] font-tile
+          leading-[41.6px]
+          tracking-[0.64px]
           sm:text-[48px]
           md:font-[700]
           lg:text-[50px]
@@ -103,7 +105,10 @@ const config = useAppConfig()
           lg:text-xl
           sm:leading-[30px]
           lg:leading-[30px]
-          text-[14px] font-[400] leading-[21px] text-[#F4F4F5] text-center
+          text-[14px]
+          font-[400]
+          leading-[21px]
+          text-[#F4F4F5] text-center
           lg:text-left
           max-w-[290px]
           sm:max-w-[440px]
@@ -133,7 +138,8 @@ const config = useAppConfig()
         class="
           absolute
           rotate-[10deg]
-          right-[-5rem] bottom-[13.8rem]
+          right-[-5rem]
+          bottom-[13.8rem]
           md:right-[-7.5rem] md:bottom-[5rem]
           lg:top-[-4rem] lg:right-[-10.6rem] lg:bottom-auto
           xl:top-[-0rem] xl:right-0
@@ -148,19 +154,15 @@ const config = useAppConfig()
             sizes="360:474px"
             class="
               shrink-0
-              min-h-[370px] min-w-[464px] max-w-min
+              min-h-[370px] min-w-[464px]
+              max-w-min
               md:min-h-[787px] md:min-w-[956px]
             "
           />
         </figure>
       </div>
 
-      <div
-        class="
-          mt-auto
-          md:mt-[-28px]
-        "
-      >
+      <div class="mt-auto md:mt-[-28px]">
         <div
           class="
             lg:text-left
@@ -269,7 +271,7 @@ const config = useAppConfig()
         >
           <span
             class="
-            text-white
+              text-white
               mb-[8px]
               sm:mb-0
               font-semibold

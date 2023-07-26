@@ -42,18 +42,15 @@
               shrink-0
               top-[-8rem]
               left-[-4rem]
-              sm:top-[-12rem]
-              sm:left-[3rem]
-              md:top-[-21rem]
-              md:left-[-8rem]
+              sm:top-[-12rem] sm:left-[3rem]
+              md:top-[-21rem] md:left-[-8rem]
               rotate-[60deg]
               lg:left-auto
               lg:rotate-[-235deg]
               lg:top-[-18rem]
               lg:right-[-10rem]
               xl:rotate-0 xl:top-[-10rem] xl:right-[-9rem]
-              2xl:top-[-10rem]
-              2xl:right-[-40px]
+              2xl:top-[-10rem] 2xl:right-[-40px]
             "
           >
             <nuxt-img
@@ -82,8 +79,7 @@
             md:mb-6
             lg:w-[400px]
             xl:w-[656px]
-            md:!text-[42px]
-            md:!leading-[63px]
+            md:!text-[42px] md:!leading-[63px]
           "
         >
           Protect your transactions from the eyes of

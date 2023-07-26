@@ -4,8 +4,7 @@
     class="
       pt-[200px]
       pb-[194px]
-      md:pt-[240px]
-      md:pb-[205px]
+      md:pt-[240px] md:pb-[205px]
       lg:py-[260px]
       xl:py-[300px]
       relative
@@ -48,9 +47,7 @@
             font-[600]
             leading-[36px]
             tracking-[-0.9px]
-            md:text-[54px]
-            md:font-[600]
-            md:leading-[120%]
+            md:text-[54px] md:font-[600] md:leading-[120%]
             text-[#FAFAFA]
           "
         >
@@ -61,9 +58,10 @@
       <div class="max-w-[700px] mx-auto">
         <p
           class="
-            text-[#BDBDBD] md:text-[28px] text-center
-            md:font-[500]
-            md:leading-[150%]
+            text-[#BDBDBD]
+            md:text-[28px]
+            text-center
+            md:font-[500] md:leading-[150%]
             text-[18px]
             font-[500]
             leading-[150%]
