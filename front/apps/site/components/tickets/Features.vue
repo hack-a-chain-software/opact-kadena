@@ -88,7 +88,16 @@ const colors = {
       />
     </div>
 
-    <div class="flex flex-wrap lg:flex-nowrap pt-[60px] gap-[24px] lg:gap-0  lg:justify-between justify-center">
+    <div
+      class="
+        flex flex-wrap
+        lg:flex-nowrap
+        pt-[60px]
+        gap-[24px]
+        lg:gap-0 lg:justify-between
+        justify-center
+      "
+    >
       <div
         v-for="{
           title,
@@ -138,7 +147,7 @@ const colors = {
                 transition-all
               "
               :src="`/tickets/${icon}-hover.png`"
-            >
+            />
 
             <Icon
               :name="icon"

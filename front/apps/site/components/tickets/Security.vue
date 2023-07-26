@@ -44,7 +44,8 @@
               rotate-[60deg]
               lg:left-auto
               lg:rotate-[-235deg]
-              lg:top-[-18rem] lg:right-[-10rem]
+              lg:top-[-18rem]
+              lg:right-[-10rem]
               xl:rotate-0 xl:top-[-10rem] xl:right-[-9rem]
               2xl:top-[-10rem]
               2xl:h-[1068px]
@@ -56,7 +57,8 @@
               width="1200px"
               src="/tickets/security.png"
               alt="Illustrative image"
-              class=" shrink-0
+              class="
+                shrink-0
                 2xl:min-h-[1068px]
                 w-auto
                 scale-x-[1]

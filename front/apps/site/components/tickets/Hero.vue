@@ -214,7 +214,8 @@ const config = useAppConfig()
         class="
           absolute
           rotate-[10deg]
-          right-[-7.5rem] bottom-[5rem]
+          right-[-7.5rem]
+          bottom-[5rem]
           lg:top-[-4rem] lg:right-[-10.6rem]
           xl:top-[-0rem] xl:right-0
           2xl:top-0 2xl:right-[-4rem]
@@ -225,10 +226,7 @@ const config = useAppConfig()
             src="/tickets/hero.webp"
             alt="Hero illustration"
             quality="100"
-            class="
-              shrink-0
-              min-h-[787px] min-w-[956px]
-            "
+            class="shrink-0 min-h-[787px] min-w-[956px]"
           />
         </figure>
       </div>
@@ -251,38 +249,37 @@ const config = useAppConfig()
         }"
         :delay="450"
         class="
-            sm:space-x-6
-            mt-auto
-            w-full
-            lg:mt-[-30px]
-            lg:mt-0
-            flex flex-col
-            sm:flex-row sm:items-center
-            opacity-0
-          "
+          sm:space-x-6
+          mt-auto
+          w-full
+          lg:mt-[-30px] lg:mt-0
+          flex flex-col
+          sm:flex-row sm:items-center
+          opacity-0
+        "
       >
         <span
           class="
-              text-white
-              mb-[8px]
-              sm:mb-0
-              font-semibold
-              tracking-[0.05rem]
-              lg:text-xl lg:leading-[30px]
-              xl:text-xl xl:leading-[30px]
-              sm:text-lg sm:text-xl sm:leading-[30px]
-            "
+            text-white
+            mb-[8px]
+            sm:mb-0
+            font-semibold
+            tracking-[0.05rem]
+            lg:text-xl lg:leading-[30px]
+            xl:text-xl xl:leading-[30px]
+            sm:text-lg sm:text-xl sm:leading-[30px]
+          "
         >
           Building on
         </span>
 
         <div
           class="
-              flex
-              space-x-4
-              lg:space-x-[18px]
-              xl:space-x-4
-            "
+            flex
+            space-x-4
+            lg:space-x-[18px]
+            xl:space-x-4
+          "
         >
           <LandingBlockchain
             v-for="{ icon, name } in config.chains.filter(
