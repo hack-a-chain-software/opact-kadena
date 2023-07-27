@@ -23,7 +23,7 @@ const onSubmit = async () => {
 
   try {
     await useFetch(
-      'https://formsubmit.co/ajax/mateus@opact.io',
+      'https://formsubmit.co/ajax/opact@hackachain.io',
       {
         method: 'POST',
         headers: {

@@ -89,6 +89,8 @@
             lg:w-[400px]
             xl:w-[493px]
             lg:mb-10
+            z-[10]
+            relative
           "
         >
           The first and simplest version of Opact. Send and

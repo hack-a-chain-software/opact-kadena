@@ -1,7 +1,3 @@
-<script setup lang="ts">
-const config = useAppConfig()
-</script>
-
 <template>
   <Container
     class="w-full mb-[60px] lg:mb-[80px]"
@@ -21,20 +17,16 @@ const config = useAppConfig()
           class="flex space-x-4 mb-2.5 sm:mb-[13px] lg:mb-6"
         >
           <Badge
-            v-for="({ name, icon }, i) in config.chains"
-            :key="name"
             v-motion
-            :delay="150 * (i + 1)"
+            :delay="150"
             :initial="{ opacity: 0, x: -15 }"
             :visibleOnce="{ opacity: 1, x: 0 }"
             class="!h-[36px]"
           >
             <div class="flex items-center space-x-1.5">
-              <Icon :name="icon" />
+              <Icon name="kadena" />
 
-              <span>
-                {{ name }}
-              </span>
+              <span> Kadena </span>
             </div>
           </Badge>
         </div>

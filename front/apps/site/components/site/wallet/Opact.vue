@@ -11,10 +11,6 @@
       justify-center
     "
   >
-    <div class="pb-1 xl:pb-4">
-      <Tag> Our Products </Tag>
-    </div>
-
     <div class="pb-6 sm:pb-[38px] lg:pb-[60px]">
       <h2
         class="

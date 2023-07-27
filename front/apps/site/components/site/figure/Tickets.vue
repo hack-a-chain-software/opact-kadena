@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-      z-[2]
+      z-[0]
       -mt-12
       mb-[68px]
       sm:mb-2.5
@@ -29,40 +29,24 @@
     <figure
       class="
         absolute
-        z-[2]
-        scale-x-[-1]
-        lg:scale-x-[1]
-        rotate-[-30deg]
-        top-[-110px]
-        left-[-120px]
-        min-w-[600px]
-        sm:rotate-[-20deg]
-        sm:top-[-240px]
-        sm:left-[-140px]
-        sm:min-w-[1000px]
-        md:rotate-[-14deg]
-        md:top-[-300px]
-        md:left-[-240px]
-        md:min-w-[1200px]
-        lg:min-w-[800px]
-        lg:top-[-20px]
-        lg:left-[330px]
-        lg:rotate-[28deg]
-        xl:rotate-[17deg]
-        xl:min-w-[960px]
-        xl:top-[-146px]
-        xl:left-[430px]
-        2xl:rotate-0
-        2xl:min-w-[1189.79px]
-        2xl:top-[-240px]
-        2xl:left-[490px]
+        rotate-[20deg]
+        lg:rotate-[-5deg]
+        xl:rotate-0
+        top-[-12.5rem]
+        sm:top-[-18rem]
+        md:top-[-20rem]
+        translate-x-[-2rem]
+        sm:translate-x-[-5rem]
+        lg:translate-x-[18rem]
+        xl:translate-x-[25rem]
+        2xl:translate-x-[33rem]
       "
     >
       <nuxt-img
         quality="100"
         src="/tickets/hero.webp"
-        class="scale-x-[-1] lg:scale-x-[1]"
-        sizes="sm:600px lg:1200px 2xl:1189.79px"
+        class="relative min-w-[800px] sm:min-w-[1200px]"
+        sizes="639:800px 2560:1200px"
         alt="Illustrative image"
       />
     </figure>
