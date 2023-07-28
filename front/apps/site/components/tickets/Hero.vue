@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const config = useAppConfig()
 
-const redirect = (path = 'https://tickets.opact.io') => window.open(path, '_blank')
+const redirect = (path = 'https://tickets.opact.io') =>
+  window.open(path, '_blank')
 </script>
 
 <template>
@@ -213,7 +214,9 @@ const redirect = (path = 'https://tickets.opact.io') => window.open(path, '_blan
             v-motion
             variant="tertiary"
             text="Documentation"
-            @click="redirect('https://docs.tickets.opact.io/')"
+            @click="
+              redirect('https://docs.tickets.opact.io/')
+            "
             class="
               w-full
               lg:w-auto

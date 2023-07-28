@@ -29,7 +29,8 @@ const colors = {
   security: 'group-hover:text-[#AD51FF]'
 } as any
 
-const redirect = (path = 'https://tickets.opact.io') => window.open(path, '_blank')
+const redirect = (path = 'https://tickets.opact.io') =>
+  window.open(path, '_blank')
 </script>
 
 <template>

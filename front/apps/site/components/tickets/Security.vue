@@ -9,7 +9,11 @@
       md:pt-[60px]
     "
   >
-    <Container cta="Check out the docs" to="https://docs.tickets.opact.io/" size="xl">
+    <Container
+      cta="Check out the docs"
+      to="https://docs.tickets.opact.io/"
+      size="xl"
+    >
       <template #before>
         <div
           class="

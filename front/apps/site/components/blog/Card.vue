@@ -15,7 +15,10 @@ const figureClasses = {
     'bottom-[-45px] right-[-55px] lg:bottom-[-61px] lg:right-[-55px] xl:bottom-[-105px] xl:right-[-110px] 2xl:bottom-[-110px] 2xl:right-[-90px]'
 } as any
 
-const redirect = (path = 'https://tickets.opact.io', target = '_blank') => window.open(path, target)
+const redirect = (
+  path = 'https://tickets.opact.io',
+  target = '_blank'
+) => window.open(path, target)
 </script>
 
 <template>
@@ -112,7 +115,11 @@ const redirect = (path = 'https://tickets.opact.io', target = '_blank') => windo
       </div>
 
       <div>
-        <Button :text="button" @click="redirect(to, '_self')" variant="secondary" />
+        <Button
+          :text="button"
+          @click="redirect(to, '_self')"
+          variant="secondary"
+        />
       </div>
     </div>
   </div>

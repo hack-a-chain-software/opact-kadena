@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const redirect = (path = 'https://tickets.opact.io') => window.open(path, '_blank')
+const redirect = (path = 'https://tickets.opact.io') =>
+  window.open(path, '_blank')
 </script>
 
 <template>

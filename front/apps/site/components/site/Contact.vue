@@ -145,9 +145,7 @@ const onSubmit = async () => {
             />
           </div>
 
-          <div
-            class="z-[2] relative"
-          >
+          <div class="z-[2] relative">
             <p
               class="
                 font-medium
@@ -156,7 +154,14 @@ const onSubmit = async () => {
                 md:text-xl
               "
             >
-              Or get in touch with us on <a href="https://t.me/hackachain" target="_blank" type="link" class="underline cursor-pointer ">Telegram</a>
+              Or get in touch with us on
+              <a
+                href="https://t.me/hackachain"
+                target="_blank"
+                type="link"
+                class="underline cursor-pointer"
+                >Telegram</a
+              >
             </p>
           </div>
         </div>
