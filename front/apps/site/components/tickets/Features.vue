@@ -28,6 +28,8 @@ const colors = {
   airplane: 'group-hover:text-[#1A92FF]',
   security: 'group-hover:text-[#AD51FF]'
 } as any
+
+const redirect = (path = 'https://tickets.opact.io') => window.open(path, '_blank')
 </script>
 
 <template>
@@ -86,7 +88,7 @@ const colors = {
       <Button
         with-icon
         variant="secondary"
-        href="https://hideyour.cash/"
+        @click="redirect()"
         text="Go to Opact Tickets"
         class="
           lg:h-8

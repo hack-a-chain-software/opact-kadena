@@ -154,7 +154,7 @@ const onSubmit = async () => {
                 md:text-xl
               "
             >
-              Or get in touch with us on Telegram
+              Or get in touch with us on <span class="underline">Telegram</span>
             </p>
           </div>
         </div>

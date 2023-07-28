@@ -1,6 +1,6 @@
 <template>
   <Section
-    id="tickets"
+    id="opact"
     class="
       pt-[125px]
       md:pt-[134px]
@@ -33,7 +33,7 @@
     <Container
       class="w-full mb-[60px] lg:mb-[80px]"
       cta="Learn more"
-      to="/wallet"
+      to="/tickets"
       size="xl"
     >
       <template #before>

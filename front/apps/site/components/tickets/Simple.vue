@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const redirect = (path = 'https://tickets.opact.io') => window.open(path, '_blank')
+</script>
+
 <template>
   <Section
     id="privacy"
@@ -77,8 +81,8 @@
         <Button
           withIcon
           variant="secondary"
+          @click="redirect()"
           text="Go to Opact Tickets"
-          href="https://hideyour.cash/"
         />
       </div>
     </div>

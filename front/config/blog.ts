@@ -7,6 +7,7 @@ export const blog = {
       figure: 'square',
       title: 'Near ZK Tools',
       button: 'know the tools',
+      to: 'https://github.com/opact-protocol/tickets',
       text: 'The first and only ZK infrastructure to ever go to NEAR Mainnet is now available to you.'
     },
     {
@@ -14,9 +15,11 @@ export const blog = {
       figure: 'hexa',
       title: 'Kadena ZK Tools',
       button: 'know the tools',
+      to: 'https://github.com/opact-protocol/wallet',
       text: 'Infrastructure brought to you by the team that created the Pact ZK functions.'
     },
     {
+      to: '#contact',
       figure: 'gear',
       color: 'purple',
       title: 'Implement ZK tooling on your blockchain',

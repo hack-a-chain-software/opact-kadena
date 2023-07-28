@@ -1,8 +1,8 @@
 <template>
   <Container
+    class="flex-1"
     id="documentation"
     cta="Opact Documentation"
-    class="flex-1"
   >
     <template #tag>
       <span class="block mb-2.5 sm:mb-[18px] lg:mb-[18px]">
