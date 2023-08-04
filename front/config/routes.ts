@@ -51,8 +51,8 @@ export const routes: Route[] = [
   },
   {
     order: 2,
-    width: 800,
-    height: 260,
+    width: 868,
+    height: 317,
     label: 'Blog',
     type: 'widget',
     widget: 'blog',

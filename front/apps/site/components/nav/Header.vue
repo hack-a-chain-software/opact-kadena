@@ -41,7 +41,7 @@
           class="hidden lg:block !h-[36px]"
         /> -->
 
-        <div/>
+        <div />
 
         <NavMobileMenu />
       </div>
