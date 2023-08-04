@@ -2,17 +2,17 @@ export const networks = [
   {
     icon: 'github',
     title: 'Github',
-    to: 'https://github.com/'
+    to: 'https://github.com/opact-protocol'
   },
   {
     icon: 'discord',
     title: 'Discord',
-    to: 'https://discord.com/'
+    to: 'https://docs.tickets.opact.io/'
   },
   {
     icon: 'twitter',
     title: 'Twitter',
-    to: 'https://twitter.com/'
+    to: 'https://twitter.com/opactzk'
   }
 ]
 

@@ -33,13 +33,15 @@
 
         <NavLinks />
 
-        <Button
+        <!-- <Button
           disabled
           with-icon
           variant="nav"
           text="Coming soon"
           class="hidden lg:block !h-[36px]"
-        />
+        /> -->
+
+        <div/>
 
         <NavMobileMenu />
       </div>
