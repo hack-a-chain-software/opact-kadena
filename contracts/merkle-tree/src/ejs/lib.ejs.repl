@@ -40,17 +40,17 @@
         (write roots key { "value": value }))
 
     (defun poseidon-hash (left:integer right:integer)
-        (poseidon.poseidon [left right]))
+        (poseidon-hash left right))
 
     (defun blake-hash (left:string right:string)
         (hash [left right]))
 
     (defun initialize()
         <% for (let i = 0; i < level; i++) { %>
-            (set-filled-subtrees "<%= i %>" (blake-zeros <%= i %>))
+            (set-filled-subtrees "<%= i %>" (poseidon-zeros <%= i %>))
         <% } %>
 
-        (insert-root "0" (blake-zeros 0))
+        (insert-root "0" (poseidon-zeros 0))
 
         (insert state "0" {
             "current_root_index": 0,
@@ -108,16 +108,16 @@
                     (filled_subtrees (at 'value (read filledSubtrees "<%= i - 1 %>")))
 
                     (lr_<%= i %> (if (= (mod current_index 2) 0)
-                        {"left": current_level_hash, "right": (blake-zeros <%= i - 1 %>)}
+                        {"left": current_level_hash, "right": (poseidon-zeros <%= i - 1 %>)}
                         {"left": filled_subtrees, "right": current_level_hash}
                     ))
 
                     (hashes (+ hashes (if (= (mod current_index 2) 0)
                         [current_level_hash]
-                        [(blake-zeros <%= i - 1 %>)])
+                        [(poseidon-zeros <%= i - 1 %>)])
                     ))
 
-                    (current_level_hash (blake-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
+                    (current_level_hash (poiseidon-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
 
                     (current_index (/ current_index 2))
                 <% } %>
@@ -130,7 +130,7 @@
             (set-current-root-index new_root_index)
             (set-next-index (+ next-index 1))
         <% for (let i = 0; i < level; i++) { %>
-            (if (= (at <%= i %> hashes) (blake-zeros <%= i %>))
+            (if (= (at <%= i %> hashes) (poseidon-zeros <%= i %>))
                 ""
                 (set-filled-subtrees "<%= i %>" (at <%= i %> hashes))
             )
