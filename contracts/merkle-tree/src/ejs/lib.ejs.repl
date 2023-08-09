@@ -5,11 +5,11 @@
 
     (defschema FilledSubtreesSchema
         "Schema for the filledSubtrees table"
-        value:string)
+        value:integer)
       
     (defschema RootsSchema
         "Schema for the roots table"
-        value:string)
+        value:integer)
 
     (defschema StateSchema
         "Schema for the config table"
@@ -33,10 +33,10 @@
     (defun set-next-index (next_index:integer)
         (update state "0" {"next_index": next_index}))
 
-    (defun set-filled-subtrees (key:string value:string)
+    (defun set-filled-subtrees (key:string value:integer)
         (write filledSubtrees key { "value": value }))
 
-    (defun insert-root (key:string value:string)
+    (defun insert-root (key:string value:integer)
         (write roots key { "value": value }))
 
     (defun blake-hash (left:string right:string)
@@ -91,7 +91,7 @@
         )
     )
 
-    (defun insert-leaf (leaf:string)
+    (defun insert-leaf (leaf:integer)
         (
             let*
             (
