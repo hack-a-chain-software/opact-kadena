@@ -46,8 +46,8 @@
 
     (defschema args
         "Structure representing the arguments to the transact function."
-        root: string
-        outputCommitments: [string]
+        root: integer
+        outputCommitments: [integer]
         publicAmount: decimal
         extDataHash: string
         tokenHash: string
@@ -90,7 +90,7 @@
 
     (deftable nullifierHashes:{NullifierHashesSchema})
 
-    (defcap new-commitment(commitment: string index: integer encryptedOutput: integer)
+    (defcap new-commitment(commitment: integer index: integer encryptedOutput: integer)
       @event
       true
     )

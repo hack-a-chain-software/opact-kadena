@@ -56,7 +56,7 @@
 (test-capability (fungible-v2-reference.TRANSFER "sender-address" "opact-contract" 10.0))
 (test-capability (coin.TRANSFER "sender-address" "opact-gas-payer" 2.0))
 
-(merkle.insert-leaf "1") ; -> OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c
+(merkle.insert-leaf 1) ; -> 20211649699328972427040417540848848882630537175401544736520822735123291360599
 
 (env-gasmodel "table")
 (env-gaslimit 10000000)
@@ -69,8 +69,8 @@
 
 (transact {
     ; args
-    "root": "OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c",
-    "outputCommitments":["4" "5"],
+    "root": 20211649699328972427040417540848848882630537175401544736520822735123291360599,
+    "outputCommitments":[4 5],
     "publicAmount":10.0,
     "extDataHash": "5Q1vrajemSYJkjNavhhXrBeonRnAUJ3pMV_PEBhyyEM",
     "tokenHash":"xREP4WsVRQ0HU5X-wjW1H2KhpA2RM2Qtc-T7K9XFvD0"
@@ -186,8 +186,8 @@
 
 (transact {
     ; args
-    "root": "OKCZZGtqfiSv896M7Mz-xp_LHrhOA4t-IlBndTuL-6c",
-    "outputCommitments":["4" "5"],
+    "root": 20211649699328972427040417540848848882630537175401544736520822735123291360599,
+    "outputCommitments":[4 5],
     "publicAmount": 21888242871839275222246405745257275088548364400416034343698204186575808495627.0,
     "extDataHash": "ycMvXYGguNryT9m7iREcHwZSWK2S4YEjaqyHpyfw4Xw",
     "tokenHash":"xREP4WsVRQ0HU5X-wjW1H2KhpA2RM2Qtc-T7K9XFvD0"
