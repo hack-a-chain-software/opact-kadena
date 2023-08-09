@@ -39,9 +39,6 @@
     (defun insert-root (key:string value:string)
         (write roots key { "value": value }))
 
-    (defun poseidon-hash (left:integer right:integer)
-        (poseidon-hash left right))
-
     (defun blake-hash (left:string right:string)
         (hash [left right]))
 
@@ -117,7 +114,7 @@
                         [(poseidon-zeros <%= i - 1 %>)])
                     ))
 
-                    (current_level_hash (poiseidon-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
+                    (current_level_hash (poseidon-hash (at 'left lr_<%= i %>) (at 'right lr_<%= i %>)))
 
                     (current_index (/ current_index 2))
                 <% } %>
