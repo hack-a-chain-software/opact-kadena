@@ -81,7 +81,7 @@
         )
     )
 
-    (defun is-known-root (root:string)
+    (defun is-known-root (root:integer)
         (
             let*
             (
