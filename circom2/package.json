@@ -19,13 +19,6 @@
     "circuit:setup": "npm run circuit:compile && npm run fullsetup",
     "circuit:tests": "mkdir -p out_tests && cd out_tests && circom ../test/circuits/test_utxo.circom --r1cs --wasm --sym --c && circom ../test/circuits/test_merkleproofposeidon.circom --r1cs --wasm --sym --c"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hack-a-chain-software/kadena-product.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "keywords": [
     "zk",
     "private",

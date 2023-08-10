@@ -5,7 +5,7 @@ A JavaScript implementation using the Poseidon hash function and a zero-knowledg
 ## Installation
 
 ```bash
-npm install @hack-a-chain-software/kadena-product
+pnpm add @hack-a-chain-software/kadena-product
 ```
 
 ## Usage
