@@ -1,7 +1,7 @@
 {
-  "name": "@hack-a-chain-software/kadena-product",
-  "version": "0.0.6",
-  "description": "A library for creating and verifying private transactions",
+  "name": "circuits",
+  "version": "0.0.1",
+  "description": "Circuits for the Opact Wallet project",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
@@ -25,12 +25,6 @@
     "transaction",
     "cryptocurrency"
   ],
-  "author": "Opact",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/hack-a-chain-software/kadena-product/issues"
-  },
-  "homepage": "https://github.com/hack-a-chain-software/kadena-product#readme",
   "dependencies": {
     "assert": "^2.0.0",
     "big-integer": "^1.6.51",

@@ -1,0 +1,62 @@
+<mxfile host="65bd71144e">
+    <diagram id="ijcBP2GxRsLBMBCO8CB2" name="smart-contract">
+        <mxGraphModel dx="1335" dy="519" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="18" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=#151219;fontSize=14;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry width="850" height="500" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="1" source="7" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=14;" edge="1" parent="1" source="2">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="680" y="140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="2. Users can send funds from within&amp;nbsp;&lt;br&gt;Opact Wallet to normal external accounts.&lt;br&gt;Everyone can see who received and how much.&lt;br&gt;However no one can see the origin of&lt;br&gt;the deposit." style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="15">
+                    <mxGeometry x="-0.2021" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-63" y="-61" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=14;" edge="1" parent="1" source="2">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="680" y="390" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="2" value="Opact Wallet&lt;br style=&quot;font-size: 14px;&quot;&gt;Contract" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="365" y="210" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="1" source="3" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="User 1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="90" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;fontSize=14;" edge="1" parent="1" source="6">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="360" y="240" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="1. Users deposit funds to contract.&lt;br&gt;Everyone can see who deposited&lt;br&gt;and how much was deposited.&lt;br&gt;However no one can see the &lt;br&gt;destination of the deposit." style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="9">
+                    <mxGeometry x="-0.3647" y="1" relative="1" as="geometry">
+                        <mxPoint x="54" y="75" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="User 2" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="220" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="User 3" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="350" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="User 5" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="690" y="350" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="User 4" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="690" y="100" width="30" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
