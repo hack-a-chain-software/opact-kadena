@@ -1,9 +1,9 @@
-import { buildPoseidon as buildPoseidonWasm } from "circomlibjs";
+import { buildPoseidonReference } from "circomlibjs";
 import { fr_random, u160_random, get_pubkey } from "./utils.js";
 import assert from "assert";
 import _ from "lodash";
 
-const poseidon = await buildPoseidonWasm();
+const poseidon = await buildPoseidonReference();
 const MIN_AMOUNT = -1n << 240n;
 const MAX_AMOUNT = 1n << 240n;
 export const PROOF_LENGTH = 32;

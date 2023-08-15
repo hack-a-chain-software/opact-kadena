@@ -1,8 +1,8 @@
 import { fr_random } from "./utils.js";
-import { buildPoseidon as buildPoseidonWasm } from "circomlibjs";
+import { buildPoseidonReference } from "circomlibjs";
 import assert from "assert";
 
-const poseidon = await buildPoseidonWasm();
+const poseidon = await buildPoseidonReference();
 const maxheight = 256;
 const merkleDefaults = Array(maxheight);
 merkleDefaults[0] = 0n;
