@@ -4,7 +4,6 @@ export const nuxtIcon = {
     near: 'Near',
     menu: 'Menu',
     logo: 'Logo',
-    send: 'Send',
     arrow: 'Arrow',
     close: 'Close',
     github: 'Github',
@@ -19,7 +18,33 @@ export const nuxtIcon = {
     airplane: 'Airplane',
     security: 'Security',
     walletConnect: 'WalletConnect',
-    opactLogo: 'OpactLogo'
+    opactLogo: 'OpactLogo',
+
+    // App Icons
+    qr: 'QR',
+    pen: 'Pen',
+    add: 'Add',
+    copy: 'Copy',
+    edit: 'Edit',
+    list: 'List',
+    send: 'Send',
+    radio: 'Radio',
+    share: 'Share',
+    chart: 'Chart',
+    search: 'Search',
+    filter: 'Filter',
+    hidden: 'Hidden',
+    blocks: 'Blocks',
+    wallet: 'Wallet',
+    visible: 'Visible',
+    receive: 'Receive',
+    settings: 'Settings',
+    calendar: 'Calendar',
+    arrowRight: 'ArrowRight',
+    radioActive: 'RadioActive',
+    information: 'Information',
+    chevronLeft: 'ChevronLeft',
+    notification: 'Notification'
   }
 }
 

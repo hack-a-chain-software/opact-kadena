@@ -43,11 +43,36 @@ module.exports = {
       colors: {
         dark: {
           blue: '#060A0F'
-        }
+        },
+
+        1: '',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        6: '',
+        7: ''
       },
 
       fontSize: {
-        //
+        giant: ['72px', '86.4px'],
+        display: ['60px', '72px'],
+        xxxl: ['48px', '57.6px'],
+        xxl: ['36px', '43.2px'],
+        xl: ['28px', '39.2px'],
+        lg: ['24px', '33.6px'],
+        md: ['22px', '30.8px'],
+        sm: ['18px', '25.2px'],
+        xs: ['16px', '22.4px'],
+        xxs: ['14px', '19.6px'],
+        xxxs: ['12px', '16.8px'],
+        nano: ['8px', '9.6px']
+      },
+
+      fontWeight: {
+        medium: 500,
+        regular: 400,
+        semibold: 700
       },
 
       screens: {
