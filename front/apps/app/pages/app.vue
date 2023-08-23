@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useWalletStore } from '~/apps/auth/stores/wallet'
-
 definePageMeta({
   layout: 'app',
   middleware: 'auth'
@@ -9,16 +7,12 @@ definePageMeta({
 useHead({
   title: 'App'
 })
-
-const router = useRouter()
-
-const { encrypt } = useWalletStore()
 </script>
 
 <template>
-  <div class="">
-    <div class="max-w-[580px] pt-2">
-      <div>
+  <div class="h-full mt-[-38px]">
+    <div class="max-w-[580px] pt-2 h-full">
+      <!-- <div>
         <h2 class="text-white font-title text-[40px]">
           Encrypt
         </h2>
@@ -40,17 +34,11 @@ const { encrypt } = useWalletStore()
 
       <div class="flex flex-col space-y-[12px]">
         <Button
-          text="Encrypt"
-          class="!h-[32px]"
-          @click="encrypt()"
-        />
-
-        <Button
           text="Deposit"
           class="!h-[32px]"
           @click="router.push('/deposit')"
         />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

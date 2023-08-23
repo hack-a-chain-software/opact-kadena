@@ -37,7 +37,9 @@ module.exports = {
       backgroundImage: {
         'card-gradient': 'linear-gradient(181.92deg, #0D1116 5.93%, #202428 98.38%)',
         'inverted-card-gradient': 'linear-gradient(181.92deg, #202428 5.93%, #0D1116 98.38%)',
-        'opact-gradient': 'linear-gradient(264.6deg, #AD51FF 12.18%, #1A92FF 91.42%)'
+        'opact-gradient': 'linear-gradient(264.6deg, #AD51FF 12.18%, #1A92FF 91.42%)',
+        'blue-gradient': 'linear-gradient(225deg, #1B6DFF 6.97%, #1A92FF 95.31%)',
+        'purple-gradient': 'linear-gradient(225deg, #8050E4 6.97%, #AD51FF 95.31%)'
       },
 
       colors: {
@@ -45,13 +47,33 @@ module.exports = {
           blue: '#060A0F'
         },
 
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        6: '',
-        7: ''
+        blue: {
+          300: '#1A92FF',
+          400: '#1B6DFF',
+          500: '#1D48FF',
+          800: '#072540',
+          950: '#060A0F'
+        },
+
+        purple: {
+          300: '#AD51FF',
+          500: '#8050E4',
+          800: '#2A2468'
+        },
+
+        gray: {
+          700: '#383B3F',
+          800: '#202428'
+        },
+
+        font: {
+          1: '#FAFAFA',
+          2: '#B8B8B8'
+        },
+
+        green: {
+          500: '#38A169'
+        }
       },
 
       fontSize: {

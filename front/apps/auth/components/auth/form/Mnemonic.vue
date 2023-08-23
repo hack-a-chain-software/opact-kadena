@@ -15,34 +15,47 @@ onMounted(() => {
 
 <template>
   <div class="text-white max-w-[450px]">
-    <div>
+    <div
+      class="
+        w-full
+        py-4
+        flex
+        justify-center
+        relative
+        items-center
+      "
+    >
       <button
-        class="flex items-center space-x-[4px]"
-        @click.prevent="currentStep = 'method'"
+        class="
+          flex
+          items-center
+          space-x-[4px]
+          h-6
+          absolute
+          top-4
+          left-0
+        "
+        @click.prevent="currentStep = 'connect'"
       >
-        <Icon name="chevron" class="rotate-[90deg]" />
-
-        <span class="text-title text-[16px]"> Back </span>
+        <Icon name="chevronLeft" class="h-6 w-6" />
       </button>
+
+      <div>
+        <h1 class="text-xs text-font-1 font-medium">
+          Create Wallet
+        </h1>
+      </div>
     </div>
 
-    <div class="pt-2">
+    <div class="pt-[32px]">
       <div>
-        <h2 class="text-white font-title text-[40px]">
+        <h2 class="text-md text-font-1 font-medium">
           Setup Your Secure Passphrase
         </h2>
       </div>
 
-      <div class="py-[25px]">
-        <p
-          class="
-            pb-[25px]
-            text-[18px]
-            font-[500]
-            leading-[26px]
-            text-[#BDBDBD]
-          "
-        >
+      <div class="pt-4 pb-[32px]">
+        <p class="text-font-2 text-xs font-regular">
           Write down the following words in order and keep
           them somewhere safe. Anyone with access to it will
           also have access to your account! You’ll be asked
@@ -54,80 +67,80 @@ onMounted(() => {
         v-if="wallet.mnemonic"
         class="
           grid grid-cols-3
-          gap-[12px]
+          gap-y-[12px] gap-x-[8px]
           relative
           group
-          cursor-pointer
         "
       >
         <div
-          :key="word + i"
           v-for="(word, i) in wallet.mnemonic.split(' ')"
-          class="
-            p-[2px]
-            relative
-            rounded-[12px]
-            h-[42px]
-            bg-card-gradient
-          "
+          :key="word + i"
+          class="p-3 rounded-[8px] bg-gray-700 space-x-2"
         >
-          <div
+          <span
             class="
-              space-x-[8px]
-              h-full
-              w-full
-              rounded-[12px]
-              flex
-              items-center
-              pl-[8px]
-              bg-inverted-card-gradient
+              select-none
+              text-xxs
+              font-medium
+              text-font-1
             "
-          >
-            <span v-text="i + 1" class="select-none" />
+            v-text="i + 1"
+          />
 
-            <span v-text="word" />
-          </div>
-        </div>
-
-        <div
-          class="
-            hidden
-            absolute
-            top-0
-            z-[10]
-            inset-0
-            group-hover:flex
-            items-center
-            backdrop-blur-sm
-            justify-center
-            bg-white/5
-            rounded-[12px]
-            group-active:bg-white/10
-          "
-        >
-          <button
-            @click.prevent="wallet.copyToClipboard()"
+          <span
             class="
-              flex
-              items-center
-              justify-center
-              space-x-[4px]
-              w-full
-              h-full
+              select-none
+              text-xxs
+              font-medium
+              text-font-1
             "
-          >
-            <Icon name="menu" class="w-max h-[28px]" />
-
-            <span class="block"> Copy to Clipboard </span>
-          </button>
+            v-text="word"
+          />
         </div>
       </div>
 
-      <div class="pt-[30px]">
-        <Button
-          text="Continue"
-          @click="currentStep = 'verify'"
-        />
+      <div
+        class="pt-[44px] flex items-center justify-center"
+      >
+        <button
+          @click.prevent="wallet.copyToClipboard()"
+          class="
+            px-4
+            py-2
+            rounded-[8px]
+            bg-gray-700
+            flex
+            space-x-2
+          "
+        >
+          <span class="text-xs font-regular opacity-[0.9]">
+            Copy
+          </span>
+
+          <Icon name="copy" class="h-6 w-6" />
+        </button>
+      </div>
+
+      <div class="pt-[137px]">
+        <button
+          @click.prevent="currentStep = 'verify'"
+          class="
+            w-full
+            flex
+            items-center
+            justify-center
+            bg-blue-gradient
+            h-[44px]
+            py-3
+            px-4
+            rounded-[12px]
+            relative
+          "
+        >
+          <span class="text-font-1 text-xs font-medium">
+            Continue
+          </span>
+        </button>
       </div>
     </div>
   </div>

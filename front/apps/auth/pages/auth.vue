@@ -14,7 +14,7 @@ const currentStep = useAuthCurrentStep()
 </script>
 
 <template>
-  <div class="my-auto mt-[calc((100vh-650px)/2)]">
+  <div>
     <Transition name="fade" mode="out-in">
       <component :is="form[currentStep]" />
     </Transition>

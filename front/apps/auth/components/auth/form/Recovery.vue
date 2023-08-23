@@ -41,34 +41,47 @@ const toPaste = async () => {
 
 <template>
   <div class="text-white max-w-[450px]">
-    <div>
+    <div
+      class="
+        w-full
+        py-4
+        flex
+        justify-center
+        relative
+        items-center
+      "
+    >
       <button
-        class="flex items-center space-x-[4px]"
+        class="
+          flex
+          items-center
+          space-x-[4px]
+          h-6
+          absolute
+          top-4
+          left-0
+        "
         @click.prevent="currentStep = 'connect'"
       >
-        <Icon name="chevron" class="rotate-[90deg]" />
-
-        <span class="text-title text-[16px]"> Back </span>
+        <Icon name="chevronLeft" class="h-6 w-6" />
       </button>
+
+      <div>
+        <h1 class="text-xs text-font-1 font-medium">
+          Recover Wallet
+        </h1>
+      </div>
     </div>
 
-    <div class="pt-2">
+    <div class="pt-[32px]">
       <div>
-        <h2 class="text-white font-title text-[40px]">
-          Recovery Your Wallet
+        <h2 class="text-md text-font-1 font-medium">
+          Setup Your Secure Passphrase
         </h2>
       </div>
 
-      <div class="py-[25px]">
-        <p
-          class="
-            pb-[25px]
-            text-[18px]
-            font-[500]
-            leading-[26px]
-            text-[#BDBDBD]
-          "
-        >
+      <div class="pt-4 pb-[32px]">
+        <p class="text-font-2 font-regular text-xs">
           Paste your passphrase below to recover your
           account.
         </p>
@@ -86,30 +99,27 @@ const toPaste = async () => {
         <div
           :key="'recovery-word-' + i"
           v-for="(_, i) in 12"
-          class="
-            p-[2px]
-            relative
-            rounded-[12px]
-            h-[42px]
-            bg-card-gradient
-          "
+          class="p-3 rounded-[8px] bg-gray-700 space-x-2"
         >
-          <div
+          <span
             class="
-              space-x-[8px]
-              h-full
-              w-full
-              rounded-[12px]
-              flex
-              items-center
-              pl-[8px]
-              bg-inverted-card-gradient
+              select-none
+              text-xxs
+              font-medium
+              text-font-1
             "
-          >
-            <span v-text="i + 1" class="select-none" />
+            v-text="i + 1"
+          />
 
-            <span v-text="splited[i] || '-'" />
-          </div>
+          <span
+            class="
+              select-none
+              text-xxs
+              font-medium
+              text-font-1
+            "
+            v-text="splited[i] || '-'"
+          />
         </div>
 
         <div
@@ -146,12 +156,30 @@ const toPaste = async () => {
         </div>
       </div>
 
-      <div class="pt-[30px]">
-        <Button
-          text="Recovery"
-          @click="recovery()"
+      <div class="pt-[265px]">
+        <button
           :disabled="!!!data.phrase"
-        />
+          class="
+            w-full
+            flex
+            items-center
+            justify-center
+            h-[44px]
+            py-3
+            px-4
+            rounded-[12px]
+            relative
+            disabled:cursor-not-allowed
+          "
+          :class="
+            !!!data.phrase
+              ? 'bg-gray-700'
+              : 'bg-blue-gradient'
+          "
+          @click.prevent="recovery()"
+        >
+          <span class="text-font-1"> Create Wallet </span>
+        </button>
       </div>
     </div>
   </div>

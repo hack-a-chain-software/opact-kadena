@@ -24,18 +24,14 @@ const selected = ref(plans[0])
 
 <template>
   <RadioGroup v-model="selected">
-    <RadioGroupLabel
-class="sr-only"
-      >Server size</RadioGroupLabel
-    >
     <div class="space-y-[10px]">
       <RadioGroupOption
-        as="template"
         v-for="plan in plans"
         :key="plan.name"
+        v-slot="{ active, checked, disabled }"
+        as="template"
         :value="plan"
         :disabled="plan.disabled"
-        v-slot="{ active, checked, disabled }"
       >
         <div
           :class="[
