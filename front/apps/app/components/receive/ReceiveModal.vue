@@ -2,7 +2,7 @@
 import {
   Dialog,
   DialogPanel,
-  DialogTitle,
+  DialogTitle
 } from '@headlessui/vue'
 
 withDefaults(

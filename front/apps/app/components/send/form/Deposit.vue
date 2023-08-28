@@ -12,7 +12,6 @@ import WalletConnector from '../../deposit/form/WalletConnector.vue'
 const isOpen = ref(false)
 const isConnectWalletOpen = ref(false)
 
-
 function setIsOpen (value) {
   isOpen.value = value
 }
