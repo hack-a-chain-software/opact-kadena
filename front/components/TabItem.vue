@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  chain: string;
+  chain?: string;
   id: string;
   name: string;
   icon: string;
@@ -13,10 +13,10 @@ const extension = useExtensions()
 // eslint-disable-next-line vue/no-setup-props-destructure
 const { account } = props.provider
 
-const { step } = useForm()
+const emit = defineEmits(['connected'])
 
 const loginCallback = () => {
-  step.value = 'message'
+  emit('connected')
 }
 </script>
 
@@ -24,39 +24,30 @@ const loginCallback = () => {
   <button
     :disabled="props.disabled"
     :class="[
-      'w-full rounded-xl text-white p-3 text-left',
-      'border-[#ffffffcc] border-[1px] flex justify-between items-center space-x-[4px] cursor-default',
-      disabled && '!opacity-[0.9] !cursor-not-allowed',
+      'h-[52px] w-full text-white text-left rounded-[8px] bg-gray-700',
+      'flex justify-between items-center space-x-[4px] cursor-default px-4',
       !account && 'hover:opacity-[0.8] !cursor-pointer ',
+      account && 'border border-blue-300',
     ]"
     @click.prevent="
       extension.login(props.provider, loginCallback)
     "
   >
-    <div class="flex items-center">
-      <Icon :name="props.icon" class="w-[32px]" />
+    <div class="flex items-center gap-2">
+      <Icon :name="props.icon" class="w-9 h-9" />
 
-      <span v-text="props.name" />
+      <span
+        v-text="props.name"
+        class="text-xs font-regular text-font-1"
+      />
     </div>
 
-    <div v-if="props.disabled">
-      <span> Disabled </span>
-    </div>
-
-    <div
+    <button
       v-if="account"
-      class="flex items-center space-x-[12px]"
+      class="text-xxxs text-blue-300"
+      @click.prevent="extension.logout()"
     >
-      <div>
-        <span> Connected </span>
-      </div>
-
-      <button
-        class="hover:opacity-80"
-        @click.prevent.stop="extension.logout()"
-      >
-        <Icon name="logout" />
-      </button>
-    </div>
+      <span> Connected </span>
+    </button>
   </button>
 </template>

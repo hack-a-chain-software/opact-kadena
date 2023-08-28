@@ -2,7 +2,7 @@
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/apps/auth/stores/wallet'
-import form from '../components/deposit/form'
+import form from '../components/send/form'
 
 definePageMeta({
   layout: 'form',
@@ -10,10 +10,10 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Deposit'
+  title: 'Send'
 })
 
-const { step } = useForm()
+const { step } = useSendForm()
 
 const wallet = useWalletStore()
 

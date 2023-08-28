@@ -6,7 +6,7 @@ export interface Form {
 }
 
 const baseForm = {
-  foo: 'chain'
+  foo: 'amount'
 }
 
 /**
@@ -14,7 +14,7 @@ const baseForm = {
  */
 const form = shallowRef<Form>({ ...baseForm })
 
-const step = shallowRef<string>('chain')
+const step = shallowRef<string>('amount')
 
 export const useForm = () => {
   const setForm = (_form: Partial<Form>) => {

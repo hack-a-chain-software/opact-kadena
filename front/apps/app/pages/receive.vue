@@ -2,7 +2,7 @@
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/apps/auth/stores/wallet'
-import form from '../components/deposit/form'
+import Create from '../components/receive/form/Create.vue'
 
 definePageMeta({
   layout: 'form',
@@ -10,10 +10,8 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Deposit'
+  title: 'Receive'
 })
-
-const { step } = useForm()
 
 const wallet = useWalletStore()
 
@@ -29,7 +27,7 @@ onBeforeMount(() => {
 <template>
   <div class="text-white">
     <Transition name="fade" mode="out-in">
-      <component :is="form[step]" />
+      <Create />
     </Transition>
   </div>
 </template>

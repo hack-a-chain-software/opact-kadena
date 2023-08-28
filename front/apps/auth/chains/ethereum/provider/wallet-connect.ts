@@ -9,7 +9,16 @@ import {
 import type { Web3Modal } from '@web3modal/html'
 import { getWeb3Modal } from '../util'
 
+const metadata = {
+  id: 'provider:wallet-connect',
+  name: 'Wallet Connector',
+  icon: 'walletConnect',
+  disabled: false
+}
+
 export const useProvider = () => {
+  const id = 'provider:wallet-connect'
+
   const callback = ref<any>()
 
   const account = ref<any>('')
@@ -23,6 +32,8 @@ export const useProvider = () => {
       modal.subscribeEvents((event) => {
         if (event.name === 'ACCOUNT_CONNECTED') {
           account.value = getAccount()
+
+          console.log(account.value)
 
           callback.value()
         }
@@ -49,7 +60,9 @@ export const useProvider = () => {
   const sendTransaction = () => {}
 
   return {
+    id,
     account,
+    metadata,
     connect,
     signMessage,
     sendTransaction,
@@ -58,10 +71,7 @@ export const useProvider = () => {
 }
 
 export default {
-  id: 'provider:wallet-connect',
-  name: 'Wallet Connector',
-  icon: 'walletConnect',
-  disabled: false,
+  ...metadata,
 
   provider: useProvider()
 }

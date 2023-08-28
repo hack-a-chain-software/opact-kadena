@@ -78,6 +78,8 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/wallet': { prerender: true },
     '/tickets': { prerender: true },
+    '/receive': { prerender: false },
+    '/app': { prerender: false },
     '/auth': { prerender: false }
   }
 })

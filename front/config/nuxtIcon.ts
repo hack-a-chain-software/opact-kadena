@@ -44,6 +44,7 @@ export const nuxtIcon = {
     radioActive: 'RadioActive',
     information: 'Information',
     chevronLeft: 'ChevronLeft',
+    minilogo: 'MiniLogo',
     notification: 'Notification'
   }
 }

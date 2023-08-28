@@ -9,6 +9,13 @@ export const useExtensions = () => {
   const login = async (newProvider: any, callback: any) => {
     // const { store } = useAuthStorage()
 
+    if (
+      provider.value &&
+      provider.value.id === newProvider.id
+    ) {
+      return callback()
+    }
+
     try {
       await newProvider.connect(callback)
 
