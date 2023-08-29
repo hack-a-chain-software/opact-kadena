@@ -1,22 +1,21 @@
-import { shallowRef, ref } from 'vue'
+import { ref } from 'vue'
 
-export const usexWalletAdapter = () => {
-  const account = ref<string>()
-  const provider = shallowRef<undefined>()
+const metadata = {
+  name: 'eckoWALLET',
+  key: 'provider:kda:adapter:xwallet',
+  icon: 'ecko',
+  disabled: false
+}
 
-  const metadata = {
-    name: 'eckoWALLET',
-    key: 'provider:kda:adapter:xwallet',
-    icon: 'ecko',
-    disabled: false
-  }
+export const useProvider = () => {
+  const id = 'provider:ecko-wallet'
 
-  if (!process.client) {
-    return {
-      metadata,
-      provider,
-      account
-    }
+  const callback = ref<any>()
+
+  const account = ref<any>('')
+
+  const init = () => {
+    //
   }
 
   const connect = async (loginCallback = () => {}) => {
@@ -26,7 +25,7 @@ export const usexWalletAdapter = () => {
     })
 
     account.value = accountResult
-
+    callback.value = loginCallback
     loginCallback()
   }
 
@@ -66,13 +65,18 @@ export const usexWalletAdapter = () => {
   }
 
   return {
-    provider,
+    id,
     account,
+    metadata,
+
+    init,
     connect,
     signMessage,
-    disconnect,
-    metadata
+    disconnect
   }
 }
 
-export default usexWalletAdapter
+export default {
+  ...metadata,
+  provider: useProvider()
+}

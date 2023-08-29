@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useExtensions } from '~/.nuxt/imports'
 const props = defineProps<{
   chain?: string;
   id: string;

@@ -1,7 +1,7 @@
-import usexWalletAdapter from './adapters/xwallet'
+import eckoWallet from './adapters/xwallet'
 
-export const adapters = {
-  'provider:kda:adapter:xwallet': usexWalletAdapter()
+export const providers = {
+  [eckoWallet.provider.id]: eckoWallet
 } as any
 
-export const getAdapters = (key: string) => adapters[key]
+export const getProvider = (key: string) => providers[key]
