@@ -120,7 +120,10 @@ const router = useRouter()
     <div class="pt-[24px] flex space-x-[24px]">
       <button
         @click.prevent="data.tab = 'tokens'"
-        :class="data.tab === 'tokens' && 'border-b-[1px] border-blue-400 !opacity-100'"
+        :class="
+          data.tab === 'tokens' &&
+          'border-b-[1px] border-blue-400 !opacity-100'
+        "
         class="px-2 pb-2 opacity-[0.5]"
       >
         <span class="text-sm font-medium text-font-1">
@@ -130,7 +133,10 @@ const router = useRouter()
 
       <button
         @click.prevent="data.tab = 'nfts'"
-        :class="data.tab === 'nfts' && 'border-b-[1px] border-blue-400 !opacity-100'"
+        :class="
+          data.tab === 'nfts' &&
+          'border-b-[1px] border-blue-400 !opacity-100'
+        "
         class="px-2 pb-2 opacity-[0.5] cursor-not-allowed"
       >
         <span class="text-sm font-medium text-font-2">
@@ -141,7 +147,8 @@ const router = useRouter()
 
     <div
       v-if="data.tab === 'tokens'"
-      class="pt-[16px] space-y-3">
+      class="pt-[16px] space-y-3"
+    >
       <div
         class="
           px-4
@@ -256,21 +263,13 @@ const router = useRouter()
         v-for="n in 8"
         class="pb-4 px-2 pt-2 rounded-[8px] bg-gray-800"
       >
-        <img
-          src="/nft.png"
-          class="rounded-[8px]"
-        />
+        <img src="/nft.png" class="rounded-[8px]" />
 
-        <div
-          class="pt-3"
-        >
-          <span
-            class="text-font-1 text-xxs"
-          >
+        <div class="pt-3">
+          <span class="text-font-1 text-xxs">
             Back in the Apes #9786
           </span>
         </div>
-
       </div>
     </div>
 
@@ -288,9 +287,7 @@ const router = useRouter()
         border-t-[0.5px] border-[#5F6267]
       "
     >
-      <button
-        class="space-y-[4px]"
-      >
+      <button class="space-y-[4px]">
         <div>
           <Icon
             name="wallet"

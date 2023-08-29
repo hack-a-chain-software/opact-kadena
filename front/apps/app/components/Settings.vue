@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { useWalletStore } from '~/apps/auth/stores/wallet'
 
-const wallet = useWalletStore()
-
 import {
   TransitionRoot,
   TransitionChild,
@@ -10,6 +8,8 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
+
+const wallet = useWalletStore()
 
 withDefaults(
   defineProps<{
@@ -25,7 +25,11 @@ const emit = defineEmits(['close'])
 
 <template>
   <TransitionRoot as="template" :show="show">
-    <Dialog as="div" class="relative z-10" @close="emit('close')">
+    <Dialog
+      as="div"
+      class="relative z-10"
+      @close="emit('close')"
+    >
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -84,11 +88,23 @@ const emit = defineEmits(['close'])
 
               <button
                 @click.prevent="wallet.logout()"
-                class="w-full p-4 bg-gray-700 flex items-center justify-between rounded-[8px]"
+                class="
+                  w-full
+                  p-4
+                  bg-gray-700
+                  flex
+                  items-center
+                  justify-between
+                  rounded-[8px]
+                "
               >
                 <div>
                   <span
-                    class="text-xs opacity-[0.9] text-font-1"
+                    class="
+                      text-xs
+                      opacity-[0.9]
+                      text-font-1
+                    "
                   >
                     Logout
                   </span>
