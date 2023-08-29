@@ -13,6 +13,7 @@ useHead({
 })
 
 const data = reactive({
+  tab: 'tokens',
   showReceiveModal: false
 })
 
@@ -117,22 +118,30 @@ const router = useRouter()
     </div>
 
     <div class="pt-[24px] flex space-x-[24px]">
-      <div class="px-2 pb-2 border-b-[1px] border-blue-400">
+      <button
+        @click.prevent="data.tab = 'tokens'"
+        :class="data.tab === 'tokens' && 'border-b-[1px] border-blue-400 !opacity-100'"
+        class="px-2 pb-2 opacity-[0.5]"
+      >
         <span class="text-sm font-medium text-font-1">
           Tokens
         </span>
-      </div>
+      </button>
 
-      <div
+      <button
+        @click.prevent="data.tab = 'nfts'"
+        :class="data.tab === 'nfts' && 'border-b-[1px] border-blue-400 !opacity-100'"
         class="px-2 pb-2 opacity-[0.5] cursor-not-allowed"
       >
         <span class="text-sm font-medium text-font-2">
           NFTs
         </span>
-      </div>
+      </button>
     </div>
 
-    <div class="pt-[16px] space-y-3">
+    <div
+      v-if="data.tab === 'tokens'"
+      class="pt-[16px] space-y-3">
       <div
         class="
           px-4
@@ -239,6 +248,33 @@ const router = useRouter()
     </div>
 
     <div
+      v-else
+      class="pb-[90px] grid grid-cols-2 gap-3 pt-3"
+    >
+      <div
+        :key="n"
+        v-for="n in 8"
+        class="pb-4 px-2 pt-2 rounded-[8px] bg-gray-800"
+      >
+        <img
+          src="/nft.png"
+          class="rounded-[8px]"
+        />
+
+        <div
+          class="pt-3"
+        >
+          <span
+            class="text-font-1 text-xxs"
+          >
+            Back in the Apes #9786
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+    <div
       class="
         py-3
         fixed
@@ -248,10 +284,13 @@ const router = useRouter()
         flex
         px-[61px]
         justify-between
+        bg-dark-blue
         border-t-[0.5px] border-[#5F6267]
       "
     >
-      <button class="space-y-[4px]">
+      <button
+        class="space-y-[4px]"
+      >
         <div>
           <Icon
             name="wallet"

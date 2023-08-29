@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
+import Settings from '../components/Settings.vue'
 import { useWalletStore } from '~/apps/auth/stores/wallet'
 
 const wallet = useWalletStore()
 
 const { connected } = storeToRefs(wallet)
+
+const data = reactive({
+  showSettings: false
+})
 
 onBeforeMount(() => {
   if (!connected.value) {
@@ -79,7 +84,7 @@ onBeforeMount(() => {
               items-center
               justify-center
             "
-            @click.prevent="wallet.logout()"
+            @click.prevent="data.showSettings = true"
           >
             <Icon
               name="settings"
@@ -93,5 +98,10 @@ onBeforeMount(() => {
         <slot />
       </div>
     </template>
+
+    <Settings
+      :show="data.showSettings"
+      @close="data.showSettings = false"
+    />
   </div>
 </template>
