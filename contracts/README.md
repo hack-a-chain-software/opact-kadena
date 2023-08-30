@@ -46,6 +46,14 @@ Plonk is another zero-knowledge proof scheme, which is quite efficient and versa
 
 A Merkle Tree is a binary tree of hashes, commonly used in computer science, particularly in blockchains, to maintain data integrity and privacy. The Merkle Tree module in this project uses an EJS template and input data to generate code for handling Merkle Trees. The `merkle-tree.ejs.repl` file is the EJS template and the `data.json` file is the input data for this template. The generated code is stored in the `lib.repl` file.
 
+### Transact
+
+Transact is the main contract for Opact Wallet. It is a smart contract that allows users to create and manage their wallets.
+
+It implements methods to receive deposits, perform withdrawals of assets and maintaining the contract's state - represented by the merkle tree. All methods require valid ZK proofs based on the Opact Wallet circuit to function.
+
+To better understand the circuit logic refer to the circuits package and the main documentation of the protocol at root [README.md](../readme.md).
+
 ### Why EJS templates?
 
 EJS (Embedded JavaScript) is a simple JavaScript template library. It lets you generate HTML (or any other output) using plain JavaScript. In this project, we use EJS templates because they allow us to use control flow statements like `for`, `while`, and `if`, which are not directly available in the Pact language. By using EJS templates and input data from `.json` files, we can generate complex scripts dynamically.
