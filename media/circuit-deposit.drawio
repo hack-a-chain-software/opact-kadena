@@ -1,0 +1,37 @@
+<mxfile host="65bd71144e">
+    <diagram id="_BN_sl4cACrqXgh4oI2z" name="Page-1">
+        <mxGraphModel dx="1335" dy="519" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#18141D" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="27" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=default;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry width="850" height="440" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="Opact Wallet Smart Contract" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontSize=14;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="710" y="220" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="1" source="19" target="17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="User 1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelBackgroundColor=none;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="220" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="&lt;h1&gt;Deposit&lt;/h1&gt;&lt;p&gt;User deposits 10 KDA to the Contract&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=default;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;labelBackgroundColor=none;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry y="10" width="260" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="1. User generates a UTXO representing their deposit:&lt;br&gt;&lt;br&gt;&lt;div style=&quot;color: rgb(204, 204, 204); font-family: &amp;quot;Droid Sans Mono&amp;quot;, &amp;quot;monospace&amp;quot;, monospace; line-height: 19px;&quot;&gt;&lt;div&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot;color: #9cdcfe;&quot;&gt;&quot;token&quot;&lt;/span&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;: &lt;/span&gt;&lt;span style=&quot;color: #ce9178;&quot;&gt;hash(KDA)&lt;/span&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot;color: #9cdcfe;&quot;&gt;&quot;amount&quot;&lt;/span&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;: &lt;/span&gt;&lt;span style=&quot;color: #ce9178;&quot;&gt;10&lt;/span&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot;color: #9cdcfe;&quot;&gt;&quot;pubkey&quot;&lt;/span&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;: &lt;/span&gt;&lt;span style=&quot;color: #ce9178;&quot;&gt;0x123&lt;/span&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot;color: #9cdcfe;&quot;&gt;&quot;blinding&quot;&lt;/span&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;: &lt;/span&gt;&lt;span style=&quot;color: #ce9178;&quot;&gt;264886&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: #d4d4d4;&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="110" y="260" width="210" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="2. User hashes their UTXO, obtaining `hash(UTXO)` and encrypts their UTXO, obtaining `encrypt(UTXO)`&amp;nbsp;" style="text;html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="215" y="150" width="210" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="3. User generates Zero Knowledge proof affirming that&lt;br&gt;- The UTXO of hash `hash(UTXO) contains exactly 10 KDA" style="text;html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="360" y="260" width="240" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="4. User submits the proof to the contract. The contract evaluates the proof to be valid and adds `hash(UTXO)` to the merkle tree in its on-chain state and emits an event with `hash(UTXO)` and `encrypt(UTXO)`" style="text;html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=14;perimeterSpacing=0;" vertex="1" parent="1">
+                    <mxGeometry x="450" y="100" width="250" height="130" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -30,3 +30,6 @@ pact
 scripts
 log
 .deploy
+.vercel
+out
+out_tests
