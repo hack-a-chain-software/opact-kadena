@@ -22,3 +22,5 @@ wip
 **/.env
 **/node_modules
 .vercel
+out
+out_tests

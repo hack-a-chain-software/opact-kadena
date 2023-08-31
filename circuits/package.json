@@ -1,0 +1,49 @@
+{
+  "name": "circuits",
+  "version": "0.0.1",
+  "description": "Circuits for the Opact Wallet project",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha --experimental-worker --timeout 100000",
+    "build:browser": "npx mkdirp browser; npm run browserify:index",
+    "browserify:index": "npx browserify -d -s txcircuit ./src/index.js > ./browser/txcircuit.js --exclude worker_threads",
+    "circuit:compile": "mkdir -p out && cd out && circom ../circuits/transaction.circom --r1cs --wasm --sym --c",
+    "setup1": "cd out && snarkjs powersoftau new bn128 17 pot12_0000.ptau -v",
+    "setup2": "cd out && snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name=\"First contribution\" -v",
+    "setup3": "cd out && snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v",
+    "setup4": "cd out && snarkjs groth16 setup transaction.r1cs pot12_final.ptau transaction_0000.zkey",
+    "setup5": "cd out && snarkjs zkey contribute transaction_0000.zkey transaction_0001.zkey --name=\"1st Contributor Name\" -v",
+    "setup6": "cd out && snarkjs zkey export verificationkey transaction_0001.zkey verification_key.json",
+    "fullsetup": "npm run setup1 && npm run setup2 && npm run setup3 && npm run setup4 && npm run setup5 && npm run setup6",
+    "circuit:setup": "npm run circuit:compile && npm run fullsetup",
+    "circuit:tests": "mkdir -p out_tests && cd out_tests && circom ../test/circuits/test_utxo.circom --r1cs --wasm --sym --c && circom ../test/circuits/test_merkleproofposeidon.circom --r1cs --wasm --sym --c"
+  },
+  "keywords": [
+    "zk",
+    "private",
+    "transaction",
+    "cryptocurrency"
+  ],
+  "dependencies": {
+    "assert": "^2.0.0",
+    "big-integer": "^1.6.51",
+    "blake2b": "^2.1.3",
+    "circomlib": "^2.0.5",
+    "circomlibjs": "v0.1.7",
+    "lodash": "^4.17.15",
+    "snarkjs_0_1_20": "npm:snarkjs@0.1.20",
+    "snarkjs": "0.7.0",
+    "websnark": "0.0.5",
+    "@types/node": "^20.4.5",
+    "typescript-require": "^0.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^9.1.3",
+    "circom_tester": "^0.0.19"
+  },
+  "files": [
+    "src/"
+  ]
+}
