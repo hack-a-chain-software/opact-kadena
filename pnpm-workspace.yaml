@@ -3,4 +3,4 @@ packages:
   - 'indexer/**'
   - 'contracts'
   - 'terraform'
-  - 'circuits'
+  - 'circom2'
