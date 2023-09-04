@@ -15,10 +15,7 @@
       <Tag> Our Products </Tag>
     </div>
 
-    <div
-      class="pb-6 sm:pb-[38px] lg:pb-[60px]"
-    >
-
+    <div class="pb-6 sm:pb-[38px] lg:pb-[60px]">
       <h2
         class="
           text-[#FAFAFA]
@@ -29,9 +26,7 @@
           sm:text-[56px]
         "
       >
-
         Opact Tickets
-
       </h2>
     </div>
 
