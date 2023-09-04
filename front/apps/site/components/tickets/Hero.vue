@@ -112,6 +112,7 @@ const redirect = (path = 'https://tickets.opact.io') =>
           leading-[21px]
           text-[#F4F4F5] text-center
           lg:text-left
+          !text-[20px]
           max-w-[290px]
           sm:max-w-[440px]
           md:max-w-[620px]

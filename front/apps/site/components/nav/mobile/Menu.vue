@@ -8,6 +8,10 @@ import {
 
 const config = useAppConfig()
 
+const redirect = (path = 'https://tickets.opact.io') => {
+  window.open(path, '_blank')
+}
+
 // const moveTo = (id: string) => {
 //   const element = document.getElementById(id)
 
@@ -107,11 +111,11 @@ const config = useAppConfig()
             </div>
 
             <Button
-              disabled
-              :with-icon="true"
-              variant="primary"
+              with-icon
+              variant="nav"
+              text="Launch App"
+              @click="redirect"
               class="!h-[36px]"
-              text="Coming soon"
             />
           </div>
         </MenuItem>
