@@ -1,10 +1,10 @@
-import { buildPoseidon as buildPoseidonWasm, buildBabyjub } from "circomlibjs";
+import { buildPoseidonReference, buildBabyjub } from "circomlibjs";
 import { fs_random, subgroupDecompress, get_pubkey } from "./utils.js";
 
 import assert from "assert";
 
 const babyJub = await buildBabyjub();
-const poseidon = await buildPoseidonWasm();
+const poseidon = await buildPoseidonReference();
 
 export function encrypt_message(message, pubkey, iv) {
   assert(message.length == 3);

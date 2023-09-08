@@ -55,6 +55,19 @@
         })
     )
 
+    (defun reset()
+        <% for (let i = 0; i < level; i++) { %>
+            (set-filled-subtrees "<%= i %>" (poseidon-zeros <%= i %>))
+        <% } %>
+
+        (insert-root "0" (poseidon-zeros 0))
+
+        (write state "0" {
+            "current_root_index": 0,
+            "next_index": 0
+        })
+    )
+
     (defun blake-zeros (i:integer)
         (if (= i 0)
             "gU2Q4_mob4UQ6u3w7mAh9vts0iI3_pSIQUEzl2dPXKo" ; (hash "0") zeroElement

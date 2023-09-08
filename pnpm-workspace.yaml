@@ -4,3 +4,4 @@ packages:
   - 'indexer/**'
   - 'terraform'
   - 'circom2'
+  - 'circuits/**'

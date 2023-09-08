@@ -95,3 +95,7 @@ If any test fails, you should see something like this:
 plonk-verifier/tests/plonk-tests.repl:7:0:ExecError: FAILURE: verify: expected {"paired": true}:object:*, received {"paired": false}:object:*
 Load failed
 ```
+
+## Circuit power
+
+From 8 utxo (in) onwards, the circuit power needs to be 18.
