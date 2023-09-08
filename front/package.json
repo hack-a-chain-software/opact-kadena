@@ -11,6 +11,13 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
+  "overrides": {
+    "vite": "4.3.0-beta.8"
+  },
+  "resolutions": {
+    "vite": "4.3.0-beta.8",
+    "@nuxt/kit": "3.0.0-rc.13"
+  },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
@@ -19,6 +26,7 @@
     "@noble/hashes": "1.3.1",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@pinia/nuxt": "^0.4.11",
+    "@rollup/plugin-inject": "^5.0.3",
     "@unhead/vue": "1.1.26",
     "@vue/reactivity": "3.3.4",
     "@vue/runtime-core": "3.3.4",
@@ -35,8 +43,9 @@
     "ethers": "^6.6.2",
     "lodash": "^4.17.21",
     "motion": "^10.16.2",
+    "node-stdlib-browser": "^1.2.0",
     "nuxt-use-motion": "2.0.0-beta.11",
-    "opact-sdk": "git@github.com:opact-protocol/sdk.git",
+    "opact-sdk": "^0.0.7",
     "pact-lang-api": "^4.3.6",
     "pinia": "^2.1.3",
     "prism-themes": "^1.9.0",

@@ -99,29 +99,27 @@ onMounted(() => {
         </div>
       </div>
 
-      <div
-        class="pt-[44px] flex items-center justify-center"
-      >
+      <div class="pt-4 flex items-center justify-end">
         <button
           @click.prevent="wallet.copyToClipboard()"
           class="
-            px-4
-            py-2
-            rounded-[8px]
-            bg-gray-700
+            px-3
+            py-1
             flex
             space-x-2
+            text-blue-400
+            focus:text-green-500
           "
         >
           <span class="text-xs font-regular opacity-[0.9]">
-            Copy
+            Copy Passphrase
           </span>
 
           <Icon name="copy" class="h-6 w-6" />
         </button>
       </div>
 
-      <div class="pt-[137px]">
+      <div class="pt-[165px]">
         <button
           @click.prevent="currentStep = 'verify'"
           class="

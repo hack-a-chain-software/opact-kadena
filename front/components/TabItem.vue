@@ -2,7 +2,6 @@
 import { useExtensions } from '~/.nuxt/imports'
 const props = defineProps<{
   chain?: string;
-  id: string;
   name: string;
   icon: string;
   provider: any;

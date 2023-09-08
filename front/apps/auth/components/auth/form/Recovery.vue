@@ -121,42 +121,29 @@ const toPaste = async () => {
             v-text="splited[i] || '-'"
           />
         </div>
-
-        <div
-          class="
-            hidden
-            absolute
-            top-0
-            z-[10]
-            inset-0
-            group-hover:flex
-            items-center
-            backdrop-blur-sm
-            justify-center
-            bg-white/5
-            rounded-[12px]
-            group-active:bg-white/10
-          "
-        >
-          <button
-            @click.prevent="toPaste"
-            class="
-              flex
-              items-center
-              justify-center
-              space-x-[4px]
-              w-full
-              h-full
-            "
-          >
-            <Icon name="menu" class="w-max h-[28px]" />
-
-            <span class="block"> Click to paste </span>
-          </button>
-        </div>
       </div>
 
-      <div class="pt-[265px]">
+      <div class="pt-4 flex justify-end">
+        <button
+          @click.prevent="toPaste"
+          class="
+            px-3
+            py-1
+            flex
+            space-x-2
+            text-blue-400
+            focus:text-green-500
+          "
+        >
+          <span class="text-xs font-regular opacity-[0.9]">
+            Paste Passphrase
+          </span>
+
+          <Icon name="copy" class="h-6 w-6" />
+        </button>
+      </div>
+
+      <div class="pt-[250px]">
         <button
           :disabled="!!!data.phrase"
           class="

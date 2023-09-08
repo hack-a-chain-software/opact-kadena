@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { getRandomWallet } from 'opact-sdk'
 // import { useExtensionStore } from './extension'
 
 export const useWalletStore = defineStore({
@@ -34,7 +35,11 @@ export const useWalletStore = defineStore({
   },
   actions: {
     async found () {
-      const { node } = await foundWallet()
+      if (process.server) {
+        return
+      }
+
+      const node = await getRandomWallet()
 
       this.persistAuth(node)
     },
@@ -92,9 +97,11 @@ export const useWalletStore = defineStore({
       )
     },
 
-    async copyToClipboard () {
+    async copyToClipboard (value?: '') {
       try {
-        await navigator.clipboard.writeText(this.mnemonic)
+        await navigator.clipboard.writeText(
+          value || this.mnemonic
+        )
         // alert('Copied')
       } catch ($e) {
         alert('Cannot copy')

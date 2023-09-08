@@ -240,7 +240,10 @@ const deposit = async () => {
             >
               <p
                 class="text-xxs font-meidum text-font-1"
-                v-text="provider?.account?.address"
+                v-text="
+                  provider?.account?.address ||
+                  provider.account.account.account
+                "
               />
             </div>
           </div>

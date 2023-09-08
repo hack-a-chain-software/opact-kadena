@@ -5,6 +5,10 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 
+import { useWalletStore } from '~/apps/auth/stores/wallet'
+
+const wallet = useWalletStore()
+
 withDefaults(
   defineProps<{
     show: boolean;
@@ -174,17 +178,22 @@ const redirect = () => {
                   gap-4
                   w-full
                 "
+                @click.prevent="
+                  wallet.copyToClipboard(
+                    'localhost:3000/payment/B3bv0SDIkmdn85jfnDNkspsdd'
+                  )
+                "
               >
                 <div class="w-[calc(100%-40px)] text-left">
                   <span
                     class="text-xs text-font-1 break-words"
                     v-text="
-                      'opactwallet.me/deposit/B3bv0SDIkmdn85jfnDNkspsdd'
+                      'localhost:3000/payment/B3bv0SDIkmdn85jfnDNkspsdd'
                     "
                   />
                 </div>
 
-                <div class="w-6 h-6">
+                <div class="w-6 h-6 text-font-1">
                   <Icon name="copy" class="w-6 h-6" />
                 </div>
               </button>
