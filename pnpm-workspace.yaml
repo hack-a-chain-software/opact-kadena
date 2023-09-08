@@ -4,3 +4,4 @@ packages:
   - 'terraform'
   - 'circom2'
   - 'contracts/**'
+  - 'circuits/**'

@@ -1,6 +1,6 @@
 (namespace (read-msg 'ns))
 
-(module groth16 MODULE_ADMIN
+(module groth16-<%= n_public - 7 %>x2 MODULE_ADMIN
     (defcap MODULE_ADMIN () true)
 
     (defschema G1Point
@@ -48,7 +48,12 @@
                         "beta2": { "x": [<%= String(beta2.x).replace(","," ") %>], "y": [<%= String(beta2.y).replace(",", " ") %>] },
                         "gamma2": { "x": [<%= String(gamma2.x).replace(","," ") %>], "y": [<%= String(gamma2.y).replace(",", " ") %>] },
                         "delta2": { "x": [<%= String(delta2.x).replace(","," ") %>], "y": [<%= String(delta2.y).replace(",", " ") %>] },
-                        "ic": [{ "x": <%= ic[0].x %>, "y": <%= ic[0].y %> } { "x": <%= ic[1].x %>, "y": <%= ic[1].y %> }],
+                        "ic": [<% for (let i = 0; i < ic.length; i++) {
+                            if (i == ic.length - 1) { %>
+                                { "x": <%= ic[i].x %>, "y": <%= ic[i].y %> }<% } else { %>
+                                { "x": <%= ic[i].x %>, "y": <%= ic[i].y %> },<% } }
+                            %>
+                        ],
                         "snark_scalar_field": 21888242871839275222246405745257275088548364400416034343698204186575808495617
                     }
                 )

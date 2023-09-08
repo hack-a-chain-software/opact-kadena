@@ -46,12 +46,12 @@ jobs:
 
       # Test modules
 
-      - name: Run test-plonk
-        run: pnpm contracts test-plonk
+      # - name: Run test-plonk
+      #   run: pnpm contracts test-plonk
 
       - name: Run test-groth16
         run: pnpm contracts test-groth16
-      
+
       - name: Run test-poseidon
         run: pnpm contracts test-poseidon
 

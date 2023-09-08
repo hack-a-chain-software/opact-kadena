@@ -62,6 +62,7 @@
         fee: decimal
         encryptedOutput1: integer
         encryptedOutput2: integer
+        encryptedValue: integer
     )
 
     (defschema token-reference
@@ -96,6 +97,11 @@
     )
 
     (defcap new-nullifier(nullifier: integer)
+      @event
+      true
+    )
+
+    (defcap new-transaction(encryptedValue: integer)
       @event
       true
     )
@@ -141,8 +147,37 @@
     (defun set-nullifierHash (value:integer)
         (write nullifierHashes (int-to-str 10 value) { "value": value }))
 
+    (defun verify-with-length (n:integer proof:object{Proof})
+        (if (= n 1) (at 'paired (groth16-1x2.verify proof))
+            (if (= n 2) (at 'paired (groth16-2x2.verify proof))
+                (if (= n 3) (at 'paired (groth16-3x2.verify proof))
+                    (if (= n 4) (at 'paired (groth16-4x2.verify proof))
+                        (if (= n 5) (at 'paired (groth16-5x2.verify proof))
+                            (if (= n 6) (at 'paired (groth16-6x2.verify proof))
+                                (if (= n 7) (at 'paired (groth16-7x2.verify proof))
+                                    (if (= n 8) (at 'paired (groth16-8x2.verify proof))
+                                        (if (= n 9) (at 'paired (groth16-9x2.verify proof))
+                                            (if (= n 10) (at 'paired (groth16-10x2.verify proof))
+                                                (enforce false "Invalid number of inputs")
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+      
     (defun verify-proof (proof:object{Proof})
-        (at 'paired (groth16.verify proof))
+        (let* 
+            ((public-values (at 'public_values proof))
+             (length-utxos-in (- (length public-values) 7))) ; subtract: root, subtree_root, utxo_out_hash[2], token, delta, message_hash; the remaining are utxos_in
+            (enforce (and (>= length-utxos-in 1) (<= length-utxos-in 10)) "Invalid number of inputs")
+            (verify-with-length length-utxos-in proof)
+        )
     )
 
     (defun deposit-fungible-v2
@@ -256,6 +291,7 @@
                 (output-commitments (at 'outputCommitments args))
                 (encrypted-output_0 (at 'encryptedOutput1 ext-data))
                 (encrypted-output_1 (at 'encryptedOutput2 ext-data))
+                (encrypted-value (at 'encryptedValue ext-data))
                 (public-values (at 'public_values proof))
                 (input-nullifiers public-values)
                 (output-commitment_0 (at 0 output-commitments))
@@ -264,6 +300,7 @@
             (map (set-nullifierHash) input-nullifiers)
             (emit-event (new-commitment output-commitment_0 (at 'index (merkle.insert-leaf output-commitment_0)) encrypted-output_0))
             (emit-event (new-commitment output-commitment_1 (at 'index (merkle.insert-leaf output-commitment_1)) encrypted-output_1))
+            (emit-event (new-transaction encrypted-value))
             (map (emit-event-new-nullifier) input-nullifiers)
         )
     )
