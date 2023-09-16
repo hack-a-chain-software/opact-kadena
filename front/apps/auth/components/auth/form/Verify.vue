@@ -32,12 +32,13 @@ const create = async () => {
   await wallet.found()
 
   router.push((route.query as any).next || '/app')
-  currentStep.value = 'connect'
+
+  // currentStep.value = 'connect'
 }
 
 const isDisabled = computed(() => {
   return (
-    wallet.node.mnemonic.phrase.split(' ')[
+    wallet.mnemonic.split(' ')[
       Number(randomNumber.value) - 1
     ] === data.word
   )

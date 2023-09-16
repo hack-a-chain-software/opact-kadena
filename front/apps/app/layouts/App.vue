@@ -6,7 +6,7 @@ import Settings from '../components/Settings.vue'
 
 const wallet = useWalletStore()
 
-const { connected } = storeToRefs(wallet)
+const { connected, isLoading } = storeToRefs(wallet)
 
 const data = reactive({
   showSettings: false
@@ -14,7 +14,12 @@ const data = reactive({
 
 onBeforeMount(() => {
   if (!connected.value) {
-    wallet.reconnect()
+    (async () => {
+      await wallet.reconnect()
+      const state = await wallet.loadState()
+
+      console.log('state', state)
+    })()
   }
 })
 </script>
@@ -22,7 +27,7 @@ onBeforeMount(() => {
 <template>
   <div class="h-screen flex flex-col bg-dark-blue">
     <div
-      v-if="!connected"
+      v-if="!connected || isLoading"
       class="h-full w-full flex items-center justify-center"
     >
       <Icon

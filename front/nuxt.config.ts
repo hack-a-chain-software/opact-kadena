@@ -1,6 +1,5 @@
-import { resolve } from "path";
-import inject from '@rollup/plugin-inject'
-import stdLibBrowser from 'node-stdlib-browser'
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 
 export default defineNuxtConfig({
   extends: ['./apps/site', './apps/auth', './apps/app'],
@@ -17,46 +16,22 @@ export default defineNuxtConfig({
   vite: {
     resolve: {
       alias: {
-        "@": resolve(__dirname, "./src"),
-        ...stdLibBrowser
-      }
-    },
-    plugins: [
-      {
-        ...inject({
-          global: [
-            require.resolve("node-stdlib-browser/helpers/esbuild/shim"),
-            "global"
-          ],
-          process: [
-            require.resolve("node-stdlib-browser/helpers/esbuild/shim"),
-            "process"
-          ],
-          Buffer: [
-            require.resolve("node-stdlib-browser/helpers/esbuild/shim"),
-            "Buffer"
-          ]
-        }),
-        enforce: "post"
-      }
-    ],
-    build: {
-      target: ["esNext"],
-      rollupOptions: {
-        output: {
-          format: "es",
-          // dir: 'dist', // Diretório de saída
-          // entryFileNames: '[name].js', // Nome do arquivo de saída
-          // chunkFileNames: '[name].js', // Nome do arquivo de chunk
-        },
-        // input: {
-        //   main: './src/main.tsx', // Caminho para o arquivo principal do seu aplicativo
-        //   worker: './src/sw/worker.ts' // Caminho para o arquivo do worker
-        // },
-      }
+        'buffer/': 'buffer-browserify',
+      },
     },
     optimizeDeps: {
-      include: ["buffer", "process"]
+      esbuildOptions: {
+        define: {
+          global: 'globalThis'
+        },
+        plugins: [
+          NodeModulesPolyfillPlugin(),
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true,
+          }),
+        ]
+      }
     },
   },
   motion: {
