@@ -334,8 +334,6 @@ export const useWalletStore = defineStore({
         excludedUTXOIDPositions: []
       })
 
-      console.log('fucking batch', batch)
-
       const objExtada = {
         sender,
         recipient,
@@ -394,6 +392,8 @@ export const useWalletStore = defineStore({
           mp_sibling: tree.proof(BigInt(utxo.hash)).pathElements
         }
       })
+
+      console.log('this.state.commitments', this.state.commitments)
 
       subtree.pushMany(sparseTreeComitments)
 

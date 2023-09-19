@@ -138,12 +138,12 @@ const redirect = (path: string, skip: boolean) => {
           h-[64px]
           px-8
           items-center
-          bg-[rgba(6,_10,_15,_0.80)]
           w-[calc(100%-260px)]
-          z-[2]
+          z-[10]
           hidden
           lg:flex
         "
+        :class="route.name !== 'app' && 'bg-[rgba(6,_10,_15,_0.80)]'"
       >
         <div>
           <span
@@ -154,7 +154,7 @@ const redirect = (path: string, skip: boolean) => {
       </div>
 
       <div
-        class="absolute z-[0] w-full hidden lg:block min-w-[1920px] select-none"
+        class="absolute z-[0] w-full hidden lg:block min-w-[1920px] select-none pointer-events-none"
       >
         <img
           src="/bg-app.png"
