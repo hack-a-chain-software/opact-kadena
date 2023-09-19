@@ -14,6 +14,13 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxtjs/google-fonts'
   ],
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'es2020'
+      }
+    }
+  },
   vite: {
     resolve: {
       alias: {
@@ -26,14 +33,14 @@ export default defineNuxtConfig({
           global: 'globalThis'
         },
         plugins: [
-          NodeGlobalsPolyfillPlugin({
-            buffer: true,
-            process: true,
-          }),
           NodeModulesPolyfillPlugin(),
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true
+          })
         ]
       }
-    }
+    },
   },
   motion: {
     directives: {
