@@ -128,7 +128,7 @@ const showProviders = (flag = true) => {
                 </DialogTitle>
 
                 <button
-                  @click.prevent="setIsOpen(false)"
+                  @click.prevent="close()"
                   class="w-8 h-8"
                 >
                   <Icon

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
+import Pact from 'pact-lang-api'
 import {
   TransitionRoot,
   TransitionChild,
@@ -13,12 +14,12 @@ import { useWalletStore } from '~/apps/auth/stores/wallet'
 
 const wallet = useWalletStore()
 
-const { node } = storeToRefs(wallet)
+const { node, depositMessage, depositing } = storeToRefs(wallet)
 
 const isOpen = ref(false)
 const isConnectWalletOpen = ref(false)
 
-const { provider } = useExtensions()
+const { provider, logout } = useExtensions()
 
 function setIsOpen (value) {
   isOpen.value = value
@@ -35,12 +36,15 @@ const router = useRouter()
 const amounts = [1, 10, 100]
 
 const data = reactive({
+  error: '',
   amount: 0,
+  balance: 0,
   token: {
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA'
   },
+  loading: false,
   showCollapsible: false
 })
 
@@ -62,16 +66,83 @@ const tokens = [
   }
 ]
 
+const coinDetails = async ({ pubkey }: any) => {
+  try {
+    const accountName = pubkey.toString()
+
+    const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+
+    const t_creationTime = Math.round(new Date().getTime() / 1000) - 10
+    const data = await Pact.fetch.local({
+      pactCode: `(coin.details ${JSON.stringify(accountName)})`,
+      meta: Pact.lang.mkMeta('', '0', 0, 0, t_creationTime, 0)
+    }, network)
+
+    return data
+  } catch (e) {
+    console.warn(e)
+  }
+}
+
+onMounted(async () => {
+  data.loading = true
+
+  const {
+    result: {
+      status,
+      data: coinData
+    }
+  } = await coinDetails({ pubkey: node.value.pubkey })
+
+  data.loading = false
+
+  if (status === 'failure') {
+    return
+  }
+
+  data.balance = coinData.balance
+})
+
 const deposit = async () => {
   try {
-    // step.value = 'awaiting'
-    // const res = await provider.value.faceut(node.value)
+    data.error = ''
+
     const transactionArgs = await wallet.deposit(
       Number(data.amount)
     )
-    const res = await provider.value.transaction({ ...transactionArgs, node: node.value })
-    console.log('res', res.requestKeys[0])
-    // step.value = 'success'
+
+    depositMessage.value = 'Awaiting user signature...'
+
+    try {
+      const tx = await provider.value.transaction({ ...transactionArgs, node: node.value })
+
+      depositMessage.value = 'Awaiting kadena result...'
+
+      const {
+        result
+      } = await Pact.fetch.listen(
+        { listen: tx.requestKeys[0] },
+        'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+      )
+
+      if (result.status === 'failure') {
+        data.error = result.error.message
+
+        return
+      }
+
+      const { decrypt, getUtxoFromDecrypted } = await import('opact-sdk')
+
+      wallet.loadState(decrypt, getUtxoFromDecrypted)
+      router.push('/app')
+      logout()
+    } catch (e) {
+      console.warn(e)
+      logout()
+    } finally {
+      depositing.value = false
+      depositMessage.value = "Computing UTXO's Values..."
+    }
   } catch (e) {
     console.warn(e)
   }
@@ -153,6 +224,18 @@ const deposit = async () => {
           <Icon name="pen" class="h-6 w-6 text-font-2 lg:hidden" />
         </div>
       </div>
+
+      <button
+        class="mt-1"
+        v-if="!data.loading"
+        @click.prevent="data.amount = data.balance"
+      >
+        <span
+          class="text-xxxs hover:underline"
+          :class="data.balance > 0 ? 'text-green-500' : 'text-red-500'"
+          v-text="`Balance: ${data.balance}`"
+        />
+      </button>
 
       <div class="pt-6 space-x-2">
         <button
@@ -340,6 +423,16 @@ const deposit = async () => {
       </template>
     </div>
 
+    <div
+      v-if="data.error"
+      class="mt-2"
+    >
+      <span
+        v-text="data.error + '*'"
+        class="text-xs text-red-500"
+      />
+    </div>
+
     <div class="mt-full lg:mt-[40px]">
       <button
         v-if="!provider"
@@ -388,7 +481,9 @@ const deposit = async () => {
         "
         @click.prevent="deposit()"
       >
-        <span class="text-font-1"> Deposit </span>
+        <span class="text-font-1"> {{ depositing ? depositMessage : 'Deposit'}} </span>
+
+        <Icon v-if="depositing" name="spinner" class="animate-spin text-white ml-[12px]" />
       </button>
     </div>
 

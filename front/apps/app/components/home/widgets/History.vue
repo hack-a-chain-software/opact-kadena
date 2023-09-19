@@ -63,6 +63,7 @@ const data = reactive({
               >
                 <Icon
                   name="arrow"
+                  class="text-white"
                 />
               </div>
 
@@ -115,6 +116,7 @@ const data = reactive({
               >
                 <Icon
                   name="arrow"
+                  class="text-white"
                 />
               </div>
 

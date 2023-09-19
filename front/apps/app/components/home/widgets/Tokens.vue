@@ -159,55 +159,70 @@ const data = reactive({
         class="pt-[16px] space-y-3"
       >
         <div
-          v-for="{ publicAmount, token } of userData"
-          :key="token.id"
-          class="
-            px-4
-            py-2.5
-            bg-gray-800
-            rounded-[8px]
-            h-[66px]
-            flex
-            items-center
-          "
+          v-if="JSON.stringify(userData) !== '{}'"
         >
-          <div class="pr-4">
-            <img src="/kda.png">
-          </div>
+          <div
+            v-for="{ publicAmount, token } of userData"
+            :key="token.id"
+            class="
+              px-4
+              py-2.5
+              bg-gray-800
+              rounded-[8px]
+              h-[66px]
+              flex
+              items-center
+            "
+          >
+            <div class="pr-4">
+              <img src="/kda.png">
+            </div>
 
-          <div class="space-y-1">
-            <p
-              class="
-                text-xs
-                font-regular
-                opacity-[0.9]
-                text-font-1
-              "
-              v-text="token.symbol"
-            />
+            <div class="space-y-1">
+              <p
+                class="
+                  text-xs
+                  font-regular
+                  opacity-[0.9]
+                  text-font-1
+                "
+                v-text="token.symbol"
+              />
 
-            <p
-              class="
-                text-font-2 text-xxs
-                font-medium
-                opacity-[0.9]
-              "
-            >
-              -
-            </p>
-          </div>
+              <p
+                class="
+                  text-font-2 text-xxs
+                  font-medium
+                  opacity-[0.9]
+                "
+              >
+                -
+              </p>
+            </div>
 
-          <div class="ml-auto">
-            <p
-              class="
-                text-sm
-                font-medium
-                text-font-1
-                opacity-[0.9]
-              "
-              v-text="publicAmount.toFixed(1)"
-            />
+            <div class="ml-auto">
+              <p
+                class="
+                  text-sm
+                  font-medium
+                  text-font-1
+                  opacity-[0.9]
+                "
+                v-text="publicAmount.toFixed(1)"
+              />
+            </div>
           </div>
+        </div>
+
+        <div
+          v-else
+          class="flex justify-center py-[32px]"
+        >
+          <span
+            class="text-font-1 text-md"
+          >
+            You do not own any tokens
+          </span>
         </div>
       </div>
 

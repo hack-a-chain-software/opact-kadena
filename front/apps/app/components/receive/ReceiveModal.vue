@@ -137,7 +137,7 @@ const redirect = () => {
 
                 <button
                   class="w-8 h-8"
-                  @click.prevent="setIsOpen(false)"
+                  @click.prevent="close()"
                 >
                   <Icon
                     name="close"

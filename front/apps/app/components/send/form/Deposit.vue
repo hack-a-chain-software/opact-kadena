@@ -8,8 +8,48 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 import { storeToRefs } from 'pinia'
+import Pact from 'pact-lang-api'
 import WalletConnector from '../../deposit/form/WalletConnector.vue'
 import { useWalletStore } from '~/apps/auth/stores/wallet'
+
+const computePactCode = ({
+    args,
+    proof,
+    extData,
+    tokenSpec
+  }: any) => {
+    return `(test.opact.transact {
+      "root": ${args.root},
+      "outputCommitments": [${args.outputCommitments.join(' ')}],
+      "publicAmount": ${args.publicAmount.toFixed(1)},
+      "extDataHash": "${args.extDataHash}",
+      "tokenHash": "${args.tokenHash}"
+    } {
+      "public_values":[${proof.public_values.join(' ')}],
+      "a":{"x": ${proof.a.x}, "y": ${proof.a.y} },
+      "b":{"x":[${proof.b.x.join(' ')}],"y":[${proof.b.y.join(' ')}]},
+      "c":{"x":${proof.c.x},"y":${proof.c.y}}
+    } {
+      "sender":"${extData.sender}",
+      "recipient":"${extData.recipient}",
+      "extAmount":${extData.extAmount.toFixed(1)},
+      "relayer":${extData.relayer},
+      "fee":${extData.fee.toFixed(1)},
+      "encryptedOutput1":"${extData.encryptedOutput1}",
+      "encryptedOutput2":"${extData.encryptedOutput2}",
+      "encryptedValue":"${extData.encryptedValue}"
+    } {
+      "id": "${tokenSpec.id}",
+      "refName":{
+        "name":"${tokenSpec.refName.name}",
+        "namespace":""
+      },
+      "refSpec":{
+        "name":"${tokenSpec.refSpec.name}",
+        "namespace":""
+      }
+    })`
+  }
 
 const wallet = useWalletStore()
 
@@ -63,18 +103,51 @@ const tokens = [
 
 const send = async () => {
   try {
-    // setTimeout(() => {
-    //   step.value = 'success'
-    // }, 3000)
-    // step.value = 'progress'
-    const transactionArgs = await wallet.withdraw(
-      Number(data.amount),
-      data.addressTo
+    const {
+      args,
+      proof,
+      extData,
+      tokenSpec
+    } = await wallet.withdraw(
+      Number(data.amount)
     )
 
-    const res = await provider.value.transaction({ ...transactionArgs, node: node.value })
+    const kp = Pact.crypto.genKeyPair()
 
-    console.log('res', res.requestKeys[0])
+    // const accountName = node.value.pubkey.toString()
+
+    const pactCode = computePactCode({ args, proof, extData, tokenSpec })
+
+    const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+
+    const createdAt = Math.round(new Date().getTime() / 1000) - 10
+
+    const tx = await Pact.fetch.send({
+      networkId: 'testnet04',
+      pactCode,
+      keyPairs: [
+        {
+          publicKey: kp.publicKey,
+          secretKey: kp.secretKey,
+          clist: [
+            // capability to use gas station
+            {
+              name: 'opact-gas-payer.GAS_PAYER',
+              args: ['hi', { int: 1 }, 1.0]
+            }
+          ]
+        }
+      ],
+      meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
+    }, network)
+
+    const res = await Pact.fetch.listen(
+      { listen: tx.requestKeys[0] },
+      network
+    )
+
+    console.log('res', res)
+    // step.value = 'success'
   } catch (e) {
     console.warn(e)
   }
