@@ -142,6 +142,7 @@ const redirect = (path: string, skip: boolean) => {
           z-[10]
           hidden
           lg:flex
+          justify-between
         "
         :class="route.name !== 'app' && 'bg-[rgba(6,_10,_15,_0.80)]'"
       >
@@ -151,6 +152,30 @@ const redirect = (path: string, skip: boolean) => {
             v-text="(titles[route.name])"
           />
         </div>
+
+        <button
+          @click.prevent="router.push('/faucet')"
+          class="
+            px-4
+            py-2
+            bg-[#0E1319]
+            border border-gray-600
+            rounded-[8px]
+            flex justify-center items-center gap-1
+            hover:opacity-80
+          "
+        >
+          <span
+            class="text-font-1 text-xxs"
+          >
+            Faucet
+          </span>
+
+          <Icon
+            name="chevron"
+            class="text-font-1 -rotate-90"
+          />
+        </button>
       </div>
 
       <div
