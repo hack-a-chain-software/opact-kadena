@@ -121,8 +121,6 @@ const send = async () => {
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-    // console.log('pactCode', pactCode)
-
     const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
     const createdAt = Math.round(new Date().getTime() / 1000) - 10

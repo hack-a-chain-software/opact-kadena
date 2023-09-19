@@ -97,8 +97,6 @@ const chunkUtxoByTokenId = (encrypted: any, nullifiers: any) => {
       return acc
     }
 
-    console.log(curr)
-
     if (!acc[curr.tokenId]) {
       acc[curr.tokenId] = {
         balance: 0n,
@@ -392,10 +390,8 @@ export const useWalletStore = defineStore({
           mp_sibling: tree.proof(BigInt(utxo.hash)).pathElements
         }
       })
-      console.log('55555')
 
       subtree.pushMany(sparseTreeComitments)
-      console.log('3333')
 
       batch.utxosIn = batch.utxosIn.map((utxo: any, i: any) => {
         const { order } = this.state.commitments.find(({ value }: any) => BigInt(value) === utxo.hash) || {}
@@ -412,8 +408,6 @@ export const useWalletStore = defineStore({
           smp_path: subtree.proof(i)
         }
       })
-
-      console.log('foooo111')
 
       const { inputs } = await computeInputs({
         batch,
@@ -497,7 +491,7 @@ export const useWalletStore = defineStore({
 
       const tokenHash = Pact.crypto.hash(JSON.stringify(objToken))
 
-      const token = poseidon([base64urlToBigInt(tokenHash)])
+      const token = poseidon.F.toObject(poseidon([base64urlToBigInt(tokenHash)]))
 
       const batch = await getSoluctionDepositBatch({
         token,
@@ -519,7 +513,7 @@ export const useWalletStore = defineStore({
 
       const extDataHash = Pact.crypto.hash(JSON.stringify(objExtada))
 
-      const messageHash = poseidon([base64urlToBigInt(extDataHash)])
+      const messageHash = poseidon.F.toObject(poseidon([base64urlToBigInt(extDataHash)]))
 
       const tree = await (new MerkleTreeService()).initMerkleTree(
         [
@@ -531,7 +525,7 @@ export const useWalletStore = defineStore({
       // TODO: can't repeat root
       const subtree = await MerkleTree.build(PROOF_LENGTH + 1)
 
-      const sparseTreeComitments = Array(12).fill(0n)
+      const sparseTreeComitments = Array(32).fill(0n)
 
       batch.utxosIn = batch.utxosIn.map((utxo: any, i: any) => {
         sparseTreeComitments[i] = EXPECTED_VALUE

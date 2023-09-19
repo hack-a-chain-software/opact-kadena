@@ -42,8 +42,6 @@ const pay = async () => {
   try {
     const tx = await provider.value.faceut(node.value)
 
-    console.log('tx', tx)
-
     data.loading = true
 
     data.loadingMessage = 'Awaiting kadena result...'
