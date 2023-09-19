@@ -11,9 +11,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "resolutions": {
-    "@nuxt/kit": "3.0.0-rc.13"
-  },
   "dependencies": {
     "@apacheli/web-workers": "^1.0.1",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",

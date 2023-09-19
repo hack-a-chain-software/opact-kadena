@@ -79,7 +79,6 @@ const data = reactive({
     symbol: 'KDA'
   },
   showCollapsible: false,
-  // 18239893320378825242612781130732771293886265265465351431370885768079954670030
   addressTo: ''
 })
 
