@@ -11,11 +11,15 @@ const router = useRouter()
       max-w-[450px]
       text-white
       min-h-[812px]
+      lg:min-h-full
+      lg:max-w-full
+      lg:pb-0
     "
   >
     <div>
       <div
         class="
+          lg:hidden
           w-full
           py-4
           flex
@@ -56,6 +60,8 @@ const router = useRouter()
             flex flex-col
             items-center
             justify-center
+            lg:bg-transparent
+            lg:mt-0
           "
         >
           <div>

@@ -27,7 +27,7 @@ const { step } = usePaymentForm()
 </script>
 
 <template>
-  <div class="text-white pt-[46px]">
+  <div class="text-white pt-[46px] lg:pt-[112px] lg:flex lg:justify-center">
     <div
       class="
         py-6
@@ -38,13 +38,24 @@ const { step } = usePaymentForm()
         gap-6
         rounded-[12px]
         bg-gray-800
+        lg:bg-transparent
       "
     >
-      <div>
+      <div
+        class="lg:hidden"
+      >
         <Icon name="logo" class="h-[37px] w-[188px]" />
       </div>
 
-      <div class="w-full">
+      <div
+        class="
+          w-full
+          lg:p-6
+          lg:bg-gray-900
+          lg:w-[546px]
+          lg:border-2 lg:border-gray-600 lg:rounded-[12px]
+        "
+      >
         <Transition name="fade" mode="out-in">
           <component :is="form[step]" />
         </Transition>

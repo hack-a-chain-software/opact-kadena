@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
 import Settings from '../components/Settings.vue'
+import { useWalletStore } from '~/apps/auth/stores/wallet'
 
 const wallet = useWalletStore()
+
+const router = useRouter()
 
 const { connected, isLoading } = storeToRefs(wallet)
 
@@ -13,19 +15,70 @@ const data = reactive({
 })
 
 onBeforeMount(() => {
+  if (connected.value) {
+    (async () => {
+      const { decrypt, getUtxoFromDecrypted } = await import('opact-sdk')
+
+      await wallet.loadState(decrypt, getUtxoFromDecrypted)
+    })()
+  }
   if (!connected.value) {
     (async () => {
-      await wallet.reconnect()
-      const state = await wallet.loadState()
+      const { decrypt, getUtxoFromDecrypted } = await import('opact-sdk')
 
-      console.log('state', state)
+      await wallet.reconnect()
+      await wallet.loadState(decrypt, getUtxoFromDecrypted)
     })()
   }
 })
+
+const route = useRoute()
+
+const routes = [
+  {
+    disabled: false,
+    path: 'app',
+    label: 'Home',
+    icon: 'wallet'
+  },
+  {
+    disabled: true,
+    path: 'history',
+    label: 'History',
+    icon: 'chart'
+  },
+  {
+    disabled: false,
+    path: 'settings',
+    label: 'Settings',
+    icon: 'settings'
+  }
+]
+
+const titles = {
+  app: 'Dashboard',
+  send: 'Send Token',
+  receive: 'Receive',
+  deposit: 'Deposit'
+}
+
+const redirect = (path: string, skip: boolean) => {
+  if (skip) {
+    return
+  }
+
+  if (path === 'settings') {
+    data.showSettings = true
+
+    return
+  }
+
+  router.push(`/${path}`)
+}
 </script>
 
 <template>
-  <div class="h-screen flex flex-col bg-dark-blue">
+  <div class="h-screen flex flex-col lg:flex-row lg:w-full bg-dark-blue overflow-hidden relative">
     <div
       v-if="!connected || isLoading"
       class="h-full w-full flex items-center justify-center"
@@ -38,7 +91,80 @@ onBeforeMount(() => {
 
     <template v-else>
       <div
+        class="hidden lg:flex min-w-[260px] p-6 bg-[#0c1015] bg-blur-[6px] border-r-2 border-[#363B42] relative z-[2]"
+      >
+        <div
+          class="space-y-12"
+        >
+          <Icon
+            name="logo"
+            class="h-8 w-[190px]"
+          />
+
+          <div>
+            <ul
+              class="space-y-6"
+            >
+              <li
+                v-for="{ label, icon, path, disabled } in routes"
+                :key="label"
+                :class="[route.name === path ? 'text-blue-400' : 'text-font-2 hover:bg-gray-800 cursor-pointer', disabled && '!cursor-not-allowed opacity-50']"
+                class="flex items-center py-3 px-4 rounded-xl space-x-2"
+                @click.prevent="redirect(path, disabled)"
+              >
+                <div>
+                  <Icon
+                    :name="icon"
+                    class="w-8 h-8"
+                  />
+                </div>
+
+                <div>
+                  <span
+                    class="text-xs"
+                    v-text="label"
+                  />
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div
         class="
+          absolute
+          right-0
+          h-[64px]
+          px-8
+          items-center
+          bg-[rgba(6,_10,_15,_0.80)]
+          w-[calc(100%-260px)]
+          z-[2]
+          hidden
+          lg:flex
+        "
+      >
+        <div>
+          <span
+            class="text-font-1 text-sm"
+            v-text="(titles[route.name])"
+          />
+        </div>
+      </div>
+
+      <div
+        class="absolute z-[0] w-full hidden lg:block min-w-[1920px] select-none"
+      >
+        <img
+          src="/bg-app.png"
+          class="w-full w-full"
+        >
+      </div>
+
+      <div
+        class="
+          lg:hidden
           h-[60px]
           py-3
           px-6
@@ -99,7 +225,7 @@ onBeforeMount(() => {
         </div>
       </div>
 
-      <div class="px-4">
+      <div class="px-4 lg:w-full lg:pt-[96px] relative z-[2]">
         <slot />
       </div>
     </template>

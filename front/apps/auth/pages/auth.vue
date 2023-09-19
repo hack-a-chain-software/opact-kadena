@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onBeforeUnmount } from 'vue'
 import form from '../components/auth/form'
 
 definePageMeta({
@@ -11,10 +12,16 @@ useHead({
 })
 
 const currentStep = useAuthCurrentStep()
+
+onBeforeUnmount(() => {
+  currentStep.value = 'connect'
+})
 </script>
 
 <template>
-  <div>
+  <div
+    class="h-full lg:flex lg:justify-center lg:items-start lg:pt-[40px]"
+  >
     <Transition name="fade" mode="out-in">
       <component :is="form[currentStep]" />
     </Transition>

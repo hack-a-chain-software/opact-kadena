@@ -166,8 +166,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(rollup@3.28.0)(vue@3.3.4)
       opact-sdk:
-        specifier: ^0.0.16
-        version: 0.0.16(graphql@16.6.0)
+        specifier: ^0.0.25
+        version: 0.0.25(graphql@16.6.0)
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -3766,11 +3766,11 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/kit-edge@3.7.4-28246374.3334ca26(rollup@3.28.0):
-    resolution: {integrity: sha512-uPsJEtO3Q5dOL1cdd7YvFICREqFLB5c1Y85xwrZGSH+sXI8jIBNKOaxbBjVY+mS+Wzphsd6E3ochDWDBNw3zQg==}
+  /@nuxt/kit-edge@3.7.4-28250936.51d90014(rollup@3.28.0):
+    resolution: {integrity: sha512-Y6la4CcSu8sOvJCfTt2VhTcDQNr4AzN59qHcAZveFCxANFXDjLTkLfrOxGnV/2EtSvl3Cca9nCQ9KWRio+/egQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
-      '@nuxt/schema': /@nuxt/schema-edge@3.7.4-28246374.3334ca26(rollup@3.28.0)
+      '@nuxt/schema': /@nuxt/schema-edge@3.7.4-28250936.51d90014(rollup@3.28.0)
       c12: 1.4.2
       consola: 3.2.3
       defu: 6.1.2
@@ -3887,8 +3887,8 @@ packages:
       - webpack
     dev: true
 
-  /@nuxt/schema-edge@3.7.4-28246374.3334ca26(rollup@3.28.0):
-    resolution: {integrity: sha512-OK6OrdaD5aBb0dOw49NL17FZSvGyvk4nrdfH7BEy+K4FiJ7Zf6DFjvywIp0R5kNivVzpm8L/0MYMu4uAjDn7Gg==}
+  /@nuxt/schema-edge@3.7.4-28250936.51d90014(rollup@3.28.0):
+    resolution: {integrity: sha512-1JwZEHH0LhFIrxchd6/RvPtv4DrXwwM/EQDLm7lOYiv5YBMPflZjR5BEKfIZBnlX85GBTJkM9ZWPY4q6omCT3A==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
       '@nuxt/ui-templates': 1.3.1
@@ -5126,6 +5126,10 @@ packages:
     dependencies:
       '@babel/types': 7.22.10
     dev: true
+
+  /@types/big.js@6.2.0:
+    resolution: {integrity: sha512-ubLURWoc4tCw/8Yds0P3CE9cBG5q+aoycwWBiXXx4gp7XPYZy9ch0L9+Pv6osSoSRgvuQNqJdlwEhP5QhKKl6w==}
+    dev: false
 
   /@types/bn.js@5.1.1:
     resolution: {integrity: sha512-qNrYbZqMx0uJAfKnKclPh+dTwK33KfLHYqtyODwd5HnXOjnkhc4qgn3BrK6RWyGZm5+sIFE7Q7Vz6QQtJB7w7g==}
@@ -7519,6 +7523,10 @@ packages:
   /big.js@5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
     dev: true
+
+  /big.js@6.2.1:
+    resolution: {integrity: sha512-bCtHMwL9LeDIozFn+oNhhFoq+yQ3BNdnsLSASUxLciOb1vgvpHsIO1dsENiGMgbb4SkP5TrzWzRiLddn8ahVOQ==}
+    dev: false
 
   /bigint-buffer@1.1.5:
     resolution: {integrity: sha512-trfYco6AoZ+rKhKnxA0hgX0HAbVP/s808/EuDSe2JDzUnCp/xAsli35Orvk67UrTEcwuxZqYZDmfA2RXJgxVvA==}
@@ -15626,7 +15634,7 @@ packages:
   /nuxt-use-motion@2.0.0-beta.11(rollup@3.28.0)(vue@3.3.4):
     resolution: {integrity: sha512-O5UrB7q+A2dWhxxcXdCWH1QJgROIhUcQzwVxIZT2vleTpi6RMi39oPt4ZNWmtU/1Z39pTbAOnwUGZcTGdqRL9g==}
     dependencies:
-      '@nuxt/kit': /@nuxt/kit-edge@3.7.4-28246374.3334ca26(rollup@3.28.0)
+      '@nuxt/kit': /@nuxt/kit-edge@3.7.4-28250936.51d90014(rollup@3.28.0)
       '@vueuse/motion': 2.0.0-beta.4(vue@3.3.4)
       defu: 5.0.1
       vue-demi: 0.12.5(vue@3.3.4)
@@ -15863,13 +15871,15 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@0.0.16(graphql@16.6.0):
-    resolution: {integrity: sha512-j8+13E2TR1ShU4T47Vo3Bl+pOXU8g01gwkhlObVJfbW6TL0jXRSaJ/FdocZETp5oQ5d6SY4lVYflchl2zSk7LQ==}
+  /opact-sdk@0.0.25(graphql@16.6.0):
+    resolution: {integrity: sha512-BKJ5oNxog7PUFeYyZvzV/bnk/Io2MO1TMVguO0AYdneqtsgnd26/V6d/9QcshQRQ8g8blkk9uU0MCkYKiDG8aw==}
     dependencies:
+      '@types/big.js': 6.2.0
+      big.js: 6.2.1
       bigint-buffer: 1.1.5
       bigint-conversion: 2.4.2
       chai: 4.3.8
-      circomlibjs: 0.1.7
+      circomlibjs: github.com/hsg88/circomlibjs/fee5b3c479caa3db1e34cbfdedad763d74277844
       crypto-browserify: 3.12.0
       ethereum-cryptography: 2.1.2
       fixed-merkle-tree: 0.7.3
@@ -21731,6 +21741,31 @@ packages:
     dependencies:
       react: 17.0.2
       use-sync-external-store: 1.2.0(react@17.0.2)
+
+  github.com/hsg88/circomlibjs/fee5b3c479caa3db1e34cbfdedad763d74277844:
+    resolution: {tarball: https://codeload.github.com/hsg88/circomlibjs/tar.gz/fee5b3c479caa3db1e34cbfdedad763d74277844}
+    name: circomlibjs
+    version: 0.0.8
+    dependencies:
+      blake-hash: 2.0.0
+      blake2b: 2.1.4
+      ffjavascript: github.com/hsg88/ffjavascript/e586e4e36f323acabe1805b01ea10070c413c6ec
+      web3: 1.10.2
+      web3-utils: 1.10.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  github.com/hsg88/ffjavascript/e586e4e36f323acabe1805b01ea10070c413c6ec:
+    resolution: {tarball: https://codeload.github.com/hsg88/ffjavascript/tar.gz/e586e4e36f323acabe1805b01ea10070c413c6ec}
+    name: ffjavascript
+    version: 0.1.0
+    dependencies:
+      big-integer: 1.6.51
+    dev: false
 
   github.com/weijiekoh/circomlib/24ed08eee0bb613b8c0135d66c1013bd9f78d50a:
     resolution: {tarball: https://codeload.github.com/weijiekoh/circomlib/tar.gz/24ed08eee0bb613b8c0135d66c1013bd9f78d50a}

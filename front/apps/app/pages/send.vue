@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/apps/auth/stores/wallet'
 import form from '../components/send/form'
 
 definePageMeta({
-  layout: 'form',
+  layout: 'app',
   middleware: 'auth'
 })
 
@@ -24,13 +24,29 @@ onBeforeMount(() => {
     wallet.reconnect()
   }
 })
+
+onBeforeUnmount(() => {
+  step.value = 'deposit'
+})
 </script>
 
 <template>
-  <div class="text-white">
-    <Transition name="fade" mode="out-in">
-      <component :is="form[step]" />
-    </Transition>
+  <div
+    class="lg:flex lg:justify-center"
+  >
+    <div
+      class="
+      text-white
+        lg:p-6
+        lg:bg-gray-900
+        lg:w-[546px]
+        lg:border-2 lg:border-gray-600 lg:rounded-[12px]
+      "
+    >
+      <Transition name="fade" mode="out-in">
+        <component :is="form[step]" />
+      </Transition>
+    </div>
   </div>
 </template>
 

@@ -33,8 +33,6 @@ export const useProvider = () => {
         if (event.name === 'ACCOUNT_CONNECTED') {
           account.value = getAccount()
 
-          console.log(account.value)
-
           callback.value()
         }
 

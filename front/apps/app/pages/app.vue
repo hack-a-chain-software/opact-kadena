@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-
-import ReceiveModal from '../components/receive/ReceiveModal.vue'
+import Tokens from '../components/home/widgets/Tokens.vue'
+import Actions from '../components/home/widgets/Actions.vue'
+import History from '../components/home/widgets/History.vue'
 
 definePageMeta({
   layout: 'app',
@@ -11,270 +11,23 @@ definePageMeta({
 useHead({
   title: 'App'
 })
-
-const data = reactive({
-  tab: 'tokens',
-  showReceiveModal: false
-})
-
-const router = useRouter()
 </script>
 
 <template>
-  <div class="h-full pt-4">
-    <div class="flex justify-between">
-      <div>
-        <div class="pb-[2px]">
-          <span class="text-font-2 text-xxs font-medium">
-            Balance
-          </span>
-        </div>
+  <div
+    class="
+      lg:w-full h-full pt-4 lg:pt-0 lg:gap-6 lg:grid lg:grid-cols-[1fr_400px] lg:grid-rows-[160px_1fr]
+    "
+  >
+    <Tokens />
 
-        <div class="flex items-center space-x-4">
-          <div>
-            <span class="text-lg font-medium text-font-1">
-              900.34
-            </span>
-          </div>
+    <Actions />
 
-          <div>
-            <Icon name="visible" class="w-6 h-6" />
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-auto">
-        <button
-          disabled
-          class="
-            text-blue-300
-            flex
-            items-center
-            justify-center
-            space-x-2
-            opacity-[0.5]
-            cursor-not-allowed
-          "
-        >
-          <span class="font-xs font-regular">
-            History
-          </span>
-
-          <div>
-            <Icon
-              name="chevron"
-              class="w-5 h-5 rotate-[-90deg]"
-            />
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <div class="pt-[24px] gap-2 grid grid-cols-3">
-      <button
-        @click.prevent="router.push('/send')"
-        class="bg-gray-800 rounded-[8px] py-3 px-4"
-      >
-        <div class="pb-2">
-          <Icon name="send" class="w-6 h-6" />
-        </div>
-
-        <div>
-          <span class="text-xxs font-medium text-font-1">
-            Send
-          </span>
-        </div>
-      </button>
-
-      <button
-        class="bg-gray-800 rounded-[8px] py-3 px-4"
-        @click.prevent="data.showReceiveModal = true"
-      >
-        <div class="pb-2">
-          <Icon name="receive" class="w-6 h-6" />
-        </div>
-
-        <div>
-          <span class="text-xxs font-medium text-font-1">
-            Receive
-          </span>
-        </div>
-      </button>
-
-      <button
-        class="bg-gray-800 rounded-[8px] py-3 px-4"
-        @click.prevent="router.push('/deposit')"
-      >
-        <div class="pb-2">
-          <Icon name="add" class="w-6 h-6 text-font-1" />
-        </div>
-
-        <div>
-          <span class="text-xxs font-medium text-font-1">
-            Deposit
-          </span>
-        </div>
-      </button>
-    </div>
-
-    <div class="pt-[24px] flex space-x-[24px]">
-      <button
-        @click.prevent="data.tab = 'tokens'"
-        :class="
-          data.tab === 'tokens' &&
-          'border-b-[1px] border-blue-400 !opacity-100'
-        "
-        class="px-2 pb-2 opacity-[0.5]"
-      >
-        <span class="text-sm font-medium text-font-1">
-          Tokens
-        </span>
-      </button>
-
-      <button
-        @click.prevent="data.tab = 'nfts'"
-        :class="
-          data.tab === 'nfts' &&
-          'border-b-[1px] border-blue-400 !opacity-100'
-        "
-        class="px-2 pb-2 opacity-[0.5] cursor-not-allowed"
-      >
-        <span class="text-sm font-medium text-font-2">
-          NFTs
-        </span>
-      </button>
-    </div>
-
-    <div
-      v-if="data.tab === 'tokens'"
-      class="pt-[16px] space-y-3"
-    >
-      <div
-        class="
-          px-4
-          py-2.5
-          bg-gray-800
-          rounded-[8px]
-          h-[66px]
-          flex
-          items-center
-        "
-      >
-        <div class="pr-4">
-          <img src="/kda.png" />
-        </div>
-
-        <div class="space-y-1">
-          <p
-            class="
-              text-xs
-              font-regular
-              opacity-[0.9]
-              text-font-1
-            "
-          >
-            KDA
-          </p>
-
-          <p
-            class="
-              text-font-2 text-xxs
-              font-medium
-              opacity-[0.9]
-            "
-          >
-            $338,91
-          </p>
-        </div>
-
-        <div class="ml-auto">
-          <p
-            class="
-              text-sm
-              font-medium
-              text-font-1
-              opacity-[0.9]
-            "
-          >
-            700,94
-          </p>
-        </div>
-      </div>
-
-      <div
-        class="
-          px-4
-          py-2.5
-          bg-gray-800
-          rounded-[8px]
-          h-[66px]
-          flex
-          items-center
-        "
-      >
-        <div class="pr-4">
-          <img src="/kdx.png" />
-        </div>
-
-        <div class="space-y-1">
-          <p
-            class="
-              text-xs
-              font-regular
-              opacity-[0.9]
-              text-font-1
-            "
-          >
-            KDX
-          </p>
-
-          <p
-            class="
-              text-font-2 text-xxs
-              font-medium
-              opacity-[0.9]
-            "
-          >
-            $78,91
-          </p>
-        </div>
-
-        <div class="ml-auto">
-          <p
-            class="
-              text-sm
-              font-medium
-              text-font-1
-              opacity-[0.9]
-            "
-          >
-            199,4
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div
-      v-else
-      class="pb-[90px] grid grid-cols-2 gap-3 pt-3"
-    >
-      <div
-        :key="n"
-        v-for="n in 8"
-        class="pb-4 px-2 pt-2 rounded-[8px] bg-gray-800"
-      >
-        <img src="/nft.png" class="rounded-[8px]" />
-
-        <div class="pt-3">
-          <span class="text-font-1 text-xxs">
-            Back in the Apes #9786
-          </span>
-        </div>
-      </div>
-    </div>
+    <History />
 
     <div
       class="
+        lg:hidden
         py-3
         fixed
         bottom-0
@@ -336,11 +89,6 @@ const router = useRouter()
       </button>
     </div>
   </div>
-
-  <ReceiveModal
-    :show="data.showReceiveModal"
-    @close="data.showReceiveModal = false"
-  />
 </template>
 
 <style>

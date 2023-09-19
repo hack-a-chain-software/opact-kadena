@@ -11,11 +11,15 @@ const router = useRouter()
       max-w-[450px]
       text-white
       min-h-[812px]
+      lg:min-h-full
+      lg:pb-0
+      lg:max-w-full
     "
   >
     <div>
       <div
         class="
+          lg:hidden
           w-full
           py-4
           flex
@@ -48,7 +52,9 @@ const router = useRouter()
 
       <div class="pt-7">
         <div
-          class="bg-gray-800 rounded-[12px] p-4 text-center"
+          class="bg-gray-800 rounded-[12px] p-4 text-center
+        lg:mt-0
+        lg:bg-transparent"
         >
           <div>
             <span class="text-md text-font-1">

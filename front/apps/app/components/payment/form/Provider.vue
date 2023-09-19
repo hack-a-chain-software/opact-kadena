@@ -12,7 +12,7 @@ const chains = getChains()
       </span>
     </div>
 
-    <div class="w-full max-w-md pt-4">
+    <div class="w-full max-w-md lg:max-w-full pt-4">
       <ul class="w-full space-y-[14px] gap-3">
         <TabItem
           v-for="provider in chains[0].providers"

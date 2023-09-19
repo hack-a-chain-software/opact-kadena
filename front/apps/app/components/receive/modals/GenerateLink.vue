@@ -39,7 +39,9 @@ const close = () => {
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
+        <div
+          class="fixed inset-0 bg-[rgba(6,_10,_15,_0.80)]"
+        />
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-auto">
@@ -50,6 +52,9 @@ const close = () => {
             items-end
             justify-center
             p-4
+            lg:justify-center
+            lg:items-start
+            lg:pt-[312px]
           "
         >
           <TransitionChild
@@ -66,13 +71,17 @@ const close = () => {
                 p-4
                 w-full
                 rounded-[12px]
+                lg:max-w-[500px]
                 space-y-4
                 bg-gray-800
+                lg:p-6
+                lg:border-[2px] lg:border-gray-600
               "
             >
               <div
                 class="
                   flex
+                  lg:hidden
                   items-center
                   justify-center
                   relative
@@ -86,8 +95,37 @@ const close = () => {
                 </DialogTitle>
               </div>
 
+              <div
+                class="
+                  hidden lg:flex relative !mt-0
+                  justify-between
+                  items-center
+                  mx-[-24px]
+                  px-[24px]
+                  pb-4
+                  border-b-[2px] border-gray-600
+                "
+              >
+                <DialogTitle
+                  as="h3"
+                  class="text-font-1 text-sm"
+                >
+                  Receive Method
+                </DialogTitle>
+
+                <button
+                  @click.prevent="setIsOpen(false)"
+                  class="w-8 h-8"
+                >
+                  <Icon
+                    name="close"
+                    class="rotate-90 w-4 h-4 text-blue-400"
+                  />
+                </button>
+              </div>
+
               <div>
-                <span class="text-sm text-font-2">
+                <span class="text-sm text-font-2 lg:text-font-1">
                   Copy or share the payment link
                 </span>
               </div>

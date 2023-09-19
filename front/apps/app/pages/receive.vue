@@ -5,7 +5,7 @@ import { useWalletStore } from '~/apps/auth/stores/wallet'
 import Create from '../components/receive/form/Create.vue'
 
 definePageMeta({
-  layout: 'form',
+  layout: 'app',
   middleware: 'auth'
 })
 
@@ -25,10 +25,22 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="text-white">
-    <Transition name="fade" mode="out-in">
-      <Create />
-    </Transition>
+  <div
+    class="lg:flex lg:justify-center"
+  >
+    <div
+      class="
+      text-white
+        lg:p-6
+        lg:bg-gray-900
+        lg:w-[546px]
+        lg:border-2 lg:border-gray-600 lg:rounded-[12px]
+      "
+    >
+      <Transition name="fade" mode="out-in">
+        <Create />
+      </Transition>
+    </div>
   </div>
 </template>
 

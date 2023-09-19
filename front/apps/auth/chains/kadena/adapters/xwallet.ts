@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import Pact from "pact-lang-api";
+import Pact from 'pact-lang-api'
 
 const metadata = {
   name: 'eckoWALLET',
@@ -33,7 +33,7 @@ export const useProvider = () => {
   }
 
   const signMessage = async ({ message }: any) => {
-    const networkId: any = null
+    const networkId: any = 'testnet04'
 
     const req = {
       method: 'kda_requestSign',
@@ -57,75 +57,73 @@ export const useProvider = () => {
     return await kadena.request(req)
   }
 
-  const coinDetails = async () => {
+  const coinDetails = async ({ pubkey }: any) => {
     try {
-      const accountName = account.value.account.account;
-      const network = 'http://ec2-3-84-139-198.compute-1.amazonaws.com:9001'
+      const accountName = pubkey.toString()
 
-      let t_creationTime = Math.round(new Date().getTime() / 1000) - 10;
-      let data = await Pact.fetch.local({
+      const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+
+      const t_creationTime = Math.round(new Date().getTime() / 1000) - 10
+      const data = await Pact.fetch.local({
         pactCode: `(coin.details ${JSON.stringify(accountName)})`,
-        meta: Pact.lang.mkMeta("", "0", 0, 0, t_creationTime, 0)
-      }, network);
+        meta: Pact.lang.mkMeta('', '0', 0, 0, t_creationTime, 0)
+      }, network)
 
       return data
-
     } catch (e) {
       console.warn(e)
     }
   }
 
-  const faceut = async () => {
+  const faceut = async (wallet: any) => {
     try {
-      const publickey = account.value.account.publickey
-      const accountName = account.value.account.account
+      const accountName = wallet.pubkey.toString()
+      const publickey = account.value.account.publicKey
 
-      const pactCode = `(coin.create-account ${JSON.stringify(accountName)} (read-keyset "user1")) (coin.coinbase ${JSON.stringify(accountName)} (read-keyset "user1") 100.0)`
+      const pactCode = `(coin.create-account ${JSON.stringify(accountName)} (read-keyset "${accountName}")) (coin.coinbase ${JSON.stringify(accountName)} (read-keyset "${accountName}") 100.0)`
 
       const cmd = await kadena.request({
-          data: {
-            networkId: metadata.networkId,
-            signingCmd: {
-              ttl: 0,
-              chainId: 0,
-              gasLimit: 0,
-              gasPrice: 0,
-              sender: accountName,
-              pactCode,
-              envData: {
-                name: "opact",
-                language: "Pact",
-                user1: {
-                  keys: [
-                    '5e7b81bf389c446fd206c6c6dbb93b1fad344ddb3e84152c8a896b35ca7b9742',
-                  ]
-                }
-              },
-              networkId: metadata.networkId,
-              signingPubKey: publickey,
-            }
-          },
+        data: {
           networkId: metadata.networkId,
-          method: "kda_requestSign",
-      });
+          signingCmd: {
+            ttl: 0,
+            chainId: 0,
+            gasLimit: 0,
+            gasPrice: 0,
+            sender: accountName,
+            pactCode,
+            envData: {
+              name: 'opact',
+              language: 'Pact',
+              [accountName]: {
+                keys: [
+                  publickey
+                ]
+              }
+            },
+            networkId: metadata.networkId,
+            signingPubKey: publickey
+          }
+        },
+        networkId: metadata.networkId,
+        method: 'kda_requestSign'
+      })
 
-      console.log('cmd', JSON.parse(cmd.signedCmd.cmd))
-
-      try{
-        const res = await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network);
+      try {
+        const res = await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
 
         return res
-      } catch(error){
-        console.log('error', error);
+      } catch (error) {
+        console.log('error', error)
       }
     } catch (error) {
-        console.log(error);
+      console.log(error)
     }
   }
 
   const computeSubAttr = (sub: any): any => {
     if (typeof sub === 'string') {
-      return `${sub}`;
+      return `${sub}`
     }
 
     if (!Array.isArray(sub) && typeof sub === 'object') {
@@ -144,22 +142,22 @@ export const useProvider = () => {
   }
 
   const computeProofCode = (proof: any) => {
-    const entries = Object.entries(proof);
+    const entries = Object.entries(proof)
 
     return entries.reduce((acc: string, curr: any, i: number) => {
       const value = computeSubAttr(proof[curr])
 
-      acc+=`"${curr}":${value}${i === entries.length - 1 ? '' : ','}`
+      acc += `"${curr}":${value}${i === entries.length - 1 ? '' : ','}`
 
       return acc
-    }, ``)
+    }, '')
   }
 
   const computePactCode = ({
     args,
     proof,
     extData,
-    tokenSpec,
+    tokenSpec
   }: any) => {
     return `(test.opact.transact {
       "root": ${args.root},
@@ -175,7 +173,7 @@ export const useProvider = () => {
     } {
       "sender":"${extData.sender}",
       "recipient":"${extData.recipient}",
-      "extAmount":${extData.extAmount}.0,
+      "extAmount":${extData.extAmount.toFixed(1)},
       "relayer":${extData.relayer},
       "fee":${extData.fee.toFixed(1)},
       "encryptedOutput1":"${extData.encryptedOutput1}",
@@ -191,7 +189,7 @@ export const useProvider = () => {
         "name":"${tokenSpec.refSpec.name}",
         "namespace":""
       }
-    })`;
+    })`
   }
 
   const transaction = async ({
@@ -199,17 +197,30 @@ export const useProvider = () => {
     proof,
     extData,
     tokenSpec,
+    node
   }: any) => {
     try {
-      const publickey = account.value.account.publickey;
-      const accountName = account.value.account.account;
+      const accountName = node.pubkey.toString()
+      const publickey = account.value.account.publicKey
 
       const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-      // console.log('pactCode', pactCode)
+      const cap1 = Pact.lang.mkCap(
+        'Coin Transfer',
+        'Capability to transfer designated amount of coin from sender to receiver',
+        'coin.TRANSFER',
+        [accountName, 'opact-contract', Number(extData.extAmount.toFixed(1))]
+      )
+
+      const cap2 = Pact.lang.mkCap(
+        'Coin Transfer for Gas',
+        'Capability to transfer gas fee from sender to gas payer',
+        'coin.TRANSFER',
+        [accountName, 'opact-gas-payer', Number(extData.fee.toFixed(1))]
+      )
 
       const cmd = await kadena.request({
-        method: "kda_requestSign",
+        method: 'kda_requestSign',
         data: {
           networkId: metadata.networkId,
           signingCmd: {
@@ -220,8 +231,8 @@ export const useProvider = () => {
             sender: accountName,
             pactCode,
             envData: {
-              language: "Pact",
-              name: "transact-deposit",
+              language: 'Pact',
+              name: 'transact-deposit',
               'token-instance': {
                 refSpec: [{
                   name: tokenSpec.refSpec.name
@@ -231,19 +242,23 @@ export const useProvider = () => {
                 }
               }
             },
+            caps: [
+              cap1,
+              cap2
+            ],
             networkId: metadata.networkId,
-            signingPubKey: publickey,
+            signingPubKey: publickey
           }
         }
-      });
+      })
 
-      try{
-        return await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network);
-      } catch(error){
-        console.log('error', error);
+      try {
+        return await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
+      } catch (error) {
+        console.log('error', error)
       }
     } catch (error) {
-        console.log(error);
+      console.log(error)
     }
   }
 
@@ -267,7 +282,7 @@ export const useProvider = () => {
     disconnect,
     signMessage,
     transaction,
-    coinDetails,
+    coinDetails
   }
 }
 

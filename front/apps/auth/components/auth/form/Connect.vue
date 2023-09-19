@@ -18,8 +18,8 @@ function setIsOpen (value) {
 </script>
 
 <template>
-  <div class="flex flex-col h-full pt-[56px] pb-[80px]">
-    <div class="flex items-center justify-center h-[42px]">
+  <div class="flex flex-col lg:flex-row lg:items-start h-full pt-[56px] pb-[80px] lg:pt-[0] lg:mt-[-64px] lg:px-[60px]">
+    <div class="lg:hidden flex items-center justify-center h-[42px]">
       <Logo class="flex justify-center mb-5" />
     </div>
 
@@ -30,64 +30,74 @@ function setIsOpen (value) {
         justify-center
         w-full
         max-h-[410px]
+        lg:max-h-full
+        lg:z-[-1]
+        lg:relative
+        lg:h-[880px]
+        lg:max-w-[60%]
+        lg:overflow-y-clip
       "
     >
-      <figure class="rotate-[-8.05deg]">
+      <figure class="">
         <nuxt-img
-          src="/hero.webp"
+          src="/auth-bg.png"
           alt="Hero illustration"
           quality="100"
-          class="min-w-[608px] h-[507px]"
+          class="min-w-[608px] h-[507px] lg:min-w-[1057px] lg:min-h-[880px] lg:h-[880px]"
           sizes="xs:861px xxl:1057px"
         />
       </figure>
     </div>
 
-    <div class="flex flex-col space-y-[16px] max-w-[400px]">
-      <h2 class="text-lg font-medium text-font-1">
-        Your private address
-      </h2>
+    <div
+      class="flex-col lg:mt-[300px] lg:mr-[5%] lg:min-w-[424px]"
+    >
+      <div class="flex flex-col space-y-[16px] max-w-[400px]">
+        <h2 class="text-lg font-medium text-font-1">
+          Your private address
+        </h2>
 
-      <p class="text-xs text-font-2 font-regular">
-        Choose how you want to connect. Web3 like you never
-        imagined.
-      </p>
-    </div>
+        <p class="text-xs text-font-2 font-regular">
+          Choose how you want to connect. Web3 like you never
+          imagined.
+        </p>
+      </div>
 
-    <div class="flex flex-col space-y-[16px] pt-[32px]">
-      <button
-        class="
-          flex
-          items-center
-          justify-center
-          bg-blue-gradient
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-        "
-        @click.prevent="setIsOpen(true)"
-      >
-        <span class="text-font-1"> Create Wallet </span>
-      </button>
+      <div class="flex flex-col space-y-[16px] pt-[32px]">
+        <button
+          class="
+            flex
+            items-center
+            justify-center
+            bg-blue-gradient
+            h-[44px]
+            py-3
+            px-4
+            rounded-[12px]
+            relative
+          "
+          @click.prevent="setIsOpen(true)"
+        >
+          <span class="text-font-1"> Create Wallet </span>
+        </button>
 
-      <button
-        class="
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-[11px]
-          px-4
-          rounded-[12px]
-          text-font-1
-          border border-font-1
-        "
-        @click.prevent="currentStep = 'recovery'"
-      >
-        <span class="text-font-1"> Recover Wallet </span>
-      </button>
+        <button
+          class="
+            flex
+            items-center
+            justify-center
+            h-[44px]
+            py-[11px]
+            px-4
+            rounded-[12px]
+            text-font-1
+            border border-font-1
+          "
+          @click.prevent="currentStep = 'recovery'"
+        >
+          <span class="text-font-1"> Recover Wallet </span>
+        </button>
+      </div>
     </div>
 
     <TransitionRoot as="template" :show="isOpen">
@@ -106,7 +116,7 @@ function setIsOpen (value) {
           leave-to="opacity-0"
         >
           <div
-            class="fixed inset-0 bg-black bg-opacity-25"
+            class="fixed inset-0 bg-[rgba(6,_10,_15,_0.80)]"
           />
         </TransitionChild>
 
@@ -117,6 +127,9 @@ function setIsOpen (value) {
               min-h-full
               items-end
               justify-center
+              lg:justify-center
+              lg:items-start
+              lg:pt-[312px]
               p-4
               pb-[30px]
             "
@@ -136,7 +149,10 @@ function setIsOpen (value) {
                   py-6
                   w-full
                   rounded-[12px]
+                  lg:max-w-[500px]
                   bg-gray-800
+                  lg:p-6
+                  lg:border-[2px] lg:border-gray-600
                 "
               >
                 <DialogTitle

@@ -7,11 +7,13 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
+import { storeToRefs } from 'pinia'
 import WalletConnector from './WalletConnector.vue'
-
 import { useWalletStore } from '~/apps/auth/stores/wallet'
 
 const wallet = useWalletStore()
+
+const { node } = storeToRefs(wallet)
 
 const isOpen = ref(false)
 const isConnectWalletOpen = ref(false)
@@ -34,7 +36,11 @@ const amounts = [1, 10, 100]
 
 const data = reactive({
   amount: 0,
-  token: null,
+  token: {
+    icon: '/kda.png',
+    name: 'Kadena',
+    symbol: 'KDA'
+  },
   showCollapsible: false
 })
 
@@ -56,109 +62,15 @@ const tokens = [
   }
 ]
 
-const state = {
-  "nullifiers": [
-    "5097715052237145403753365704898254467169137625210256492956965949270430045",
-    "10350054029334029104721836436197614298271599814974025951759768887472959204491",
-    "8880212327543797734391566362872821399417931236479047492409675925327395362024",
-    "6744756488845918878339475731082062348289674403192928430312475229224416054163",
-    "11447887161685273325229383682033758855034454108223333399257174474224042460477",
-    "20085879863141481154416816762505004939695895115007481593493468713550477118072",
-    "1491673331617618272981045375721765540778861924763498414377149116092375404182",
-    "1409566157580977860959833662881925553878710509003",
-    "1076349462536313652575937474535332016951960024124",
-    "814843937149388495664711784579302082226637396667434303269754721330180190802"
-  ],
-  "commitments": [
-    {
-      "value": 4,
-      "order": 4
-    },
-    {
-      "value": 5,
-      "order": 5
-    }
-  ],
-  "encryptedData": [
-    1,
-    1
-  ]
-}
-
 const deposit = async () => {
   try {
     // step.value = 'awaiting'
-    // await provider.value.faceut()
-    const transactionArgs = await wallet.deposit(state)
-
-    const res = await provider.value.transaction({ ...transactionArgs })
-
-    // const res = await provider.value.transaction({
-    //   args: {
-    //     root: "18366138217714291923534712849449091358386817997964088830897385671725623871073",
-    //     outputCommitments:[4, 5],
-    //     publicAmount: 10.0,
-    //     extDataHash: "lcYCxFO_7CT9n94Vjwmv4nUpfMOksDydOTGxM4fbv5Y",
-    //     tokenHash:"QMmJhXTNea-YwuI9rKwk5Gjlyr21rs8AV9nImHvoCbI"
-    //   },
-    //   proof: {
-    //     public_values:[
-    //       "5097715052237145403753365704898254467169137625210256492956965949270430045",
-    //       "10350054029334029104721836436197614298271599814974025951759768887472959204491",
-    //       "8880212327543797734391566362872821399417931236479047492409675925327395362024",
-    //       "6744756488845918878339475731082062348289674403192928430312475229224416054163",
-    //       "11447887161685273325229383682033758855034454108223333399257174474224042460477",
-    //       "20085879863141481154416816762505004939695895115007481593493468713550477118072",
-    //       "1491673331617618272981045375721765540778861924763498414377149116092375404182",
-    //       "1409566157580977860959833662881925553878710509003",
-    //       "1076349462536313652575937474535332016951960024124",
-    //       "814843937149388495664711784579302082226637396667434303269754721330180190802"
-    //     ],
-    //     a:{
-    //       x:"17901042678392254749009477662444348028409443811053697007027715576663992903799",
-    //       y:"17048225545256157163674902826671998880176775729930869352951888784634602972577"
-    //     },
-    //     b:{
-    //       x:[
-    //         "4434085511194832277146281817017632276264964685517905758544892252867374596754",
-    //         "18032823362937264937199773264971671344432187031187091034703593895639367647694"
-    //       ],
-    //       y :[
-    //         "9439696666055659947675970120722790572303540575063261557626202383522078275740",
-    //         "20091390898922485508524257678012892745061123293603606701407411013078735614039"
-    //       ]
-    //     },
-    //     c:{
-    //       x: "17910219481298589721088687155746307889801437978994146636715821557888886556540",
-    //       y: "3644328300856086571465919298625535607457024633955676512087523130907764371638"
-    //     }
-    //   },
-    //   extData: {
-    //     sender: "sender-address-1",
-    //     recipient:"recipient-address",
-    //     extAmount:10.0,
-    //     relayer: 1,
-    //     fee: 1.0,
-    //     encryptedOutput1:12,
-    //     encryptedOutput2:12,
-    //     encryptedValue:1
-    //   },
-    //   tokenSpec: {
-    //     id: "",
-    //     refName: {
-    //       name: "coin",
-    //       namespace: ""
-    //     },
-    //     refSpec: {
-    //       name: "fungible-v2",
-    //       namespace: ""
-    //     }
-    //   }
-    // })
-
+    // const res = await provider.value.faceut(node.value)
+    const transactionArgs = await wallet.deposit(
+      Number(data.amount)
+    )
+    const res = await provider.value.transaction({ ...transactionArgs, node: node.value })
     console.log('res', res.requestKeys[0])
-    // await provider.value.checkTransaction()
-    // const details = await provider.value.coinDetails()
     // step.value = 'success'
   } catch (e) {
     console.warn(e)
@@ -175,9 +87,14 @@ const deposit = async () => {
       max-w-[450px]
       text-white
       min-h-[812px]
+      lg:pb-0
+      lg:min-h-full
+      lg:max-w-full
     "
   >
-    <div>
+    <div
+      class="lg:w-full"
+    >
       <div
         class="
           w-full
@@ -186,6 +103,7 @@ const deposit = async () => {
           justify-center
           relative
           items-center
+          lg:hidden
         "
       >
         <button
@@ -210,7 +128,7 @@ const deposit = async () => {
         </div>
       </div>
 
-      <div class="flex flex-col space-y-2 pt-[24px]">
+      <div class="flex flex-col space-y-2 pt-[24px] lg:pt-0">
         <div>
           <h2 class="text-font-1 text-xxs font-medium">
             Enter or select amount
@@ -218,7 +136,7 @@ const deposit = async () => {
         </div>
 
         <div
-          class="flex justify-center items-center space-x-1"
+          class="flex justify-between items-center space-x-1"
         >
           <input
             v-model="data.amount"
@@ -230,25 +148,29 @@ const deposit = async () => {
               text-font-2
               outline-none
             "
-          />
+          >
 
-          <Icon name="pen" class="h-6 w-6 text-font-2" />
+          <Icon name="pen" class="h-6 w-6 text-font-2 lg:hidden" />
         </div>
       </div>
 
       <div class="pt-6 space-x-2">
         <button
           v-for="amount in amounts"
+          @click.prevent="data.amount = amount"
           :key="amount"
           class="
-            border-[1.5px] border-gray-700
+            group
+            active:border-blue-400
+            border-[1.5px]
+            border-gray-700
             p-3
             rounded-full
           "
         >
           <span
-            class="text-xxs text-font-2 font-medium"
-            v-text="`${amount} ${data.token?.symbol || ''}`"
+            class="text-xxs text-font-2 group-active:text-blue-400 font-medium"
+            v-text="amount"
           />
         </button>
       </div>
@@ -263,11 +185,14 @@ const deposit = async () => {
 
           <div>
             <button
+              disabled
               class="
                 flex
                 items-center
                 space-x-2
                 text-blue-400
+                cursor-not-allowed
+                disabled:opacity-[0.8]
               "
               @click.prevent="step = 'token'"
             >
@@ -290,7 +215,10 @@ const deposit = async () => {
             rounded-[8px]
             justify-between
             bg-gray-800
+            disabled:opacity-60
+            disabled:cursor-not-allowed
           "
+          disabled
           @click.prevent="setIsOpen(true)"
         >
           <div v-if="!data.token">
@@ -300,7 +228,7 @@ const deposit = async () => {
           </div>
 
           <div v-else class="space-x-2 flex items-center">
-            <img :src="data.token.icon" class="w-6 h-6" />
+            <img :src="data.token.icon" class="w-6 h-6">
 
             <span v-text="data.token.name" />
           </div>
@@ -343,7 +271,7 @@ const deposit = async () => {
                 class="text-xxs font-meidum text-font-1"
                 v-text="
                   provider?.account?.address ||
-                  provider.account.account.account
+                    provider.account.account.account
                 "
               />
             </div>
@@ -412,7 +340,7 @@ const deposit = async () => {
       </template>
     </div>
 
-    <div class="mt-full">
+    <div class="mt-full lg:mt-[40px]">
       <button
         v-if="!provider"
         :disabled="!data.token || !data.amount"
@@ -486,7 +414,7 @@ const deposit = async () => {
           leave-to="opacity-0"
         >
           <div
-            class="fixed inset-0 bg-black bg-opacity-25"
+            class="fixed inset-0 bg-[rgba(6,_10,_15,_0.80)]"
           />
         </TransitionChild>
 
@@ -497,6 +425,9 @@ const deposit = async () => {
               min-h-full
               items-end
               justify-center
+              lg:justify-center
+              lg:items-start
+              lg:pt-[312px]
               p-4
             "
           >
@@ -514,12 +445,16 @@ const deposit = async () => {
                   p-4
                   w-full
                   rounded-[12px]
+                  lg:max-w-[500px]
                   space-y-4
                   bg-gray-800
+                  lg:p-6
+                  lg:border-[2px] lg:border-gray-600
                 "
               >
                 <div
                   class="
+                    lg:hidden
                     flex
                     items-center
                     justify-center
@@ -544,7 +479,36 @@ const deposit = async () => {
                   </DialogTitle>
                 </div>
 
-                <div class="relative">
+                <div
+                  class="
+                    hidden lg:flex relative !mt-0
+                    justify-between
+                    items-center
+                    mx-[-24px]
+                    px-[24px]
+                    pb-4
+                    border-b-[2px] border-gray-600
+                  "
+                >
+                  <DialogTitle
+                    as="h3"
+                    class="text-font-1 text-sm"
+                  >
+                    Select token
+                  </DialogTitle>
+
+                  <button
+                    @click.prevent="setIsOpen(false)"
+                    class="w-8 h-8"
+                  >
+                    <Icon
+                      name="close"
+                      class="rotate-90 w-4 h-4 text-blue-400"
+                    />
+                  </button>
+                </div>
+
+                <div class="relative lg:!mt-6">
                   <input
                     placeholder="Search"
                     class="
@@ -559,7 +523,7 @@ const deposit = async () => {
                       placeholder:text-font-2
                       border-2 border-gray-700
                     "
-                  />
+                  >
 
                   <div class="absolute left-4 top-4">
                     <Icon
@@ -609,7 +573,7 @@ const deposit = async () => {
                         <img
                           :src="token.icon"
                           class="w-9 h-9"
-                        />
+                        >
                       </div>
 
                       <div

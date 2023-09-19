@@ -22,10 +22,14 @@ const back = () => {
       max-w-[450px]
       text-white
       min-h-[812px]
+      lg:min-h-full
+      lg:max-w-full
+      lg:pb-0
     "
   >
     <div
       class="
+        lg:hidden
         w-full
         py-4
         flex
@@ -67,6 +71,8 @@ const back = () => {
         py-3
         bg-gray-800
         rounded-[12px]
+        lg:bg-transparent
+        lg:mt-0
       "
     >
       <div>

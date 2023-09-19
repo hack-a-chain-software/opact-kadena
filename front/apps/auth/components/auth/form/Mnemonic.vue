@@ -14,7 +14,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="text-white max-w-[450px]">
+  <div
+    class="text-white max-w-[450px]
+      lg:h-auto
+      lg:p-6
+      lg:bg-gray-900
+      lg:w-[546px]
+      lg:border-2 lg:border-gray-600 lg:rounded-[12px]"
+  >
     <div
       class="
         w-full
@@ -23,6 +30,7 @@ onMounted(() => {
         justify-center
         relative
         items-center
+        lg:hidden
       "
     >
       <button
@@ -47,7 +55,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="pt-[32px]">
+    <div class="pt-[32px] lg:pt-0">
       <div>
         <h2 class="text-md text-font-1 font-medium">
           Setup Your Secure Passphrase
@@ -101,7 +109,6 @@ onMounted(() => {
 
       <div class="pt-4 flex items-center justify-end">
         <button
-          @click.prevent="wallet.copyToClipboard()"
           class="
             px-3
             py-1
@@ -110,6 +117,7 @@ onMounted(() => {
             text-blue-400
             focus:text-green-500
           "
+          @click.prevent="wallet.copyToClipboard()"
         >
           <span class="text-xs font-regular opacity-[0.9]">
             Copy Passphrase
@@ -119,9 +127,8 @@ onMounted(() => {
         </button>
       </div>
 
-      <div class="pt-[165px]">
+      <div class="pt-[165px] lg:pt-[56px]">
         <button
-          @click.prevent="currentStep = 'verify'"
           class="
             w-full
             flex
@@ -134,6 +141,7 @@ onMounted(() => {
             rounded-[12px]
             relative
           "
+          @click.prevent="currentStep = 'verify'"
         >
           <span class="text-font-1 text-xs font-medium">
             Continue

@@ -40,7 +40,15 @@ const toPaste = async () => {
 </script>
 
 <template>
-  <div class="text-white max-w-[450px]">
+  <div
+    class="text-white max-w-[450px]
+      lg:h-auto
+      lg:p-6
+      lg:bg-gray-900
+      lg:w-[546px]
+      lg:border-2 lg:border-gray-600 lg:rounded-[12px]
+    "
+  >
     <div
       class="
         w-full
@@ -49,6 +57,7 @@ const toPaste = async () => {
         justify-center
         relative
         items-center
+        lg:hidden
       "
     >
       <button
@@ -73,7 +82,7 @@ const toPaste = async () => {
       </div>
     </div>
 
-    <div class="pt-[32px]">
+    <div class="pt-[32px] lg:pt-0">
       <div>
         <h2 class="text-md text-font-1 font-medium">
           Setup Your Secure Passphrase
@@ -97,8 +106,8 @@ const toPaste = async () => {
         "
       >
         <div
-          :key="'recovery-word-' + i"
           v-for="(_, i) in 12"
+          :key="'recovery-word-' + i"
           class="p-3 rounded-[8px] bg-gray-700 space-x-2"
         >
           <span
@@ -125,7 +134,6 @@ const toPaste = async () => {
 
       <div class="pt-4 flex justify-end">
         <button
-          @click.prevent="toPaste"
           class="
             px-3
             py-1
@@ -134,6 +142,7 @@ const toPaste = async () => {
             text-blue-400
             focus:text-green-500
           "
+          @click.prevent="toPaste"
         >
           <span class="text-xs font-regular opacity-[0.9]">
             Paste Passphrase
@@ -143,7 +152,7 @@ const toPaste = async () => {
         </button>
       </div>
 
-      <div class="pt-[250px]">
+      <div class="pt-[250px] lg:pt-[56px]">
         <button
           :disabled="!!!data.phrase"
           class="

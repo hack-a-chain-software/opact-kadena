@@ -53,11 +53,15 @@ const tokens = [
       max-w-[450px]
       text-white
       min-h-[812px]
+      lg:pb-0
+      lg:min-h-full
+      lg:max-w-full
     "
   >
     <div>
       <div
         class="
+          lg:hidden
           w-full
           py-4
           flex
@@ -88,7 +92,7 @@ const tokens = [
         </div>
       </div>
 
-      <div class="flex flex-col space-y-2 pt-[24px]">
+      <div class="flex flex-col space-y-2 pt-[24px] lg:pt-0">
         <div>
           <h2 class="text-font-1 text-xxs font-medium">
             Enter or select amount
@@ -96,7 +100,7 @@ const tokens = [
         </div>
 
         <div
-          class="flex justify-center items-center space-x-1"
+          class="flex justify-between items-center space-x-1"
         >
           <input
             v-model="data.amount"
@@ -120,16 +124,20 @@ const tokens = [
       <div class="pt-6 space-x-2">
         <button
           v-for="amount in amounts"
+          @click.prevent="data.amount = amount"
           :key="amount"
           class="
-            border-[1.5px] border-gray-700
+            group
+            active:border-blue-400
+            border-[1.5px]
+            border-gray-700
             p-3
             rounded-full
           "
         >
           <span
-            class="text-xxs text-font-2 font-medium"
-            v-text="`${amount} ${data.token?.symbol || ''}`"
+            class="text-xxs group-active:text-blue-400 text-font-2 font-medium"
+            v-text="amount"
           />
         </button>
       </div>
@@ -171,7 +179,7 @@ const tokens = [
       </div>
     </div>
 
-    <div class="mt-full">
+    <div class="mt-full lg:mt-[40px]">
       <button
         :disabled="!data.token || !data.amount"
         class="
@@ -220,7 +228,7 @@ const tokens = [
           leave-to="opacity-0"
         >
           <div
-            class="fixed inset-0 bg-black bg-opacity-25"
+            class="fixed inset-0 bg-[rgba(6,_10,_15,_0.80)]"
           />
         </TransitionChild>
 
@@ -231,6 +239,9 @@ const tokens = [
               min-h-full
               items-end
               justify-center
+              lg:justify-center
+              lg:items-start
+              lg:pt-[312px]
               p-4
             "
           >
@@ -248,12 +259,16 @@ const tokens = [
                   p-4
                   w-full
                   rounded-[12px]
+                  lg:max-w-[500px]
                   space-y-4
                   bg-gray-800
+                  lg:p-6
+                  lg:border-[2px] lg:border-gray-600
                 "
               >
                 <div
                   class="
+                    lg:hidden
                     flex
                     items-center
                     justify-center
@@ -278,7 +293,36 @@ const tokens = [
                   </DialogTitle>
                 </div>
 
-                <div class="relative">
+                <div
+                  class="
+                    hidden lg:flex relative !mt-0
+                    justify-between
+                    items-center
+                    mx-[-24px]
+                    px-[24px]
+                    pb-4
+                    border-b-[2px] border-gray-600
+                  "
+                >
+                  <DialogTitle
+                    as="h3"
+                    class="text-font-1 text-sm"
+                  >
+                    Select token
+                  </DialogTitle>
+
+                  <button
+                    @click.prevent="setIsOpen(false)"
+                    class="w-8 h-8"
+                  >
+                    <Icon
+                      name="close"
+                      class="rotate-90 w-4 h-4 text-blue-400"
+                    />
+                  </button>
+                </div>
+
+                <div class="relative lg:!mt-6">
                   <input
                     placeholder="Search"
                     class="
@@ -293,14 +337,12 @@ const tokens = [
                       placeholder:text-font-2
                       border-2 border-gray-700
                     "
-                  />
-
-                  <div
-                    class="absolute left-4 top-4 shrink-0"
                   >
+
+                  <div class="absolute left-4 top-4">
                     <Icon
                       name="search"
-                      class="w-[20px] h-[20px] shrink-0"
+                      class="w-[20px] h-[20px]"
                     />
                   </div>
                 </div>
@@ -345,7 +387,7 @@ const tokens = [
                         <img
                           :src="token.icon"
                           class="w-9 h-9"
-                        />
+                        >
                       </div>
 
                       <div

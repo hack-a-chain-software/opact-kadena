@@ -3,7 +3,16 @@ const currentStep = useAuthCurrentStep()
 </script>
 
 <template>
-  <div class="text-white max-w-[450px]">
+  <div
+    class="
+      text-white max-w-[450px]
+      lg:h-auto
+      lg:p-6
+      lg:bg-gray-900
+      lg:w-[546px]
+      lg:border-2 lg:border-gray-600 lg:rounded-[12px]
+    "
+  >
     <div
       class="
         w-full
@@ -12,6 +21,7 @@ const currentStep = useAuthCurrentStep()
         justify-center
         relative
         items-center
+        lg:hidden
       "
     >
       <button
@@ -36,7 +46,7 @@ const currentStep = useAuthCurrentStep()
       </div>
     </div>
 
-    <div class="pt-8">
+    <div class="pt-8 lg:pt-0">
       <div>
         <h2 class="text-font-1 text-md font-medium">
           Choose a Security Method
@@ -61,7 +71,7 @@ const currentStep = useAuthCurrentStep()
 
         <div class="space-y-4">
           <button
-            class="p-4 bg-gray-700 rounded-[8px] relative"
+            class="p-4 bg-gray-700 rounded-[8px] relative w-full"
             @click.prevent="currentStep = 'mnemonic'"
           >
             <div class="text-left space-y-[8px]">
@@ -79,7 +89,7 @@ const currentStep = useAuthCurrentStep()
               class="
                 absolute
                 right-[16px]
-                top-[39px]
+                top-[25px]
                 shrink-0
               "
             >
@@ -93,7 +103,7 @@ const currentStep = useAuthCurrentStep()
           <button
             disabled
             class="
-              p-4
+              p-4 w-full
               bg-gray-700
               rounded-[8px]
               relative
@@ -116,7 +126,7 @@ const currentStep = useAuthCurrentStep()
               class="
                 absolute
                 right-[16px]
-                top-[39px]
+                top-[25px]
                 shrink-0
               "
             >

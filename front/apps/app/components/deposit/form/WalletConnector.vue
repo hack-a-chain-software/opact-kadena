@@ -45,7 +45,7 @@ const showProviders = (flag = true) => {
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
+        <div class="fixed inset-0 bg-[rgba(6,_10,_15,_0.80)]" />
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-auto">
@@ -56,6 +56,9 @@ const showProviders = (flag = true) => {
             items-end
             justify-center
             p-4
+            lg:justify-center
+            lg:items-start
+            lg:pt-[312px]
           "
         >
           <TransitionChild
@@ -72,12 +75,16 @@ const showProviders = (flag = true) => {
                 p-4
                 w-full
                 rounded-[12px]
+                lg:max-w-[500px]
                 space-y-4
                 bg-gray-800
+                lg:p-6
+                lg:border-[2px] lg:border-gray-600
               "
             >
               <div
                 class="
+                  lg:hidden
                   flex
                   items-center
                   justify-center
@@ -102,12 +109,43 @@ const showProviders = (flag = true) => {
                 </DialogTitle>
               </div>
 
+              <div
+                class="
+                  hidden lg:flex relative !mt-0
+                  justify-between
+                  items-center
+                  mx-[-24px]
+                  px-[24px]
+                  pb-4
+                  border-b-[2px] border-gray-600
+                "
+              >
+                <DialogTitle
+                  as="h3"
+                  class="text-font-1 text-sm"
+                >
+                  Connect your Wallet
+                </DialogTitle>
+
+                <button
+                  @click.prevent="setIsOpen(false)"
+                  class="w-8 h-8"
+                >
+                  <Icon
+                    name="close"
+                    class="rotate-90 w-4 h-4 text-blue-400"
+                  />
+                </button>
+              </div>
+
               <template v-if="!isOpen">
                 <div class="relative">
                   <span
                     class="
                       text-xxs
                       font-regular
+                      lg:text-font-1
+                      lg:text-sm
                       text-font-2
                     "
                   >

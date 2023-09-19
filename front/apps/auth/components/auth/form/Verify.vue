@@ -46,7 +46,14 @@ const isDisabled = computed(() => {
 </script>
 
 <template>
-  <div class="text-white max-w-[450px]">
+  <div
+    class="text-white max-w-[450px]
+      lg:h-auto
+      lg:p-6
+      lg:bg-gray-900
+      lg:w-[546px]
+      lg:border-2 lg:border-gray-600 lg:rounded-[12px]"
+  >
     <div
       class="
         w-full
@@ -55,6 +62,7 @@ const isDisabled = computed(() => {
         justify-center
         relative
         items-center
+        lg:hidden
       "
     >
       <button
@@ -81,7 +89,7 @@ const isDisabled = computed(() => {
       </div>
     </div>
 
-    <div class="pt-[32px]">
+    <div class="pt-[32px] lg:pt-0">
       <div>
         <h2 class="text-md text-font-1 font-medium">
           Verify Phrase
@@ -115,10 +123,10 @@ const isDisabled = computed(() => {
             rounded-[8px]
             outline-none
           "
-        />
+        >
       </div>
 
-      <div class="pt-[397px]">
+      <div class="pt-[397px] lg:pt-[56px]">
         <button
           :disabled="!isDisabled"
           class="

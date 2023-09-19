@@ -22,19 +22,23 @@ const back = () => {
       max-w-[450px]
       text-white
       min-h-[812px]
+      lg:min-h-full
+      lg:pb-0
+      lg:max-w-full
     "
   >
     <div
       class="
         w-full
         py-4
+        lg:hidden
         flex
         justify-center
         relative
         items-center
       "
     >
-      <button
+      <!-- <button
         class="
           flex
           items-center
@@ -47,7 +51,7 @@ const back = () => {
         @click.prevent="back()"
       >
         <Icon name="chevronLeft" class="h-6 w-6" />
-      </button>
+      </button> -->
 
       <div>
         <h1 class="text-xs text-font-1 font-medium">
@@ -67,6 +71,8 @@ const back = () => {
         py-3
         bg-gray-800
         rounded-[12px]
+        lg:mt-0
+        lg:bg-transparent
       "
     >
       <div>

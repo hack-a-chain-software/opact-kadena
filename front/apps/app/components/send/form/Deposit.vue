@@ -7,7 +7,15 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
+import { storeToRefs } from 'pinia'
 import WalletConnector from '../../deposit/form/WalletConnector.vue'
+import { useWalletStore } from '~/apps/auth/stores/wallet'
+
+const wallet = useWalletStore()
+
+const { node } = storeToRefs(wallet)
+
+const { provider } = useExtensions()
 
 const isOpen = ref(false)
 const isConnectWalletOpen = ref(false)
@@ -26,9 +34,13 @@ const router = useRouter()
 
 const data = reactive({
   amount: 0,
-  token: null,
+  token: {
+    icon: '/kda.png',
+    name: 'Kadena',
+    symbol: 'KDA'
+  },
   showCollapsible: false,
-  addressTo: ''
+  addressTo: '18239893320378825242612781130732771293886265265465351431370885768079954670030'
 })
 
 const tokens = [
@@ -49,12 +61,20 @@ const tokens = [
   }
 ]
 
-const send = () => {
+const send = async () => {
   try {
-    setTimeout(() => {
-      step.value = 'success'
-    }, 3000)
-    step.value = 'progress'
+    // setTimeout(() => {
+    //   step.value = 'success'
+    // }, 3000)
+    // step.value = 'progress'
+    const transactionArgs = await wallet.withdraw(
+      Number(data.amount),
+      data.addressTo
+    )
+
+    const res = await provider.value.transaction({ ...transactionArgs, node: node.value })
+
+    console.log('res', res.requestKeys[0])
   } catch (e) {
     console.warn(e)
   }
@@ -70,9 +90,14 @@ const send = () => {
       max-w-[450px]
       text-white
       min-h-[812px]
+      lg:pb-0
+      lg:min-h-full
+      lg:max-w-full
     "
   >
-    <div>
+    <div
+      class="lg:w-full"
+    >
       <div
         class="
           w-full
@@ -81,6 +106,7 @@ const send = () => {
           justify-center
           relative
           items-center
+          lg:hidden
         "
       >
         <button
@@ -105,7 +131,7 @@ const send = () => {
         </div>
       </div>
 
-      <div class="flex flex-col space-y-2 pt-[24px]">
+      <div class="flex flex-col space-y-2 pt-[24px] lg:pt-0">
         <div>
           <h2 class="text-font-1 text-xxs font-medium">
             Amount
@@ -113,7 +139,7 @@ const send = () => {
         </div>
 
         <div
-          class="flex justify-center items-center space-x-1"
+          class="flex justify-between items-center space-x-1"
         >
           <input
             v-model="data.amount"
@@ -125,7 +151,7 @@ const send = () => {
               text-font-2
               outline-none
             "
-          />
+          >
 
           <Icon name="pen" class="h-6 w-6 text-font-2" />
         </div>
@@ -146,7 +172,10 @@ const send = () => {
             rounded-[8px]
             justify-between
             bg-gray-800
+            disabled:opacity-60
+            disabled:cursor-not-allowed
           "
+          disabled
           @click.prevent="setIsOpen(true)"
         >
           <div v-if="!data.token">
@@ -156,7 +185,7 @@ const send = () => {
           </div>
 
           <div v-else class="space-x-2 flex items-center">
-            <img :src="data.token.icon" class="w-6 h-6" />
+            <img :src="data.token.icon" class="w-6 h-6">
 
             <span v-text="data.token.name" />
           </div>
@@ -176,6 +205,7 @@ const send = () => {
 
         <div class="relative">
           <input
+            v-model="data.addressTo"
             placeholder="Address..."
             class="
               p-4
@@ -187,8 +217,7 @@ const send = () => {
               text-font-1
               outline-none
             "
-            v-model="data.addressTo"
-          />
+          >
 
           <div class="absolute top-3 right-4">
             <Icon
@@ -254,7 +283,7 @@ const send = () => {
       </div>
     </div>
 
-    <div class="mt-full">
+    <div class="mt-full lg:mt-[40px]">
       <button
         :disabled="
           !data.token || !data.amount || !data.addressTo
@@ -304,7 +333,7 @@ const send = () => {
           leave-to="opacity-0"
         >
           <div
-            class="fixed inset-0 bg-black bg-opacity-25"
+            class="fixed inset-0 bg-[rgba(6,_10,_15,_0.80)]"
           />
         </TransitionChild>
 
@@ -315,6 +344,9 @@ const send = () => {
               min-h-full
               items-end
               justify-center
+              lg:justify-center
+              lg:items-start
+              lg:pt-[312px]
               p-4
             "
           >
@@ -332,12 +364,16 @@ const send = () => {
                   p-4
                   w-full
                   rounded-[12px]
+                  lg:max-w-[500px]
                   space-y-4
                   bg-gray-800
+                  lg:p-6
+                  lg:border-[2px] lg:border-gray-600
                 "
               >
                 <div
                   class="
+                    lg:hidden
                     flex
                     items-center
                     justify-center
@@ -362,7 +398,36 @@ const send = () => {
                   </DialogTitle>
                 </div>
 
-                <div class="relative">
+                <div
+                  class="
+                    hidden lg:flex relative !mt-0
+                    justify-between
+                    items-center
+                    mx-[-24px]
+                    px-[24px]
+                    pb-4
+                    border-b-[2px] border-gray-600
+                  "
+                >
+                  <DialogTitle
+                    as="h3"
+                    class="text-font-1 text-sm"
+                  >
+                    Select token
+                  </DialogTitle>
+
+                  <button
+                    @click.prevent="setIsOpen(false)"
+                    class="w-8 h-8"
+                  >
+                    <Icon
+                      name="close"
+                      class="rotate-90 w-4 h-4 text-blue-400"
+                    />
+                  </button>
+                </div>
+
+                <div class="relative lg:!mt-6">
                   <input
                     placeholder="Search"
                     class="
@@ -377,7 +442,7 @@ const send = () => {
                       placeholder:text-font-2
                       border-2 border-gray-700
                     "
-                  />
+                  >
 
                   <div class="absolute left-4 top-4">
                     <Icon
@@ -427,7 +492,7 @@ const send = () => {
                         <img
                           :src="token.icon"
                           class="w-9 h-9"
-                        />
+                        >
                       </div>
 
                       <div

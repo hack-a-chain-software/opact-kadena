@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import { blake2b } from 'blakets'
-import Pact from "pact-lang-api"
+import Pact from 'pact-lang-api'
 import { defineStore } from 'pinia'
 // import { blake2b256 } from '@multiformats/blake2/blake2b'
 // // import { blake2b } from "ethereum-cryptography/blake2b.js";
@@ -11,14 +11,20 @@ const PROOF_LENGTH = 32
 
 const EXPECTED_VALUE = 11954255677048767585730959529592939615262310191150853775895456173962480955685n
 
-const computeLocalTestnet = (data: any) => {
+const computeLocalTestnet = async (data: any, wallet?: any, decrypt?: any, getUtxoFromDecrypted?: any) => {
   return data
     .sort((a: any, b: any) => a.txid - b.txid)
     .map(({ events }: any) => events)
-    .reduce((acc: any, curr: any) => acc.concat(curr),[])
+    .reduce((acc: any, curr: any) => acc.concat(curr), [])
     .reduce((curr: any, event: any) => {
       if (event.name === 'new-nullifier') {
-        curr.nullifiers = [...curr.nullifiers, ...event.params.map((param: any) => param.int)]
+        curr.nullifiers = [...curr.nullifiers, ...event.params.reduce((acc: any, param: any) => {
+          if (Array.isArray(param)) {
+            return [...acc, ...param.map((parm: any) => parm.int)]
+          }
+
+          return [param.int]
+        }, [])]
       }
 
       if (event.name === 'new-commitment') {
@@ -29,84 +35,90 @@ const computeLocalTestnet = (data: any) => {
 
         curr.commitments = [...curr.commitments, commitment]
 
-        curr.encryptedData = [...curr.encryptedData, event.params[2].int]
+        if (wallet && decrypt && event.params[2].length > 1) {
+          try {
+            const value = getUtxoFromDecrypted(decrypt({
+              wallet,
+              encrypted: event.params[2]
+            }))
+
+            curr.decryptedData = [...curr.decryptedData, value]
+          } catch (e) {
+            console.warn(e)
+          }
+        }
       }
 
       return curr
     }, {
       nullifiers: [],
       commitments: [],
-      encryptedData: [],
+      decryptedData: []
     })
-}
-
-const utxo = {
-  txo: {
-    token: "832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166",
-    amount: "1196235912130269727416504814248729565403940735380832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166",
-    pubkey: "8938953828777687434937074892093933157671984277448136535499184663705332772014832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166",
-    blinding: "21785434670000210267130206152006579786532912209177849056771328037904546000959832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166",
-    hash: "4613618889813288715894130243957282271546550742261259215341954248817589349732832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166"
-  },
-  txId: "123456789",
-  token: "832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166",
-  chain: "kadena",
-  sender: "8938953828777687434937074892093933157671984277448136535499184663705332772014832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166",
-  amount: "8938953828777687434937074892093933157671984277448136535499184663705332772014832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166",
-  position: "123456789",
-  receiver: "8938953828777687434937074892093933157671984277448136535499184663705332772014n832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166832719810210204902983213847411017819246076070166",
-  spec: {
-    id: "12345679",
-    refname: {
-      name: "contract-ref-name",
-      namespace: "free"
-    },
-    refSpec: {
-      name: "contract-ref-spec-name",
-      namespace: "free"
-    }
-  }
 }
 
 export const getPublicArgs = (
   proof: any,
-  publicSignals: string[],
+  publicSignals: string[]
 ): any => {
   return {
     public_values: publicSignals,
     a: {
-      x: proof["pi_a"][0],
-      y: proof["pi_a"][1],
+      x: proof.pi_a[0],
+      y: proof.pi_a[1]
     },
     b: {
-      x: proof["pi_b"][0],
-      y: proof["pi_b"][1],
+      x: proof.pi_b[0],
+      y: proof.pi_b[1]
     },
     c: {
-      x: proof["pi_c"][0],
-      y: proof["pi_c"][1],
-    },
-  };
-};
+      x: proof.pi_c[0],
+      y: proof.pi_c[1]
+    }
+  }
+}
 
-const baseUtxos = [30n, 40n, 50n, 10n, 20n, 10n, 20n, 0n]
-
-function base64urlToBigInt(base64url: string) {
+function base64urlToBigInt (base64url: string) {
   // Passo 1: Converter a string base64-url para a forma padrão de base64
-  let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/');
-  const padding = '='.repeat((4 - base64.length % 4) % 4);
-  base64 += padding;
+  let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/')
+  const padding = '='.repeat((4 - base64.length % 4) % 4)
+  base64 += padding
 
   // Passo 2: Decodificar a string base64 para obter bytes
-  const bytes = atob(base64);
+  const bytes = atob(base64)
 
   // Passo 3: Converter esses bytes em um bigint
-  let bigint = BigInt(0);
+  let bigint = BigInt(0)
   for (let i = 0; i < bytes.length; i++) {
-      bigint = (bigint << BigInt(8)) + BigInt(bytes.charCodeAt(i));
+    bigint = (bigint << BigInt(8)) + BigInt(bytes.charCodeAt(i))
   }
 
-  return bigint;
+  return bigint
+}
+
+const chunkUtxoByTokenId = (encrypted: any) => {
+  return encrypted.reduce((acc: any, curr: any) => {
+    if (!acc[curr.tokenId]) {
+      acc[curr.tokenId] = {
+        balance: 0n,
+        publicAmount: 0,
+        utxos: [],
+        token: {
+          id: 1,
+          decimals: 12,
+          symbol: 'KDA',
+          name: 'Kadena',
+          icon: '/kda.png'
+        }
+      }
+    }
+
+    acc[curr.tokenId].utxos = [...encrypted]
+    acc[curr.tokenId].balance += BigInt(curr.amount)
+    acc[curr.tokenId].publicAmount += Number(curr.publicAmount)
+
+    return acc
+  }, {})
 }
 
 export const useWalletStore = defineStore({
@@ -116,6 +128,7 @@ export const useWalletStore = defineStore({
 
     return {
       cache,
+      userData: null,
 
       balance: 0,
 
@@ -126,7 +139,7 @@ export const useWalletStore = defineStore({
       state: null,
       provider: null,
 
-      isLoading: true,
+      isLoading: true
     }
   },
 
@@ -144,18 +157,21 @@ export const useWalletStore = defineStore({
       shortenAddress(state.node.address)
   },
   actions: {
-    async loadState () {
+    async loadState (decrypt: any, getUtxoFromDecrypted: any) {
       this.isLoading = true
 
       const { data } = await axios.get('http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata', {
         headers: {
-          "Access-Control-Allow-Origin": "*"
+          'Access-Control-Allow-Origin': '*'
         }
       })
 
-      const state = computeLocalTestnet(data)
+      const state = await computeLocalTestnet(data, this.node, decrypt, getUtxoFromDecrypted)
+
+      const userData = chunkUtxoByTokenId(state.decryptedData)
 
       this.state = state
+      this.userData = userData
       this.isLoading = false
 
       return state
@@ -167,7 +183,7 @@ export const useWalletStore = defineStore({
       }
 
       const {
-        getHDWalletFromMnemonic,
+        getHDWalletFromMnemonic
       } = await getSdk() || {}
 
       const node: any = await getHDWalletFromMnemonic(this.mnemonic)
@@ -183,7 +199,7 @@ export const useWalletStore = defineStore({
       }
 
       const {
-        getHDWalletFromMnemonic,
+        getHDWalletFromMnemonic
       } = await getSdk() || {}
 
       const node: any = await getHDWalletFromMnemonic(phrase)
@@ -191,10 +207,12 @@ export const useWalletStore = defineStore({
       this.node = node
 
       this.persistAuth(node)
+
+      return node
     },
 
     async reconnect () {
-      await this.recovery(this.cache.phrase)
+      return await this.recovery(this.cache.phrase)
     },
 
     persistAuth (node: any) {
@@ -214,7 +232,7 @@ export const useWalletStore = defineStore({
       }
 
       const {
-        generateMnemonic,
+        generateMnemonic
       } = await getSdk() || {}
 
       const mnemonic = generateMnemonic()
@@ -228,15 +246,15 @@ export const useWalletStore = defineStore({
       }
 
       const {
-        encrypt,
+        encrypt
       } = await getSdk() || {}
 
       const encrypted = await encrypt(
         JSON.stringify(utxo),
         {
           pvtkey: this.node.pvtkey << 4n,
-          rawBig: this.node.rawBig,
-        },
+          rawBig: this.node.rawBig
+        }
       )
 
       return encrypted
@@ -249,115 +267,32 @@ export const useWalletStore = defineStore({
 
       const {
         decrypt,
-        getUtxoFromDecrypted,
+        getUtxoFromDecrypted
       } = await getSdk() || {}
 
       const decrypted = await decrypt({
         ...encrypted,
         wallet: {
           pvtkey: this.node.pvtkey << 4n,
-          rawBig: this.node.rawBig,
-        },
+          rawBig: this.node.rawBig
+        }
       })
 
       return getUtxoFromDecrypted(decrypted)
     },
 
-    async withdraw (amount: bigint = 66n, token: bigint = 832719810210204902983213847411017819246076070166n) {
+    async withdraw (amount: number, receiver: string) {
       if (process.server) {
         return
       }
 
-      const init = Date.now()
-
-      const {
-        getUtxo,
-        MerkleTree,
-        computeInputs,
-        getSolutionBatch,
-      } = await getSdk() || {}
-
       const wallet = this.node
 
-      const utxos = [
-        ...(await Promise.all(baseUtxos.map(async (amount) => await getUtxo({ amount, token, wallet }))))
-      ]
+      const sender = wallet.pubkey.toString()
 
-      const tree = await MerkleTree.build(PROOF_LENGTH + 1);
+      const recipient = receiver || sender
 
-      const subtree = await MerkleTree.build(PROOF_LENGTH + 1);
-
-      const sparseTreeComitments = Array(12).fill(0n);
-
-      tree.pushMany(utxos.map((utxo: any) => utxo.hash));
-
-      const treeBalance = {
-        tree,
-        token,
-        utxos,
-        balance: BigInt(10),
-      }
-
-      const batch = await getSolutionBatch({
-        wallet,
-        totalRequired: amount,
-        excludedUTXOIDPositions: [],
-        treeBalance: treeBalance as any,
-      });
-
-      batch.utxosIn = batch.utxosIn.map((txo: any) => {
-        let i = utxos.findIndex(({ nullifier }: any) => nullifier === txo.nullifier)
-
-        sparseTreeComitments[i] = EXPECTED_VALUE
-
-        return {
-          ...utxos[i],
-          mp_path: i,
-          mp_sibling: tree.proof(i)
-         }
-      })
-
-      subtree.pushMany(sparseTreeComitments);
-
-      batch.utxosIn = batch.utxosIn.map((txo: any) => {
-        let i = utxos.findIndex(({ nullifier }: any) => nullifier === txo.nullifier)
-
-        return {
-          ...txo,
-          smp_path: subtree.proof(i)
-         }
-      })
-
-      const { inputs } = await computeInputs({
-        batch,
-        wallet,
-        token: treeBalance.token,
-        roots: {
-          tree: tree.root,
-          subtree: subtree.root,
-        }
-      });
-
-      // @ts-expect-error
-      const { groth16 } = await import('snarkjs')
-
-      const pi = await groth16.fullProve(
-        inputs,
-        '/transaction.wasm',
-        '/transaction_0001.zkey',
-      );
-
-      const ends = Date.now()
-
-      return pi
-    },
-
-    async deposit ({
-      commitments,
-      amount = 1,
-      sender = 'sender-address-1',
-      recipient = 'recipient-address',
-      objToken = {
+      const objToken = {
         id: '',
         refName: {
           name: 'coin',
@@ -368,18 +303,31 @@ export const useWalletStore = defineStore({
           namespace: ''
         }
       }
-    }: any) {
-      if (process.server) {
-        return
-      }
 
       const {
         MerkleTree,
         computeInputs,
         getPoseidon,
+        formatInteger,
         MerkleTreeService,
-        getSoluctionDepositBatch,
+        getSolutionBatch
       } = await getSdk() || {}
+
+      // TODO: can't repeat
+      const token = 13709362265683028135327451465739503029694613776989099289896536370234649273310n
+
+      const integer = await formatInteger(amount, 12)
+
+      const batch = await getSolutionBatch({
+        wallet: this.node,
+        publicAmount: amount,
+        treeBalance: {
+          ...this.userData[1],
+          token
+        },
+        totalRequired: BigInt(integer),
+        excludedUTXOIDPositions: []
+      })
 
       const objExtada = {
         sender,
@@ -388,73 +336,54 @@ export const useWalletStore = defineStore({
         relayer: 1,
         extAmount: amount,
         encryptedValue: 1,
-        encryptedOutput1: 1,
-        encryptedOutput2: 2,
+        encryptedOutput1: batch.encryptedOutput1,
+        encryptedOutput2: batch.encryptedOutput2
       }
 
       const poseidon = await getPoseidon()
 
       const tokenHash = Pact.crypto.hash(JSON.stringify(objToken))
 
-      const token = poseidon.F.toObject(poseidon([base64urlToBigInt(tokenHash)]))
-
       const extDataHash = Pact.crypto.hash(JSON.stringify(objExtada))
 
-      const messageHash = poseidon.F.toObject(poseidon([base64urlToBigInt(extDataHash)]))
-
-      const wallet = this.node
-
-      const batch = await getSoluctionDepositBatch({
-        token,
-        amount,
-        keys: this.node,
-      });
+      // TODO: can't repeat
+      const messageHash = poseidon([base64urlToBigInt(extDataHash)]) + BigInt(1)
 
       const tree = await (new MerkleTreeService()).initMerkleTree(
-        '161015158386721250961923434737995904749326433712597261336369305638983090910',
         [
-          // {
-          //   order: 0,
-          //   value: 4n
-          // },
-          // {
-          //   order: 1,
-          //   value: 5n
-          // },
-          // {
-          //   order: 2,
-          //   value: 4485246893792388428001014082455705460960072146220752488586457108430613990559n
-          // },
-          {
-            order: 0,
-            value: 2024558050549391605055505300975560606538290886087545981949454377574357070182n
-          },
+          0,
+          ...this.state.commitments.slice(2).map((comm: any) => BigInt(comm.value))
         ]
-      );
+      )
 
-      console.log('tree', tree.root)
+      const subtree = await MerkleTree.build(PROOF_LENGTH + 1)
 
-      const sparseTreeComitments = Array(12).fill(0n);
+      const sparseTreeComitments = Array(12).fill(20245580505493916050120530097556060653829088608754598194945437757435702111n)
 
-      batch.utxosIn = batch.utxosIn.map((utxo: any, i: any) => {
-        sparseTreeComitments[i] = EXPECTED_VALUE
+      batch.utxosIn = batch.utxosIn.map((utxo: any) => {
+        const {
+          order
+        } = this.state.commitments.slice(2).find((hash: any) => hash.value === utxo.hash)
+
+        sparseTreeComitments[order - 1] = EXPECTED_VALUE
 
         return {
           ...utxo,
-          mp_path: 0,
-          mp_sibling: tree.proof(BigInt("4485246893792388428001014082455705460960072146220752488586457108430613990559")).pathElements
+          mp_path: order - 1,
+          mp_sibling: tree.proof(BigInt(utxo.hash)).pathElements
         }
       })
 
-      const subtree = await (new MerkleTreeService()).initMerkleTree(
-        '21663839004416932945382355908790599225266501822907911457504978515578255421292',
-        sparseTreeComitments.map((value: any, i: any) => ({ order: i, value }))
-      )
+      subtree.pushMany(sparseTreeComitments)
 
-      batch.utxosIn = batch.utxosIn.map((txo: any, i: any) => {
+      batch.utxosIn = batch.utxosIn.map((txo: any) => {
+        const {
+          order
+        } = this.state.commitments.slice(2).find((hash: any) => hash.value === txo.hash)
+
         return {
           ...txo,
-          smp_path: subtree.proof(sparseTreeComitments[0]).pathElements
+          smp_path: subtree.proof(order - 1)
         }
       })
 
@@ -465,11 +394,11 @@ export const useWalletStore = defineStore({
         messageHash,
         roots: {
           tree: tree.root,
-          subtree: subtree.root,
-        },
-      });
+          subtree: subtree.root
+        }
+      })
 
-      //@ts-expect-error
+      // @ts-expect-error
       const { groth16 } = await import('snarkjs')
 
       const {
@@ -478,8 +407,8 @@ export const useWalletStore = defineStore({
       } = await groth16.fullProve(
         inputs,
         '/transaction.wasm',
-        '/transaction_0001.zkey',
-      );
+        '/transaction_0001.zkey'
+      )
 
       return {
         proof: {
@@ -489,15 +418,152 @@ export const useWalletStore = defineStore({
           ...objExtada
         },
         tokenSpec: {
-          ...objToken,
+          ...objToken
         },
         args: {
           tokenHash,
           extDataHash,
-          publicAmount: 1,
+          publicAmount: amount,
           root: tree.root.toString(),
-          outputCommitments: batch.utxosOut.map((utxo: any) => utxo.hash.toString()),
+          outputCommitments: batch.utxosOut.map((utxo: any) => utxo.hash.toString())
+        }
+      }
+    },
+
+    async deposit (amount: number, receiver?: string) {
+      if (process.server) {
+        return
+      }
+
+      const wallet = this.node
+
+      const sender = wallet.pubkey.toString()
+
+      const recipient = receiver || sender
+
+      const objToken = {
+        id: '',
+        refName: {
+          name: 'coin',
+          namespace: ''
         },
+        refSpec: {
+          name: 'fungible-v2',
+          namespace: ''
+        }
+      }
+
+      const {
+        MerkleTree,
+        computeInputs,
+        getPoseidon,
+        formatInteger,
+        MerkleTreeService,
+        getSoluctionDepositBatch
+      } = await getSdk() || {}
+
+      // TODO: can't repeat
+      const token = 13709362265683028135327451465739503029694613776989099289896536370234649273380n
+
+      const integer = await formatInteger(amount, 12)
+
+      const batch = await getSoluctionDepositBatch({
+        token,
+        keys: this.node,
+        publicAmount: amount,
+        amount: BigInt(integer)
+      })
+
+      const objExtada = {
+        sender,
+        recipient,
+        fee: 1.0,
+        relayer: 1,
+        extAmount: amount,
+        encryptedValue: 1,
+        encryptedOutput1: batch.encryptedOutput1,
+        encryptedOutput2: batch.encryptedOutput2
+      }
+
+      const poseidon = await getPoseidon()
+
+      const tokenHash = Pact.crypto.hash(JSON.stringify(objToken))
+
+      const extDataHash = Pact.crypto.hash(JSON.stringify(objExtada))
+
+      // TODO: can't repeat
+      const messageHash = poseidon([base64urlToBigInt(extDataHash)]) + BigInt(1)
+
+      const tree = await (new MerkleTreeService()).initMerkleTree(
+        [
+          0,
+          ...this.state.commitments.slice(2).map((comm: any) => BigInt(comm.value))
+        ]
+      )
+
+      const subtree = await MerkleTree.build(PROOF_LENGTH + 1)
+
+      const sparseTreeComitments = Array(12).fill(202455805054939160501205300975560606538290886087545981949454377574357070181n)
+
+      batch.utxosIn = batch.utxosIn.map((utxo: any, i: any) => {
+        sparseTreeComitments[i] = EXPECTED_VALUE
+
+        return {
+          ...utxo,
+          mp_path: i,
+          mp_sibling: tree.path(i).pathElements
+        }
+      })
+
+      subtree.pushMany(sparseTreeComitments)
+
+      batch.utxosIn = batch.utxosIn.map((txo: any, i: any) => {
+        return {
+          ...txo,
+          smp_path: subtree.proof(i)
+        }
+      })
+
+      const { inputs } = await computeInputs({
+        batch,
+        wallet,
+        token,
+        messageHash,
+        roots: {
+          tree: tree.root,
+          subtree: subtree.root
+        }
+      })
+
+      // @ts-expect-error
+      const { groth16 } = await import('snarkjs')
+
+      const {
+        proof,
+        publicSignals
+      } = await groth16.fullProve(
+        inputs,
+        '/transaction.wasm',
+        '/transaction_0001.zkey'
+      )
+
+      return {
+        proof: {
+          ...getPublicArgs(proof, publicSignals)
+        },
+        extData: {
+          ...objExtada
+        },
+        tokenSpec: {
+          ...objToken
+        },
+        args: {
+          tokenHash,
+          extDataHash,
+          publicAmount: amount,
+          root: tree.root.toString(),
+          outputCommitments: batch.utxosOut.map((utxo: any) => utxo.hash.toString())
+        }
       }
     },
 

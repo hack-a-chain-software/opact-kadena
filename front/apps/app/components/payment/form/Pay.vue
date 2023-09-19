@@ -65,58 +65,44 @@ const pay = async () => {
     </div>
 
     <div class="pt-4">
-      <div class="p-4 bg-gray-700 rounded-[12px]">
-        <div>
-          <span class="text-xxs text-font-2"> to </span>
-        </div>
-
-        <div class="pt-2">
-          <span class="text-xs break-words">
-            0zk1qywdxmxcwvkrerhjxhehmwde3se54t0eunp687tuxggl2xy7z8ml0rv7j6fe
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-4">
-      <div class="p-4 bg-gray-700 rounded-[12px]">
+      <div class="pb-2">
         <div>
           <span class="text-xxs text-font-2"> Value </span>
         </div>
 
-        <div class="flex items-center justify-between">
+        <div class="mt-2 p-4 rounded-[8px] flex items-center justify-between bg-gray-700">
           <div class="flex-grow">
             <input
               v-model="data.amount"
               placeholder="0"
               class="
-                bg-transparent
-                text-xl text-font-1
-                outline-none
-                w-full
-              "
-            />
+            bg-transparent
+            text-xl text-font-1
+            outline-none
+            w-full
+          "
+            >
           </div>
 
           <div>
             <button
-              @click.prevent="setIsOpen(true)"
               class="
-                bg-gray-800
-                px-3
-                rounded-full
-                py-1
-                flex
-                space-x-1
-                w-max
-                items-center
-              "
+            bg-gray-800
+            px-3
+            rounded-full
+            py-1
+            flex
+            space-x-1
+            w-max
+            items-center
+          "
+              @click.prevent="setIsOpen(true)"
             >
               <div class="shrink-0">
                 <img
                   :src="data.token.icon"
                   class="w-5 h-5"
-                />
+                >
               </div>
 
               <div>
@@ -128,7 +114,21 @@ const pay = async () => {
       </div>
     </div>
 
-    <div class="pt-4">
+    <div class="pt-4 lg:pt-8">
+      <div>
+        <div>
+          <span class="text-xxs text-font-2"> to </span>
+        </div>
+
+        <div class="mt-2 p-4 bg-gray-700 rounded-[8px]">
+          <span class="text-xs break-words">
+            0zk1qywdxmxcwvkrerhjxhehmwde3se54t0eunp687tuxggl2xy7z8ml0rv7j6fe
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-4 lg:pt-8">
       <Collapsible
         v-model="data.showCollapsible"
         title="Transaction Details"
@@ -182,9 +182,9 @@ const pay = async () => {
         </div>
       </Collapsible>
     </div>
-    <div class="pt-6">
+
+    <div class="pt-6 lg:pt-[40px]">
       <button
-        @click.prevent="pay()"
         :disabled="!data.token || !data.amount"
         class="
           w-full
@@ -203,6 +203,7 @@ const pay = async () => {
             ? 'bg-gray-700'
             : 'bg-blue-gradient'
         "
+        @click.prevent="pay()"
       >
         <span class="text-font-1"> Confirm Payment </span>
       </button>
@@ -297,7 +298,7 @@ const pay = async () => {
                       placeholder:text-font-2
                       border-2 border-gray-700
                     "
-                  />
+                  >
 
                   <div class="absolute left-4 top-4">
                     <Icon
@@ -347,7 +348,7 @@ const pay = async () => {
                         <img
                           :src="token.icon"
                           class="w-9 h-9"
-                        />
+                        >
                       </div>
 
                       <div
