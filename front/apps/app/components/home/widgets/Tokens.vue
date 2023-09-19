@@ -42,7 +42,7 @@ const data = reactive({
           <div class="flex items-center space-x-4">
             <div>
               <span class="text-lg font-medium text-font-1">
-                900.34
+                0 USD
               </span>
             </div>
 

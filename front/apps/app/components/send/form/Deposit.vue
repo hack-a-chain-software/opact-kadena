@@ -363,7 +363,7 @@ const send = async () => {
                 <span
                   class="text-xxs font-medium text-font-1"
                 >
-                  0,02 KDA
+                  1 KDA
                 </span>
               </div>
             </div>
@@ -390,7 +390,7 @@ const send = async () => {
                 <span
                   class="text-xxs font-medium text-blue-300"
                 >
-                  156,02 KDA
+                  {{ Number(data.amount) + 1 }} KDA
                 </span>
               </div>
             </div>
