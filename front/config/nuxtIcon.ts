@@ -22,6 +22,8 @@ export const nuxtIcon = {
 
     // App Icons
     qr: 'QR',
+    ring: 'Ring',
+    active: 'Active',
     pen: 'Pen',
     add: 'Add',
     copy: 'Copy',

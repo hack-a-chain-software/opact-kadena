@@ -159,7 +159,7 @@ const data = reactive({
         class="pt-[16px] space-y-3"
       >
         <div
-          v-if="JSON.stringify(userData) !== '{}'"
+          v-if="Object.keys(userData).length > 0"
         >
           <div
             v-for="{ publicAmount, token } of userData"
@@ -221,7 +221,7 @@ const data = reactive({
           <span
             class="text-font-1 text-md"
           >
-            You do not own any tokens
+            You don't have any tokens
           </span>
         </div>
       </div>

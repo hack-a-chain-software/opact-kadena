@@ -13,15 +13,15 @@ import WalletConnector from '../../deposit/form/WalletConnector.vue'
 import { useWalletStore } from '~/apps/auth/stores/wallet'
 
 const computePactCode = ({
-    args,
-    proof,
-    extData,
-    tokenSpec
-  }: any) => {
-    return `(test.opact.transact {
+  args,
+  proof,
+  extData,
+  tokenSpec
+}: any) => {
+  return `(test.opact.transact {
       "root": ${args.root},
       "outputCommitments": [${args.outputCommitments.join(' ')}],
-      "publicAmount": ${args.publicAmount.toFixed(1)},
+      "publicAmount": ${args.publicAmount.toString()}.0,
       "extDataHash": "${args.extDataHash}",
       "tokenHash": "${args.tokenHash}"
     } {
@@ -34,7 +34,7 @@ const computePactCode = ({
       "recipient":"${extData.recipient}",
       "extAmount":${extData.extAmount.toFixed(1)},
       "relayer":${extData.relayer},
-      "fee":${extData.fee.toFixed(1)},
+      "fee": 0.0,
       "encryptedOutput1":"${extData.encryptedOutput1}",
       "encryptedOutput2":"${extData.encryptedOutput2}",
       "encryptedValue":"${extData.encryptedValue}"
@@ -49,13 +49,11 @@ const computePactCode = ({
         "namespace":""
       }
     })`
-  }
+}
 
 const wallet = useWalletStore()
 
 const { node } = storeToRefs(wallet)
-
-const { provider } = useExtensions()
 
 const isOpen = ref(false)
 const isConnectWalletOpen = ref(false)
@@ -68,19 +66,21 @@ function setConnectWalletOpen (value) {
   isConnectWalletOpen.value = value
 }
 
-const { step } = useSendForm()
-
 const router = useRouter()
 
 const data = reactive({
   amount: 0,
+  loading: false,
+  loadingMessage: 'Generating ZK Proof...',
+  error: '',
   token: {
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA'
   },
   showCollapsible: false,
-  addressTo: '18239893320378825242612781130732771293886265265465351431370885768079954670030'
+  // 18239893320378825242612781130732771293886265265465351431370885768079954670030
+  addressTo: ''
 })
 
 const tokens = [
@@ -103,6 +103,9 @@ const tokens = [
 
 const send = async () => {
   try {
+    data.loading = true
+    data.error = ''
+
     const {
       args,
       proof,
@@ -114,13 +117,24 @@ const send = async () => {
 
     const kp = Pact.crypto.genKeyPair()
 
-    // const accountName = node.value.pubkey.toString()
+    const accountName = node.value.pubkey.toString()
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
+
+    // console.log('pactCode', pactCode)
 
     const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
     const createdAt = Math.round(new Date().getTime() / 1000) - 10
+
+    data.loadingMessage = 'Sending your proof to relayer...'
+
+    const cap1 = Pact.lang.mkCap(
+      'Coin Transfer',
+      'Capability to transfer designated amount of coin from sender to receiver',
+      'coin.TRANSFER',
+      ['opact-contract', accountName, Number((extData.extAmount * (-1)).toFixed(1))]
+    )
 
     const tx = await Pact.fetch.send({
       networkId: 'testnet04',
@@ -131,6 +145,7 @@ const send = async () => {
           secretKey: kp.secretKey,
           clist: [
             // capability to use gas station
+            cap1.cap,
             {
               name: 'opact-gas-payer.GAS_PAYER',
               args: ['hi', { int: 1 }, 1.0]
@@ -138,18 +153,46 @@ const send = async () => {
           ]
         }
       ],
+      envData: {
+        language: 'Pact',
+        name: 'transact-deposit',
+        'token-instance': {
+          refSpec: [{
+            name: tokenSpec.refSpec.name
+          }],
+          refName: {
+            name: tokenSpec.refName.name
+          }
+        }
+      },
+
       meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
     }, network)
 
-    const res = await Pact.fetch.listen(
+    data.loadingMessage = 'Awaint transaction results...'
+
+    const {
+      result
+    } = await Pact.fetch.listen(
       { listen: tx.requestKeys[0] },
       network
     )
 
-    console.log('res', res)
-    // step.value = 'success'
+    if (result.status === 'failure') {
+      data.error = result.error.message
+
+      return
+    }
+
+    const { decrypt, getUtxoFromDecrypted } = await import('opact-sdk')
+
+    wallet.loadState(decrypt, getUtxoFromDecrypted)
+    router.push('/app')
   } catch (e) {
     console.warn(e)
+  } finally {
+    data.loading = false
+    data.loadingMessage = 'Generating ZK Proof...'
   }
 }
 </script>
@@ -356,6 +399,16 @@ const send = async () => {
       </div>
     </div>
 
+    <div
+      v-if="data.error"
+      class="mt-2 max-w-full break-words"
+    >
+      <span
+        v-text="data.error + '*'"
+        class="text-xs text-red-500"
+      />
+    </div>
+
     <div class="mt-full lg:mt-[40px]">
       <button
         :disabled="
@@ -380,7 +433,9 @@ const send = async () => {
         "
         @click.prevent="send()"
       >
-        <span class="text-font-1"> Send Token </span>
+        <span class="text-font-1"> {{ data.loading ? data.loadingMessage : 'Send Token' }} </span>
+
+        <Icon v-if="data.loading" name="spinner" class="animate-spin text-white ml-[12px]" />
       </button>
     </div>
 
@@ -490,8 +545,8 @@ const send = async () => {
                   </DialogTitle>
 
                   <button
-                    @click.prevent="setIsOpen(false)"
                     class="w-8 h-8"
+                    @click.prevent="setIsOpen(false)"
                   >
                     <Icon
                       name="close"

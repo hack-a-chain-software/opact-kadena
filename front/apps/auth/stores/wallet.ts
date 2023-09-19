@@ -1,11 +1,6 @@
 import axios from 'axios'
-// import { blake2b } from 'blakets'
 import Pact from 'pact-lang-api'
 import { defineStore } from 'pinia'
-// import { blake2b256 } from '@multiformats/blake2/blake2b'
-// // import { blake2b } from "ethereum-cryptography/blake2b.js";
-// import { utf8ToBytes } from "ethereum-cryptography/utils.js";
-// import { bytesToHex as toHex } from "ethereum-cryptography/utils.js";
 
 const PROOF_LENGTH = 32
 
@@ -96,8 +91,14 @@ function base64urlToBigInt (base64url: string) {
   return bigint
 }
 
-const chunkUtxoByTokenId = (encrypted: any) => {
+const chunkUtxoByTokenId = (encrypted: any, nullifiers: any) => {
   return encrypted.reduce((acc: any, curr: any) => {
+    if (nullifiers.includes(curr.nullifier)) {
+      return acc
+    }
+
+    console.log(curr)
+
     if (!acc[curr.tokenId]) {
       acc[curr.tokenId] = {
         balance: 0n,
@@ -113,9 +114,9 @@ const chunkUtxoByTokenId = (encrypted: any) => {
       }
     }
 
-    acc[curr.tokenId].utxos = [...encrypted]
     acc[curr.tokenId].balance += BigInt(curr.amount)
     acc[curr.tokenId].publicAmount += Number(curr.publicAmount)
+    acc[curr.tokenId].utxos = [...acc[curr.tokenId].utxos, curr]
 
     return acc
   }, {})
@@ -162,7 +163,7 @@ export const useWalletStore = defineStore({
     async loadState (decrypt: any, getUtxoFromDecrypted: any) {
       this.isLoading = true
 
-      const { data } = await axios.get('http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata', {
+      const { data } = await axios.get('http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata?salt=75', {
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
@@ -170,11 +171,11 @@ export const useWalletStore = defineStore({
 
       const state = await computeLocalTestnet(data, this.node, decrypt, getUtxoFromDecrypted)
 
-      const userData = chunkUtxoByTokenId(state.decryptedData)
+      const userData = chunkUtxoByTokenId(state.decryptedData, state.nullifiers)
 
       this.state = state
-      this.userData = userData
       this.isLoading = false
+      this.userData = userData
 
       return state
     },
@@ -315,14 +316,16 @@ export const useWalletStore = defineStore({
         getSolutionBatch
       } = await getSdk() || {}
 
-      // TODO: can't repeat
-      const token = 1370936226568302813532745146573950302969461377698909928989653637014649273380n
-
       const integer = await formatInteger(amount, 12)
+
+      const poseidon = await getPoseidon()
+
+      const tokenHash = Pact.crypto.hash(JSON.stringify(objToken))
+
+      const token = poseidon([base64urlToBigInt(tokenHash)])
 
       const batch = await getSolutionBatch({
         wallet: this.node,
-        publicAmount: amount,
         treeBalance: {
           ...this.userData[1],
           token
@@ -331,30 +334,27 @@ export const useWalletStore = defineStore({
         excludedUTXOIDPositions: []
       })
 
+      console.log('fucking batch', batch)
+
       const objExtada = {
         sender,
         recipient,
         fee: 1.0,
         relayer: 1,
-        extAmount: amount,
+        extAmount: amount * (-1),
         encryptedValue: 1,
         encryptedOutput1: batch.encryptedOutput1,
         encryptedOutput2: batch.encryptedOutput2
       }
 
-      const poseidon = await getPoseidon()
-
-      const tokenHash = Pact.crypto.hash(JSON.stringify(objToken))
-
       const extDataHash = Pact.crypto.hash(JSON.stringify(objExtada))
 
-      // TODO: can't repeat
-      const messageHash = poseidon([base64urlToBigInt(extDataHash)]) + BigInt(2)
+      const messageHash = poseidon([base64urlToBigInt(extDataHash)])
 
       const tree = await (new MerkleTreeService()).initMerkleTree(
         [
           0,
-          ...this.state.commitments.slice(2).map((comm: any) => BigInt(comm.value))
+          ...this.state.commitments.map((comm: any) => BigInt(comm.value))
         ]
       )
 
@@ -424,7 +424,6 @@ export const useWalletStore = defineStore({
         }
       })
 
-      // @ts-expect-error
       const { groth16 } = await import('snarkjs')
 
       const {
@@ -449,7 +448,7 @@ export const useWalletStore = defineStore({
         args: {
           tokenHash,
           extDataHash,
-          publicAmount: amount,
+          publicAmount: 21888242871839275222246405745257275088548364400416034343698204186575808495617n + BigInt(integer),
           root: tree.root.toString(),
           outputCommitments: batch.utxosOut.map((utxo: any) => utxo.hash.toString())
         }
@@ -490,11 +489,13 @@ export const useWalletStore = defineStore({
         getSoluctionDepositBatch
       } = await getSdk() || {}
 
-      // TODO: can't repeat
-      const token = 13709362256830281353274514651503029694613776989998989653637023464917340n + BigInt(amount.toFixed(0))
-
-      // TODO: can't repeat
       const integer = await formatInteger(amount, 12)
+
+      const poseidon = await getPoseidon()
+
+      const tokenHash = Pact.crypto.hash(JSON.stringify(objToken))
+
+      const token = poseidon([base64urlToBigInt(tokenHash)])
 
       const batch = await getSoluctionDepositBatch({
         token,
@@ -514,26 +515,21 @@ export const useWalletStore = defineStore({
         encryptedOutput2: batch.encryptedOutput2
       }
 
-      const poseidon = await getPoseidon()
-
-      const tokenHash = Pact.crypto.hash(JSON.stringify(objToken))
-
       const extDataHash = Pact.crypto.hash(JSON.stringify(objExtada))
 
-      // TODO: can't repeat
-      const messageHash = poseidon([base64urlToBigInt(extDataHash)]) + BigInt(amount.toFixed(0))
+      const messageHash = poseidon([base64urlToBigInt(extDataHash)])
 
       const tree = await (new MerkleTreeService()).initMerkleTree(
         [
           0,
-          ...this.state.commitments.slice(2).map((comm: any) => BigInt(comm.value))
+          ...this.state.commitments.map((comm: any) => BigInt(comm.value))
         ]
       )
 
       // TODO: can't repeat root
       const subtree = await MerkleTree.build(PROOF_LENGTH + 1)
 
-      const sparseTreeComitments = Array(12).fill(2024558050549391605012053009755606653829088608754591949453775743570141n + BigInt(amount.toFixed(0)))
+      const sparseTreeComitments = Array(12).fill(0n)
 
       batch.utxosIn = batch.utxosIn.map((utxo: any, i: any) => {
         sparseTreeComitments[i] = EXPECTED_VALUE
@@ -565,10 +561,9 @@ export const useWalletStore = defineStore({
         }
       })
 
-      // @ts-expect-error
-      const { groth16 } = await import('snarkjs')
-
       this.depositMessage = 'Generating ZK Proof...'
+
+      const { groth16 } = await import('snarkjs')
 
       const {
         proof,

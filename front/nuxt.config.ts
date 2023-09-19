@@ -1,5 +1,8 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
+// import { resolve } from 'path'
+// import inject from '@rollup/plugin-inject'
+import stdLibBrowser from 'node-stdlib-browser'
 
 export default defineNuxtConfig({
   extends: ['./apps/site', './apps/auth', './apps/app'],
@@ -16,9 +19,28 @@ export default defineNuxtConfig({
   vite: {
     resolve: {
       alias: {
-        'buffer/': 'buffer-browserify',
-      },
+        ...stdLibBrowser
+      }
     },
+    // plugins: [
+    //   {
+    //     ...inject({
+    //       global: [
+    //         require.resolve("node-stdlib-browser/helpers/esbuild/shim"),
+    //         "global"
+    //       ],
+    //       process: [
+    //         require.resolve("node-stdlib-browser/helpers/esbuild/shim"),
+    //         "process"
+    //       ],
+    //       Buffer: [
+    //         require.resolve("node-stdlib-browser/helpers/esbuild/shim"),
+    //         "Buffer"
+    //       ]
+    //     }),
+    //     enforce: "post"
+    //   }
+    // ],
     optimizeDeps: {
       esbuildOptions: {
         define: {
@@ -28,11 +50,11 @@ export default defineNuxtConfig({
           NodeModulesPolyfillPlugin(),
           NodeGlobalsPolyfillPlugin({
             process: true,
-            buffer: true,
-          }),
+            buffer: true
+          })
         ]
       }
-    },
+    }
   },
   motion: {
     directives: {
