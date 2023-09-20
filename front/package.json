@@ -1,9 +1,6 @@
 {
   "name": "front",
   "private": true,
-  "engines": {
-    "node": "20.6.1"
-  },
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",

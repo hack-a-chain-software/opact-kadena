@@ -356,7 +356,7 @@ export const useWalletStore = defineStore({
 
       const subtree = await MerkleTree.build(PROOF_LENGTH + 1)
 
-      const sparseTreeComitments = Array(32).fill(0n)
+      let sparseTreeComitments = Array(12).fill(0n)
 
       batch.utxosIn = batch.utxosIn.map((utxo: any, i:any) => {
         const base = {
@@ -390,6 +390,8 @@ export const useWalletStore = defineStore({
           mp_sibling: tree.proof(BigInt(utxo.hash)).pathElements
         }
       })
+
+      sparseTreeComitments = [...sparseTreeComitments].map((value: any) => !value ? 0n : value)
 
       subtree.pushMany(sparseTreeComitments)
 
@@ -525,7 +527,7 @@ export const useWalletStore = defineStore({
       // TODO: can't repeat root
       const subtree = await MerkleTree.build(PROOF_LENGTH + 1)
 
-      const sparseTreeComitments = Array(32).fill(0n)
+      let sparseTreeComitments = Array(12).fill(0n)
 
       batch.utxosIn = batch.utxosIn.map((utxo: any, i: any) => {
         sparseTreeComitments[i] = EXPECTED_VALUE
@@ -536,6 +538,8 @@ export const useWalletStore = defineStore({
           mp_sibling: tree.path(i).pathElements
         }
       })
+
+      sparseTreeComitments = [...sparseTreeComitments].map((value: any) => !value ? 0n : value)
 
       subtree.pushMany(sparseTreeComitments)
 
