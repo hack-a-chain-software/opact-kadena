@@ -160,8 +160,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(rollup@3.28.0)(vue@3.3.4)
       opact-sdk:
-        specifier: ^0.0.31
-        version: 0.0.31(graphql@16.6.0)
+        specifier: ^0.0.45
+        version: 0.0.45(graphql@16.6.0)
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -179,7 +179,7 @@ importers:
         version: 0.12.0(rollup@3.28.0)
       snarkjs:
         specifier: ^0.7.0
-        version: 0.7.0
+        version: 0.7.1
       tailwind-merge:
         specifier: ^1.13.1
         version: 1.13.1
@@ -3764,11 +3764,11 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/kit-edge@3.7.4-28250936.51d90014(rollup@3.28.0):
-    resolution: {integrity: sha512-Y6la4CcSu8sOvJCfTt2VhTcDQNr4AzN59qHcAZveFCxANFXDjLTkLfrOxGnV/2EtSvl3Cca9nCQ9KWRio+/egQ==}
+  /@nuxt/kit-edge@3.7.4-28252678.2bf9028f(rollup@3.28.0):
+    resolution: {integrity: sha512-pYta2YeqAFnC4U26pjp/WPgTPJyfiPkNxsRqWhnJPm8i9mds89ctoi4igX6yr9LHZiYStMq7Y9bGdwcUCOoomg==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
-      '@nuxt/schema': /@nuxt/schema-edge@3.7.4-28250936.51d90014(rollup@3.28.0)
+      '@nuxt/schema': /@nuxt/schema-edge@3.7.4-28252678.2bf9028f(rollup@3.28.0)
       c12: 1.4.2
       consola: 3.2.3
       defu: 6.1.2
@@ -3885,11 +3885,12 @@ packages:
       - webpack
     dev: true
 
-  /@nuxt/schema-edge@3.7.4-28250936.51d90014(rollup@3.28.0):
-    resolution: {integrity: sha512-1JwZEHH0LhFIrxchd6/RvPtv4DrXwwM/EQDLm7lOYiv5YBMPflZjR5BEKfIZBnlX85GBTJkM9ZWPY4q6omCT3A==}
+  /@nuxt/schema-edge@3.7.4-28252678.2bf9028f(rollup@3.28.0):
+    resolution: {integrity: sha512-Nr7kmcwZmZ/zTTZS12Bwr+NE3hj3ZrSJdGS/lwepY9h0gLKR194ldQUUVzb1JOAsrj0mC7NxCTjQvqCF7VfctA==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
       '@nuxt/ui-templates': 1.3.1
+      consola: 3.2.3
       defu: 6.1.2
       hookable: 5.5.3
       pathe: 1.1.1
@@ -8289,11 +8290,11 @@ packages:
       fnv-plus: 1.3.1
     dev: false
 
-  /circom_runtime@0.1.22:
-    resolution: {integrity: sha512-V/XYZWBhbZY8SotkaGH4FbiDYAZ8a1Md++MBiKPDOuWS/NIJB+Q+XIiTC8zKMgoDaa9cd2OiTvsC9J6te7twNg==}
+  /circom_runtime@0.1.24:
+    resolution: {integrity: sha512-H7/7I2J/cBmRnZm9docOCGhfxzS61BEm4TMCWcrZGsWNBQhePNfQq88Oj2XpUfzmBTCd8pRvRb3Mvazt3TMrJw==}
     hasBin: true
     dependencies:
-      ffjavascript: 0.2.57
+      ffjavascript: 0.2.60
     dev: false
 
   /circomlibjs@0.0.8:
@@ -8308,18 +8309,6 @@ packages:
       - bufferutil
       - encoding
       - supports-color
-      - utf-8-validate
-    dev: false
-
-  /circomlibjs@0.1.7:
-    resolution: {integrity: sha512-GRAUoAlKAsiiTa+PA725G9RmEmJJRc8tRFxw/zKktUxlQISGznT4hH4ESvW8FNTsrGg/nNd06sGP/Wlx0LUHVg==}
-    dependencies:
-      blake-hash: 2.0.0
-      blake2b: 2.1.4
-      ethers: 5.7.2
-      ffjavascript: 0.2.60
-    transitivePeerDependencies:
-      - bufferutil
       - utf-8-validate
     dev: false
 
@@ -11462,22 +11451,6 @@ packages:
       mocha: 8.4.0
       wasmcurves: 0.0.14
       worker-threads: 1.0.0
-    dev: false
-
-  /ffjavascript@0.2.57:
-    resolution: {integrity: sha512-V+vxZ/zPNcthrWmqfe/1YGgqdkTamJeXiED0tsk7B84g40DKlrTdx47IqZuiygqAVG6zMw4qYuvXftIJWsmfKQ==}
-    dependencies:
-      wasmbuilder: 0.0.16
-      wasmcurves: 0.2.0
-      web-worker: 1.2.0
-    dev: false
-
-  /ffjavascript@0.2.59:
-    resolution: {integrity: sha512-QssOEUv+wilz9Sg7Zaj6KWAm7QceOAEsFuEBTltUsDo1cjn11rA/LGYvzFBPbzNfxRlZxwgJ7uxpCQcdDlrNfw==}
-    dependencies:
-      wasmbuilder: 0.0.16
-      wasmcurves: 0.2.1
-      web-worker: 1.2.0
     dev: false
 
   /ffjavascript@0.2.60:
@@ -15632,7 +15605,7 @@ packages:
   /nuxt-use-motion@2.0.0-beta.11(rollup@3.28.0)(vue@3.3.4):
     resolution: {integrity: sha512-O5UrB7q+A2dWhxxcXdCWH1QJgROIhUcQzwVxIZT2vleTpi6RMi39oPt4ZNWmtU/1Z39pTbAOnwUGZcTGdqRL9g==}
     dependencies:
-      '@nuxt/kit': /@nuxt/kit-edge@3.7.4-28250936.51d90014(rollup@3.28.0)
+      '@nuxt/kit': /@nuxt/kit-edge@3.7.4-28252678.2bf9028f(rollup@3.28.0)
       '@vueuse/motion': 2.0.0-beta.4(vue@3.3.4)
       defu: 5.0.1
       vue-demi: 0.12.5(vue@3.3.4)
@@ -15869,15 +15842,16 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@0.0.31(graphql@16.6.0):
-    resolution: {integrity: sha512-hXtn7qRV2vr8/sgGH6sQN5kETue8kll0qynVhfEMCbxAEXiCyx013CvfhDhuC7g9I5P9MWG45mCBqKro2061oA==}
+  /opact-sdk@0.0.45(graphql@16.6.0):
+    resolution: {integrity: sha512-xWv62HbhvPSjtOYBRIY8QB2jXbZpJq/mooBfLX2BjkKBVZoNn6cgCtUPaSq4hb0XG39+OJZ33rtHuy3cJj13tQ==}
     dependencies:
       '@types/big.js': 6.2.0
       big.js: 6.2.1
       bigint-buffer: 1.1.5
       bigint-conversion: 2.4.2
+      bn.js: 5.2.1
       chai: 4.3.8
-      circomlibjs: 0.1.7
+      circomlibjs: github.com/hsg88/circomlibjs/fee5b3c479caa3db1e34cbfdedad763d74277844
       crypto-browserify: 3.12.0
       ethereum-cryptography: 2.1.2
       fixed-merkle-tree: 0.7.3
@@ -17270,13 +17244,13 @@ packages:
       ffjavascript: 0.2.22
     dev: false
 
-  /r1csfile@0.0.45:
-    resolution: {integrity: sha512-YKIp4D441aZ6OoI9y+bfAyb2j4Cl+OFq/iiX6pPWDrL4ZO968h0dq0w07i65edvrTt7/G43mTnl0qEuLXyp/Yw==}
+  /r1csfile@0.0.47:
+    resolution: {integrity: sha512-oI4mAwuh1WwuFg95eJDNDDL8hCaZkwnPuNZrQdLBWvDoRU7EG+L/MOHL7SwPW2Y+ZuYcTLpj3rBkgllBQZN/JA==}
     dependencies:
       '@iden3/bigarray': 0.0.2
       '@iden3/binfileutils': 0.0.11
       fastfile: 0.0.20
-      ffjavascript: 0.2.57
+      ffjavascript: 0.2.60
     dev: false
 
   /radix3@1.0.1:
@@ -18538,20 +18512,20 @@ packages:
       - supports-color
     dev: true
 
-  /snarkjs@0.7.0:
-    resolution: {integrity: sha512-Vu5W+0Va6X1xvlCllpZ2r3/S7MafnL6IrAv09lk/F+VNDHuHEHx3xopR9Kr70p2KpbBBJ/HB9VCDZWism8WGlA==}
+  /snarkjs@0.7.1:
+    resolution: {integrity: sha512-Qs1oxssa135WZkzfARgEp5SuKHKvKNtcspeJbE5je6MurUpBylD1rzcAzQSTGWA/EH/BV/TmUyTaTD64xScvbA==}
     hasBin: true
     dependencies:
       '@iden3/binfileutils': 0.0.11
       bfj: 7.1.0
       blake2b-wasm: 2.4.0
-      circom_runtime: 0.1.22
+      circom_runtime: 0.1.24
       ejs: 3.1.9
       fastfile: 0.0.20
-      ffjavascript: 0.2.59
+      ffjavascript: 0.2.60
       js-sha3: 0.8.0
       logplease: 1.2.15
-      r1csfile: 0.0.45
+      r1csfile: 0.0.47
     dev: false
 
   /sonic-boom@2.8.0:
@@ -20822,18 +20796,6 @@ packages:
       blakejs: 1.2.1
     dev: false
 
-  /wasmcurves@0.2.0:
-    resolution: {integrity: sha512-3e2rbxdujOwaod657gxgmdhZNn+i1qKdHO3Y/bK+8E7bV8ttV/fu5FO4/WLBACF375cK0QDLOP+65Na63qYuWA==}
-    dependencies:
-      wasmbuilder: 0.0.16
-    dev: false
-
-  /wasmcurves@0.2.1:
-    resolution: {integrity: sha512-9ciO7bUE5bgpbOcdK7IO3enrSVIKHwrQmPibok4GLJWaCA7Wyqc9PRYnu5HbiFv9NDFNqVKPtU5R6Is5KujBLg==}
-    dependencies:
-      wasmbuilder: 0.0.16
-    dev: false
-
   /wasmcurves@0.2.2:
     resolution: {integrity: sha512-JRY908NkmKjFl4ytnTu5ED6AwPD+8VJ9oc94kdq7h5bIwbj0L4TDJ69mG+2aLs2SoCmGfqIesMWTEJjtYsoQXQ==}
     dependencies:
@@ -21739,6 +21701,31 @@ packages:
     dependencies:
       react: 17.0.2
       use-sync-external-store: 1.2.0(react@17.0.2)
+
+  github.com/hsg88/circomlibjs/fee5b3c479caa3db1e34cbfdedad763d74277844:
+    resolution: {tarball: https://codeload.github.com/hsg88/circomlibjs/tar.gz/fee5b3c479caa3db1e34cbfdedad763d74277844}
+    name: circomlibjs
+    version: 0.0.8
+    dependencies:
+      blake-hash: 2.0.0
+      blake2b: 2.1.4
+      ffjavascript: github.com/hsg88/ffjavascript/e586e4e36f323acabe1805b01ea10070c413c6ec
+      web3: 1.10.2
+      web3-utils: 1.10.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  github.com/hsg88/ffjavascript/e586e4e36f323acabe1805b01ea10070c413c6ec:
+    resolution: {tarball: https://codeload.github.com/hsg88/ffjavascript/tar.gz/e586e4e36f323acabe1805b01ea10070c413c6ec}
+    name: ffjavascript
+    version: 0.1.0
+    dependencies:
+      big-integer: 1.6.51
+    dev: false
 
   github.com/weijiekoh/circomlib/24ed08eee0bb613b8c0135d66c1013bd9f78d50a:
     resolution: {tarball: https://codeload.github.com/weijiekoh/circomlib/tar.gz/24ed08eee0bb613b8c0135d66c1013bd9f78d50a}
