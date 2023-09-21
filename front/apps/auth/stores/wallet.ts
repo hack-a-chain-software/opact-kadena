@@ -60,13 +60,13 @@ export const useWalletStore = defineStore({
 
       const state = await computeLocalTestnet(data, this.node, decrypt, getUtxoFromDecrypted)
 
-      const userData = groupUtxoByToken(state.decryptedData, state.nullifiers)
+      // const userData = groupUtxoByToken(state.decryptedData, state.nullifiers)
 
-      console.log('userdata', userData)
+      // console.log('userdata', userData)
 
       this.state = state
       this.isLoading = false
-      this.userData = userData
+      this.userData = {}
 
       return state
     },
