@@ -157,8 +157,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(rollup@3.28.0)(vue@3.3.4)
       opact-sdk:
-        specifier: ^0.0.49
-        version: 0.0.49(graphql@16.6.0)
+        specifier: ^0.0.50
+        version: 0.0.50(graphql@16.6.0)
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -15794,8 +15794,8 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@0.0.49(graphql@16.6.0):
-    resolution: {integrity: sha512-1H2kTYJMFe1cg7DNScLmuYSRDnrdB1dvkMHxlv08TX44m5r2YUdBsWaJBz8n0hUyhgq7tQFqyL4saMYIx1KGyg==}
+  /opact-sdk@0.0.50(graphql@16.6.0):
+    resolution: {integrity: sha512-G6Okx8aE9C4MvepOw85lK6fNQIh+Mn7Hhnde8WZcYzR/TVfPOyQ6vjfbxLqe+n3WU2lPQIS2re8sZaAUA3uu0A==}
     dependencies:
       '@types/big.js': 6.2.0
       big.js: 6.2.1

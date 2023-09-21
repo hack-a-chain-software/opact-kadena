@@ -1,4 +1,6 @@
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
+import stdLibBrowser from 'node-stdlib-browser'
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 
 export default defineNuxtConfig({
   extends: ['./apps/site', './apps/auth', './apps/app'],
@@ -14,17 +16,25 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts'
   ],
   vite: {
-    plugins: [
-      nodePolyfills({
-        include: ['buffer', 'util', 'stream', 'crypto'],
-        globals: {
-          process: true,
-        }
-      }),
-    ],
-    define: {
-      "process.env": {},
+    resolve: {
+      alias: {
+        ...stdLibBrowser
+      },
     },
+    optimizeDeps: {
+      esbuildOptions: {
+        define: {
+          global: 'globalThis'
+        },
+        plugins: [
+          NodeModulesPolyfillPlugin(),
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true
+          })
+        ]
+      }
+    }
   },
   motion: {
     directives: {

@@ -80,6 +80,8 @@ export const useProvider = () => {
       const accountName = wallet.pubkey.toString()
       const publickey = account.value.account.publicKey
 
+      console.log('')
+
       const pactCode = `(coin.create-account ${JSON.stringify(accountName)} (read-keyset "${accountName}")) (coin.coinbase ${JSON.stringify(accountName)} (read-keyset "${accountName}") 100.0)`
 
       const cmd = await kadena.request({
@@ -162,7 +164,7 @@ export const useProvider = () => {
     return `(test.opact.transact {
       "root": ${args.root},
       "outputCommitments": [${args.outputCommitments.join(' ')}],
-      "publicAmount": ${args.publicAmount.toFixed(1)},
+      "publicAmount": ${args.publicAmount.toString()}.0,
       "extDataHash": "${args.extDataHash}",
       "tokenHash": "${args.tokenHash}"
     } {
