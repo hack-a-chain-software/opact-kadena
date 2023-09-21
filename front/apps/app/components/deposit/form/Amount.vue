@@ -70,7 +70,7 @@ const coinDetails = async ({ pubkey }: any) => {
   try {
     const accountName = pubkey.toString()
 
-    const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+    const network = 'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
     const t_creationTime = Math.round(new Date().getTime() / 1000) - 10
     const data = await Pact.fetch.local({
@@ -122,7 +122,7 @@ const deposit = async () => {
         result
       } = await Pact.fetch.listen(
         { listen: tx.requestKeys[0] },
-        'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+        'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
       )
 
       if (result.status === 'failure') {

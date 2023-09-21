@@ -52,7 +52,7 @@ export const useWalletStore = defineStore({
 
       this.isLoading = true
 
-      const { data } = await axios.get('http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata?salt=75', {
+      const { data } = await axios.get('https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata?salt=75', {
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
@@ -60,13 +60,13 @@ export const useWalletStore = defineStore({
 
       const state = await computeLocalTestnet(data, this.node, decrypt, getUtxoFromDecrypted)
 
-      // const userData = groupUtxoByToken(state.decryptedData, state.nullifiers)
+      const userData = groupUtxoByToken(state.decryptedData, state.nullifiers)
 
-      // console.log('userdata', userData)
+      console.log('userdata', userData)
 
       this.state = state
       this.isLoading = false
-      this.userData = {}
+      this.userData = userData
 
       return state
     },

@@ -1,16 +1,9 @@
-// import stdLibBrowser from 'node-stdlib-browser'
-// import replace from '@rollup/plugin-replace'
-// import { existsSync, readFileSync } from "node:fs"
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
-// import nodePolyfills from 'vite-plugin-node-stdlib-browser'
-// import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
-// import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
-// import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
-// import inject from '@rollup/plugin-inject'
 
 export default defineNuxtConfig({
   extends: ['./apps/site', './apps/auth', './apps/app'],
   modules: [
+    'nupolyon',
     'nuxt-icon',
     '@pinia/nuxt',
     '@nuxt/image',
@@ -21,43 +14,17 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts'
   ],
   vite: {
-    // vue: {
-    //   script: {
-    //     fs: {
-    //       fileExists(file: string) {
-    //         return existsSync(file);
-    //       },
-    //       readFile(file: string) {
-    //         return readFileSync(file, "utf-8");
-    //       },
-    //     },
-    //   },
-    // },
     plugins: [
       nodePolyfills({
-        // globals: {
-        //   Buffer: true, // can also be 'build', 'dev', or false
-        //   global: true,
-        //   process: true,
-        // },
-        // include: ['fs']
-        overrides: {
-          // Since `fs` is not supported in browsers, we can use the `memfs` package to polyfill it.
-          fs: 'memfs',
+        include: ['buffer', 'util', 'stream', 'crypto'],
+        globals: {
+          process: true,
         }
       }),
     ],
     define: {
       "process.env": {},
     },
-    // optimizeDeps: {
-    //   include: ["buffer", "process"],
-    //   esbuildOptions: {
-    //     define: {
-    //       global: 'globalThis'
-    //     },
-    //   }
-    // },
   },
   motion: {
     directives: {

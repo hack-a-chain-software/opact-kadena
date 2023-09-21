@@ -120,7 +120,7 @@ const send = async () => {
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-    const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+    const network = 'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
     const createdAt = Math.round(new Date().getTime() / 1000) - 10
 

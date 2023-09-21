@@ -50,7 +50,7 @@ const pay = async () => {
       result
     } = await Pact.fetch.listen(
       { listen: tx.requestKeys[0] },
-      'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+      'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
     )
 
     if (result.status === 'failure') {
