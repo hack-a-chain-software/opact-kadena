@@ -113,12 +113,12 @@ const deposit = async () => {
       Number(data.amount)
     )
 
-    depositMessage.value = 'Awaiting user signature...'
+    depositMessage.value = 'Awaiting signature...'
 
     try {
       const tx = await provider.value.transaction({ ...transactionArgs, node: node.value })
 
-      depositMessage.value = 'Awaiting kadena result...'
+      depositMessage.value = 'Awaiting TX results...'
 
       const {
         result

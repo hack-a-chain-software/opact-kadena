@@ -168,7 +168,7 @@ const send = async () => {
       meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
     }, network)
 
-    data.loadingMessage = 'Awaint transaction results...'
+    data.loadingMessage = 'Awaiting TX results...'
 
     const {
       result
