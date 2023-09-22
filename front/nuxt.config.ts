@@ -1,7 +1,7 @@
 // import nodePolyfills from 'vite-plugin-node-stdlib-browser'
 
 export default defineNuxtConfig({
-  ssr: false,
+  // ssr: false,
   extends: ['./apps/site', './apps/app'],
   modules: [
     'nuxt-icon',
