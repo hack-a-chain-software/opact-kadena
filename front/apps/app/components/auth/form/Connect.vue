@@ -39,13 +39,13 @@ function setIsOpen (value) {
       "
     >
       <figure class="">
-        <nuxt-img
+        <img
           src="/auth-bg.png"
           alt="Hero illustration"
           quality="100"
           class="min-w-[608px] h-[507px] lg:min-w-[1057px] lg:min-h-[880px] lg:h-[880px]"
           sizes="xs:861px xxl:1057px"
-        />
+        >
       </figure>
     </div>
 
