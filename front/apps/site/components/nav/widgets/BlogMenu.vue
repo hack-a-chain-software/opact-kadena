@@ -82,7 +82,7 @@ const articles: any[] = [
     </div>
 
     <div class="flex space-x-[24px]">
-      <NuxtLInk
+      <NuxtLink
         target="_blank"
         :to="config.blog.ctaTo"
         class="cursor-pointer hover:opacity-[0.8] space-x-[8px] text-[#BDBDBD]"
@@ -92,13 +92,13 @@ const articles: any[] = [
         > Blog </span>
 
         <Icon name="arrow" class="w-[18px] h-[18px]" />
-      </NuxtLInk>
+      </NuxtLink>
 
       <div
         class="h-full w-[1px] bg-[#BDBDBD]"
       />
 
-      <NuxtLInk
+      <NuxtLink
         target="_blank"
         :to="config.blog.ctaTo"
         class="cursor-pointer text-[#BDBDBD] hover:opacity-[0.8] space-x-[8px]"
@@ -108,7 +108,7 @@ const articles: any[] = [
         > Documentation </span>
 
         <Icon name="arrow" class="w-[18px] h-[18px]" />
-      </NuxtLInk>
+      </NuxtLink>
     </div>
   </div>
 </template>

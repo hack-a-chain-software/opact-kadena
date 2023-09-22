@@ -1,42 +1,16 @@
 <script setup lang="ts">
-import { reactive, computed } from 'vue'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { onMounted } from 'vue'
+// import { storeToRefs } from 'pinia'
+import { useWalletStore } from '~/stores/wallet'
 
 const currentStep = useAuthCurrentStep()
 
-const router = useRouter()
-const route = useRoute()
-
 const wallet = useWalletStore()
+// const { connected } = storeToRefs(wallet)
 
-const data = reactive({
-  phrase: ''
+onMounted(() => {
+  wallet.newMnemonic()
 })
-
-const splited = computed(() => {
-  if (!data.phrase) {
-    return []
-  }
-
-  return data.phrase.split(' ')
-})
-
-const recovery = async () => {
-  await wallet.recovery(data.phrase)
-
-  router.push((route.query as any).next || '/app')
-  currentStep.value = 'connect'
-}
-
-const toPaste = async () => {
-  const text = await navigator.clipboard.readText()
-
-  if (text.split(' ').length !== 12) {
-    return
-  }
-
-  data.phrase = text
-}
 </script>
 
 <template>
@@ -46,8 +20,7 @@ const toPaste = async () => {
       lg:p-6
       lg:bg-gray-900
       lg:w-[546px]
-      lg:border-2 lg:border-gray-600 lg:rounded-[12px]
-    "
+      lg:border-2 lg:border-gray-600 lg:rounded-[12px]"
   >
     <div
       class="
@@ -77,7 +50,7 @@ const toPaste = async () => {
 
       <div>
         <h1 class="text-xs text-font-1 font-medium">
-          Recover Wallet
+          Create Wallet
         </h1>
       </div>
     </div>
@@ -90,24 +63,26 @@ const toPaste = async () => {
       </div>
 
       <div class="pt-4 pb-[32px]">
-        <p class="text-font-2 font-regular text-xs">
-          Paste your passphrase below to recover your
-          account.
+        <p class="text-font-2 text-xs font-regular">
+          Write down the following words in order and keep
+          them somewhere safe. Anyone with access to it will
+          also have access to your account! You’ll be asked
+          to verify your passphrase next.
         </p>
       </div>
 
       <div
+        v-if="wallet.mnemonic"
         class="
           grid grid-cols-3
-          gap-[12px]
+          gap-y-[12px] gap-x-[8px]
           relative
           group
-          cursor-pointer
         "
       >
         <div
-          v-for="(_, i) in 12"
-          :key="'recovery-word-' + i"
+          v-for="(word, i) in wallet.mnemonic.split(' ')"
+          :key="word + i"
           class="p-3 rounded-[8px] bg-gray-700 space-x-2"
         >
           <span
@@ -127,12 +102,12 @@ const toPaste = async () => {
               font-medium
               text-font-1
             "
-            v-text="splited[i] || '-'"
+            v-text="word"
           />
         </div>
       </div>
 
-      <div class="pt-4 flex justify-end">
+      <div class="pt-4 flex items-center justify-end">
         <button
           class="
             px-3
@@ -142,41 +117,38 @@ const toPaste = async () => {
             text-blue-400
             focus:text-green-500
           "
-          @click.prevent="toPaste"
+          @click.prevent="wallet.copyToClipboard()"
         >
           <span class="text-xs font-regular opacity-[0.9]">
-            Paste Passphrase
+            Copy Passphrase
           </span>
 
           <Icon name="copy" class="h-6 w-6" />
         </button>
       </div>
 
-      <div class="pt-[250px] lg:pt-[56px]">
+      <div class="pt-[165px] lg:pt-[56px]">
         <button
-          :disabled="!!!data.phrase"
           class="
             w-full
             flex
             items-center
             justify-center
+            bg-blue-gradient
             h-[44px]
             py-3
             px-4
             rounded-[12px]
             relative
-            disabled:cursor-not-allowed
           "
-          :class="
-            !!!data.phrase
-              ? 'bg-gray-700'
-              : 'bg-blue-gradient'
-          "
-          @click.prevent="recovery()"
+          @click.prevent="currentStep = 'verify'"
         >
-          <span class="text-font-1"> Create Wallet </span>
+          <span class="text-font-1 text-xs font-medium">
+            Continue
+          </span>
         </button>
       </div>
     </div>
   </div>
 </template>
+~/apps/app/stores/wallet

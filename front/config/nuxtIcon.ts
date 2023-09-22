@@ -40,7 +40,7 @@ export const nuxtIcon = {
     wallet: 'Wallet',
     visible: 'Visible',
     receive: 'Receive',
-    settings: 'Settings',
+    settings: 'IconSettings',
     calendar: 'Calendar',
     arrowRight: 'ArrowRight',
     radioActive: 'RadioActive',

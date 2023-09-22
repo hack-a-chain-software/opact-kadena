@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import {
   TransitionRoot,
   TransitionChild,
@@ -9,7 +9,7 @@ import {
 import Pact from 'pact-lang-api'
 import { reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 const router = useRouter()
 
@@ -50,7 +50,7 @@ const pay = async () => {
       result
     } = await Pact.fetch.listen(
       { listen: tx.requestKeys[0] },
-      'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+      'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
     )
 
     if (result.status === 'failure') {
@@ -176,3 +176,4 @@ const pay = async () => {
     </div>
   </div>
 </template>
+~/apps/app/stores/wallet

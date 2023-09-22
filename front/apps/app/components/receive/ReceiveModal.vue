@@ -7,7 +7,7 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
@@ -285,3 +285,4 @@ const redirect = () => {
     </Dialog>
   </TransitionRoot>
 </template>
+~/apps/app/stores/wallet

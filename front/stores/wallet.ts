@@ -1,6 +1,17 @@
 import axios from 'axios'
 import Pact from 'pact-lang-api'
 import { defineStore } from 'pinia'
+import {
+  poseidon,
+  computeProof,
+  getSolutionBatch,
+  groupUtxoByToken,
+  base64urlToBigInt,
+  computeTreeValues,
+  computeLocalTestnet,
+  getSoluctionDepositBatch,
+  computeTransactionParams
+} from 'opact-sdk'
 
 export const useWalletStore = defineStore({
   id: 'opact-wallet',
@@ -41,18 +52,9 @@ export const useWalletStore = defineStore({
   },
   actions: {
     async loadState (decrypt: any, getUtxoFromDecrypted: any) {
-      if (process.server) {
-        return
-      }
-
-      const {
-        groupUtxoByToken,
-        computeLocalTestnet
-      } = await getSdk() || {}
-
       this.isLoading = true
 
-      const { data } = await axios.get('https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata?salt=75', {
+      const { data } = await axios.get('http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata?salt=75', {
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
@@ -72,10 +74,6 @@ export const useWalletStore = defineStore({
     },
 
     async found () {
-      if (process.server) {
-        return
-      }
-
       const {
         getHDWalletFromMnemonic
       } = await getSdk() || {}
@@ -88,10 +86,6 @@ export const useWalletStore = defineStore({
     },
 
     async recovery (phrase: string) {
-      if (process.server) {
-        return
-      }
-
       const {
         getHDWalletFromMnemonic
       } = await getSdk() || {}
@@ -121,10 +115,6 @@ export const useWalletStore = defineStore({
     },
 
     async newMnemonic () {
-      if (process.server) {
-        return
-      }
-
       const {
         generateMnemonic
       } = await getSdk() || {}
@@ -149,19 +139,6 @@ export const useWalletStore = defineStore({
         }
       }
     ) {
-      if (process.server) {
-        return
-      }
-
-      const {
-        poseidon,
-        computeProof,
-        getSolutionBatch,
-        base64urlToBigInt,
-        computeTreeValues,
-        computeTransactionParams,
-      } = await getSdk() || {}
-
       const tokenHash = Pact.crypto.hash(JSON.stringify(selectedToken))
 
       const token = poseidon([base64urlToBigInt(tokenHash)])
@@ -230,21 +207,6 @@ export const useWalletStore = defineStore({
         }
       }
     ) {
-      if (process.server) {
-        return
-      }
-
-      this.depositing = true
-
-      const {
-        poseidon,
-        computeProof,
-        base64urlToBigInt,
-        computeTreeValues,
-        computeTransactionParams,
-        getSoluctionDepositBatch
-      } = await getSdk() || {}
-
       this.depositing = true
 
       const tokenHash = Pact.crypto.hash(JSON.stringify(selectedToken))

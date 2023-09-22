@@ -6,7 +6,7 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
@@ -129,3 +129,4 @@ const emit = defineEmits(['close'])
     </Dialog>
   </TransitionRoot>
 </template>
+~/apps/app/stores/wallet

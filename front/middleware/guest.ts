@@ -1,4 +1,4 @@
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 export default defineNuxtRouteMiddleware(() => {
   const wallet = useWalletStore()

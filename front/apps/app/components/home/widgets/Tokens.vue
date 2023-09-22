@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
@@ -247,3 +247,4 @@ const data = reactive({
     </div>
   </div>
 </template>
+~/apps/app/stores/wallet

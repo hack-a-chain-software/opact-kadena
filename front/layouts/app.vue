@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
-import Settings from '../components/Settings.vue'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import Settings from '~/apps/app/components/Settings.vue'
+import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
@@ -261,3 +261,4 @@ const redirect = (path: string, skip: boolean) => {
     />
   </div>
 </template>
+~/apps/app/stores/wallet

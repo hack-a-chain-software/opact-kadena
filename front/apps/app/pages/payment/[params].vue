@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 import form from '../../components/payment/form'
 
 definePageMeta({
@@ -75,3 +75,4 @@ const { step } = usePaymentForm()
   opacity: 0;
 }
 </style>
+~/apps/app/stores/wallet

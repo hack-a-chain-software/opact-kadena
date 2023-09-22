@@ -10,7 +10,7 @@ import {
 import { storeToRefs } from 'pinia'
 import Pact from 'pact-lang-api'
 import WalletConnector from '../../deposit/form/WalletConnector.vue'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 const computePactCode = ({
   args,
@@ -120,7 +120,7 @@ const send = async () => {
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-    const network = 'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+    const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
     const createdAt = Math.round(new Date().getTime() / 1000) - 10
 
@@ -648,3 +648,4 @@ const send = async () => {
     </TransitionRoot>
   </div>
 </template>
+~/apps/app/stores/wallet

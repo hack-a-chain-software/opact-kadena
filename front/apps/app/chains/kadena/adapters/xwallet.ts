@@ -7,7 +7,7 @@ const metadata = {
   icon: 'ecko',
   disabled: false,
   networkId: 'testnet04',
-  network: 'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+  network: 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 }
 
 export const useProvider = () => {
@@ -61,7 +61,7 @@ export const useProvider = () => {
     try {
       const accountName = pubkey.toString()
 
-      const network = 'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+      const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
       const t_creationTime = Math.round(new Date().getTime() / 1000) - 10
       const data = await Pact.fetch.local({

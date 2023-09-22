@@ -1,11 +1,9 @@
-import stdLibBrowser from 'node-stdlib-browser'
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
-import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
+// import nodePolyfills from 'vite-plugin-node-stdlib-browser'
 
 export default defineNuxtConfig({
-  extends: ['./apps/site', './apps/auth', './apps/app'],
+  ssr: false,
+  extends: ['./apps/site', './apps/app'],
   modules: [
-    'nupolyon',
     'nuxt-icon',
     '@pinia/nuxt',
     '@nuxt/image',
@@ -15,24 +13,18 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxtjs/google-fonts'
   ],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {}
+    }
+  },
   vite: {
-    resolve: {
-      alias: {
-        ...stdLibBrowser
-      },
-    },
     optimizeDeps: {
       esbuildOptions: {
         define: {
           global: 'globalThis'
-        },
-        plugins: [
-          NodeModulesPolyfillPlugin(),
-          NodeGlobalsPolyfillPlugin({
-            process: true,
-            buffer: true
-          })
-        ]
+        }
       }
     }
   },

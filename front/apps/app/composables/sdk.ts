@@ -1,4 +1,7 @@
 // TODO: FIX CIRCOMLIBSJS WITH SERVER SIDE
+import { Buffer } from 'buffer'
+
+globalThis.Buffer = Buffer
 
 let sdk: any = null
 

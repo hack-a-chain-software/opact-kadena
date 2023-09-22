@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 const router = useRouter()
 const route = useRoute()
@@ -152,3 +152,4 @@ const isDisabled = computed(() => {
     </div>
   </div>
 </template>
+~/apps/app/stores/wallet

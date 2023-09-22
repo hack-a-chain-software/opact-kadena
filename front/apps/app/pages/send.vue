@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeMount, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 import form from '../components/send/form'
 
 definePageMeta({
@@ -61,3 +61,4 @@ onBeforeUnmount(() => {
   opacity: 0;
 }
 </style>
+~/apps/app/stores/wallet

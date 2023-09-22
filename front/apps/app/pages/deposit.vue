@@ -2,7 +2,7 @@
 import { onBeforeMount, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
 import form from '../components/deposit/form'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 definePageMeta({
   layout: 'app',
@@ -60,3 +60,4 @@ onBeforeUnmount(() => {
   opacity: 0;
 }
 </style>
+~/apps/app/stores/wallet

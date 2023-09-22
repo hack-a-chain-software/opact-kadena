@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/apps/auth/stores/wallet'
+import { useWalletStore } from '~/stores/wallet'
 import Create from '../components/receive/form/Create.vue'
 
 definePageMeta({
@@ -55,3 +55,4 @@ onBeforeMount(() => {
   opacity: 0;
 }
 </style>
+~/apps/app/stores/wallet
