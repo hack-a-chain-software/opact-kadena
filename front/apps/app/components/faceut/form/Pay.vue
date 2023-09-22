@@ -4,8 +4,6 @@ import { reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
 
-const RPC = "https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com"
-
 const router = useRouter()
 
 const wallet = useWalletStore()
@@ -33,6 +31,8 @@ function setIsOpen (value) {
   isOpen.value = value
 }
 
+const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+
 const pay = async () => {
   try {
     const tx = await provider.value.faceut(node.value)
@@ -45,7 +45,7 @@ const pay = async () => {
       result
     } = await Pact.fetch.listen(
       { listen: tx.requestKeys[0] },
-      `${RPC}:9001`
+      RPC
     )
 
     if (result.status === 'failure') {
