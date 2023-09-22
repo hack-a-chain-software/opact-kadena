@@ -13,7 +13,7 @@ import {
   computeTransactionParams
 } from 'opact-sdk'
 
-const RPC = "https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com"
+const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com'
 
 export const useWalletStore = defineStore({
   id: 'opact-wallet',
@@ -55,8 +55,7 @@ export const useWalletStore = defineStore({
   actions: {
     async loadState (decrypt: any, getUtxoFromDecrypted: any) {
       this.isLoading = true
-
-      const { data } = await axios.get(`${RPC}:5000/getdata?salt=75`, {
+      const { data } = await axios.get(`${RPC}?salt=75`, {
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
