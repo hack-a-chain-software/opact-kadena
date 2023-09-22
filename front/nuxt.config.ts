@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-icon',
     '@pinia/nuxt',
-    '@nuxt/image',
+    '@nuxt/image-edge',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@nuxtjs/tailwindcss',
@@ -18,6 +18,9 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {}
     }
+  },
+  image: {
+    provider: 'ipx'
   },
   vite: {
     optimizeDeps: {

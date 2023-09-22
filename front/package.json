@@ -17,6 +17,7 @@
     "@gtm-support/vue-gtm": "^2.0.0",
     "@headlessui/vue": "^1.7.16",
     "@nuxt/babel-preset-app": "^2.17.1",
+    "@nuxt/image-edge": "1.0.0-rc.2-28256461.fdc0975",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@pinia/nuxt": "^0.4.11",
     "@unhead/vue": "^1.7.4",

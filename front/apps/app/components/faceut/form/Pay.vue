@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogPanel,
-  DialogTitle
-} from '@headlessui/vue'
 import Pact from 'pact-lang-api'
 import { reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
+
+const RPC = "https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com"
 
 const router = useRouter()
 
@@ -50,7 +45,7 @@ const pay = async () => {
       result
     } = await Pact.fetch.listen(
       { listen: tx.requestKeys[0] },
-      'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+      `${RPC}:9001`
     )
 
     if (result.status === 'failure') {

@@ -12,6 +12,8 @@ import Pact from 'pact-lang-api'
 import WalletConnector from '../../deposit/form/WalletConnector.vue'
 import { useWalletStore } from '~/stores/wallet'
 
+const RPC = "https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com"
+
 const computePactCode = ({
   args,
   proof,
@@ -120,7 +122,7 @@ const send = async () => {
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-    const network = 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+    const network = `${RPC}:9001`
 
     const createdAt = Math.round(new Date().getTime() / 1000) - 10
 
