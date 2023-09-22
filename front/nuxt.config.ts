@@ -1,7 +1,13 @@
 // import nodePolyfills from 'vite-plugin-node-stdlib-browser'
 
+let ssr = false
+
+if (process.env.NODE_ENV !== 'development') {
+  ssr = true
+}
+
 export default defineNuxtConfig({
-  // ssr: false,
+  ssr,
   extends: ['./apps/site', './apps/app'],
   modules: [
     'nuxt-icon',

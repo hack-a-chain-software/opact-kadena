@@ -221,6 +221,8 @@ export const useWalletStore = defineStore({
         wallet: this.node
       })
 
+      console.log(typeof amount !== 'bigint')
+
       const {
         roots,
         newIns

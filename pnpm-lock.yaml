@@ -148,8 +148,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(vue@3.3.4)
       opact-sdk:
-        specifier: ^0.0.57
-        version: 0.0.57
+        specifier: ^0.0.59
+        version: 0.0.59
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -15660,8 +15660,8 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@0.0.57:
-    resolution: {integrity: sha512-qGlv1XzpQYXv0QjpYrsx8CUJJfUOcbZqSlCt1sS+MWksFAVnca4yz80Kkz10UYVuntB1GX3+RbMs8Wc0u7ILSg==}
+  /opact-sdk@0.0.59:
+    resolution: {integrity: sha512-O/fB8PtLTWlhiEZfchM6vlDImtAsdMlHl6iPxHsu8rDMj2MHeObg3PmjKZLa+dbKtDwYH0qLX7aLHG5wSYDhWg==}
     dependencies:
       '@noble/hashes': 1.3.2
       '@peculiar/webcrypto': 1.4.3

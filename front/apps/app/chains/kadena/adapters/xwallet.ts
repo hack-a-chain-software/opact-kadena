@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import Pact from 'pact-lang-api'
 
-const RPC = "https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com"
+const RPC = 'https://cors-anywhere.herokuapp.com/http://ec2-34-235-122-42.compute-1.amazonaws.com'
 
 const metadata = {
   name: 'eckoWALLET',
