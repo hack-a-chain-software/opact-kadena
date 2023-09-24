@@ -22,10 +22,9 @@ const splited = computed(() => {
 })
 
 const recovery = async () => {
-  await wallet.recovery(data.phrase)
+  await wallet.found(data.phrase)
 
   router.push((route.query as any).next || '/app')
-  currentStep.value = 'connect'
 }
 
 const toPaste = async () => {
@@ -180,4 +179,3 @@ const toPaste = async () => {
     </div>
   </div>
 </template>
-~/apps/app/stores/wallet

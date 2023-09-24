@@ -261,4 +261,3 @@ const redirect = (path: string, skip: boolean) => {
     />
   </div>
 </template>
-~/apps/app/stores/wallet

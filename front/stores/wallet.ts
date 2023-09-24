@@ -62,8 +62,6 @@ export const useWalletStore = defineStore({
 
       const userData = groupUtxoByToken(state.decryptedData, state.nullifiers)
 
-      console.log('userdata', userData)
-
       this.state = state
       this.isLoading = false
       this.userData = userData
@@ -79,22 +77,8 @@ export const useWalletStore = defineStore({
       this.persistAuth(node)
     },
 
-    async recovery (phrase: string) {
-      const {
-        getHDWalletFromMnemonic
-      } = await getSdk() || {}
-
-      const node: any = await getHDWalletFromMnemonic(phrase)
-
-      this.node = node
-
-      this.persistAuth(node)
-
-      return node
-    },
-
     async reconnect () {
-      return await this.recovery(this.cache.phrase)
+      return await this.found(this.cache.phrase)
     },
 
     persistAuth (node: any) {
@@ -106,16 +90,6 @@ export const useWalletStore = defineStore({
       store({
         phrase: node.mnemonic
       })
-    },
-
-    async newMnemonic () {
-      const {
-        generateMnemonic
-      } = await getSdk() || {}
-
-      const mnemonic = generateMnemonic()
-
-      this.mnemonic = mnemonic
     },
 
     async withdraw (
@@ -253,23 +227,6 @@ export const useWalletStore = defineStore({
         proof,
         extData,
         tokenSpec
-      }
-    },
-
-    verifyMnemonic (word: string, index: number) {
-      return (
-        this.mnemonic.split(' ')[index] === word
-      )
-    },
-
-    async copyToClipboard (value?: '') {
-      try {
-        await navigator.clipboard.writeText(
-          value || this.mnemonic
-        )
-        // alert('Copied')
-      } catch ($e) {
-        alert('Cannot copy')
       }
     },
 

@@ -129,4 +129,3 @@ const emit = defineEmits(['close'])
     </Dialog>
   </TransitionRoot>
 </template>
-~/apps/app/stores/wallet

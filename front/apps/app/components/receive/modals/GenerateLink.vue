@@ -194,4 +194,3 @@ const close = () => {
     </Dialog>
   </TransitionRoot>
 </template>
-~/apps/app/stores/wallet

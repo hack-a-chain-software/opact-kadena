@@ -18,7 +18,7 @@ const {
 
 <template>
   <div
-    class="h-full lg:flex lg:justify-center lg:items-start lg:pt-[40px]"
+    class="h-full lg:flex lg:justify-center lg:items-start"
   >
     <Transition name="fade" mode="out-in">
       <component

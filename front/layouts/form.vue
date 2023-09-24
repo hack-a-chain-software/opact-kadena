@@ -11,6 +11,12 @@ const router = useRouter()
       justify-between
       relative
       overflow-hidden
+      lg:overflow-auto
+      lg:min-h-screen
+      lg:h-auto
+      lg:justify-start
+      lg:gap-[48px]
+      lg:pb-[80px]
     "
   >
     <div

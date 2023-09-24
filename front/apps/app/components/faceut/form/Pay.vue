@@ -171,4 +171,3 @@ const pay = async () => {
     </div>
   </div>
 </template>
-~/apps/app/stores/wallet

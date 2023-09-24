@@ -61,4 +61,3 @@ onBeforeUnmount(() => {
   opacity: 0;
 }
 </style>
-~/apps/app/stores/wallet

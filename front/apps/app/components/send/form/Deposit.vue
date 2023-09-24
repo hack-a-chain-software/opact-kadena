@@ -650,4 +650,3 @@ const send = async () => {
     </TransitionRoot>
   </div>
 </template>
-~/apps/app/stores/wallet

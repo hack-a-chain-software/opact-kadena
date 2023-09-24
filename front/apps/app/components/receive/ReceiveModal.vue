@@ -285,4 +285,3 @@ const redirect = () => {
     </Dialog>
   </TransitionRoot>
 </template>
-~/apps/app/stores/wallet

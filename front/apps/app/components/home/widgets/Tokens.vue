@@ -247,4 +247,3 @@ const data = reactive({
     </div>
   </div>
 </template>
-~/apps/app/stores/wallet

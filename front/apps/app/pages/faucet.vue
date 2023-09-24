@@ -75,4 +75,3 @@ const { step } = useFaceutForm()
   opacity: 0;
 }
 </style>
-~/apps/app/stores/wallet

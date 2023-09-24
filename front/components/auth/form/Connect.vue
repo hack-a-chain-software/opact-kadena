@@ -9,7 +9,7 @@ const emits = defineEmits(['changeStep'])
 </script>
 
 <template>
-  <div class="flex flex-col lg:flex-row lg:items-start h-full pt-[56px] pb-[80px] lg:pt-[0] lg:mt-[-64px] lg:px-[60px]">
+  <div class="flex flex-col lg:flex-row lg:items-start h-full pt-[56px] pb-[80px] lg:pt-[0] lg:pb-0 lg:mt-[-64px] lg:px-0 lg:max-w-full lg:overflow-x-clip lg:items-center">
     <div class="lg:hidden flex items-center justify-center h-[42px]">
       <Logo class="flex justify-center mb-5" />
     </div>
@@ -21,11 +21,12 @@ const emits = defineEmits(['changeStep'])
         justify-center
         w-full
         max-h-[410px]
-        lg:max-h-full
+        lg:h-full
+        lg:max-h-max
         lg:z-[-1]
         lg:relative
-        lg:h-[880px]
-        lg:max-w-[60%]
+        lg:max-w-[50%]
+        xl:max-w-[60%]
         lg:overflow-y-clip
       "
     >
@@ -41,54 +42,58 @@ const emits = defineEmits(['changeStep'])
     </div>
 
     <div
-      class="flex-col lg:mt-[300px] lg:mr-[5%] lg:min-w-[424px]"
+      class="flex-col lg:mr-[0%] lg:w-full lg:flex lg:items-center"
     >
-      <div class="flex flex-col space-y-[16px] max-w-[400px]">
-        <h2 class="text-lg font-medium text-font-1">
-          Your private address
-        </h2>
+      <div
+        class="lg:max-w-[424px]"
+      >
+        <div class="flex flex-col space-y-[16px] max-w-[400px]">
+          <h2 class="text-lg font-medium text-font-1">
+            Your private address
+          </h2>
 
-        <p class="text-xs text-font-2 font-regular">
-          Choose how you want to connect. Web3 like you never
-          imagined.
-        </p>
-      </div>
+          <p class="text-xs text-font-2 font-regular">
+            Choose how you want to connect. Web3 like you never
+            imagined.
+          </p>
+        </div>
 
-      <div class="flex flex-col space-y-[16px] pt-[32px]">
-        <button
-          class="
-            flex
-            items-center
-            justify-center
-            bg-blue-gradient
-            h-[44px]
-            py-3
-            px-4
-            rounded-[12px]
-            relative
-          "
-          @click.prevent="data.show = true"
-        >
-          <span class="text-font-1"> Create Wallet </span>
-        </button>
+        <div class="flex flex-col space-y-[16px] pt-[32px]">
+          <button
+            class="
+              flex
+              items-center
+              justify-center
+              bg-blue-gradient
+              h-[44px]
+              py-3
+              px-4
+              rounded-[12px]
+              relative
+            "
+            @click.prevent="data.show = true"
+          >
+            <span class="text-font-1"> Create Wallet </span>
+          </button>
 
-        <button
-          class="
-            flex
-            items-center
-            justify-center
-            h-[44px]
-            py-[11px]
-            px-4
-            rounded-[12px]
-            text-font-1
-            border border-font-1
-          "
-          @click.prevent="emits('changeStep', 'recovery')"
-        >
-          <span class="text-font-1"> Recover Wallet </span>
-        </button>
-      </div>
+          <button
+            class="
+              flex
+              items-center
+              justify-center
+              h-[44px]
+              py-[11px]
+              px-4
+              rounded-[12px]
+              text-font-1
+              border border-font-1
+            "
+            @click.prevent="emits('changeStep', 'recovery')"
+          >
+            <span class="text-font-1"> Recover Wallet </span>
+          </button>
+        </div>
+    </div>
     </div>
 
     <AuthGetStartedModal
