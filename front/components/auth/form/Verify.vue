@@ -2,16 +2,25 @@
 import { computed, reactive } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
 
+const props = withDefaults(
+  defineProps<{
+    mnemonic?: string;
+  }>(),
+  {
+    mnemonic: ''
+  }
+)
+
 const router = useRouter()
 const route = useRoute()
+
+const wallet = useWalletStore()
 
 const data = reactive({
   word: ''
 })
 
 const currentStep = useAuthCurrentStep()
-
-const wallet = useWalletStore()
 
 const randomNumber = computed(() => {
   return Math.floor(
@@ -20,25 +29,20 @@ const randomNumber = computed(() => {
 })
 
 const create = async () => {
-  const isValid = wallet.verifyMnemonic(
-    data.word,
-    Number(randomNumber.value) - 1
-  )
+  const isValid = props.mnemonic.split(' ')[Number(randomNumber.value) - 1] === data.word
 
   if (!isValid) {
     return
   }
 
-  await wallet.found()
+  await wallet.found(props.mnemonic)
 
   router.push((route.query as any).next || '/app')
-
-  // currentStep.value = 'connect'
 }
 
 const isDisabled = computed(() => {
   return (
-    wallet.mnemonic.split(' ')[
+    props.mnemonic.split(' ')[
       Number(randomNumber.value) - 1
     ] === data.word
   )
@@ -152,4 +156,3 @@ const isDisabled = computed(() => {
     </div>
   </div>
 </template>
-~/apps/app/stores/wallet

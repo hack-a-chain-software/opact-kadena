@@ -1,15 +1,27 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-// import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/stores/wallet'
+import { reactive } from 'vue'
+import { generateMnemonic } from 'opact-sdk'
 
-const currentStep = useAuthCurrentStep()
+const data = reactive({
+  mnemonic: ''
+})
 
-const wallet = useWalletStore()
-// const { connected } = storeToRefs(wallet)
+const emits = defineEmits(['changeStep', 'mnemonic'])
+
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(data.mnemonic)
+  } catch (e) {
+    console.warn(e)
+  }
+}
 
 onMounted(() => {
-  wallet.newMnemonic()
+  const mnemonic = generateMnemonic()
+
+  data.mnemonic = mnemonic
+
+  emits('mnemonic', mnemonic)
 })
 </script>
 
@@ -72,7 +84,7 @@ onMounted(() => {
       </div>
 
       <div
-        v-if="wallet.mnemonic"
+        v-if="data.mnemonic"
         class="
           grid grid-cols-3
           gap-y-[12px] gap-x-[8px]
@@ -81,7 +93,7 @@ onMounted(() => {
         "
       >
         <div
-          v-for="(word, i) in wallet.mnemonic.split(' ')"
+          v-for="(word, i) in data.mnemonic.split(' ')"
           :key="word + i"
           class="p-3 rounded-[8px] bg-gray-700 space-x-2"
         >
@@ -117,7 +129,7 @@ onMounted(() => {
             text-blue-400
             focus:text-green-500
           "
-          @click.prevent="wallet.copyToClipboard()"
+          @click.prevent="copyToClipboard()"
         >
           <span class="text-xs font-regular opacity-[0.9]">
             Copy Passphrase
@@ -141,7 +153,7 @@ onMounted(() => {
             rounded-[12px]
             relative
           "
-          @click.prevent="currentStep = 'verify'"
+          @click.prevent="emits('changeStep', 'verify')"
         >
           <span class="text-font-1 text-xs font-medium">
             Continue
@@ -151,4 +163,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-~/apps/app/stores/wallet

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount } from 'vue'
-import form from '../components/auth/form'
+import { useAuth } from '~/hooks/auth'
 
 definePageMeta({
   layout: 'form',
@@ -11,11 +10,10 @@ useHead({
   title: 'Auth'
 })
 
-const currentStep = useAuthCurrentStep()
-
-onBeforeUnmount(() => {
-  currentStep.value = 'connect'
-})
+const {
+  data,
+  form
+} = useAuth()
 </script>
 
 <template>
@@ -23,7 +21,12 @@ onBeforeUnmount(() => {
     class="h-full lg:flex lg:justify-center lg:items-start lg:pt-[40px]"
   >
     <Transition name="fade" mode="out-in">
-      <component :is="form[currentStep]" />
+      <component
+        :is="form[data.stepForm]"
+        :mnemonic="data.mnemonic"
+        @mnemonic="($event) => data.mnemonic = $event"
+        @changeStep="($event) => data.stepForm = $event"
+      />
     </Transition>
   </div>
 </template>

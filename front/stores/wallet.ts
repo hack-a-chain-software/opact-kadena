@@ -9,6 +9,7 @@ import {
   base64urlToBigInt,
   computeTreeValues,
   computeLocalTestnet,
+  getHDWalletFromMnemonic,
   getSoluctionDepositBatch,
   computeTransactionParams
 } from 'opact-sdk'
@@ -26,12 +27,8 @@ export const useWalletStore = defineStore({
 
       balance: 0,
 
-      mnemonic: '',
-
       node: null,
-      chain: null,
       state: null,
-      provider: null,
       depositing: false,
       depositMessage: 'Generating ZK Proof...',
 
@@ -74,12 +71,8 @@ export const useWalletStore = defineStore({
       return state
     },
 
-    async found () {
-      const {
-        getHDWalletFromMnemonic
-      } = await getSdk() || {}
-
-      const node: any = await getHDWalletFromMnemonic(this.mnemonic)
+    async found (mnemonic: '') {
+      const node: any = await getHDWalletFromMnemonic(mnemonic)
 
       this.node = node
 

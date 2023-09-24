@@ -1,4 +1,4 @@
-// import nodePolyfills from 'vite-plugin-node-stdlib-browser'
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
 let ssr = false
 
@@ -29,11 +29,17 @@ export default defineNuxtConfig({
     provider: 'ipx'
   },
   vite: {
+    // plugins: [nodePolyfills()],
     optimizeDeps: {
       esbuildOptions: {
         define: {
           global: 'globalThis'
-        }
+        },
+        plugins: [
+          NodeGlobalsPolyfillPlugin({
+            buffer: true
+          }),
+        ]
       }
     }
   },

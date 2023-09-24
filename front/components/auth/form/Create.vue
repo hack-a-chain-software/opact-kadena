@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const currentStep = useAuthCurrentStep()
+const emits = defineEmits(['changeStep'])
 </script>
 
 <template>
@@ -34,7 +34,7 @@ const currentStep = useAuthCurrentStep()
           top-4
           left-0
         "
-        @click.prevent="currentStep = 'connect'"
+        @click.prevent="emits('changeStep', 'connect')"
       >
         <Icon name="chevronLeft" class="h-6 w-6" />
       </button>
@@ -72,7 +72,7 @@ const currentStep = useAuthCurrentStep()
         <div class="space-y-4">
           <button
             class="p-4 bg-gray-700 rounded-[8px] relative w-full"
-            @click.prevent="currentStep = 'mnemonic'"
+            @click.prevent="emits('changeStep', 'mnemonic')"
           >
             <div class="text-left space-y-[8px]">
               <p class="text-xs font-regular text-font-1">

@@ -5,7 +5,7 @@ import Mnemonic from './Mnemonic.vue'
 import Recovery from './Recovery.vue'
 import Verify from './Verify.vue'
 
-export const authForm = {
+export const form = {
   create: Create,
   connect: Connect,
   recovery: Recovery,
@@ -14,4 +14,4 @@ export const authForm = {
   verify: Verify
 }
 
-export default authForm
+export type FormType = 'create' | 'connect' | 'recovery' | 'method' | 'mnemonic' | 'verify'
