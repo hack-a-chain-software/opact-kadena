@@ -93,6 +93,7 @@ export const useWalletStore = defineStore({
       })
     },
 
+    // TODO: move this to sdk
     async withdraw (
       amount: number,
       receiver: string,
@@ -161,6 +162,7 @@ export const useWalletStore = defineStore({
       }
     },
 
+    // TODO: move this to sdk
     async deposit (
       amount: number,
       receiver?: string,
@@ -229,22 +231,6 @@ export const useWalletStore = defineStore({
         extData,
         tokenSpec
       }
-    },
-
-    async newMnemonic () {
-      const {
-        generateMnemonic
-      } = await getSdk() || {}
-
-      const mnemonic = generateMnemonic()
-
-      this.mnemonic = mnemonic
-    },
-
-    verifyMnemonic (word: string, index: number) {
-      return (
-        this.mnemonic.split(' ')[index] === word
-      )
     },
 
     logout () {

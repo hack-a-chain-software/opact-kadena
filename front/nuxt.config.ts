@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     provider: 'ipx'
   },
   vite: {
+    log: 'info',
     optimizeDeps: {
       esbuildOptions: {
         define: {
