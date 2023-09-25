@@ -183,9 +183,7 @@ const send = async () => {
       return
     }
 
-    const { decrypt, getUtxoFromDecrypted } = await import('opact-sdk')
-
-    wallet.loadState(decrypt, getUtxoFromDecrypted)
+    wallet.loadState()
     router.push('/app')
   } catch (e) {
     console.warn(e)

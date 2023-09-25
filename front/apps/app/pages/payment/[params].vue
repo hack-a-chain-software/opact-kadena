@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
 import form from '../../components/payment/form'
 
 definePageMeta({
   layout: 'form'
-  // middleware: 'auth'
 })
 
 useHead({

@@ -12,6 +12,7 @@ import {
   computeLocalTestnet,
   getHDWalletFromMnemonic,
   getSoluctionDepositBatch,
+  decrypt, getUtxoFromDecrypted,
   computeTransactionParams
 } from 'opact-sdk'
 
@@ -51,7 +52,7 @@ export const useWalletStore = defineStore({
       shortenAddress(state.node.address)
   },
   actions: {
-    async loadState (decrypt: any, getUtxoFromDecrypted: any) {
+    async loadState () {
       this.isLoading = true
       const { data } = await axios.get(`${RPC}?salt=75`, {
         headers: {
@@ -61,7 +62,11 @@ export const useWalletStore = defineStore({
 
       const state = await computeLocalTestnet(data, this.node, decrypt, getUtxoFromDecrypted)
 
-      const userData = groupUtxoByToken(state.decryptedData, state.nullifiers)
+      let userData = null
+
+      if (this.node) {
+        userData = groupUtxoByToken(state.decryptedData, state.nullifiers)
+      }
 
       this.state = state
       this.isLoading = false
@@ -79,6 +84,10 @@ export const useWalletStore = defineStore({
     },
 
     async reconnect () {
+      if (!this.cache) {
+        return
+      }
+
       return await this.found(this.cache.phrase)
     },
 

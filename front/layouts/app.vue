@@ -16,20 +16,15 @@ const data = reactive({
 
 onBeforeMount(() => {
   if (connected.value) {
-    (async () => {
-      const { decrypt, getUtxoFromDecrypted } = await import('opact-sdk')
+    wallet.loadState()
 
-      await wallet.loadState(decrypt, getUtxoFromDecrypted)
-    })()
+    return
   }
-  if (!connected.value) {
-    (async () => {
-      const { decrypt, getUtxoFromDecrypted } = await import('opact-sdk')
 
-      await wallet.reconnect()
-      await wallet.loadState(decrypt, getUtxoFromDecrypted)
-    })()
-  }
+  (async () => {
+    await wallet.reconnect()
+    await wallet.loadState()
+  })()
 })
 
 const route = useRoute()

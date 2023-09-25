@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-
 import {
   TransitionRoot,
   TransitionChild,
@@ -9,22 +8,49 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 
-const { step } = usePaymentForm()
+const route = useRoute()
 
-const { provider } = useExtensions()
+const params = computed<any>(() => {
+  const [
+    tokenId = '',
+    amount = '',
+    pubkey = '',
+  ] = window.atob(route.params.params).split('-') || []
+
+  return {
+    tokenId,
+    amount,
+    pubkey
+  }
+})
+
+const lockedToken = computed(() => {
+  return tokens.find(({ id }) => id === Number(params.value.tokenId || -1))
+})
+
+const buttonIsDisabled = computed(() => {
+  if (params.value.tokenId && params.value.amount && params.value.pubkey) {
+    return false
+  }
+
+  return !data.token || !data.amount
+})
 
 const tokens = [
   {
+    id: 1,
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA'
   },
   {
+    id: 2,
     icon: '/kdx.png',
     name: 'Kaddex',
     symbol: 'KDX'
   },
   {
+    id: 3,
     icon: '/kishk.png',
     name: 'KishuKen',
     symbol: 'KISHK'
@@ -33,8 +59,13 @@ const tokens = [
 
 const data = reactive({
   amount: '',
+  error: '',
+  balance: 0,
+  loading: false,
   token: tokens[0],
-  showGenerateLink: false
+  depositing: false,
+  depositMessage: '',
+  showCollapsible: false,
 })
 
 const isOpen = ref(false)
@@ -43,16 +74,8 @@ function setIsOpen (value) {
   isOpen.value = value
 }
 
-const pay = async () => {
-  try {
-    step.value = 'awaiting'
-    await provider.value.signMessage({
-      message: 'KADENA EXAMPLE'
-    })
-    step.value = 'success'
-  } catch (e) {
-    console.warn(e)
-  }
+const deposit = async () => {
+  console.log('foooooooooo')
 }
 </script>
 
@@ -73,29 +96,46 @@ const pay = async () => {
         <div class="mt-2 p-4 rounded-[8px] flex items-center justify-between bg-gray-700">
           <div class="flex-grow">
             <input
+              v-if="!params.amount"
               v-model="data.amount"
               placeholder="0"
               class="
-            bg-transparent
-            text-xl text-font-1
-            outline-none
-            w-full
-          "
+                bg-transparent
+                text-xl text-font-1
+                outline-none
+                w-full
+              "
             >
+
+            <input
+              v-else
+              readonly
+              :value="params.amount"
+              class="
+                bg-transparent
+                text-xl text-font-1
+                outline-none
+                w-full
+                cursor-not-allowed
+              "
+            />
           </div>
 
           <div>
             <button
               class="
-            bg-gray-800
-            px-3
-            rounded-full
-            py-1
-            flex
-            space-x-1
-            w-max
-            items-center
-          "
+                bg-gray-800
+                px-3
+                rounded-full
+                py-1
+                flex
+                space-x-1
+                w-max
+                items-center
+                cursor-not-allowed
+                disabled:opacity-[0.8]
+              "
+              :disabled="lockedToken !== -1"
               @click.prevent="setIsOpen(true)"
             >
               <div class="shrink-0">
@@ -120,11 +160,12 @@ const pay = async () => {
           <span class="text-xxs text-font-2"> to </span>
         </div>
 
-        <div class="mt-2 p-4 bg-gray-700 rounded-[8px]">
-          <span class="text-xs break-words">
-            0zk1qywdxmxcwvkrerhjxhehmwde3se54t0eunp687tuxggl2xy7z8ml0rv7j6fe
-          </span>
-        </div>
+        <input
+          readonly
+          :value="`OZK${params.pubkey}`"
+          :class="'cursor-not-allowed'"
+          class="mt-2 p-4 bg-gray-700 rounded-[8px] text-xs break-words w-full outline-none"
+        />
       </div>
     </div>
 
@@ -185,7 +226,7 @@ const pay = async () => {
 
     <div class="pt-6 lg:pt-[40px]">
       <button
-        :disabled="!data.token || !data.amount"
+        :disabled="buttonIsDisabled"
         class="
           w-full
           flex
@@ -199,11 +240,11 @@ const pay = async () => {
           disabled:cursor-not-allowed
         "
         :class="
-          !data.token || !data.amount
+          buttonIsDisabled
             ? 'bg-gray-700'
             : 'bg-blue-gradient'
         "
-        @click.prevent="pay()"
+        @click.prevent="deposit()"
       >
         <span class="text-font-1"> Confirm Payment </span>
       </button>

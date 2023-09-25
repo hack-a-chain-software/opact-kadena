@@ -22,21 +22,29 @@ const amounts = [1, 10, 100]
 const data = reactive({
   amount: 0,
   token: null,
+  token: {
+    icon: '/kda.png',
+    name: 'Kadena',
+    symbol: 'KDA'
+  },
   showGenerateLink: false
 })
 
 const tokens = [
   {
+    id: 1,
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA'
   },
   {
+    id: 3,
     icon: '/kdx.png',
     name: 'Kaddex',
     symbol: 'KDX'
   },
   {
+    id: 2,
     icon: '/kishk.png',
     name: 'KishuKen',
     symbol: 'KISHK'
@@ -116,7 +124,7 @@ const tokens = [
 
           <Icon
             name="pen"
-            class="min-w-[24px] min-h-[24px] text-font-2"
+            class="min-w-[24px] min-h-[24px] text-font-2 lg:invisible"
           />
         </div>
       </div>
@@ -157,7 +165,10 @@ const tokens = [
             rounded-[8px]
             justify-between
             bg-gray-800
+            disabled:opacity-60
+            disabled:cursor-not-allowed
           "
+          disabled
           @click.prevent="setIsOpen(true)"
         >
           <div v-if="!data.token">
@@ -208,6 +219,8 @@ const tokens = [
     </div>
 
     <GenerateLink
+      :token="1"
+      :amount="data.amount"
       :show="data.showGenerateLink"
       @close="data.showGenerateLink = false"
     />

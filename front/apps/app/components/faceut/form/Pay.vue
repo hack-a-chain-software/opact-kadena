@@ -54,9 +54,7 @@ const pay = async () => {
       return
     }
 
-    const { decrypt, getUtxoFromDecrypted } = await import('opact-sdk')
-
-    wallet.loadState(decrypt, getUtxoFromDecrypted)
+    wallet.loadState()
     router.push('/app')
     logout()
   } catch (e) {

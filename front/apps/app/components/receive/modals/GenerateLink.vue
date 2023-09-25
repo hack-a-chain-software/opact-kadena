@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
 import {
   TransitionRoot,
   TransitionChild,
@@ -11,14 +12,29 @@ import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     show: boolean;
+    token: number;
+    amount: number;
   }>(),
   {
     show: false
   }
 )
+
+
+const copyToClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text)
+  } catch (e) {
+    console.warn(e)
+  }
+}
+
+const params = computed(() => {
+  return window.btoa(`${props.token}-${props.amount}-${wallet.node.hexPub}`)
+})
 
 const emit = defineEmits(['close', 'connected'])
 
@@ -110,11 +126,11 @@ const close = () => {
                   as="h3"
                   class="text-font-1 text-sm"
                 >
-                  Receive Method
+                  Receive Payment
                 </DialogTitle>
 
                 <button
-                  @click.prevent="setIsOpen(false)"
+                  @click.prevent="emit('close')"
                   class="w-8 h-8"
                 >
                   <Icon
@@ -143,8 +159,8 @@ const close = () => {
                     w-full
                   "
                   @click.prevent="
-                    wallet.copyToClipboard(
-                      'localhost:3000/payment/B3bv0SDIkmdn85jfnDNkspsdd'
+                    copyToClipboard(
+                      `localhost:3000/payment/${params}`
                     )
                   "
                 >
@@ -157,7 +173,7 @@ const close = () => {
                         break-words
                       "
                       v-text="
-                        'localhost:3000/payment/B3bv0SDIkmdn85jfnDNkspsdd'
+                        `localhost:3000/payment/${params}`
                       "
                     />
                   </div>
