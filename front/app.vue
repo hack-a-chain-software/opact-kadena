@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { Buffer } from 'buffer'
-
-globalThis.Buffer = Buffer
-
 useHead({
   titleTemplate: title => title || 'Home',
   meta: [
