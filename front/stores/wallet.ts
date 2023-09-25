@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Pact from 'pact-lang-api'
+import { useAuthStorage } from '~/hooks/auth-storage'
 import { defineStore } from 'pinia'
 import {
   poseidon,
@@ -228,6 +229,22 @@ export const useWalletStore = defineStore({
         extData,
         tokenSpec
       }
+    },
+
+    async newMnemonic () {
+      const {
+        generateMnemonic
+      } = await getSdk() || {}
+
+      const mnemonic = generateMnemonic()
+
+      this.mnemonic = mnemonic
+    },
+
+    verifyMnemonic (word: string, index: number) {
+      return (
+        this.mnemonic.split(' ')[index] === word
+      )
     },
 
     logout () {

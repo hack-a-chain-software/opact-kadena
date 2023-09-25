@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const chains = getChains()
+import { chains } from '~/chains'
 
 const emit = defineEmits(['connected'])
 </script>

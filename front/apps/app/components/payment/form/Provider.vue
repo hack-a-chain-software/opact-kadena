@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-const { step } = usePaymentForm()
+import { chains } from '~/chains'
 
-const chains = getChains()
+const { step } = usePaymentForm()
 </script>
 
 <template>

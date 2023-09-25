@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-const { step } = useFaceutForm()
+import { chains } from '~/chains'
 
-const chains = getChains()
+const { step } = useFaceutForm()
 </script>
 
 <template>

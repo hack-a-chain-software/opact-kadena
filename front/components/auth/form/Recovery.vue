@@ -2,7 +2,7 @@
 import { reactive, computed } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
 
-const currentStep = useAuthCurrentStep()
+const emits = defineEmits(['changeStep'])
 
 const router = useRouter()
 const route = useRoute()
@@ -69,7 +69,7 @@ const toPaste = async () => {
           top-4
           left-0
         "
-        @click.prevent="currentStep = 'connect'"
+        @click.prevent="emits('changeStep', 'connect')"
       >
         <Icon name="chevronLeft" class="h-6 w-6" />
       </button>

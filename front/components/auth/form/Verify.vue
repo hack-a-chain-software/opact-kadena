@@ -2,6 +2,8 @@
 import { computed, reactive } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
 
+const emits = defineEmits(['changeStep'])
+
 const props = withDefaults(
   defineProps<{
     mnemonic?: string;
@@ -19,8 +21,6 @@ const wallet = useWalletStore()
 const data = reactive({
   word: ''
 })
-
-const currentStep = useAuthCurrentStep()
 
 const randomNumber = computed(() => {
   return Math.floor(
@@ -79,7 +79,7 @@ const isDisabled = computed(() => {
           top-4
           left-0
         "
-        @click.prevent="currentStep = 'connect'"
+        @click.prevent="emits('changeStep', 'connect')"
       >
         <span class="text-blue-400 text-xxs font-medium">
           Restart

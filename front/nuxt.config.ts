@@ -29,7 +29,6 @@ export default defineNuxtConfig({
     provider: 'ipx'
   },
   vite: {
-    // plugins: [nodePolyfills()],
     optimizeDeps: {
       esbuildOptions: {
         define: {
@@ -37,8 +36,8 @@ export default defineNuxtConfig({
         },
         plugins: [
           NodeGlobalsPolyfillPlugin({
-            buffer: true
-          }),
+            buffer: true,
+          }) as any,
         ]
       }
     }

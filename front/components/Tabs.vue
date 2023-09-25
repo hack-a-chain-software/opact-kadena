@@ -7,8 +7,7 @@ import {
   TabPanel
 } from '@headlessui/vue'
 import TabItem from './TabItem.vue'
-
-const chains = getChains()
+import { chains } from '~/chains'
 </script>
 
 <template>
