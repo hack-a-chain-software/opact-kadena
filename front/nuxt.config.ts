@@ -1,3 +1,4 @@
+import inject from '@rollup/plugin-inject'
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
 let ssr = false
@@ -28,18 +29,28 @@ export default defineNuxtConfig({
   image: {
     provider: 'ipx'
   },
+  build: {
+    extend(config, ctx) {
+      if (ctx.isClient) {
+        // config.devtool = hasSourceMaps
+      }
+      config.module.rules.push({
+        test: /\.bin$/,
+        use: 'arraybuffer-loader'
+      })
+    },
+  },
   vite: {
-    // plugins: [nodePolyfills()],
     optimizeDeps: {
       esbuildOptions: {
-        define: {
-          global: 'globalThis'
-        },
         plugins: [
           NodeGlobalsPolyfillPlugin({
             buffer: true
           }),
-        ]
+        ],
+        define: {
+          global: 'globalThis'
+        }
       }
     }
   },
