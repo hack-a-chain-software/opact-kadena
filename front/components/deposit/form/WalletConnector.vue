@@ -6,6 +6,7 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
+import { reactive } from 'vue'
 import Chains from './Chains.vue'
 
 withDefaults(
@@ -17,25 +18,20 @@ withDefaults(
   }
 )
 
-const isOpen = ref(false)
+const data = reactive({
+  show: false
+})
 
-const emit = defineEmits(['close', 'connected'])
+const emits = defineEmits(['close', 'connected'])
 
 const close = () => {
-  setTimeout(() => {
-    isOpen.value = false
-  }, 100)
-  emit('close')
-}
-
-const showProviders = (flag = true) => {
-  isOpen.value = flag
+  emits('close')
 }
 </script>
 
 <template>
   <TransitionRoot as="template" :show="show">
-    <Dialog as="div" class="relative z-10" @close="close()">
+    <Dialog as="div" class="relative z-10" @close="data.show = false">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -138,7 +134,7 @@ const showProviders = (flag = true) => {
                 </button>
               </div>
 
-              <template v-if="!isOpen">
+              <template v-if="!data.show">
                 <div class="relative">
                   <span
                     class="
@@ -169,7 +165,7 @@ const showProviders = (flag = true) => {
                       disabled:cursor-not-allowed
                       bg-blue-gradient
                     "
-                    @click.prevent="showProviders()"
+                    @click.prevent="data.show = true"
                   >
                     <span class="text-font-1">
                       Connect Wallet
@@ -180,7 +176,7 @@ const showProviders = (flag = true) => {
 
               <Chains
                 v-else
-                @connected="emit('connected')"
+                @connected="emits('connected')"
               />
             </DialogPanel>
           </TransitionChild>

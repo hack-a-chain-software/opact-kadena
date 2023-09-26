@@ -1,37 +1,17 @@
 <script setup lang="ts">
-import { reactive, ref, onMounted } from 'vue'
 import Pact from 'pact-lang-api'
-import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogPanel,
-  DialogTitle
-} from '@headlessui/vue'
 import { storeToRefs } from 'pinia'
+import { reactive, onMounted } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
-import WalletConnector from './WalletConnector.vue'
+import { computeDepositParams } from '~/hooks/deposit'
 
 const wallet = useWalletStore()
 
 const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
-const { node, depositMessage, depositing } = storeToRefs(wallet)
-
-const isOpen = ref(false)
-const isConnectWalletOpen = ref(false)
+const { node, state } = storeToRefs(wallet)
 
 const { provider, logout } = useExtensions()
-
-function setIsOpen (value) {
-  isOpen.value = value
-}
-
-function setConnectWalletOpen (value) {
-  isConnectWalletOpen.value = value
-}
-
-const { step } = useForm()
 
 const router = useRouter()
 
@@ -41,32 +21,18 @@ const data = reactive({
   error: '',
   amount: 0,
   balance: 0,
+  provider: null,
+  loading: false,
+  depositing: false,
+  showConnect: false,
+  showCollapsible: false,
+  depositMessage: 'Generating ZK Proof...',
   token: {
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA'
   },
-  loading: false,
-  showCollapsible: false
 })
-
-const tokens = [
-  {
-    icon: '/kda.png',
-    name: 'Kadena',
-    symbol: 'KDA'
-  },
-  {
-    icon: '/kdx.png',
-    name: 'Kaddex',
-    symbol: 'KDX'
-  },
-  {
-    icon: '/kishk.png',
-    name: 'KishuKen',
-    symbol: 'KISHK'
-  }
-]
 
 const coinDetails = async ({ pubkey }: any) => {
   try {
@@ -74,10 +40,11 @@ const coinDetails = async ({ pubkey }: any) => {
 
     const network = RPC
 
-    const t_creationTime = Math.round(new Date().getTime() / 1000) - 10
+    const createdAt = Math.round(new Date().getTime() / 1000) - 10
+
     const data = await Pact.fetch.local({
       pactCode: `(coin.details ${JSON.stringify(accountName)})`,
-      meta: Pact.lang.mkMeta('', '0', 0, 0, t_creationTime, 0)
+      meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
     }, network)
 
     return data
@@ -106,45 +73,43 @@ onMounted(async () => {
 })
 
 const deposit = async () => {
-  try {
-    data.error = ''
+  data.error = ''
+  data.depositing = true
 
-    const transactionArgs = await wallet.deposit(
-      Number(data.amount)
+  try {
+    const transactionArgs = await computeDepositParams(
+      node.value,
+      Number(data.amount),
+      state.value.commitments
     )
 
-    depositMessage.value = 'Awaiting signature...'
+    data.depositMessage = 'Await sign...'
 
-    try {
-      const tx = await provider.value.transaction({ ...transactionArgs, node: node.value })
+    const tx = await provider.value.transaction({ ...transactionArgs, node: node.value })
 
-      depositMessage.value = 'Awaiting TX results...'
+    data.depositMessage = 'Awaiting TX results...'
 
-      const {
-        result
-      } = await Pact.fetch.listen(
-        { listen: tx.requestKeys[0] },
-        RPC
-      )
+    const {
+      result
+    } = await Pact.fetch.listen(
+      { listen: tx.requestKeys[0] },
+      RPC
+    )
 
-      if (result.status === 'failure') {
-        data.error = result.error.message
+    if (result.status === 'failure') {
+      data.error = result.error.message
 
-        return
-      }
-
-      wallet.loadState()
-      router.push('/app')
-      logout()
-    } catch (e) {
-      console.warn(e)
-      logout()
-    } finally {
-      depositing.value = false
-      depositMessage.value = "Computing UTXO's Values..."
+      return
     }
+
+    wallet.loadState()
+    router.push('/app')
+    logout()
   } catch (e) {
+    logout()
     console.warn(e)
+    data.depositing = false
+    data.depositMessage = "Computing UTXO's Values..."
   }
 }
 </script>
@@ -226,8 +191,8 @@ const deposit = async () => {
       </div>
 
       <button
-        class="mt-1"
         v-if="!data.loading"
+        class="mt-1"
         @click.prevent="data.amount = data.balance"
       >
         <span
@@ -240,7 +205,6 @@ const deposit = async () => {
       <div class="pt-6 space-x-2">
         <button
           v-for="amount in amounts"
-          @click.prevent="data.amount = amount"
           :key="amount"
           class="
             group
@@ -250,6 +214,7 @@ const deposit = async () => {
             p-3
             rounded-full
           "
+          @click.prevent="data.amount = amount"
         >
           <span
             class="text-xxs text-font-2 group-active:text-blue-400 font-medium"
@@ -302,7 +267,7 @@ const deposit = async () => {
             disabled:cursor-not-allowed
           "
           disabled
-          @click.prevent="setIsOpen(true)"
+          @click.prevent="() => {}"
         >
           <div v-if="!data.token">
             <span class="text-font-2 text-xxs font-medium">
@@ -428,8 +393,8 @@ const deposit = async () => {
       class="mt-2"
     >
       <span
-        v-text="data.error + '*'"
         class="text-xs text-red-500"
+        v-text="data.error + '*'"
       />
     </div>
 
@@ -454,7 +419,7 @@ const deposit = async () => {
             ? 'bg-gray-700'
             : 'bg-blue-gradient'
         "
-        @click.prevent="setConnectWalletOpen(true)"
+        @click.prevent="data.showConnect = true"
       >
         <span class="text-font-1"> Connect Wallet </span>
       </button>
@@ -481,221 +446,16 @@ const deposit = async () => {
         "
         @click.prevent="deposit()"
       >
-        <span class="text-font-1"> {{ depositing ? depositMessage : 'Deposit'}} </span>
+        <span class="text-font-1"> {{ data.depositing ? data.depositMessage : 'Deposit' }} </span>
 
-        <Icon v-if="depositing" name="spinner" class="animate-spin text-white ml-[12px]" />
+        <Icon v-if="data.depositing" name="spinner" class="animate-spin text-white ml-[12px]" />
       </button>
     </div>
 
-    <WalletConnector
-      :show="isConnectWalletOpen"
-      @close="setConnectWalletOpen(false)"
-      @connected="setConnectWalletOpen(false)"
+    <DepositFormWalletConnector
+      :show="data.showConnect"
+      @close="data.showConnect = false"
+      @connected="data.showConnect = false"
     />
-
-    <TransitionRoot as="template" :show="isOpen">
-      <Dialog
-        as="div"
-        class="relative z-10"
-        @close="setIsOpen(false)"
-      >
-        <TransitionChild
-          as="template"
-          enter="duration-300 ease-out"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="duration-200 ease-in"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
-        >
-          <div
-            class="fixed inset-0 bg-[rgba(6,_10,_15,_0.80)]"
-          />
-        </TransitionChild>
-
-        <div class="fixed inset-0 overflow-y-auto">
-          <div
-            class="
-              flex
-              min-h-full
-              items-end
-              justify-center
-              lg:justify-center
-              lg:items-start
-              lg:pt-[312px]
-              p-4
-            "
-          >
-            <TransitionChild
-              as="template"
-              enter="duration-200 ease-out"
-              enter-from="opacity-0 translate-y-[600px]"
-              enter-to="opacity-100 scale-100"
-              leave="duration-200 ease-in"
-              leave-from="opacity-100 scale-100"
-              leave-to="opacity-0 translate-y-[600px]"
-            >
-              <DialogPanel
-                class="
-                  p-4
-                  w-full
-                  rounded-[12px]
-                  lg:max-w-[500px]
-                  space-y-4
-                  bg-gray-800
-                  lg:p-6
-                  lg:border-[2px] lg:border-gray-600
-                "
-              >
-                <div
-                  class="
-                    lg:hidden
-                    flex
-                    items-center
-                    justify-center
-                    relative
-                  "
-                >
-                  <button
-                    class="absolute left-0"
-                    @click.prevent="setIsOpen(false)"
-                  >
-                    <Icon
-                      name="chevron"
-                      class="text-font-1 rotate-90"
-                    />
-                  </button>
-
-                  <DialogTitle
-                    as="h3"
-                    class="text-font-1 text-xs"
-                  >
-                    Choose Token
-                  </DialogTitle>
-                </div>
-
-                <div
-                  class="
-                    hidden lg:flex relative !mt-0
-                    justify-between
-                    items-center
-                    mx-[-24px]
-                    px-[24px]
-                    pb-4
-                    border-b-[2px] border-gray-600
-                  "
-                >
-                  <DialogTitle
-                    as="h3"
-                    class="text-font-1 text-sm"
-                  >
-                    Select token
-                  </DialogTitle>
-
-                  <button
-                    @click.prevent="setIsOpen(false)"
-                    class="w-8 h-8"
-                  >
-                    <Icon
-                      name="close"
-                      class="rotate-90 w-4 h-4 text-blue-400"
-                    />
-                  </button>
-                </div>
-
-                <div class="relative lg:!mt-6">
-                  <input
-                    placeholder="Search"
-                    class="
-                      p-4
-                      pl-11
-                      w-full
-                      text-xs
-                      rounded-[8px]
-                      text-font-1
-                      bg-transparent
-                      outline-none
-                      placeholder:text-font-2
-                      border-2 border-gray-700
-                    "
-                  >
-
-                  <div class="absolute left-4 top-4">
-                    <Icon
-                      name="search"
-                      class="w-[20px] h-[20px]"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div>
-                    <span
-                      class="
-                        text-xxs
-                        font-medium
-                        text-font-2
-                      "
-                    >
-                      Your tokens
-                    </span>
-                  </div>
-
-                  <div
-                    class="
-                      space-y-3
-                      divide divide-y-[1px] divide-gray-700
-                    "
-                  >
-                    <button
-                      v-for="token in tokens"
-                      :key="token.name"
-                      class="
-                        w-full
-                        flex
-                        items-center
-                        space-x-3
-                        pt-3
-                      "
-                      @click.prevent="
-                        () => {
-                          setIsOpen(false);
-                          data.token = { ...token };
-                        }
-                      "
-                    >
-                      <div>
-                        <img
-                          :src="token.icon"
-                          class="w-9 h-9"
-                        >
-                      </div>
-
-                      <div
-                        class="
-                          flex flex-col
-                          space-y-1
-                          text-left
-                        "
-                      >
-                        <span
-                          class="text-xs text-font-1"
-                          v-text="token.symbol"
-                        />
-
-                        <span
-                          class="text-xs text-font-2"
-                          v-text="token.name"
-                        />
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              </DialogPanel>
-            </TransitionChild>
-          </div>
-        </div>
-      </Dialog>
-    </TransitionRoot>
   </div>
 </template>

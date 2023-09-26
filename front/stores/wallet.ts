@@ -11,7 +11,6 @@ import {
   computeTreeValues,
   computeLocalTestnet,
   getHDWalletFromMnemonic,
-  getSoluctionDepositBatch,
   decrypt, getUtxoFromDecrypted,
   computeTransactionParams
 } from 'opact-sdk'
@@ -25,14 +24,12 @@ export const useWalletStore = defineStore({
 
     return {
       cache,
-      userData: null,
 
       balance: 0,
 
       node: null,
       state: null,
-      depositing: false,
-      depositMessage: 'Generating ZK Proof...',
+      userData: null,
 
       isLoading: true
     }
@@ -159,77 +156,6 @@ export const useWalletStore = defineStore({
         batch,
         token,
         roots,
-        wallet: this.node,
-        message: poseidon([base64urlToBigInt(args.extDataHash)])
-      })
-
-      return {
-        args,
-        proof,
-        extData,
-        tokenSpec
-      }
-    },
-
-    // TODO: move this to sdk
-    async deposit (
-      amount: number,
-      receiver?: string,
-      selectedToken = {
-        id: '',
-        refName: {
-          name: 'coin',
-          namespace: ''
-        },
-        refSpec: {
-          name: 'fungible-v2',
-          namespace: ''
-        }
-      }
-    ) {
-      this.depositing = true
-
-      const tokenHash = Pact.crypto.hash(JSON.stringify(selectedToken))
-
-      const token = poseidon([base64urlToBigInt(tokenHash)])
-
-      const batch = await getSoluctionDepositBatch({
-        token,
-        amount,
-        wallet: this.node
-      })
-
-      console.log(typeof amount !== 'bigint')
-
-      const {
-        roots,
-        newIns
-      } = await computeTreeValues(batch, this.state.commitments)
-
-      batch.utxosIn = [...newIns]
-
-      const {
-        args,
-        extData,
-        tokenSpec
-      } = await computeTransactionParams({
-        batch,
-        amount,
-        receiver,
-        fee: 1.0,
-        relayer: 1,
-        selectedToken,
-        wallet: this.node,
-        root: roots.tree.toString(),
-        sender: this.node.pubkey.toString()
-      })
-
-      this.depositMessage = 'Generating ZK Proof...'
-
-      const proof = await computeProof({
-        batch,
-        roots,
-        token,
         wallet: this.node,
         message: poseidon([base64urlToBigInt(args.extDataHash)])
       })

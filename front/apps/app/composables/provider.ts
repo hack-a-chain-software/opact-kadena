@@ -38,9 +38,9 @@ export const useExtensions = () => {
 
     provider.value = null
 
-    const { clear } = useAuthStorage()
+    // const { clear } = useAuthStorage()
 
-    clear(['providers'])
+    // clear(['providers'])
   }
 
   const isConnected = computed(() => !!provider.value)

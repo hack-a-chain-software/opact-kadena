@@ -5,7 +5,7 @@ import message from './Message.vue'
 import awaiting from './Await.vue'
 import success from './Success.vue'
 
-export const depositForm = {
+export const form = {
   chain,
   awaiting,
   token,
@@ -14,4 +14,4 @@ export const depositForm = {
   success
 }
 
-export default depositForm
+export type FormType = 'chain' | 'awaiting' | 'token' | 'amount' | 'message' | 'success'

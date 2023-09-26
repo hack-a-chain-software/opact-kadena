@@ -75,7 +75,7 @@ function setIsOpen (value) {
 }
 
 const deposit = async () => {
-  console.log('foooooooooo')
+  // console.log('foooooooooo')
 }
 </script>
 

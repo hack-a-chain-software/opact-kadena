@@ -34,49 +34,6 @@ export const useProvider = () => {
     loginCallback()
   }
 
-  const signMessage = async ({ message }: any) => {
-    const networkId: any = 'testnet04'
-
-    const req = {
-      method: 'kda_requestSign',
-      networkId,
-      data: {
-        networkId,
-        signingCmd: {
-          ttl: 600,
-          pactCode: '(foo)',
-          sender: 'foooo',
-          networkId,
-          chainId: '1',
-          envData: {},
-          gasLimit: 15000,
-          gasPrice: 1e-5,
-          caps: []
-        }
-      }
-    }
-
-    return await kadena.request(req)
-  }
-
-  const coinDetails = async ({ pubkey }: any) => {
-    try {
-      const accountName = pubkey.toString()
-
-      const network = RPC
-
-      const t_creationTime = Math.round(new Date().getTime() / 1000) - 10
-      const data = await Pact.fetch.local({
-        pactCode: `(coin.details ${JSON.stringify(accountName)})`,
-        meta: Pact.lang.mkMeta('', '0', 0, 0, t_creationTime, 0)
-      }, network)
-
-      return data
-    } catch (e) {
-      console.warn(e)
-    }
-  }
-
   const faceut = async (wallet: any) => {
     try {
       const accountName = wallet.pubkey.toString()
@@ -203,67 +160,59 @@ export const useProvider = () => {
     tokenSpec,
     node
   }: any) => {
-    try {
-      const accountName = node.pubkey.toString()
-      const publickey = account.value.account.publicKey
+    const accountName = node.pubkey.toString()
+    const publickey = account.value.account.publicKey
 
-      const pactCode = computePactCode({ args, proof, extData, tokenSpec })
+    const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-      const cap1 = Pact.lang.mkCap(
-        'Coin Transfer',
-        'Capability to transfer designated amount of coin from sender to receiver',
-        'coin.TRANSFER',
-        [accountName, 'opact-contract', Number(extData.extAmount.toFixed(1))]
-      )
+    const cap1 = Pact.lang.mkCap(
+      'Coin Transfer',
+      'Capability to transfer designated amount of coin from sender to receiver',
+      'coin.TRANSFER',
+      [accountName, 'opact-contract', Number(extData.extAmount.toFixed(1))]
+    )
 
-      const cap2 = Pact.lang.mkCap(
-        'Coin Transfer for Gas',
-        'Capability to transfer gas fee from sender to gas payer',
-        'coin.TRANSFER',
-        [accountName, 'opact-gas-payer', Number(extData.fee.toFixed(1))]
-      )
+    const cap2 = Pact.lang.mkCap(
+      'Coin Transfer for Gas',
+      'Capability to transfer gas fee from sender to gas payer',
+      'coin.TRANSFER',
+      [accountName, 'opact-gas-payer', Number(extData.fee.toFixed(1))]
+    )
 
-      const cmd = await kadena.request({
-        method: 'kda_requestSign',
-        data: {
-          networkId: metadata.networkId,
-          signingCmd: {
-            ttl: 0,
-            chainId: 0,
-            gasLimit: 0,
-            gasPrice: 0,
-            sender: accountName,
-            pactCode,
-            envData: {
-              language: 'Pact',
-              name: 'transact-deposit',
-              'token-instance': {
-                refSpec: [{
-                  name: tokenSpec.refSpec.name
-                }],
-                refName: {
-                  name: tokenSpec.refName.name
-                }
+    const cmd = await kadena.request({
+      method: 'kda_requestSign',
+      data: {
+        networkId: metadata.networkId,
+        signingCmd: {
+          ttl: 0,
+          chainId: 0,
+          gasLimit: 0,
+          gasPrice: 0,
+          sender: accountName,
+          pactCode,
+          envData: {
+            language: 'Pact',
+            name: 'transact-deposit',
+            'token-instance': {
+              refSpec: [{
+                name: tokenSpec.refSpec.name
+              }],
+              refName: {
+                name: tokenSpec.refName.name
               }
-            },
-            caps: [
-              cap1,
-              cap2
-            ],
-            networkId: metadata.networkId,
-            signingPubKey: publickey
-          }
+            }
+          },
+          caps: [
+            cap1,
+            cap2
+          ],
+          networkId: metadata.networkId,
+          signingPubKey: publickey
         }
-      })
-
-      try {
-        return await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
-      } catch (error) {
-        console.log('error', error)
       }
-    } catch (error) {
-      console.log(error)
-    }
+    })
+
+    return await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
   }
 
   const disconnect = async function () {
@@ -284,9 +233,7 @@ export const useProvider = () => {
     faceut,
     connect,
     disconnect,
-    signMessage,
-    transaction,
-    coinDetails
+    transaction
   }
 }
 

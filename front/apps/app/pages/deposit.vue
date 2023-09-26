@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount } from 'vue'
-import { storeToRefs } from 'pinia'
-import form from '../components/deposit/form'
-import { useWalletStore } from '~/stores/wallet'
+import { useDeposit } from '~/hooks/deposit'
 
 definePageMeta({
   layout: 'app',
@@ -13,21 +10,10 @@ useHead({
   title: 'Deposit'
 })
 
-const { step } = useForm()
-
-const wallet = useWalletStore()
-
-const { connected } = storeToRefs(wallet)
-
-onBeforeMount(() => {
-  if (!connected.value) {
-    wallet.reconnect()
-  }
-})
-
-onBeforeUnmount(() => {
-  step.value = 'amount'
-})
+const {
+  data,
+  form
+} = useDeposit()
 </script>
 
 <template>
@@ -43,7 +29,9 @@ onBeforeUnmount(() => {
       "
     >
       <Transition name="fade" mode="out-in">
-        <component :is="form[step]" />
+        <component
+          :is="form[data.stepForm]"
+        />
       </Transition>
     </div>
   </div>
