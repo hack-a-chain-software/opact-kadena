@@ -31,7 +31,7 @@ const data = reactive({
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA'
-  },
+  }
 })
 
 const coinDetails = async ({ pubkey }: any) => {
@@ -452,7 +452,7 @@ const deposit = async () => {
       </button>
     </div>
 
-    <DepositFormWalletConnector
+    <DepositWalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
       @connected="data.showConnect = false"

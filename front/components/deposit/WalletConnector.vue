@@ -7,7 +7,6 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 import { reactive } from 'vue'
-import Chains from './Chains.vue'
 
 withDefaults(
   defineProps<{
@@ -174,7 +173,7 @@ const close = () => {
                 </div>
               </template>
 
-              <Chains
+              <DepositChains
                 v-else
                 @connected="emits('connected')"
               />

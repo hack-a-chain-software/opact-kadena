@@ -88,8 +88,7 @@ export const computeDepositParams = async (
 }
 
 export const useDeposit = () => {
-  const data = reactive<UseDepositInterface>({
-    mnemonic: '',
+  const data = reactive<{ stepForm: string }>({
     stepForm: 'amount'
   })
 
