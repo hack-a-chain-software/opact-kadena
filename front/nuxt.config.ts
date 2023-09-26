@@ -8,9 +8,6 @@ if (process.env.NODE_ENV !== 'development') {
 
 export default defineNuxtConfig({
   ssr,
-  app: {
-    pageTransition: { name: 'page', mode: 'out-in' }
-  },
   extends: ['./apps/site', './apps/app'],
   modules: [
     'nuxt-icon',
@@ -68,6 +65,7 @@ export default defineNuxtConfig({
     }
   },
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       link: [
         {

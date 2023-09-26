@@ -145,8 +145,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(vue@3.3.4)
       opact-sdk:
-        specifier: ^0.0.59
-        version: 0.0.59
+        specifier: ^1.0.2
+        version: 1.0.2
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -3619,11 +3619,11 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/kit-edge@3.7.4-28256404.e9001902:
-    resolution: {integrity: sha512-Ih+QskYPdL0P0s4WfHjYNWu7rfGFCeedn61C0ntNNSDPuuM9pwmZNCEm/bATCJO6dlJ5YP1OdEMssUccrJk09w==}
+  /@nuxt/kit-edge@3.7.4-28261800.3510cedc:
+    resolution: {integrity: sha512-bw5N10D6EvPveD3LkGsb9wYp/gDMteVE/oQi+8l60LzoQfcpoQhZ0Hh1KQEgz+YPlff/FOm8H5wAIZQ2BLwypg==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
-      '@nuxt/schema': /@nuxt/schema-edge@3.7.4-28256404.e9001902
+      '@nuxt/schema': /@nuxt/schema-edge@3.7.4-28261800.3510cedc
       c12: 1.4.2
       consola: 3.2.3
       defu: 6.1.2
@@ -3741,8 +3741,8 @@ packages:
       - webpack
     dev: true
 
-  /@nuxt/schema-edge@3.7.4-28256404.e9001902:
-    resolution: {integrity: sha512-tAVCnGDKU/HibB92DwniH0IqKF5GYMiJljZQdFLD2+lrem2SZNQbap+x3te6xIC8bFloh7CS8rK+EAOre1fXqA==}
+  /@nuxt/schema-edge@3.7.4-28261800.3510cedc:
+    resolution: {integrity: sha512-BGbOUfUynGWkywmMzatbSYJiTdccWDp3fHo35aJHk+PD4wgaH0cGqoRD+vv+9iFAf79e/CFN6W55FkW0knnx5w==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
       '@nuxt/ui-templates': 1.3.1
@@ -15394,7 +15394,7 @@ packages:
   /nuxt-use-motion@2.0.0-beta.11(vue@3.3.4):
     resolution: {integrity: sha512-O5UrB7q+A2dWhxxcXdCWH1QJgROIhUcQzwVxIZT2vleTpi6RMi39oPt4ZNWmtU/1Z39pTbAOnwUGZcTGdqRL9g==}
     dependencies:
-      '@nuxt/kit': /@nuxt/kit-edge@3.7.4-28256404.e9001902
+      '@nuxt/kit': /@nuxt/kit-edge@3.7.4-28261800.3510cedc
       '@vueuse/motion': 2.0.0-beta.4(vue@3.3.4)
       defu: 5.0.1
       vue-demi: 0.12.5(vue@3.3.4)
@@ -15643,13 +15643,12 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@0.0.59:
-    resolution: {integrity: sha512-O/fB8PtLTWlhiEZfchM6vlDImtAsdMlHl6iPxHsu8rDMj2MHeObg3PmjKZLa+dbKtDwYH0qLX7aLHG5wSYDhWg==}
+  /opact-sdk@1.0.2:
+    resolution: {integrity: sha512-r3usjPGngocJ/0WdeAuO7eCw1UY2emDAvixH1/XiBC82oAnwyg1A2IJ5ivrQyYRaIgODlNmmvGxUO8bujByDGQ==}
     dependencies:
       '@noble/hashes': 1.3.2
       '@peculiar/webcrypto': 1.4.3
       big.js: 6.2.1
-      bigint-buffer: 1.1.5
       bigint-conversion: 2.4.2
       blake-hash: 2.0.0
       circomlibjs: github.com/hsg88/circomlibjs/fee5b3c479caa3db1e34cbfdedad763d74277844

@@ -57,7 +57,7 @@ export const useWalletStore = defineStore({
         }
       })
 
-      const state = await computeLocalTestnet(data, this.node, decrypt, getUtxoFromDecrypted)
+      const state = await computeLocalTestnet(data, this.node)
 
       let userData = null
 

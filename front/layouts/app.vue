@@ -139,7 +139,6 @@ const redirect = (path: string, skip: boolean) => {
           lg:flex
           justify-between
         "
-        :class="route.name !== 'app' && 'bg-[rgba(6,_10,_15,_0.80)]'"
       >
         <div>
           <span
