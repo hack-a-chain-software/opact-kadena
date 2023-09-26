@@ -8,6 +8,9 @@ if (process.env.NODE_ENV !== 'development') {
 
 export default defineNuxtConfig({
   ssr,
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
   extends: ['./apps/site', './apps/app'],
   modules: [
     'nuxt-icon',
@@ -29,7 +32,6 @@ export default defineNuxtConfig({
     provider: 'ipx'
   },
   vite: {
-    log: 'info',
     optimizeDeps: {
       esbuildOptions: {
         define: {
@@ -37,8 +39,8 @@ export default defineNuxtConfig({
         },
         plugins: [
           NodeGlobalsPolyfillPlugin({
-            buffer: true,
-          }) as any,
+            buffer: true
+          }) as any
         ]
       }
     }
