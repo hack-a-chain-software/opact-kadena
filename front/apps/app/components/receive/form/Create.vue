@@ -120,7 +120,7 @@ const tokens = [
               text-font-2
               outline-none
             "
-          />
+          >
 
           <Icon
             name="pen"
@@ -132,7 +132,6 @@ const tokens = [
       <div class="pt-6 space-x-2">
         <button
           v-for="amount in amounts"
-          @click.prevent="data.amount = amount"
           :key="amount"
           class="
             group
@@ -142,6 +141,7 @@ const tokens = [
             p-3
             rounded-full
           "
+          @click.prevent="data.amount = amount"
         >
           <span
             class="text-xxs group-active:text-blue-400 text-font-2 font-medium"
@@ -178,7 +178,7 @@ const tokens = [
           </div>
 
           <div v-else class="space-x-2 flex items-center">
-            <img :src="data.token.icon" class="w-6 h-6" />
+            <img :src="data.token.icon" class="w-6 h-6">
 
             <span v-text="data.token.name" />
           </div>
@@ -325,8 +325,8 @@ const tokens = [
                   </DialogTitle>
 
                   <button
-                    @click.prevent="setIsOpen(false)"
                     class="w-8 h-8"
+                    @click.prevent="setIsOpen(false)"
                   >
                     <Icon
                       name="close"
