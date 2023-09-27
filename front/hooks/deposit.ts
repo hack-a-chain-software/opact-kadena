@@ -25,6 +25,7 @@ export const computeDepositParams = async (
   wallet: any,
   amount: number,
   commitments?: any,
+  sender?: any,
   receiver?: string,
   selectedToken = {
     id: '',
@@ -45,7 +46,7 @@ export const computeDepositParams = async (
   const batch = await getSoluctionDepositBatch({
     token,
     amount,
-    wallet
+    pubkey: wallet.pubkey
   })
 
   const {
@@ -62,13 +63,13 @@ export const computeDepositParams = async (
   } = await computeTransactionParams({
     batch,
     amount,
-    wallet,
+    sender,
     receiver,
     fee: 1.0,
     relayer: 1,
     selectedToken,
+    pubkey: wallet.pubkey,
     root: roots.tree.toString(),
-    sender: wallet.pubkey.toString()
   })
 
   const proof = await computeProof({
@@ -88,7 +89,7 @@ export const computeDepositParams = async (
 }
 
 export const useDeposit = () => {
-  const data = reactive<{ stepForm: string }>({
+  const data = reactive<{ stepForm: FormType }>({
     stepForm: 'amount'
   })
 

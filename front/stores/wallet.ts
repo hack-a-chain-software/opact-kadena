@@ -6,14 +6,63 @@ import {
   poseidon,
   computeProof,
   getSolutionBatch,
-  groupUtxoByToken,
+  // groupUtxoByToken,
+  MerkleTree, MerkleTreeService,
   base64urlToBigInt,
   computeTreeValues,
   computeLocalTestnet,
   getHDWalletFromMnemonic,
-  decrypt, getUtxoFromDecrypted,
-  computeTransactionParams
+  computeTransactionParams,
+  getNullifier
 } from 'opact-sdk'
+
+const PROOF_LENGTH = 32
+
+const EXPECTED_VALUE = 11954255677048767585730959529592939615262310191150853775895456173962480955685n
+
+export const groupUtxoByToken = (encrypted: any, nullifiers: any, secret: any) => {
+  return encrypted.reduce((acc: any, curr: any) => {
+    const utxo = {
+      hash: BigInt(curr.hash),
+      token: BigInt(curr.token),
+      amount: BigInt(curr.amount),
+      pubkey: BigInt(curr.pubkey),
+      tokenId: Number(curr.tokenId),
+      blinding: BigInt(curr.blinding),
+      publicAmount: Number(curr.publicAmount)
+    }
+
+    const nullifier = getNullifier({
+      utxo,
+      secret
+    })
+
+    if (nullifiers.includes(nullifier.toString())) {
+      return acc
+    }
+
+    if (!acc[curr.tokenId]) {
+      acc[curr.tokenId] = {
+        balance: 0n,
+        publicAmount: 0,
+        utxos: [],
+        token: {
+          id: 1,
+          decimals: 12,
+          symbol: 'KDA',
+          name: 'Kadena',
+          icon: '/kda.png'
+        }
+      }
+    }
+
+    acc[utxo.tokenId].balance += utxo.amount
+    acc[utxo.tokenId].publicAmount += utxo.publicAmount
+    acc[utxo.tokenId].utxos = [...acc[utxo.tokenId].utxos, utxo]
+
+    return acc
+  }, {})
+}
 
 const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
 
@@ -57,12 +106,16 @@ export const useWalletStore = defineStore({
         }
       })
 
-      const state = await computeLocalTestnet(data, this.node)
+      const state = await computeLocalTestnet(data, this.node) as any
 
       let userData = null
 
       if (this.node) {
-        userData = groupUtxoByToken(state.decryptedData, state.nullifiers)
+        userData = groupUtxoByToken(
+          state.decryptedData,
+          state.nullifiers,
+          this.node.pvtkey
+        )
       }
 
       this.state = state
@@ -99,7 +152,6 @@ export const useWalletStore = defineStore({
       })
     },
 
-    // TODO: move this to sdk
     async withdraw (
       amount: number,
       receiver: string,
@@ -121,7 +173,7 @@ export const useWalletStore = defineStore({
 
       const batch = await getSolutionBatch({
         amount,
-        wallet: this.node,
+        pubkey: this.node.pubkey,
         treeBalance: {
           ...this.userData[1],
           token
@@ -136,6 +188,8 @@ export const useWalletStore = defineStore({
 
       batch.utxosIn = [...newIns]
 
+      console.log('this.node', this.node)
+
       const {
         args,
         extData,
@@ -146,8 +200,8 @@ export const useWalletStore = defineStore({
         fee: 1.0,
         relayer: 1,
         selectedToken,
-        wallet: this.node,
         amount: amount * (-1),
+        pubkey: this.node.pubkey,
         root: roots.tree.toString(),
         sender: this.node.pubkey.toString()
       })
@@ -159,6 +213,8 @@ export const useWalletStore = defineStore({
         wallet: this.node,
         message: poseidon([base64urlToBigInt(args.extDataHash)])
       })
+
+      console.log(args, extData, tokenSpec)
 
       return {
         args,

@@ -23,6 +23,25 @@ export const useProvider = () => {
     //
   }
 
+  const coinDetails = async () => {
+    try {
+      const accountName = account.value.account.publicKey
+
+      const network = RPC
+
+      const createdAt = Math.round(new Date().getTime() / 1000) - 10
+
+      const data = await Pact.fetch.local({
+        pactCode: `(coin.details ${JSON.stringify(accountName)})`,
+        meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
+      }, network)
+
+      return data
+    } catch (e) {
+      console.warn(e)
+    }
+  }
+
   const connect = async (loginCallback = () => {}) => {
     const accountResult = await kadena.request({
       method: 'kda_connect',
@@ -34,12 +53,10 @@ export const useProvider = () => {
     loginCallback()
   }
 
-  const faceut = async (wallet: any) => {
+  const faceut = async () => {
     try {
-      const accountName = wallet.pubkey.toString()
+      const accountName = account.value.account.publicKey
       const publickey = account.value.account.publicKey
-
-      console.log('')
 
       const pactCode = `(coin.create-account ${JSON.stringify(accountName)} (read-keyset "${accountName}")) (coin.coinbase ${JSON.stringify(accountName)} (read-keyset "${accountName}") 100.0)`
 
@@ -153,14 +170,15 @@ export const useProvider = () => {
     })`
   }
 
-  const transaction = async ({
-    args,
-    proof,
-    extData,
-    tokenSpec,
-    node
-  }: any) => {
-    const accountName = node.pubkey.toString()
+  const transaction = async (
+    {
+      args,
+      proof,
+      extData,
+      tokenSpec
+    }: any,
+  ) => {
+    const accountName = account.value.account.publicKey
     const publickey = account.value.account.publicKey
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
@@ -233,7 +251,8 @@ export const useProvider = () => {
     faceut,
     connect,
     disconnect,
-    transaction
+    transaction,
+    coinDetails,
   }
 }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { reactive, onMounted } from 'vue'
 import Pact from 'pact-lang-api'
 import { storeToRefs } from 'pinia'
-import { reactive, onMounted } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
 import { computeDepositParams } from '~/hooks/deposit'
 
@@ -34,26 +34,15 @@ const data = reactive({
   }
 })
 
-const coinDetails = async ({ pubkey }: any) => {
-  try {
-    const accountName = pubkey.toString()
+const checkFunds = async () => {
+  data.showConnect = false
 
-    const network = RPC
+  await nextTick()
 
-    const createdAt = Math.round(new Date().getTime() / 1000) - 10
-
-    const data = await Pact.fetch.local({
-      pactCode: `(coin.details ${JSON.stringify(accountName)})`,
-      meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
-    }, network)
-
-    return data
-  } catch (e) {
-    console.warn(e)
+  if (!provider.value) {
+    return
   }
-}
 
-onMounted(async () => {
   data.loading = true
 
   const {
@@ -61,7 +50,7 @@ onMounted(async () => {
       status,
       data: coinData
     }
-  } = await coinDetails({ pubkey: node.value.pubkey })
+  } = await provider.value.coinDetails()
 
   data.loading = false
 
@@ -70,6 +59,14 @@ onMounted(async () => {
   }
 
   data.balance = coinData.balance
+}
+
+onMounted(() => {
+  if (!provider.value) {
+    return
+  }
+
+  checkFunds()
 })
 
 const deposit = async () => {
@@ -80,12 +77,13 @@ const deposit = async () => {
     const transactionArgs = await computeDepositParams(
       node.value,
       Number(data.amount),
-      state.value.commitments
+      state.value.commitments,
+      provider.value.account.account.publicKey
     )
 
     data.depositMessage = 'Await sign...'
 
-    const tx = await provider.value.transaction({ ...transactionArgs, node: node.value })
+    const tx = await provider.value.transaction(transactionArgs)
 
     data.depositMessage = 'Awaiting TX results...'
 
@@ -319,7 +317,7 @@ const deposit = async () => {
                 class="text-xxs font-meidum text-font-1"
                 v-text="
                   provider?.account?.address ||
-                    provider.account.account.account
+                    provider.account?.account?.account
                 "
               />
             </div>
@@ -455,7 +453,7 @@ const deposit = async () => {
     <DepositWalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
-      @connected="data.showConnect = false"
+      @connected="checkFunds()"
     />
   </div>
 </template>

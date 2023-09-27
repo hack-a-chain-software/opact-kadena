@@ -1,15 +1,13 @@
 import pay from './Pay.vue'
-import awaiting from './Await.vue'
 import success from './Success.vue'
 import connect from './Connect.vue'
 import provider from './Provider.vue'
 
-const form = {
+export const form = {
   pay,
   connect,
   success,
-  provider,
-  awaiting
+  provider
 }
 
-export default form
+export type FormType = 'pay' | 'connect' | 'success'

@@ -112,12 +112,11 @@ const send = async () => {
       extData,
       tokenSpec
     } = await wallet.withdraw(
-      Number(data.amount)
+      Number(data.amount),
+      data.addressTo
     )
 
     const kp = Pact.crypto.genKeyPair()
-
-    const accountName = node.value.pubkey.toString()
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
@@ -131,7 +130,7 @@ const send = async () => {
       'Coin Transfer',
       'Capability to transfer designated amount of coin from sender to receiver',
       'coin.TRANSFER',
-      ['opact-contract', accountName, Number((extData.extAmount * (-1)).toFixed(1))]
+      ['opact-contract', data.addressTo, Number((extData.extAmount * (-1)).toFixed(1))]
     )
 
     const tx = await Pact.fetch.send({

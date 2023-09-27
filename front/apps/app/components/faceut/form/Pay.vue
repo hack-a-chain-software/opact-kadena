@@ -35,7 +35,7 @@ const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute
 
 const pay = async () => {
   try {
-    const tx = await provider.value.faceut(node.value)
+    const tx = await provider.value.faceut(node.value.pubkey.toString())
 
     data.loading = true
 
@@ -47,6 +47,8 @@ const pay = async () => {
       { listen: tx.requestKeys[0] },
       RPC
     )
+
+    console.log('TX error', result)
 
     if (result.status === 'failure') {
       data.error = result.error.message
@@ -136,7 +138,8 @@ const pay = async () => {
 
         <div class="mt-2 p-4 bg-gray-700 rounded-[8px] cursor-not-allowed">
           <span class="text-xs break-words">
-            {{ node?.pubkey.toString() }}
+            {{ provider?.account?.address ||
+                provider?.account?.account?.account }}
           </span>
         </div>
       </div>

@@ -1,81 +1,106 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogPanel,
-  DialogTitle
-} from '@headlessui/vue'
+import axios from 'axios'
+import Pact from 'pact-lang-api'
+import { onBeforeMount } from 'vue'
+import { useReceiver } from '~/hooks/receiver'
 
-const route = useRoute()
+const { provider } = useExtensions()
 
-const params = computed<any>(() => {
-  const [
-    tokenId = '',
-    amount = '',
-    pubkey = '',
-  ] = window.atob(route.params.params).split('-') || []
+const {
+  data,
+  pubkey,
+  amount,
+  params,
+  buttonIsDisabled,
+  computeDepositParams
+} = useReceiver()
 
-  return {
-    tokenId,
-    amount,
-    pubkey
-  }
+const emits = defineEmits(['changeStep'])
+
+// TODO: SEND THIS TO NUXTCONFIG
+const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
+
+onBeforeMount(() => {
+  (async () => {
+    const { data: dataApi } = await axios.get(`${RPC}?salt=75`, {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
+
+    const { commitments } = dataApi
+      .sort((a: any, b: any) => a.txid - b.txid)
+      .map(({ events }: any) => events)
+      .reduce((acc: any, curr: any) => acc.concat(curr), [])
+      .reduce((curr: any, event: any) => {
+        if (event.name === 'new-commitment') {
+          const commitment = {
+            value: event.params[0].int,
+            order: event.params[1].int
+          }
+
+          curr.commitments = [...curr.commitments, commitment]
+        }
+
+        return curr
+      }, {
+        commitments: []
+      }) as any
+
+    console.log('commitments', commitments)
+
+    data.commitments = commitments
+  })()
 })
-
-const lockedToken = computed(() => {
-  return tokens.find(({ id }) => id === Number(params.value.tokenId || -1))
-})
-
-const buttonIsDisabled = computed(() => {
-  if (params.value.tokenId && params.value.amount && params.value.pubkey) {
-    return false
-  }
-
-  return !data.token || !data.amount
-})
-
-const tokens = [
-  {
-    id: 1,
-    icon: '/kda.png',
-    name: 'Kadena',
-    symbol: 'KDA'
-  },
-  {
-    id: 2,
-    icon: '/kdx.png',
-    name: 'Kaddex',
-    symbol: 'KDX'
-  },
-  {
-    id: 3,
-    icon: '/kishk.png',
-    name: 'KishuKen',
-    symbol: 'KISHK'
-  }
-]
-
-const data = reactive({
-  amount: '',
-  error: '',
-  balance: 0,
-  loading: false,
-  token: tokens[0],
-  depositing: false,
-  depositMessage: '',
-  showCollapsible: false,
-})
-
-const isOpen = ref(false)
-
-function setIsOpen (value) {
-  isOpen.value = value
-}
 
 const deposit = async () => {
-  // console.log('foooooooooo')
+  data.error = ''
+  data.depositing = true
+
+  const mockWalletNode = {
+    pubkey: 11266420894616539307519683389038109246654130435849311470670815520318096498921n,
+    pvtkey: 1482393132684423265528213543145697981060187089163992385907820405516567711584n
+  }
+
+  try {
+    const transactionArgs = await computeDepositParams(
+      mockWalletNode,
+      BigInt(`0x${pubkey.value}`),
+      Number(amount.value),
+      data.commitments,
+      provider.value.account.account.publicKey
+    )
+
+    console.log(transactionArgs.extData)
+
+    data.depositMessage = 'Await sign...'
+
+    const tx = await provider.value.transaction(transactionArgs)
+
+    data.depositMessage = 'Awaiting TX results...'
+
+    const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+
+    const {
+      result
+    } = await Pact.fetch.listen(
+      { listen: tx.requestKeys[0] },
+      RPC
+    )
+
+    if (result.status === 'failure') {
+      console.warn(result.error.message)
+      data.error = result.error.message
+
+      return
+    }
+
+    emits('changeStep', 'success')
+  } catch (e) {
+    console.warn(e)
+    data.depositing = false
+    data.depositMessage = "Computing UTXO's Values..."
+  }
 }
 </script>
 
@@ -96,7 +121,7 @@ const deposit = async () => {
         <div class="mt-2 p-4 rounded-[8px] flex items-center justify-between bg-gray-700">
           <div class="flex-grow">
             <input
-              v-if="!params.amount"
+              v-if="!params?.amount"
               v-model="data.amount"
               placeholder="0"
               class="
@@ -118,7 +143,7 @@ const deposit = async () => {
                 w-full
                 cursor-not-allowed
               "
-            />
+            >
           </div>
 
           <div>
@@ -135,8 +160,7 @@ const deposit = async () => {
                 cursor-not-allowed
                 disabled:opacity-[0.8]
               "
-              :disabled="lockedToken !== -1"
-              @click.prevent="setIsOpen(true)"
+              :disabled="true"
             >
               <div class="shrink-0">
                 <img
@@ -161,68 +185,17 @@ const deposit = async () => {
         </div>
 
         <input
-          readonly
-          :value="`OZK${params.pubkey}`"
+          :value="pubkey"
+          :readonly="params?.pubkey"
           :class="'cursor-not-allowed'"
           class="mt-2 p-4 bg-gray-700 rounded-[8px] text-xs break-words w-full outline-none"
-        />
+        >
       </div>
     </div>
 
-    <div class="pt-4 lg:pt-8">
-      <Collapsible
-        v-model="data.showCollapsible"
-        title="Transaction Details"
-        class="!bg-gray-700"
-      >
-        <div>
-          <div class="flex items-center justify-between">
-            <div>
-              <span
-                class="text-xxs font-medium text-font-2"
-              >
-                Estimated Fees
-              </span>
-            </div>
-
-            <div>
-              <span
-                class="text-xxs font-medium text-font-1"
-              >
-                0,02 KDA
-              </span>
-            </div>
-          </div>
-
-          <div
-            class="
-              flex
-              justify-between
-              items-center
-              pt-3
-              mt-4
-              border-t border-[#57595C]
-            "
-          >
-            <div>
-              <span
-                class="text-xxs font-medium text-font-2"
-              >
-                Total
-              </span>
-            </div>
-
-            <div>
-              <span
-                class="text-xxs font-medium text-blue-300"
-              >
-                156,02 KDA
-              </span>
-            </div>
-          </div>
-        </div>
-      </Collapsible>
-    </div>
+    <PaymentInfo
+      :amount="amount"
+    />
 
     <div class="pt-6 lg:pt-[40px]">
       <button
@@ -250,7 +223,7 @@ const deposit = async () => {
       </button>
     </div>
 
-    <TransitionRoot as="template" :show="isOpen">
+    <!-- <TransitionRoot as="template" :show="isOpen">
       <Dialog
         as="div"
         class="relative z-10"
@@ -417,6 +390,6 @@ const deposit = async () => {
           </div>
         </div>
       </Dialog>
-    </TransitionRoot>
+    </TransitionRoot> -->
   </div>
 </template>

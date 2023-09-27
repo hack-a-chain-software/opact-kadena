@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { step } = usePaymentForm()
+const emits = defineEmits(['changeStep'])
 </script>
 
 <template>
@@ -19,7 +19,6 @@ const { step } = usePaymentForm()
 
     <div class="pt-6">
       <button
-        @click.prevent="step = 'provider'"
         class="
           w-full
           flex
@@ -33,6 +32,7 @@ const { step } = usePaymentForm()
           disabled:cursor-not-allowed
           bg-blue-gradient
         "
+        @click.prevent="emits('changeStep', 'provider')"
       >
         <span class="text-font-1"> Connect Wallet </span>
       </button>
