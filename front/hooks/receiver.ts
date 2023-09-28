@@ -6,7 +6,7 @@ import {
   base64urlToBigInt,
   formatInteger,
   computeTreeValues,
-  // getSoluctionDepositBatch,
+  getSoluctionDepositBatch,
   getUtxo,
   computeTransactionParams
 } from 'opact-sdk'
@@ -18,31 +18,32 @@ export const RPC =
     ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata'
     : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
 
-const getSoluctionDepositBatch = async ({
-  token,
-  amount,
-  pubkey,
-  receiverWallet,
-}: any) => {
-  let totalRequired = amount
+// const getSoluctionDepositBatch = async ({
+//   token,
+//   amount,
+//   pubkey,
+//   receiverWallet,
+// }: any) => {
+//   let totalRequired = amount
 
-  if (typeof amount !== 'bigint') {
-    totalRequired = BigInt(formatInteger(amount, 12))
-  }
+//   if (typeof amount !== 'bigint') {
+//     totalRequired = BigInt(formatInteger(amount, 12))
+//   }
 
-  return {
-    delta: totalRequired,
-    utxosIn: [
-      getUtxo({ token, pubkey, amount: 0n }),
-      getUtxo({ token, pubkey, amount: 0n }),
-      getUtxo({ token, pubkey, amount: 0n }),
-    ],
-    utxosOut: [
-      getUtxo({ token, pubkey: receiverWallet, amount: totalRequired, publicAmount: String(amount) }),
-      getUtxo({ token, pubkey: receiverWallet, amount: 0n }),
-    ],
-  }
-}
+//   return {
+//     delta: totalRequired,
+//     utxosIn: [
+//       getUtxo({ token, pubkey, amount: 0n }),
+//       getUtxo({ token, pubkey, amount: 0n }),
+//       getUtxo({ token, pubkey, amount: 0n }),
+//     ],
+//     utxosOut: [
+//       getUtxo({ token, pubkey: receiverWallet, amount: totalRequired, publicAmount: String(amount) }),
+//       getUtxo({ token, pubkey: receiverWallet, amount: 0n }),
+//     ],
+//   }
+// }
+
 const computeDepositParams = async (
   wallet: any,
   pubkey: any,
@@ -69,7 +70,7 @@ const computeDepositParams = async (
     token,
     amount,
     pubkey: wallet.pubkey,
-    receiverWallet: pubkey
+    receiverPubkey: pubkey
   })
 
   const {
@@ -90,7 +91,7 @@ const computeDepositParams = async (
     fee: 1.0,
     relayer: 1,
     selectedToken,
-    receiver: pubkey.toString(),
+    receiver: BigInt(pubkey).toString(),
     root: roots.tree.toString(),
     sender: sender || wallet.pubkey.toString()
   })
@@ -100,7 +101,7 @@ const computeDepositParams = async (
     roots,
     token,
     wallet,
-    pubkey,
+    pubkey: BigInt(pubkey),
     message: poseidon([base64urlToBigInt(args.extDataHash)])
   })
 

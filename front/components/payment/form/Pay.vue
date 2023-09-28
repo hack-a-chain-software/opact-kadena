@@ -65,7 +65,7 @@ const deposit = async () => {
   try {
     const transactionArgs = await computeDepositParams(
       mockWalletNode,
-      BigInt(`0x${pubkey.value}`),
+      `0x${pubkey.value}`,
       Number(amount.value),
       data.commitments,
       provider.value.account.account.publicKey

@@ -6,8 +6,7 @@ import {
   poseidon,
   computeProof,
   getSolutionBatch,
-  // groupUtxoByToken,
-  MerkleTree, MerkleTreeService,
+  groupUtxoByToken,
   base64urlToBigInt,
   computeTreeValues,
   computeLocalTestnet,
@@ -15,54 +14,6 @@ import {
   computeTransactionParams,
   getNullifier
 } from 'opact-sdk'
-
-const PROOF_LENGTH = 32
-
-const EXPECTED_VALUE = 11954255677048767585730959529592939615262310191150853775895456173962480955685n
-
-export const groupUtxoByToken = (encrypted: any, nullifiers: any, secret: any) => {
-  return encrypted.reduce((acc: any, curr: any) => {
-    const utxo = {
-      hash: BigInt(curr.hash),
-      token: BigInt(curr.token),
-      amount: BigInt(curr.amount),
-      pubkey: BigInt(curr.pubkey),
-      tokenId: Number(curr.tokenId),
-      blinding: BigInt(curr.blinding),
-      publicAmount: Number(curr.publicAmount)
-    }
-
-    const nullifier = getNullifier({
-      utxo,
-      secret
-    })
-
-    if (nullifiers.includes(nullifier.toString())) {
-      return acc
-    }
-
-    if (!acc[curr.tokenId]) {
-      acc[curr.tokenId] = {
-        balance: 0n,
-        publicAmount: 0,
-        utxos: [],
-        token: {
-          id: 1,
-          decimals: 12,
-          symbol: 'KDA',
-          name: 'Kadena',
-          icon: '/kda.png'
-        }
-      }
-    }
-
-    acc[utxo.tokenId].balance += utxo.amount
-    acc[utxo.tokenId].publicAmount += utxo.publicAmount
-    acc[utxo.tokenId].utxos = [...acc[utxo.tokenId].utxos, utxo]
-
-    return acc
-  }, {})
-}
 
 const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
 

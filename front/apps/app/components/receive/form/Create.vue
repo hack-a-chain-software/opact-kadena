@@ -21,7 +21,6 @@ const amounts = [1, 10, 100]
 
 const data = reactive({
   amount: 0,
-  token: null,
   token: {
     icon: '/kda.png',
     name: 'Kadena',
