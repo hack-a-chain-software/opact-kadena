@@ -161,6 +161,7 @@ const close = () => {
                     justify-between
                     gap-4
                     w-full
+                    group
                   "
                   @click.prevent="
                     copyToClipboard(
@@ -175,6 +176,7 @@ const close = () => {
                       class="
                         text-xs text-font-1
                         break-words
+                        group-active:text-blue-400
                       "
                       v-text="
                         `${baseUrl}/payment/${params}`
@@ -182,7 +184,7 @@ const close = () => {
                     />
                   </div>
 
-                  <div class="w-6 h-6 text-font-1">
+                  <div class="w-6 h-6 text-font-1 group-active:text-blue-400">
                     <Icon name="copy" class="w-6 h-6" />
                   </div>
                 </button>

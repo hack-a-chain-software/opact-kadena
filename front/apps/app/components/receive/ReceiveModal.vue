@@ -6,10 +6,13 @@ import {
   TransitionRoot,
   DialogTitle
 } from '@headlessui/vue'
+import { storeToRefs } from 'pinia';
 
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
+
+const { node } = storeToRefs(wallet)
 
 withDefaults(
   defineProps<{
@@ -25,6 +28,24 @@ const isOpen = ref(false)
 const router = useRouter()
 
 const emit = defineEmits(['close', 'redirect'])
+
+
+const params = computed(() => {
+  return window.btoa(wallet.node.hexPub)
+})
+
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'localhost:3000'
+    : window.location.origin
+
+const copyToClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text)
+  } catch (e) {
+    console.warn(e)
+  }
+}
 
 const close = () => {
   setTimeout(() => {
@@ -221,7 +242,7 @@ const redirect = () => {
               <div v-else>
                 <div>
                   <span class="text-xxs text-font-2">
-                    Receive payments easily
+                    Receive payments
                   </span>
                 </div>
 
@@ -236,23 +257,25 @@ const redirect = () => {
                     justify-between
                     gap-4
                     w-full
+                    group
                   "
                     @click.prevent="
-                      wallet.copyToClipboard(
-                        'localhost:3000/payment/B3bv0SDIkmdn85jfnDNkspsdd'
+                      copyToClipboard(
+                        `${baseUrl}/payment/${params}`
                       )
                     "
                   >
                     <div class="w-[calc(100%-40px)] text-left">
                       <span
-                        class="text-xs text-font-1 break-words"
+                        class="text-xs text-font-1 break-words
+                        group-active:text-blue-400"
                         v-text="
-                          'localhost:3000/payment/B3bv0SDIkmdn85jfnDNkspsdd'
+                          `${baseUrl}/payment/${params}`
                         "
                       />
                     </div>
 
-                    <div class="w-6 h-6 text-font-1">
+                    <div class="w-6 h-6 text-font-1 group-active:text-blue-400">
                       <Icon name="copy" class="w-6 h-6" />
                     </div>
                   </button>
