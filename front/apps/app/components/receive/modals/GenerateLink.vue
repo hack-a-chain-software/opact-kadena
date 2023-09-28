@@ -24,7 +24,7 @@ const props = withDefaults(
 )
 
 const baseUrl =
-  process.env.NODE_ENV !== 'development'
+  process.env.NODE_ENV === 'development'
     ? 'localhost:3000'
     : window.location.origin
 
