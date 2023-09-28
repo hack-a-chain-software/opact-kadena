@@ -23,6 +23,10 @@ const props = withDefaults(
   }
 )
 
+const baseUrl =
+  process.env.NODE_ENV !== 'development'
+    ? 'localhost:3000'
+    : window.location.origin
 
 const copyToClipboard = async (text: string) => {
   try {
@@ -141,7 +145,7 @@ const close = () => {
               </div>
 
               <div>
-                <span class="text-sm text-font-2 lg:text-font-1">
+                <span class="text-sm text-font-2 lg:text-font-1 text-xxs">
                   Copy or share the payment link
                 </span>
               </div>
@@ -160,7 +164,7 @@ const close = () => {
                   "
                   @click.prevent="
                     copyToClipboard(
-                      `localhost:3000/payment/${params}`
+                      `${baseUrl}/payment/${params}`
                     )
                   "
                 >
@@ -173,7 +177,7 @@ const close = () => {
                         break-words
                       "
                       v-text="
-                        `localhost:3000/payment/${params}`
+                        `${baseUrl}/payment/${params}`
                       "
                     />
                   </div>
@@ -183,7 +187,7 @@ const close = () => {
                   </div>
                 </button>
 
-                <div class="pt-6">
+                <!-- <div class="pt-6">
                   <button
                     class="
                       w-full
@@ -201,7 +205,7 @@ const close = () => {
                   >
                     <span class="text-font-1"> Share </span>
                   </button>
-                </div>
+                </div> -->
               </div>
             </DialogPanel>
           </TransitionChild>

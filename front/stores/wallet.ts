@@ -12,7 +12,6 @@ import {
   computeLocalTestnet,
   getHDWalletFromMnemonic,
   computeTransactionParams,
-  getNullifier
 } from 'opact-sdk'
 
 const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'

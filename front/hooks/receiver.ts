@@ -124,7 +124,7 @@ export const useReceiver = () => {
     commitments: null,
     depositing: false,
     showConnect: false,
-    depositMessage: '',
+    depositMessage: 'Loading Metadata',
     showCollapsible: false,
     token: {
       id: 1,

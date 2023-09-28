@@ -132,7 +132,7 @@ const redirect = () => {
                   as="h3"
                   class="text-font-1 text-sm"
                 >
-                  Connect your Wallet
+                  Payment Link
                 </DialogTitle>
 
                 <button
@@ -221,7 +221,7 @@ const redirect = () => {
               <div v-else>
                 <div>
                   <span class="text-xxs text-font-2">
-                    Payment Link
+                    Receive payments easily
                   </span>
                 </div>
 
@@ -258,7 +258,7 @@ const redirect = () => {
                   </button>
                 </div>
 
-                <div class="pt-6">
+                <!-- <div class="pt-6">
                   <button
                     class="
                     w-full
@@ -276,7 +276,7 @@ const redirect = () => {
                   >
                     <span class="text-font-1"> Share </span>
                   </button>
-                </div>
+                </div> -->
               </div>
             </DialogPanel>
           </TransitionChild>

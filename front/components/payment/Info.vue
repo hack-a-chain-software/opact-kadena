@@ -29,7 +29,7 @@ withDefaults(
             <span
               class="text-xxs font-medium text-font-1"
             >
-              0,02 KDA
+              1 KDA
             </span>
           </div>
         </div>

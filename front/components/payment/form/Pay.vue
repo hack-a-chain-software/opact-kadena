@@ -22,6 +22,7 @@ const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute
 
 onBeforeMount(() => {
   (async () => {
+    data.depositing = true
     const { data: dataApi } = await axios.get(`${RPC}?salt=75`, {
       headers: {
         'Access-Control-Allow-Origin': '*'
@@ -50,6 +51,8 @@ onBeforeMount(() => {
     console.log('commitments', commitments)
 
     data.commitments = commitments
+    data.depositing = false
+    data.depositMessage = 'Generating ZK Proof...'
   })()
 })
 
@@ -219,7 +222,9 @@ const deposit = async () => {
         "
         @click.prevent="deposit()"
       >
-        <span class="text-font-1"> Confirm Payment </span>
+        <span class="text-font-1"> {{ data.depositing ? data.depositMessage : 'Confirm Payment' }} </span>
+
+        <Icon v-if="data.depositing" name="spinner" class="animate-spin text-white ml-[12px]" />
       </button>
     </div>
 
