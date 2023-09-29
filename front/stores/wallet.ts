@@ -1,18 +1,11 @@
 import axios from 'axios'
-import Pact from 'pact-lang-api'
-import { useAuthStorage } from '~/hooks/auth-storage'
 import { defineStore } from 'pinia'
 import {
-  poseidon,
-  computeProof,
-  getSolutionBatch,
   groupUtxoByToken,
-  base64urlToBigInt,
-  computeTreeValues,
   computeLocalTestnet,
-  getHDWalletFromMnemonic,
-  computeTransactionParams,
+  getHDWalletFromMnemonic
 } from 'opact-sdk'
+import { useAuthStorage } from '~/hooks/auth-storage'
 
 const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
 
@@ -100,78 +93,6 @@ export const useWalletStore = defineStore({
       store({
         phrase: node.mnemonic
       })
-    },
-
-    async withdraw (
-      amount: number,
-      receiver: string,
-      selectedToken = {
-        id: '',
-        refName: {
-          name: 'coin',
-          namespace: ''
-        },
-        refSpec: {
-          name: 'fungible-v2',
-          namespace: ''
-        }
-      }
-    ) {
-      const tokenHash = Pact.crypto.hash(JSON.stringify(selectedToken))
-
-      const token = poseidon([base64urlToBigInt(tokenHash)])
-
-      const batch = await getSolutionBatch({
-        amount,
-        pubkey: this.node.pubkey,
-        treeBalance: {
-          ...this.userData[1],
-          token
-        },
-        excludedUTXOIDPositions: []
-      })
-
-      const {
-        roots,
-        newIns
-      } = await computeTreeValues(batch, this.state.commitments)
-
-      batch.utxosIn = [...newIns]
-
-      console.log('this.node', this.node)
-
-      const {
-        args,
-        extData,
-        tokenSpec
-      } = computeTransactionParams({
-        batch,
-        receiver,
-        fee: 1.0,
-        relayer: 1,
-        selectedToken,
-        amount: amount * (-1),
-        pubkey: this.node.pubkey,
-        root: roots.tree.toString(),
-        sender: this.node.pubkey.toString()
-      })
-
-      const proof = await computeProof({
-        batch,
-        token,
-        roots,
-        wallet: this.node,
-        message: poseidon([base64urlToBigInt(args.extDataHash)])
-      })
-
-      console.log(args, extData, tokenSpec)
-
-      return {
-        args,
-        proof,
-        extData,
-        tokenSpec
-      }
     },
 
     logout () {

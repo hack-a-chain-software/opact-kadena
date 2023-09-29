@@ -3,6 +3,7 @@ import axios from 'axios'
 import Pact from 'pact-lang-api'
 import { onBeforeMount } from 'vue'
 import { useReceiver } from '~/hooks/receiver'
+import { computePaymentParams } from '~/utils/sdk'
 
 const { provider } = useExtensions()
 
@@ -12,13 +13,14 @@ const {
   amount,
   params,
   buttonIsDisabled,
-  computeDepositParams
 } = useReceiver()
 
 const emits = defineEmits(['changeStep'])
 
 // TODO: SEND THIS TO NUXTCONFIG
-const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
+const RPC = process.env.NODE_ENV !== 'development'
+  ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata'
+  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
 
 onBeforeMount(() => {
   (async () => {
@@ -60,21 +62,13 @@ const deposit = async () => {
   data.error = ''
   data.depositing = true
 
-  const mockWalletNode = {
-    pubkey: 11266420894616539307519683389038109246654130435849311470670815520318096498921n,
-    pvtkey: 1482393132684423265528213543145697981060187089163992385907820405516567711584n
-  }
-
   try {
-    const transactionArgs = await computeDepositParams(
-      mockWalletNode,
+    const transactionArgs = await computePaymentParams(
       `0x${pubkey.value}`,
       Number(amount.value),
       data.commitments,
       provider.value.account.account.publicKey
     )
-
-    console.log(transactionArgs.extData)
 
     data.depositMessage = 'Await sign...'
 
@@ -82,7 +76,9 @@ const deposit = async () => {
 
     data.depositMessage = 'Awaiting TX results...'
 
-    const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+    const RPC = process.env.NODE_ENV !== 'development'
+      ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
+      : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
     const {
       result

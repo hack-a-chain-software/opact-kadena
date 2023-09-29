@@ -31,7 +31,9 @@ function setIsOpen (value) {
   isOpen.value = value
 }
 
-const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+const RPC = process.env.NODE_ENV !== 'development'
+  ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
+  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 const pay = async () => {
   try {
@@ -47,8 +49,6 @@ const pay = async () => {
       { listen: tx.requestKeys[0] },
       RPC
     )
-
-    console.log('TX error', result)
 
     if (result.status === 'failure') {
       data.error = result.error.message

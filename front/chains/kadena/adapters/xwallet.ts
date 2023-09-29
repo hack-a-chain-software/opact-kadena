@@ -1,7 +1,10 @@
 import { ref } from 'vue'
 import Pact from 'pact-lang-api'
+import { computePactCode } from '~/utils/kadena'
 
-const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+const RPC = process.env.NODE_ENV !== 'development'
+  ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
+  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 const metadata = {
   name: 'eckoWALLET',
@@ -97,77 +100,6 @@ export const useProvider = () => {
     } catch (error) {
       console.log(error)
     }
-  }
-
-  const computeSubAttr = (sub: any): any => {
-    if (typeof sub === 'string') {
-      return `${sub}`
-    }
-
-    if (!Array.isArray(sub) && typeof sub === 'object') {
-      return `{${computeSubAttr(sub)}}`
-    }
-
-    const arrayOfPrimitive = sub.every((item: any) => typeof item === 'string')
-
-    if (Array.isArray(sub) && arrayOfPrimitive) {
-      return `[${sub.join(' ')}]`
-    }
-
-    if (Array.isArray(sub) && !arrayOfPrimitive) {
-      return `[${computeProofCode(sub)}]`
-    }
-  }
-
-  const computeProofCode = (proof: any) => {
-    const entries = Object.entries(proof)
-
-    return entries.reduce((acc: string, curr: any, i: number) => {
-      const value = computeSubAttr(proof[curr])
-
-      acc += `"${curr}":${value}${i === entries.length - 1 ? '' : ','}`
-
-      return acc
-    }, '')
-  }
-
-  const computePactCode = ({
-    args,
-    proof,
-    extData,
-    tokenSpec
-  }: any) => {
-    return `(test.opact.transact {
-      "root": ${args.root},
-      "outputCommitments": [${args.outputCommitments.join(' ')}],
-      "publicAmount": ${args.publicAmount.toString()}.0,
-      "extDataHash": "${args.extDataHash}",
-      "tokenHash": "${args.tokenHash}"
-    } {
-      "public_values":[${proof.public_values.join(' ')}],
-      "a":{"x": ${proof.a.x}, "y": ${proof.a.y} },
-      "b":{"x":[${proof.b.x.join(' ')}],"y":[${proof.b.y.join(' ')}]},
-      "c":{"x":${proof.c.x},"y":${proof.c.y}}
-    } {
-      "sender":"${extData.sender}",
-      "recipient":"${extData.recipient}",
-      "extAmount":${extData.extAmount.toFixed(1)},
-      "relayer":${extData.relayer},
-      "fee":${extData.fee.toFixed(1)},
-      "encryptedOutput1":"${extData.encryptedOutput1}",
-      "encryptedOutput2":"${extData.encryptedOutput2}",
-      "encryptedValue":"${extData.encryptedValue}"
-    } {
-      "id": "${tokenSpec.id}",
-      "refName":{
-        "name":"${tokenSpec.refName.name}",
-        "namespace":""
-      },
-      "refSpec":{
-        "name":"${tokenSpec.refSpec.name}",
-        "namespace":""
-      }
-    })`
   }
 
   const transaction = async (

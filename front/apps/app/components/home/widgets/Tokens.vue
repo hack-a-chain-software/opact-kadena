@@ -162,7 +162,7 @@ const data = reactive({
           v-if="Object.keys(userData).length > 0"
         >
           <div
-            v-for="{ publicAmount, token } of userData"
+            v-for="{ balance, token } of userData"
             :key="token.id"
             class="
               px-4
@@ -208,7 +208,7 @@ const data = reactive({
                   text-font-1
                   opacity-[0.9]
                 "
-                v-text="publicAmount.toFixed(1)"
+                v-text="balance.toString()"
               />
             </div>
           </div>

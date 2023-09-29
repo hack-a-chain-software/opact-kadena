@@ -3,11 +3,13 @@ import { reactive, onMounted } from 'vue'
 import Pact from 'pact-lang-api'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
-import { computeDepositParams } from '~/hooks/deposit'
+import { computeDepositParams } from '~/utils/sdk'
 
 const wallet = useWalletStore()
 
-const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+const RPC = process.env.NODE_ENV !== 'development'
+  ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
+  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 const { node, state } = storeToRefs(wallet)
 

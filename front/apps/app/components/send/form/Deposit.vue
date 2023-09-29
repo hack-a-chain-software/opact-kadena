@@ -7,54 +7,23 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
-import { storeToRefs } from 'pinia'
 import Pact from 'pact-lang-api'
+import { storeToRefs } from 'pinia'
+import { computePactCode } from '~/utils/kadena'
 import { useWalletStore } from '~/stores/wallet'
+import { computeWihtdrawParams, computeTransferParams } from '~/utils/sdk'
 
-const RPC = process.env.NODE_ENV !== 'development' ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
-
-const computePactCode = ({
-  args,
-  proof,
-  extData,
-  tokenSpec
-}: any) => {
-  return `(test.opact.transact {
-      "root": ${args.root},
-      "outputCommitments": [${args.outputCommitments.join(' ')}],
-      "publicAmount": ${args.publicAmount.toString()}.0,
-      "extDataHash": "${args.extDataHash}",
-      "tokenHash": "${args.tokenHash}"
-    } {
-      "public_values":[${proof.public_values.join(' ')}],
-      "a":{"x": ${proof.a.x}, "y": ${proof.a.y} },
-      "b":{"x":[${proof.b.x.join(' ')}],"y":[${proof.b.y.join(' ')}]},
-      "c":{"x":${proof.c.x},"y":${proof.c.y}}
-    } {
-      "sender":"${extData.sender}",
-      "recipient":"${extData.recipient}",
-      "extAmount":${extData.extAmount.toFixed(1)},
-      "relayer":${extData.relayer},
-      "fee": 0.0,
-      "encryptedOutput1":"${extData.encryptedOutput1}",
-      "encryptedOutput2":"${extData.encryptedOutput2}",
-      "encryptedValue":"${extData.encryptedValue}"
-    } {
-      "id": "${tokenSpec.id}",
-      "refName":{
-        "name":"${tokenSpec.refName.name}",
-        "namespace":""
-      },
-      "refSpec":{
-        "name":"${tokenSpec.refSpec.name}",
-        "namespace":""
-      }
-    })`
-}
+const RPC = process.env.NODE_ENV !== 'development'
+  ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
+  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 const wallet = useWalletStore()
 
-const { node } = storeToRefs(wallet)
+const {
+  node,
+  state,
+  userData,
+ } = storeToRefs(wallet)
 
 const isOpen = ref(false)
 const isConnectWalletOpen = ref(false)
@@ -106,79 +75,166 @@ const send = async () => {
     data.loading = true
     data.error = ''
 
-    const {
-      args,
-      proof,
-      extData,
-      tokenSpec
-    } = await wallet.withdraw(
-      Number(data.amount),
-      data.addressTo
-    )
+    if (data.addressTo.includes('OZK')) {
+      console.log('testing OZK')
+      const {
+        args,
+        proof,
+        extData,
+        tokenSpec
+      } = await computeTransferParams(
+        Number(data.amount),
+        data.addressTo.replace('OZK', '').trim(),
+        node.value,
+        state.value.commitments,
+        userData.value[1]
+      )
 
-    const kp = Pact.crypto.genKeyPair()
+      const kp = Pact.crypto.genKeyPair()
 
-    const pactCode = computePactCode({ args, proof, extData, tokenSpec })
+      const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-    const network = RPC
+      const network = RPC
 
-    const createdAt = Math.round(new Date().getTime() / 1000) - 10
+      const createdAt = Math.round(new Date().getTime() / 1000) - 10
 
-    data.loadingMessage = 'Sending your proof to relayer...'
+      data.loadingMessage = 'Sending your proof to relayer...'
 
-    const cap1 = Pact.lang.mkCap(
-      'Coin Transfer',
-      'Capability to transfer designated amount of coin from sender to receiver',
-      'coin.TRANSFER',
-      ['opact-contract', data.addressTo, Number((extData.extAmount * (-1)).toFixed(1))]
-    )
+      const cap1 = Pact.lang.mkCap(
+        'Coin Transfer',
+        'Capability to transfer designated amount of coin from sender to receiver',
+        'coin.TRANSFER',
+        ['opact-contract', data.addressTo, Number((extData.extAmount * (-1)).toFixed(1))]
+      )
 
-    const tx = await Pact.fetch.send({
-      networkId: 'testnet04',
-      pactCode,
-      keyPairs: [
-        {
-          publicKey: kp.publicKey,
-          secretKey: kp.secretKey,
-          clist: [
-            // capability to use gas station
-            cap1.cap,
-            {
-              name: 'opact-gas-payer.GAS_PAYER',
-              args: ['hi', { int: 1 }, 1.0]
-            }
-          ]
-        }
-      ],
-      envData: {
-        language: 'Pact',
-        name: 'transact-deposit',
-        'token-instance': {
-          refSpec: [{
-            name: tokenSpec.refSpec.name
-          }],
-          refName: {
-            name: tokenSpec.refName.name
+      const tx = await Pact.fetch.send({
+        networkId: 'testnet04',
+        pactCode,
+        keyPairs: [
+          {
+            publicKey: kp.publicKey,
+            secretKey: kp.secretKey,
+            clist: [
+              cap1.cap,
+              {
+                name: 'opact-gas-payer.GAS_PAYER',
+                args: [1.0]
+              }
+            ]
           }
-        }
-      },
+        ],
+        envData: {
+          language: 'Pact',
+          name: 'transact-deposit',
+          'token-instance': {
+            refSpec: [{
+              name: tokenSpec.refSpec.name
+            }],
+            refName: {
+              name: tokenSpec.refName.name
+            }
+          }
+        },
 
-      meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
-    }, network)
+        meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
+      }, network)
 
-    data.loadingMessage = 'Awaiting TX results...'
+      data.loadingMessage = 'Awaiting TX results...'
 
-    const {
-      result
-    } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      network
-    )
+      const {
+        result
+      } = await Pact.fetch.listen(
+        { listen: tx.requestKeys[0] },
+        network
+      )
 
-    if (result.status === 'failure') {
-      data.error = result.error.message
+      if (result.status === 'failure') {
+        data.error = result.error.message
+
+        return
+      }
+
+      wallet.loadState()
+      router.push('/app')
 
       return
+    } else {
+      const {
+        args,
+        proof,
+        extData,
+        tokenSpec
+      } = await computeWihtdrawParams(
+        Number(data.amount),
+        data.addressTo,
+        node.value,
+        state.value.commitments,
+        userData.value[1]
+      )
+
+      const kp = Pact.crypto.genKeyPair()
+
+      const pactCode = computePactCode({ args, proof, extData, tokenSpec })
+
+      const network = RPC
+
+      const createdAt = Math.round(new Date().getTime() / 1000) - 10
+
+      data.loadingMessage = 'Sending your proof to relayer...'
+
+      const cap1 = Pact.lang.mkCap(
+        'Coin Transfer',
+        'Capability to transfer designated amount of coin from sender to receiver',
+        'coin.TRANSFER',
+        ['opact-contract', data.addressTo, Number((extData.extAmount * (-1)).toFixed(1))]
+      )
+
+      const tx = await Pact.fetch.send({
+        networkId: 'testnet04',
+        pactCode,
+        keyPairs: [
+          {
+            publicKey: kp.publicKey,
+            secretKey: kp.secretKey,
+            clist: [
+              cap1.cap,
+              {
+                name: 'opact-gas-payer.GAS_PAYER',
+                args: [1.0]
+              }
+            ]
+          }
+        ],
+        envData: {
+          language: 'Pact',
+          name: 'transact-deposit',
+          'token-instance': {
+            refSpec: [{
+              name: tokenSpec.refSpec.name
+            }],
+            refName: {
+              name: tokenSpec.refName.name
+            }
+          }
+        },
+
+        meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
+      }, network)
+
+      data.loadingMessage = 'Awaiting TX results...'
+
+      const {
+        result
+      } = await Pact.fetch.listen(
+        { listen: tx.requestKeys[0] },
+        network
+      )
+
+      if (result.status === 'failure') {
+        data.error = result.error.message
+
+        return
+      }
     }
 
     wallet.loadState()
