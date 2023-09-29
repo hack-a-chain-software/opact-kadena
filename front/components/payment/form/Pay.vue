@@ -25,7 +25,7 @@ const RPC = process.env.NODE_ENV !== 'development'
 onBeforeMount(() => {
   (async () => {
     data.depositing = true
-    const { data: dataApi } = await axios.get(`${RPC}?salt=75`, {
+    const { data: dataApi } = await axios.get(`${RPC}?salt=268`, {
       headers: {
         'Access-Control-Allow-Origin': '*'
       }

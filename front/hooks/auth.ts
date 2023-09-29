@@ -9,7 +9,7 @@ interface UseAuthInterface {
 export const useAuth = () => {
   const data = reactive<UseAuthInterface>({
     mnemonic: '',
-    stepForm: 'connect',
+    stepForm: 'connect'
   })
 
   return {

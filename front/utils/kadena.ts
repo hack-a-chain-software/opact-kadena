@@ -16,14 +16,11 @@ export const computePactCode = ({
       "b":{"x":[${proof.b.x.join(' ')}],"y":[${proof.b.y.join(' ')}]},
       "c":{"x":${proof.c.x},"y":${proof.c.y}}
     } {
+      "encryptedReceipts": [""],
       "sender":"${extData.sender}",
       "recipient":"${extData.recipient}",
       "extAmount":${extData.extAmount.toFixed(1)},
-      "relayer":${extData.relayer},
-      "fee": 0.0,
-      "encryptedOutput1":"${extData.encryptedOutput1}",
-      "encryptedOutput2":"${extData.encryptedOutput2}",
-      "encryptedValue":"${extData.encryptedValue}"
+      "encryptedCommitments": ["${extData.encryptedCommitments.join('" "')}"]
     } {
       "id": "${tokenSpec.id}",
       "refName":{

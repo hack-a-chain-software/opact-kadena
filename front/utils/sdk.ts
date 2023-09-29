@@ -30,7 +30,7 @@ export const computeWihtdrawParams = async (
     treeBalance,
     selectedToken,
     senderWallet: wallet,
-    totalRequired: amount,
+    totalRequired: amount
   })
 
   const {
@@ -40,8 +40,6 @@ export const computeWihtdrawParams = async (
   } = computeTransactionParams({
     batch,
     receiver,
-    fee: 1.0,
-    relayer: 1,
     selectedToken,
     amount: amount * (-1),
     sender: wallet.pubkey.toString(),
@@ -95,9 +93,7 @@ export const computeTransferParams = async (
   } = computeTransactionParams({
     batch,
     receiver,
-    fee: 0.0,
     amount: 0,
-    relayer: 1,
     selectedToken,
     root: batch.roots.tree.toString(),
     sender: wallet.pubkey.toString()
@@ -152,8 +148,6 @@ export const computeDepositParams = async (
     amount,
     sender,
     receiver,
-    fee: 1.0,
-    relayer: 1,
     selectedToken,
     root: batch.roots.tree.toString()
   })
@@ -209,8 +203,6 @@ export const computePaymentParams = async (
     batch,
     amount,
     pubkey,
-    fee: 1.0,
-    relayer: 1,
     selectedToken,
     receiver: pubkey,
     root: batch.roots.tree.toString(),

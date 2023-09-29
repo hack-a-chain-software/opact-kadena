@@ -145,8 +145,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(vue@3.3.4)
       opact-sdk:
-        specifier: ^1.0.21
-        version: 1.0.21
+        specifier: ^1.0.23
+        version: 1.0.23
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -3619,11 +3619,11 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/kit-edge@3.8.0-28265143.876fa7f3:
-    resolution: {integrity: sha512-S3VgsjdcaoVu/P8esm474eLeTQChDZsW7ATJlfddwUGFQVaCc8/wh9lEptHny8zIxD7LLhkGlVt/zuos0zu7Jg==}
+  /@nuxt/kit-edge@3.8.0-28266437.b95c85b5:
+    resolution: {integrity: sha512-ZIBsJobIrTfi3wsxUElSIF4vlPFottU7f8nmBMBQbKsBfUhRcHebaGkwk9VMOgE8iFhAl+mdr0mEYh4+bEyHDQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
-      '@nuxt/schema': /@nuxt/schema-edge@3.8.0-28265143.876fa7f3
+      '@nuxt/schema': /@nuxt/schema-edge@3.8.0-28266437.b95c85b5
       c12: 1.4.2
       consola: 3.2.3
       defu: 6.1.2
@@ -3741,8 +3741,8 @@ packages:
       - webpack
     dev: true
 
-  /@nuxt/schema-edge@3.8.0-28265143.876fa7f3:
-    resolution: {integrity: sha512-BZSSmNKG8ZtTrXT+D4WrocsQ6sPErn+BATA/RQE+TiPeTsY6e09d4eKlZrIONzqO+Rdt4t4NrJdAIyOLTQXN2A==}
+  /@nuxt/schema-edge@3.8.0-28266437.b95c85b5:
+    resolution: {integrity: sha512-001sv5IW6TITQAWJBWzv9ZTVxy2kWY98uECte5JToL7Jg1ENs193I2T/UYqlvHKY2t18xWFauDyl3H3PeZ70Og==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
       '@nuxt/ui-templates': 1.3.1
@@ -3894,7 +3894,7 @@ packages:
       get-port-please: 3.1.1
       h3: 1.8.2
       knitwork: 1.0.0
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       mlly: 1.4.2
       ohash: 1.1.3
       pathe: 1.1.1
@@ -3999,7 +3999,7 @@ packages:
     dependencies:
       '@nuxt/kit': 3.4.0
       fontaine: 0.2.3
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       pathe: 1.1.1
       ufo: 1.3.0
     transitivePeerDependencies:
@@ -5916,7 +5916,7 @@ packages:
       '@vue/reactivity-transform': 3.3.4
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       postcss: 8.4.31
       source-map-js: 1.0.2
 
@@ -5971,7 +5971,7 @@ packages:
       '@vue/compiler-core': 3.3.4
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
-      magic-string: 0.30.3
+      magic-string: 0.30.4
 
   /@vue/reactivity@3.3.4:
     resolution: {integrity: sha512-kLTDLwd0B1jG08NBF3R5rqULtv/f8x3rOFByTDz4J53ttIQEDmALqKqXY0J+XQeN0aV2FBxY8nJDf88yvOPAqQ==}
@@ -14464,7 +14464,7 @@ packages:
     resolution: {integrity: sha512-RQJGOUham95/bqe9KaaQDxSP5txZoySk1omZCY7ZiG6/mqRY1t0w8Mmv9TV3XE0VkAD84pjUXs8jFFNLIzf5ow==}
     dependencies:
       estree-walker: 3.0.3
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       mlly: 1.4.2
       ufo: 1.3.0
       unplugin: 1.5.0
@@ -14474,7 +14474,7 @@ packages:
     resolution: {integrity: sha512-0shqecEPgdFpnI3AP90epXyxZy9g6CRZ+SZ7BcqFwYmtFEnZ1jpevcV5HoyVnlDS9gCnc1UIg3Rsvp3Ci7r8OA==}
     engines: {node: '>=16.14.0'}
     dependencies:
-      magic-string: 0.30.3
+      magic-string: 0.30.4
     dev: true
 
   /magic-string@0.26.7:
@@ -14491,8 +14491,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /magic-string@0.30.3:
-    resolution: {integrity: sha512-B7xGbll2fG/VjP+SWg4sX3JynwIU0mjoTc6MPpKNuIvftk6u6vqhDnk1R80b8C2GBR6ywqy+1DcKBrevBg+bmw==}
+  /magic-string@0.30.4:
+    resolution: {integrity: sha512-Q/TKtsC5BPm0kGqgBIF9oXAs/xEf2vRKiIB4wCRQTJOQIByZ1d+NnUOotvJOvNpi5RNIgVOMC3pOuaP1ZTDlVg==}
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -15140,7 +15140,7 @@ packages:
       klona: 2.0.6
       knitwork: 1.0.0
       listhen: 1.5.5
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       mime: 3.0.0
       mlly: 1.4.2
       mri: 1.2.0
@@ -15393,7 +15393,7 @@ packages:
   /nuxt-use-motion@2.0.0-beta.11(vue@3.3.4):
     resolution: {integrity: sha512-O5UrB7q+A2dWhxxcXdCWH1QJgROIhUcQzwVxIZT2vleTpi6RMi39oPt4ZNWmtU/1Z39pTbAOnwUGZcTGdqRL9g==}
     dependencies:
-      '@nuxt/kit': /@nuxt/kit-edge@3.8.0-28265143.876fa7f3
+      '@nuxt/kit': /@nuxt/kit-edge@3.8.0-28266437.b95c85b5
       '@vueuse/motion': 2.0.0-beta.4(vue@3.3.4)
       defu: 5.0.1
       vue-demi: 0.12.5(vue@3.3.4)
@@ -15445,7 +15445,7 @@ packages:
       jiti: 1.20.0
       klona: 2.0.6
       knitwork: 1.0.0
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       mlly: 1.4.2
       nitropack: 2.6.3
       nuxi: 3.9.0
@@ -15642,8 +15642,8 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@1.0.21:
-    resolution: {integrity: sha512-fi3p29JYLO1ZRKwTGc7ptrslvO2Ls3eI6eWZ2L6M1r8AhFn4c5o6hlfhZ1t7aMnrp7ert3oWPMD38Ol4K835FQ==}
+  /opact-sdk@1.0.23:
+    resolution: {integrity: sha512-9ZfVMz3CiNqOWotfhVfNH3JKIrFoR99vMel8/esGYTPhb9cjHeGMlxilYTDJjhOZyU+AT6+t8szo7ZFoDNumbw==}
     dependencies:
       '@noble/hashes': 1.3.2
       '@peculiar/webcrypto': 1.4.3
@@ -19507,7 +19507,7 @@ packages:
     dependencies:
       acorn: 8.10.0
       estree-walker: 3.0.3
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       unplugin: 1.5.0
 
   /unctx@2.3.1:
@@ -19515,7 +19515,7 @@ packages:
     dependencies:
       acorn: 8.10.0
       estree-walker: 3.0.3
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       unplugin: 1.5.0
 
   /undeclared-identifiers@1.1.3:
@@ -19603,7 +19603,7 @@ packages:
       escape-string-regexp: 5.0.0
       fast-glob: 3.3.1
       local-pkg: 0.4.3
-      magic-string: 0.30.3
+      magic-string: 0.30.4
       mlly: 1.4.2
       pathe: 1.1.1
       pkg-types: 1.0.3

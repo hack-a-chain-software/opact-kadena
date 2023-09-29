@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import Pact from 'pact-lang-api'
+import { MerkleTreeService } from 'opact-sdk'
 import { computePactCode } from '~/utils/kadena'
 
 const RPC = process.env.NODE_ENV !== 'development'
@@ -108,7 +109,7 @@ export const useProvider = () => {
       proof,
       extData,
       tokenSpec
-    }: any,
+    }: any
   ) => {
     const accountName = account.value.account.publicKey
     const publickey = account.value.account.publicKey
@@ -122,12 +123,12 @@ export const useProvider = () => {
       [accountName, 'opact-contract', Number(extData.extAmount.toFixed(1))]
     )
 
-    const cap2 = Pact.lang.mkCap(
-      'Coin Transfer for Gas',
-      'Capability to transfer gas fee from sender to gas payer',
-      'coin.TRANSFER',
-      [accountName, 'opact-gas-payer', Number(extData.fee.toFixed(1))]
-    )
+    // const cap2 = Pact.lang.mkCap(
+    //   'Coin Transfer for Gas',
+    //   'Capability to transfer gas fee from sender to gas payer',
+    //   'coin.TRANSFER',
+    //   [accountName, 'opact-gas-payer', Number(extData.fee.toFixed(1))]
+    // )
 
     const cmd = await kadena.request({
       method: 'kda_requestSign',
@@ -153,8 +154,8 @@ export const useProvider = () => {
             }
           },
           caps: [
-            cap1,
-            cap2
+            cap1
+            // cap2
           ],
           networkId: metadata.networkId,
           signingPubKey: publickey

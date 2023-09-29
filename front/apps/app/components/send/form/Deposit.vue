@@ -76,7 +76,6 @@ const send = async () => {
     data.error = ''
 
     if (data.addressTo.includes('OZK')) {
-      console.log('testing OZK')
       const {
         args,
         proof,
@@ -189,6 +188,13 @@ const send = async () => {
         ['opact-contract', data.addressTo, Number((extData.extAmount * (-1)).toFixed(1))]
       )
 
+      const cap2 = Pact.lang.mkCap(
+        'Coin Transfer for Gas',
+        'Capability to transfer gas fee from sender to gas payer',
+        'coin.TRANSFER',
+        ['opact-contract', 'opact-gas-payer', 1.0]
+      )
+
       const tx = await Pact.fetch.send({
         networkId: 'testnet04',
         pactCode,
@@ -198,6 +204,7 @@ const send = async () => {
             secretKey: kp.secretKey,
             clist: [
               cap1.cap,
+              cap2.cap,
               {
                 name: 'opact-gas-payer.GAS_PAYER',
                 args: [1.0]
