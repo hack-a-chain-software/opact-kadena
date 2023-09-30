@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import Tokens from '../components/home/widgets/Tokens.vue'
-import Actions from '../components/home/widgets/Actions.vue'
-import History from '../components/home/widgets/History.vue'
-
 definePageMeta({
   layout: 'app',
   middleware: 'auth'
 })
 
 useHead({
-  title: 'App'
+  title: 'Home'
 })
 </script>
 
@@ -19,11 +15,11 @@ useHead({
       lg:w-full h-full pt-4 lg:pt-0 lg:gap-6 lg:grid lg:grid-cols-[minmax(auto,_698px)_400px] lg:grid-rows-[160px_1fr] lg:justify-center
     "
   >
-    <Tokens />
+    <AppWidgetTokens />
 
-    <Actions />
+    <AppWidgetActions />
 
-    <History />
+    <AppWidgetHistory />
 
     <div
       class="

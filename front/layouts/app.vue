@@ -32,7 +32,7 @@ const route = useRoute()
 const routes = [
   {
     disabled: false,
-    path: 'app',
+    path: 'home',
     label: 'Home',
     icon: 'wallet'
   },

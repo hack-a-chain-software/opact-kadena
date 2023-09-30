@@ -7,7 +7,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Deposit'
+  title: 'Deposit NFT'
 })
 
 const {

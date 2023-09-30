@@ -59,7 +59,7 @@ const data = reactive({
 
       <button
         class="bg-gray-800 rounded-[8px] px-4 h-[72px]"
-        @click.prevent="router.push('/deposit')"
+        @click.prevent="router.push('/deposit/token')"
       >
         <div class="pb-1">
           <Icon name="add" class="w-6 h-6 text-font-1" />
