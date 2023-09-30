@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
-import { faucet } from '~/utils/kadena';
 
 const router = useRouter()
 
