@@ -3,8 +3,6 @@ import { reactive } from 'vue'
 
 const router = useRouter()
 
-const amounts = [1, 10, 100]
-
 const data = reactive({
   amount: 0,
   show: false,
@@ -94,26 +92,9 @@ const data = reactive({
         </div>
       </div>
 
-      <div class="pt-6 space-x-2">
-        <button
-          v-for="amount in amounts"
-          :key="amount"
-          class="
-            group
-            active:border-blue-400
-            border-[1.5px]
-            border-gray-700
-            p-3
-            rounded-full
-          "
-          @click.prevent="data.amount = amount"
-        >
-          <span
-            class="text-xxs group-active:text-blue-400 text-font-2 font-medium"
-            v-text="amount"
-          />
-        </button>
-      </div>
+      <TokenAmounts
+        @selected="data.amount = $event"
+      />
 
       <div class="pt-7">
         <div class="flex justify-between pb-2">

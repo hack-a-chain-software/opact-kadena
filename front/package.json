@@ -36,7 +36,7 @@
     "memfs": "^4.3.0",
     "motion": "^10.16.2",
     "nuxt-use-motion": "2.0.0-beta.11",
-    "opact-sdk": "^1.0.23",
+    "opact-sdk": "^1.0.24",
     "pact-lang-api": "^4.3.6",
     "pinia": "^2.1.3",
     "prism-themes": "^1.9.0",

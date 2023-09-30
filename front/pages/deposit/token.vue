@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDeposit } from '~/hooks/deposit'
+import { useDepositForm } from '~/hooks/deposit'
 
 definePageMeta({
   layout: 'app',
@@ -13,7 +13,7 @@ useHead({
 const {
   data,
   form
-} = useDeposit()
+} = useDepositForm()
 </script>
 
 <template>

@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
-import Pact from 'pact-lang-api'
 import { storeToRefs } from 'pinia'
+import { reactive, onMounted } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
 import { computeDepositParams } from '~/utils/sdk'
 
 const wallet = useWalletStore()
-
-const RPC = process.env.NODE_ENV !== 'development'
-  ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
-  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 const { node, state } = storeToRefs(wallet)
 
 const { provider, logout } = useExtensions()
 
 const router = useRouter()
-
-const amounts = [1, 10, 100]
 
 const data = reactive({
   error: '',
@@ -83,33 +76,19 @@ const deposit = async () => {
       provider.value.account.account.publicKey
     )
 
-    data.depositMessage = 'Await sign...'
-
-    const tx = await provider.value.transaction(transactionArgs)
-
-    data.depositMessage = 'Awaiting TX results...'
-
-    const {
-      result
-    } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      RPC
+    await provider.value.transaction(
+      transactionArgs,
+      (message: string) => data.depositMessage = message
     )
-
-    if (result.status === 'failure') {
-      data.error = result.error.message
-
-      return
-    }
 
     wallet.loadState()
     router.push('/home')
-    logout()
   } catch (e) {
-    logout()
     console.warn(e)
     data.depositing = false
     data.depositMessage = "Computing UTXO's Values..."
+  } finally {
+    logout()
   }
 }
 </script>
@@ -202,26 +181,9 @@ const deposit = async () => {
         />
       </button>
 
-      <div class="pt-6 space-x-2">
-        <button
-          v-for="amount in amounts"
-          :key="amount"
-          class="
-            group
-            active:border-blue-400
-            border-[1.5px]
-            border-gray-700
-            p-3
-            rounded-full
-          "
-          @click.prevent="data.amount = amount"
-        >
-          <span
-            class="text-xxs text-font-2 group-active:text-blue-400 font-medium"
-            v-text="amount"
-          />
-        </button>
-      </div>
+      <TokenAmounts
+        @selected="data.amount = $event"
+      />
 
       <div class="pt-7">
         <div class="flex justify-between pb-2">

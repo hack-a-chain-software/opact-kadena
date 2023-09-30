@@ -145,8 +145,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(vue@3.3.4)
       opact-sdk:
-        specifier: ^1.0.23
-        version: 1.0.23
+        specifier: ^1.0.24
+        version: 1.0.24
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -390,7 +390,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 5.59.7(@typescript-eslint/parser@5.59.7)(eslint@8.41.0)(typescript@4.9.5)
       '@typescript-eslint/parser': 5.59.7(eslint@8.41.0)(typescript@4.9.5)
       eslint: 8.41.0
-      eslint-plugin-jest: 27.4.0(@typescript-eslint/eslint-plugin@5.59.7)(eslint@8.41.0)(typescript@4.9.5)
+      eslint-plugin-jest: 27.4.2(@typescript-eslint/eslint-plugin@5.59.7)(eslint@8.41.0)(typescript@4.9.5)
       typescript: 4.9.5
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
@@ -3619,11 +3619,11 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/kit-edge@3.8.0-28266437.b95c85b5:
-    resolution: {integrity: sha512-ZIBsJobIrTfi3wsxUElSIF4vlPFottU7f8nmBMBQbKsBfUhRcHebaGkwk9VMOgE8iFhAl+mdr0mEYh4+bEyHDQ==}
+  /@nuxt/kit-edge@3.8.0-28267841.4063b498:
+    resolution: {integrity: sha512-cnqQ4qhwv1nWUcBnOpv5YqKFdI9ODLwXPX4VBvTMIbMFMgktQh/ZIXTOqcYZ7JOtR/e0FqbJ7T8AzhX2Zm1s5w==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
-      '@nuxt/schema': /@nuxt/schema-edge@3.8.0-28266437.b95c85b5
+      '@nuxt/schema': /@nuxt/schema-edge@3.8.0-28267841.4063b498
       c12: 1.4.2
       consola: 3.2.3
       defu: 6.1.2
@@ -3741,8 +3741,8 @@ packages:
       - webpack
     dev: true
 
-  /@nuxt/schema-edge@3.8.0-28266437.b95c85b5:
-    resolution: {integrity: sha512-001sv5IW6TITQAWJBWzv9ZTVxy2kWY98uECte5JToL7Jg1ENs193I2T/UYqlvHKY2t18xWFauDyl3H3PeZ70Og==}
+  /@nuxt/schema-edge@3.8.0-28267841.4063b498:
+    resolution: {integrity: sha512-9mobZRU3TMU6MJ6dUIWXOTnHLxTZsStMfxm6TBOPsopZ4L29EuiZBICw17OX3SBS5Wj4yv7Y+Vc4jlEJkz/A4A==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
       '@nuxt/ui-templates': 1.3.1
@@ -7898,7 +7898,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001541
-      electron-to-chromium: 1.4.536
+      electron-to-chromium: 1.4.537
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
 
@@ -9504,8 +9504,8 @@ packages:
       jake: 10.8.7
     dev: false
 
-  /electron-to-chromium@1.4.536:
-    resolution: {integrity: sha512-L4VgC/76m6y8WVCgnw5kJy/xs7hXrViCFdNKVG8Y7B2isfwrFryFyJzumh3ugxhd/oB1uEaEEvRdmeLrnd7OFA==}
+  /electron-to-chromium@1.4.537:
+    resolution: {integrity: sha512-W1+g9qs9hviII0HAwOdehGYkr+zt7KKdmCcJcjH0mYg6oL8+ioT3Skjmt7BLoAQqXhjf40AXd+HlR4oAWMlXjA==}
 
   /elliptic@6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
@@ -10400,8 +10400,8 @@ packages:
       - supports-color
     dev: false
 
-  /eslint-plugin-jest@27.4.0(@typescript-eslint/eslint-plugin@5.59.7)(eslint@8.41.0)(typescript@4.9.5):
-    resolution: {integrity: sha512-ukVeKmMPAUA5SWjHenvyyXnirKfHKMdOsTZdn5tZx5EW05HGVQwBohigjFZGGj3zuv1cV6hc82FvWv6LdIbkgg==}
+  /eslint-plugin-jest@27.4.2(@typescript-eslint/eslint-plugin@5.59.7)(eslint@8.41.0)(typescript@4.9.5):
+    resolution: {integrity: sha512-3Nfvv3wbq2+PZlRTf2oaAWXWwbdBejFRBR2O8tAO67o+P8zno+QGbcDYaAXODlreXVg+9gvWhKKmG2rgfb8GEg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^5.0.0 || ^6.0.0
@@ -15393,7 +15393,7 @@ packages:
   /nuxt-use-motion@2.0.0-beta.11(vue@3.3.4):
     resolution: {integrity: sha512-O5UrB7q+A2dWhxxcXdCWH1QJgROIhUcQzwVxIZT2vleTpi6RMi39oPt4ZNWmtU/1Z39pTbAOnwUGZcTGdqRL9g==}
     dependencies:
-      '@nuxt/kit': /@nuxt/kit-edge@3.8.0-28266437.b95c85b5
+      '@nuxt/kit': /@nuxt/kit-edge@3.8.0-28267841.4063b498
       '@vueuse/motion': 2.0.0-beta.4(vue@3.3.4)
       defu: 5.0.1
       vue-demi: 0.12.5(vue@3.3.4)
@@ -15642,8 +15642,8 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@1.0.23:
-    resolution: {integrity: sha512-9ZfVMz3CiNqOWotfhVfNH3JKIrFoR99vMel8/esGYTPhb9cjHeGMlxilYTDJjhOZyU+AT6+t8szo7ZFoDNumbw==}
+  /opact-sdk@1.0.24:
+    resolution: {integrity: sha512-l1nTS9XOzps4tlrtElBLjzRGxxIgFlWvW73TFu75AVNvb1g8TRHQ2CB7vbAPJCUvU8fmPb/8qusUksnsnwOMgQ==}
     dependencies:
       '@noble/hashes': 1.3.2
       '@peculiar/webcrypto': 1.4.3

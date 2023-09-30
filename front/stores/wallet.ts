@@ -2,65 +2,16 @@ import axios from 'axios'
 import { defineStore } from 'pinia'
 import {
   groupUtxoByToken,
-  // computeLocalTestnet,
-  decrypt,
-  getUtxoFromDecrypted,
+  computeLocalTestnet,
   getHDWalletFromMnemonic,
 } from 'opact-sdk'
 import { useAuthStorage } from '~/hooks/auth-storage'
 import { shortenAddress } from '~/utils/string'
 
-const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
+const RPC = process.env.NODE_ENV !== 'development'
+  ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata'
+  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
 
-export const computeLocalTestnet = async (data: any[], wallet?: any) => {
-  return data
-    .sort((a: any, b: any) => a.txid - b.txid)
-    .map(({ events }: any) => events)
-    .reduce((acc: any, curr: any) => acc.concat(curr), [])
-    .reduce((curr: any, event: any) => {
-      if (event.name === 'new-nullifier') {
-        curr.nullifiers = [...curr.nullifiers, ...event.params.reduce((acc: any, param: any) => {
-          if (Array.isArray(param)) {
-            return [...acc, ...param.map((parm: any) => parm.int)]
-          }
-
-          return [param.int]
-        }, [])]
-      }
-
-      if (event.name === 'new-commitment') {
-        const commitment = {
-          value: event.params[0].int,
-          order: event.params[1].int
-        }
-
-        curr.commitments = [...curr.commitments, commitment]
-      }
-
-      if (event.name === 'new-encrypted-output') {
-        try {
-          const [
-            encrypted
-          ] = event.params
-
-          const value = getUtxoFromDecrypted(decrypt(
-            encrypted,
-            wallet.pvtkey,
-          ))
-
-          curr.decryptedData = [...curr.decryptedData, value]
-        } catch (e) {
-          // console.warn(e)
-        }
-      }
-
-      return curr
-    }, {
-      nullifiers: [],
-      commitments: [],
-      decryptedData: []
-    }) as []
-}
 export const useWalletStore = defineStore({
   id: 'opact-wallet',
   state: (): any => {

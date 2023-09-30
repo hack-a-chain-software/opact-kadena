@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import Pact from 'pact-lang-api'
-import { reactive, ref } from 'vue'
-import { storeToRefs } from 'pinia'
+import { reactive } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
 
 const router = useRouter()
 
 const wallet = useWalletStore()
-
-const { node } = storeToRefs(wallet)
 
 const { provider, logout } = useExtensions()
 
@@ -25,44 +21,20 @@ const data = reactive({
   loading: false
 })
 
-const isOpen = ref(false)
-
-function setIsOpen (value) {
-  isOpen.value = value
-}
-
-const RPC = process.env.NODE_ENV !== 'development'
-  ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
-  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
-
 const pay = async () => {
   try {
-    const tx = await provider.value.faceut(node.value.pubkey.toString())
-
     data.loading = true
 
-    data.loadingMessage = 'Awaiting kadena result...'
-
-    const {
-      result
-    } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      RPC
+    await provider.value.faucet(
+      (message: string) => data.loadingMessage = message
     )
-
-    if (result.status === 'failure') {
-      data.error = result.error.message
-
-      return
-    }
 
     wallet.loadState()
     router.push('/home')
-    logout()
   } catch (e) {
     console.warn(e)
-    logout()
   } finally {
+    logout()
     data.loading = false
     data.loadingMessage = ""
   }
@@ -102,17 +74,17 @@ const pay = async () => {
             <button
               disabled
               class="
-            bg-gray-800
-            px-3
-            rounded-full
-            py-1
-            flex
-            space-x-1
-            w-max
-            items-center
-            cursor-not-allowed
-          "
-              @click.prevent="setIsOpen(true)"
+                bg-gray-800
+                px-3
+                rounded-full
+                py-1
+                flex
+                space-x-1
+                w-max
+                items-center
+                cursor-not-allowed
+              "
+              @click.prevent="() => {}"
             >
               <div class="shrink-0">
                 <img

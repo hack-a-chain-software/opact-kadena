@@ -70,29 +70,10 @@ const deposit = async () => {
       provider.value.account.account.publicKey
     )
 
-    data.depositMessage = 'Await sign...'
-
-    const tx = await provider.value.transaction(transactionArgs)
-
-    data.depositMessage = 'Awaiting TX results...'
-
-    const RPC = process.env.NODE_ENV !== 'development'
-      ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
-      : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
-
-    const {
-      result
-    } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      RPC
+    await provider.value.transaction(
+      transactionArgs,
+      (message: string) => data.depositMessage = message
     )
-
-    if (result.status === 'failure') {
-      console.warn(result.error.message)
-      data.error = result.error.message
-
-      return
-    }
 
     emits('changeStep', 'success')
   } catch (e) {
