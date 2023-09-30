@@ -57,7 +57,7 @@ const pay = async () => {
     }
 
     wallet.loadState()
-    router.push('/app')
+    router.push('/home')
     logout()
   } catch (e) {
     console.warn(e)

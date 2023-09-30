@@ -8,6 +8,7 @@ import {
   getHDWalletFromMnemonic,
 } from 'opact-sdk'
 import { useAuthStorage } from '~/hooks/auth-storage'
+import { shortenAddress } from '~/utils/string'
 
 const RPC = process.env.NODE_ENV !== 'development' ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata' : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
 

@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/stores/wallet'
-
 definePageMeta({
   layout: 'app',
   middleware: 'auth'
@@ -10,16 +6,6 @@ definePageMeta({
 
 useHead({
   title: 'Create Invoice'
-})
-
-const wallet = useWalletStore()
-
-const { connected } = storeToRefs(wallet)
-
-onBeforeMount(() => {
-  if (!connected.value) {
-    wallet.reconnect()
-  }
 })
 </script>
 
