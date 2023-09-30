@@ -13,8 +13,21 @@ const data = reactive({
   showSettings: false
 })
 
-await wallet.reconnect()
-await wallet.loadState()
+// await wallet.reconnect()
+// await wallet.loadState()
+
+onBeforeMount(() => {
+  if (connected.value) {
+    wallet.loadState()
+
+    return
+  }
+
+  (async () => {
+    await wallet.reconnect()
+    await wallet.loadState()
+  })()
+})
 
 const route = useRoute()
 
