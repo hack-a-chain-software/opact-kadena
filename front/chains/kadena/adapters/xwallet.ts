@@ -57,13 +57,11 @@ export const useProvider = () => {
     loginCallback()
   }
 
-  const faucet = async (callbackProgress: any) => {
+  const faucet = async () => {
     const accountName = account.value.account.publicKey
     const publickey = account.value.account.publicKey
 
     const pactCode = getPactCodeForFaucet(accountName)
-
-    callbackProgress('Await sign...')
 
     const cmd = await kadena.request({
       data: {
@@ -91,8 +89,6 @@ export const useProvider = () => {
       networkId: metadata.networkId,
       method: 'kda_requestSign'
     })
-
-    callbackProgress('Awaiting TX results...')
 
     const tx = await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
 

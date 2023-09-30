@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import axios from 'axios'
-import Pact from 'pact-lang-api'
 import { onBeforeMount } from 'vue'
 import { useInvoice } from '~/hooks/invoice'
 import { computePaymentParams } from '~/utils/sdk'

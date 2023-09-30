@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
+import { faucet } from '~/utils/kadena';
 
 const router = useRouter()
 
@@ -16,7 +17,6 @@ const data = reactive({
     name: 'Kadena',
     symbol: 'KDA'
   },
-  loadingMessage: '',
   showGenerateLink: false,
   loading: false
 })
@@ -25,9 +25,7 @@ const pay = async () => {
   try {
     data.loading = true
 
-    await provider.value.faucet(
-      (message: string) => data.loadingMessage = message
-    )
+    await provider.value.faucet()
 
     wallet.loadState()
     router.push('/home')
@@ -36,7 +34,6 @@ const pay = async () => {
   } finally {
     logout()
     data.loading = false
-    data.loadingMessage = ""
   }
 }
 </script>
