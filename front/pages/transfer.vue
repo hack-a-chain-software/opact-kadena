@@ -10,7 +10,6 @@ useHead({
   title: 'Send'
 })
 
-
 const {
   data,
   form

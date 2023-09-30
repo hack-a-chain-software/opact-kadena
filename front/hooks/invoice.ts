@@ -1,5 +1,17 @@
 import { reactive, computed } from 'vue'
-import { form, FormType } from '~/components/payment/form'
+import pay from '~/components/invoice/Pay.vue'
+import success from '~/components/Success.vue'
+import provider from '~/components/Provider.vue'
+import connect from '~/components/invoice/Connect.vue'
+
+const form = {
+  pay,
+  connect,
+  success,
+  provider
+}
+
+export type FormType = 'create' | 'connect' | 'recovery' | 'mnemonic' | 'verify'
 
 export const RPC =
   process.env.NODE_ENV !== 'development'

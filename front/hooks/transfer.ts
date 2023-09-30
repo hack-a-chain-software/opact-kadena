@@ -1,19 +1,17 @@
 import { reactive } from 'vue'
-import deposit from '~/components/transfer/Deposit.vue'
-import success from '~/components/transfer/Success.vue'
-import progress from '~/components/transfer/Progress.vue'
+import success from '~/components/Success.vue'
+import transfer from '~/components/TransferForm.vue'
 
 const form = {
-  deposit,
+  transfer,
   success,
-  progress,
 }
 
-export type FormType = 'token' | 'amount'
+export type FormType = 'transfer' | 'success'
 
 export const useTransfer = () => {
   const data = reactive<{ stepForm: FormType }>({
-    stepForm: 'deposit'
+    stepForm: 'transfer'
   })
 
   return {

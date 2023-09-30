@@ -192,7 +192,7 @@ const deposit = async () => {
       </div>
     </div>
 
-    <PaymentInfo
+    <TxDetails
       :amount="amount"
     />
 

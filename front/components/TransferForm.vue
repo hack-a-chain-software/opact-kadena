@@ -497,7 +497,7 @@ const send = async () => {
       </button>
     </div>
 
-    <DepositWalletConnector
+    <WalletConnector
       :show="isConnectWalletOpen"
       @close="setConnectWalletOpen(false)"
       @connected="setConnectWalletOpen(false)"

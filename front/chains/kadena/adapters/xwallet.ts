@@ -1,6 +1,5 @@
 import { ref } from 'vue'
 import Pact from 'pact-lang-api'
-import { MerkleTreeService } from 'opact-sdk'
 import { computePactCode } from '~/utils/kadena'
 
 const RPC = process.env.NODE_ENV !== 'development'

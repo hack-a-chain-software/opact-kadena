@@ -452,7 +452,7 @@ const deposit = async () => {
       </button>
     </div>
 
-    <DepositWalletConnector
+    <WalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
       @connected="checkFunds()"

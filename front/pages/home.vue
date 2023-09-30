@@ -15,11 +15,11 @@ useHead({
       lg:w-full h-full pt-4 lg:pt-0 lg:gap-6 lg:grid lg:grid-cols-[minmax(auto,_698px)_400px] lg:grid-rows-[160px_1fr] lg:justify-center
     "
   >
-    <AppWidgetTokens />
+    <WidgetTokens />
 
-    <AppWidgetActions />
+    <WidgetActions />
 
-    <AppWidgetHistory />
+    <WidgetHistory />
 
     <div
       class="

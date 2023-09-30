@@ -7,6 +7,7 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 import { reactive } from 'vue'
+import { chains } from '~/chains'
 
 withDefaults(
   defineProps<{
@@ -21,10 +22,10 @@ const data = reactive({
   show: false
 })
 
-const emits = defineEmits(['close', 'connected'])
+const emit = defineEmits(['close', 'connected'])
 
 const close = () => {
-  emits('close')
+  emit('close')
 }
 </script>
 
@@ -173,10 +174,21 @@ const close = () => {
                 </div>
               </template>
 
-              <DepositChains
+              <div
                 v-else
-                @connected="emits('connected')"
-              />
+                class="w-full max-w-md"
+              >
+                <ul class="w-full space-y-[14px] gap-3">
+                  <TabItem
+                    v-for="provider in chains[0].providers"
+                    :key="provider.id"
+                    :chain="provider.key"
+                    v-bind="provider"
+                    class="w-full"
+                    @connected="emit('connected')"
+                  />
+                </ul>
+              </div>
             </DialogPanel>
           </TransitionChild>
         </div>

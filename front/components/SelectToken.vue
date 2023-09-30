@@ -1,12 +1,45 @@
-<!-- <script lang="ts" setup>
+<script lang="ts" setup>
+withDefaults(
+  defineProps<{
+    show?: boolean,
+  }>(),
+  {
+    show: false
+  }
+)
+
+const emit = defineEmits(['selected', 'close'])
+
+const close = () => {
+  emit('close')
+}
+
+const select = (token: any) => {
+  emit('selected', token)
+}
+
+const tokens = [
+  {
+    id: 0,
+    icon: '/kda.png',
+    name: 'Kadena',
+    symbol: 'KDA'
+  },
+  {
+    id: 1,
+    icon: '/kdx.png',
+    name: 'Kaddex',
+    symbol: 'KDX'
+  }
+]
 </script>
 
 <template>
-  <TransitionRoot as="template" :show="false">
+  <TransitionRoot as="template" :show="show">
     <Dialog
       as="div"
       class="relative z-10"
-      @close="() => {}"
+      @close="close()"
     >
       <TransitionChild
         as="template"
@@ -67,7 +100,7 @@
               >
                 <button
                   class="absolute left-0"
-                  @click.prevent="setIsOpen(false)"
+                  @click.prevent="close()"
                 >
                   <Icon
                     name="chevron"
@@ -103,7 +136,7 @@
 
                 <button
                   class="w-8 h-8"
-                  @click.prevent="setIsOpen(false)"
+                  @click.prevent="close()"
                 >
                   <Icon
                     name="close"
@@ -168,8 +201,8 @@
                       "
                     @click.prevent="
                       () => {
-                        setIsOpen(false);
-                        data.token = { ...token };
+                        close()
+                        select(token)
                       }
                     "
                   >
@@ -206,4 +239,4 @@
       </div>
     </Dialog>
   </TransitionRoot>
-</template> -->
+</template>

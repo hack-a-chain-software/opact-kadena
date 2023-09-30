@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 withDefaults(
   defineProps<{
+    fee: number | string;
     amount: number | string;
   }>(),
   {
-    amount: 0
+    fee: 0,
+    amount: 0,
   }
 )
 </script>
@@ -29,7 +31,7 @@ withDefaults(
             <span
               class="text-xxs font-medium text-font-1"
             >
-              1 KDA
+              {{ fee }} KDA
             </span>
           </div>
         </div>
@@ -56,7 +58,7 @@ withDefaults(
             <span
               class="text-xxs font-medium text-blue-300"
             >
-              {{ Number(amount) + 1 }} KDA
+              {{ Number(amount) + Number(fee) }} KDA
             </span>
           </div>
         </div>
