@@ -12,8 +12,6 @@ import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
-const { node } = storeToRefs(wallet)
-
 withDefaults(
   defineProps<{
     show: boolean;

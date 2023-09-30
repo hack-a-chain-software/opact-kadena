@@ -1,4 +1,12 @@
 <script lang="ts" setup>
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogPanel,
+  DialogTitle
+} from '@headlessui/vue'
+
 withDefaults(
   defineProps<{
     show?: boolean,
