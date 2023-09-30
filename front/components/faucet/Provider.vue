@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { chains } from '~/chains'
 
-const { step } = useFaceutForm()
+const emits = defineEmits(['changeStep'])
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const { step } = useFaceutForm()
           :chain="provider.key"
           v-bind="provider"
           class="w-full"
-          @connected="step = 'pay'"
+          @connected="emits('changeStep', 'pay')"
         />
       </ul>
     </div>

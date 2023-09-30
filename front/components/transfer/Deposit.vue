@@ -154,7 +154,7 @@ const send = async () => {
       }
 
       wallet.loadState()
-      router.push('/app')
+      router.push('/home')
 
       return
     } else {
@@ -245,7 +245,7 @@ const send = async () => {
     }
 
     wallet.loadState()
-    router.push('/app')
+    router.push('/home')
   } catch (e) {
     console.warn(e)
   } finally {
@@ -293,7 +293,7 @@ const send = async () => {
             top-4
             left-0
           "
-          @click.prevent="router.push('/app')"
+          @click.prevent="router.push('/home')"
         >
           <Icon name="chevronLeft" class="h-6 w-6" />
         </button>

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import ReceiveModal from '~/apps/app/components/receive/ReceiveModal.vue'
 
 const router = useRouter()
 
@@ -29,7 +28,7 @@ const data = reactive({
     <div class="gap-2 grid grid-cols-3">
       <button
         class="bg-gray-800 rounded-[8px] h-[72px] px-4"
-        @click.prevent="router.push('/send')"
+        @click.prevent="router.push('/transfer')"
       >
         <div class="pb-1">
           <Icon name="send" class="w-6 h-6" />
@@ -74,7 +73,7 @@ const data = reactive({
     </div>
   </div>
 
-  <ReceiveModal
+  <InvoiceReceiveModal
     :show="data.showReceiveModal"
     @close="data.showReceiveModal = false"
   />

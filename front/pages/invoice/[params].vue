@@ -1,29 +1,18 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/stores/wallet'
-import form from '~/apps/app/components/faceut/form'
+import { useReceiverForm } from '~/hooks/invoice'
 
 definePageMeta({
-  layout: 'form',
-  middleware: 'auth'
+  layout: 'form'
 })
 
 useHead({
   title: 'Payment'
 })
 
-const wallet = useWalletStore()
-
-const { connected } = storeToRefs(wallet)
-
-onBeforeMount(() => {
-  if (!connected.value) {
-    wallet.reconnect()
-  }
-})
-
-const { step } = useFaceutForm()
+const {
+  data,
+  form
+} = useReceiverForm()
 </script>
 
 <template>
@@ -57,7 +46,10 @@ const { step } = useFaceutForm()
         "
       >
         <Transition name="fade" mode="out-in">
-          <component :is="form[step]" />
+          <component
+            :is="form[data.stepForm]"
+            @changeStep="($event) => data.stepForm = $event"
+          />
         </Transition>
       </div>
     </div>

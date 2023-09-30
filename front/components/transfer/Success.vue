@@ -38,7 +38,7 @@ const router = useRouter()
             top-4
             left-0
           "
-          @click.prevent="router.push('/app')"
+          @click.prevent="router.push('/home')"
         >
           <Icon name="chevronLeft" class="h-6 w-6" />
         </button>
@@ -95,7 +95,7 @@ const router = useRouter()
                 disabled:cursor-not-allowed
                 bg-blue-gradient
               "
-              @click.prevent="router.push('/app')"
+              @click.prevent="router.push('/home')"
             >
               <span class="text-font-1"> Finish </span>
             </button>

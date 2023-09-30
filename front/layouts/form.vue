@@ -31,7 +31,7 @@ const router = useRouter()
       "
     >
       <button
-        @click.prevent="router.push('/app')"
+        @click.prevent="router.push('/home')"
       >
         <Icon
           name="logo"

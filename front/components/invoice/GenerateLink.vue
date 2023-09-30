@@ -165,7 +165,7 @@ const close = () => {
                   "
                   @click.prevent="
                     copyToClipboard(
-                      `${baseUrl}/payment/${params}`
+                      `${baseUrl}/invoice/${params}`
                     )
                   "
                 >
@@ -179,7 +179,7 @@ const close = () => {
                         group-active:text-blue-400
                       "
                       v-text="
-                        `${baseUrl}/payment/${params}`
+                        `${baseUrl}/invoice/${params}`
                       "
                     />
                   </div>

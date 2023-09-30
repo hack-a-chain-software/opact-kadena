@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 export default defineNuxtConfig({
   ssr,
-  extends: ['./apps/site', './apps/app'],
+  extends: ['./apps/site'],
   modules: [
     'nuxt-icon',
     '@pinia/nuxt',

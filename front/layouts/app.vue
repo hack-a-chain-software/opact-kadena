@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
-import Settings from '~/apps/app/components/Settings.vue'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()

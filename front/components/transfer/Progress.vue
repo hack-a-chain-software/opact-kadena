@@ -38,7 +38,7 @@ const router = useRouter()
             top-4
             left-0
           "
-          @click.prevent="router.push('/app')"
+          @click.prevent="router.push('/home')"
         >
           <Icon name="chevronLeft" class="h-6 w-6" />
         </button>

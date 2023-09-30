@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import ReceiveModal from '~/apps/app/components/receive/ReceiveModal.vue'
 
 const router = useRouter()
 
@@ -151,9 +150,4 @@ const data = reactive({
       </div>
     </div>
   </div>
-
-  <ReceiveModal
-    :show="data.showReceiveModal"
-    @close="data.showReceiveModal = false"
-  />
 </template>

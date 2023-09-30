@@ -7,13 +7,6 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
-import GenerateLink from '../modals/GenerateLink.vue'
-
-const isOpen = ref(false)
-
-function setIsOpen (value) {
-  isOpen.value = value
-}
 
 const router = useRouter()
 
@@ -21,6 +14,7 @@ const amounts = [1, 10, 100]
 
 const data = reactive({
   amount: 0,
+  show: false,
   token: {
     icon: '/kda.png',
     name: 'Kadena',
@@ -87,7 +81,7 @@ const tokens = [
             top-4
             left-0
           "
-          @click.prevent="router.push('/app')"
+          @click.prevent="router.push('/home')"
         >
           <Icon name="chevronLeft" class="h-6 w-6" />
         </button>
@@ -168,7 +162,7 @@ const tokens = [
             disabled:cursor-not-allowed
           "
           disabled
-          @click.prevent="setIsOpen(true)"
+          @click.prevent="data.show = true"
         >
           <div v-if="!data.token">
             <span class="text-font-2 text-xxs font-medium">
@@ -217,18 +211,18 @@ const tokens = [
       </button>
     </div>
 
-    <GenerateLink
+    <InvoiceGenerateLink
       :token="1"
       :amount="data.amount"
       :show="data.showGenerateLink"
       @close="data.showGenerateLink = false"
     />
 
-    <TransitionRoot as="template" :show="isOpen">
+    <TransitionRoot as="template" :show="data.show">
       <Dialog
         as="div"
         class="relative z-10"
-        @close="setIsOpen(false)"
+        @close="data.show = false"
       >
         <TransitionChild
           as="template"
@@ -289,7 +283,7 @@ const tokens = [
                 >
                   <button
                     class="absolute left-0"
-                    @click.prevent="setIsOpen(false)"
+                    @click.prevent="data.show = false"
                   >
                     <Icon
                       name="chevron"
@@ -325,7 +319,7 @@ const tokens = [
 
                   <button
                     class="w-8 h-8"
-                    @click.prevent="setIsOpen(false)"
+                    @click.prevent="data.show = false"
                   >
                     <Icon
                       name="close"
@@ -390,7 +384,7 @@ const tokens = [
                       "
                       @click.prevent="
                         () => {
-                          setIsOpen(false);
+                          data.show = false
                           data.token = { ...token };
                         }
                       "

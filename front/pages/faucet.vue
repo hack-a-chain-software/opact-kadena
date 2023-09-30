@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { useReceiverForm } from '~/hooks/receiver'
+import { useFaucet } from '~/hooks/faucet'
 
 definePageMeta({
-  layout: 'form'
+  layout: 'form',
+  middleware: 'auth'
 })
 
 useHead({
-  title: 'Payment'
+  title: 'Faucet'
 })
 
 const {
   data,
   form
-} = useReceiverForm()
+} = useFaucet()
 </script>
 
 <template>
@@ -67,4 +68,3 @@ const {
   opacity: 0;
 }
 </style>
-../../../../components/payment/form

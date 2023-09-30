@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/stores/wallet'
-import Create from '../components/receive/form/Create.vue'
+import { useTransfer } from '~/hooks/transfer'
 
 definePageMeta({
   layout: 'app',
@@ -10,18 +7,14 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Receive'
+  title: 'Send'
 })
 
-const wallet = useWalletStore()
 
-const { connected } = storeToRefs(wallet)
-
-onBeforeMount(() => {
-  if (!connected.value) {
-    wallet.reconnect()
-  }
-})
+const {
+  data,
+  form
+} = useTransfer()
 </script>
 
 <template>
@@ -38,7 +31,9 @@ onBeforeMount(() => {
       "
     >
       <Transition name="fade" mode="out-in">
-        <Create />
+        <component
+          :is="form[data.stepForm]"
+        />
       </Transition>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { step } = useFaceutForm()
+const emits = defineEmits(['changeStep'])
 </script>
 
 <template>
@@ -73,7 +73,7 @@ const { step } = useFaceutForm()
           disabled:cursor-not-allowed
           bg-blue-gradient
         "
-        @click.prevent="step = 'provider'"
+        @click.prevent="emits('changeStep', 'provider')"
       >
         <span class="text-font-1"> Connect Wallet </span>
       </button>

@@ -82,7 +82,7 @@ const data = reactive({
       <div class="lg:hidden pt-[24px] gap-2 grid grid-cols-3">
         <button
           class="bg-gray-800 rounded-[8px] py-3 px-4"
-          @click.prevent="router.push('/send')"
+          @click.prevent="router.push('/transfer')"
         >
           <div class="pb-2">
             <Icon name="send" class="w-6 h-6" />

@@ -48,17 +48,11 @@ const copyToClipboard = async (text: string) => {
 }
 
 const close = () => {
-  setTimeout(() => {
-    isOpen.value = false
-  }, 100)
   emit('close')
 }
 
 const redirect = () => {
-  emit('close')
-  setTimeout(() => {
-    router.push('/receive')
-  }, 100)
+  router.push('/invoice/create')
 }
 </script>
 
@@ -261,7 +255,7 @@ const redirect = () => {
                   "
                     @click.prevent="
                       copyToClipboard(
-                        `${baseUrl}/payment/${params}`
+                        `${baseUrl}/invoice/${params}`
                       )
                     "
                   >
@@ -270,7 +264,7 @@ const redirect = () => {
                         class="text-xs text-font-1 break-words
                         group-active:text-blue-400"
                         v-text="
-                          `${baseUrl}/payment/${params}`
+                          `${baseUrl}/invoice/${params}`
                         "
                       />
                     </div>
@@ -280,26 +274,6 @@ const redirect = () => {
                     </div>
                   </button>
                 </div>
-
-                <!-- <div class="pt-6">
-                  <button
-                    class="
-                    w-full
-                    flex
-                    items-center
-                    justify-center
-                    h-[44px]
-                    py-3
-                    px-4
-                    rounded-[12px]
-                    relative
-                    disabled:cursor-not-allowed
-                    bg-blue-gradient
-                  "
-                  >
-                    <span class="text-font-1"> Share </span>
-                  </button>
-                </div> -->
               </div>
             </DialogPanel>
           </TransitionChild>

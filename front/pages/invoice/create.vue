@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount } from 'vue'
+import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
-import form from '../components/send/form'
 
 definePageMeta({
   layout: 'app',
@@ -10,10 +9,8 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Send'
+  title: 'Create Invoice'
 })
-
-const { step } = useSendForm()
 
 const wallet = useWalletStore()
 
@@ -23,10 +20,6 @@ onBeforeMount(() => {
   if (!connected.value) {
     wallet.reconnect()
   }
-})
-
-onBeforeUnmount(() => {
-  step.value = 'deposit'
 })
 </script>
 
@@ -44,7 +37,7 @@ onBeforeUnmount(() => {
       "
     >
       <Transition name="fade" mode="out-in">
-        <component :is="form[step]" />
+        <InvoiceCreate />
       </Transition>
     </div>
   </div>
