@@ -2,7 +2,6 @@
 import { useFaucet } from '~/hooks/faucet'
 
 definePageMeta({
-  layout: 'form',
   middleware: 'auth'
 })
 

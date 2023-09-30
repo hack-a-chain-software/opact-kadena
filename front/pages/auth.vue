@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { useAuth } from '~/hooks/auth'
 
-definePageMeta({
-  layout: 'form',
-  middleware: 'guest'
-})
-
 useHead({
   title: 'Auth'
 })

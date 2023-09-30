@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { useReceiverForm } from '~/hooks/invoice'
-
-definePageMeta({
-  layout: 'form'
-})
+import { useInvoiceForm } from '~/hooks/invoice'
 
 useHead({
-  title: 'Payment'
+  title: 'Invoice'
 })
 
 const {
   data,
   form
-} = useReceiverForm()
+} = useInvoiceForm()
 </script>
 
 <template>

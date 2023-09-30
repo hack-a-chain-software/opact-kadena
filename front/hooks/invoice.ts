@@ -18,7 +18,7 @@ export const RPC =
     ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata'
     : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
 
-export const useReceiver = () => {
+export const useInvoice = () => {
   const data = reactive<any>({
     amount: '',
     error: '',
@@ -74,7 +74,7 @@ export const useReceiver = () => {
   }
 }
 
-export const useReceiverForm = () => {
+export const useInvoiceForm = () => {
   const data = reactive<{ stepForm: FormType }>({
     stepForm: 'connect'
   })

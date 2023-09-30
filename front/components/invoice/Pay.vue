@@ -2,7 +2,7 @@
 import axios from 'axios'
 import Pact from 'pact-lang-api'
 import { onBeforeMount } from 'vue'
-import { useReceiver } from '~/hooks/invoice'
+import { useInvoice } from '~/hooks/invoice'
 import { computePaymentParams } from '~/utils/sdk'
 
 const { provider } = useExtensions()
@@ -13,7 +13,7 @@ const {
   amount,
   params,
   buttonIsDisabled,
-} = useReceiver()
+} = useInvoice()
 
 const emits = defineEmits(['changeStep'])
 
