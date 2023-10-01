@@ -89,10 +89,14 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { prerender: true },
+    '/auth': { prerender: false },
     '/wallet': { prerender: true },
     '/tickets': { prerender: true },
     '/receive': { prerender: false },
     '/home': { prerender: false, ssr: false },
-    '/auth': { prerender: false, ssr: false }
+    '/transfer': { prerender: false, ssr: false },
+    '/deposit/nft': { prerender: false, ssr: false },
+    '/deposit/token': { prerender: false, ssr: false },
+    '/invoice/create': { prerender: false, ssr: false },
   }
 })

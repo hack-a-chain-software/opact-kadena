@@ -145,10 +145,10 @@ const data = reactive({
             data.tab === 'nfts' &&
               'border-b-[1px] border-blue-400 !opacity-100'
           "
-          class="px-2 pb-2 opacity-[0.5] cursor-not-allowed"
+          class="px-2 pb-2 opacity-[0.5]"
           @click.prevent="data.tab = 'nfts'"
         >
-          <span class="text-sm font-medium text-font-2">
+          <span class="text-sm font-medium text-font-1">
             NFTs
           </span>
         </button>
@@ -228,7 +228,7 @@ const data = reactive({
 
       <div
         v-else
-        class="pb-[90px] lg:pb-0 grid grid-cols-2 gap-3 pt-3 lg:grid-cols-3 xl:grid-cols-4"
+        class="pb-[90px] lg:pb-0 grid grid-cols-2 gap-3 pt-3 lg:grid-cols-3 xl:grid-cols-3"
       >
         <div
           v-for="n in 8"
