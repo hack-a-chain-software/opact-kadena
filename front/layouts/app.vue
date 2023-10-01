@@ -15,9 +15,7 @@ const data = reactive({
 })
 
 if (cache) {
-  const node = wallet.found(cache.value.phrase)
-
-  const state = computeLocalTestnet(node.pvtkey).then((res) => {
+  computeLocalTestnet(cache.value.phrase).then((res) => {
     wallet.getUserData(res)
   }) as any
 }
