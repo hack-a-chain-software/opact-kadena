@@ -86,14 +86,16 @@ export const useWalletStore = defineStore({
       return state
     },
 
-    async found (mnemonic: '') {
+    found (mnemonic: '') {
       const node: any = getHDWalletFromMnemonic(mnemonic)
 
       this.node = node
 
       this.persistAuth(node)
 
-      return node
+      return {
+        pvtkey: node.pvtkey.toString()
+      }
     },
 
     reconnect () {
@@ -108,10 +110,11 @@ export const useWalletStore = defineStore({
       const { store } = useAuthStorage()
 
       this.node = node
-      this.cache = { phrase: node.mnemonic }
+      this.cache = { phrase: node.mnemonic, pvtkey: node.pvtkey.toString() }
 
       store({
-        phrase: node.mnemonic
+        phrase: node.mnemonic,
+        pvtkey: node.pvtkey.toString(),
       })
     },
 
