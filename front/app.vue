@@ -24,7 +24,17 @@ useHead({
 
 <template>
   <Html lang="en" />
-  <NuxtLoadingIndicator />
+  <NuxtLoadingIndicator>
+    <div
+      class="h-full w-full flex items-center justify-center min-h-screen min-w-screen bg-gray-900"
+    >
+      <Icon
+        name="minilogo"
+        class="animate-spin text-white w-8 h-8 min-h-screen"
+      />
+    </div>
+  </NuxtLoadingIndicator>
+
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
