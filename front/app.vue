@@ -26,7 +26,7 @@ useHead({
   <Html lang="en" />
   <NuxtLoadingIndicator>
     <div
-      class="h-full w-full flex items-center justify-center min-h-screen min-w-screen bg-gray-900"
+      class="h-full w-full flex items-center justify-center min-h-screen min-w-screen bg-gray-900 fixed top-0 left-0"
     >
       <Icon
         name="minilogo"
