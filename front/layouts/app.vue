@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
+import { watch, onBeforeMount } from 'vue'
 import { computeLocalTestnet } from 'opact-sdk'
 import { useWalletStore } from '~/stores/wallet'
 
@@ -14,18 +14,18 @@ const data = reactive({
   showSettings: false
 })
 
-const { data: state } = await useAsyncData(
-  async () => {
-    return await computeLocalTestnet(cache.value.pvtkey)
-  },
-  {
-    watch: [cache]
-  }
+const { data: state } = useLazyAsyncData(
+  'state',
+  () => computeLocalTestnet(cache.value.pvtkey)
 )
 
-onBeforeMount(() => {
+watch(state, (newState) => {
+  if (!newState) {
+    return
+  }
+
   wallet.reconnect()
-  wallet.getUserData(state.value)
+  wallet.getUserData(newState)
 })
 
 const route = useRoute()
