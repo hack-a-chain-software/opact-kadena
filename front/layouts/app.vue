@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
+import { computeLocalTestnet } from 'opact-sdk'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
@@ -13,21 +14,23 @@ const data = reactive({
   showSettings: false
 })
 
-// await wallet.reconnect()
-// await wallet.loadState()
+const node = await wallet.reconnect()
+const state = await computeLocalTestnet(node.pvtkey) as any
 
-onBeforeMount(() => {
-  if (connected.value) {
-    wallet.loadState()
+wallet.getUserData(state)
 
-    return
-  }
+// onBeforeMount(() => {
+//   if (connected.value) {
+//     wallet.loadState()
 
-  (async () => {
-    await wallet.reconnect()
-    await wallet.loadState()
-  })()
-})
+//     return
+//   }
+
+//   (async () => {
+//     await wallet.reconnect()
+//     await wallet.loadState()
+//   })()
+// })
 
 const route = useRoute()
 
@@ -39,7 +42,7 @@ const routes = [
     icon: 'wallet'
   },
   {
-    disabled: true,
+    disabled: false,
     path: 'history',
     label: 'History',
     icon: 'chart'
@@ -75,14 +78,14 @@ const redirect = (path: string, skip: boolean) => {
 </script>
 
 <template>
-  <div class="h-screen flex flex-col lg:flex-row lg:w-full bg-dark-blue overflow-hidden relative">
+  <div class="min-h-screen pb-[40px] flex flex-col lg:flex-row lg:w-full bg-dark-blue overflow-hidden relative">
     <div
       v-if="!connected || isLoading"
       class="h-full w-full flex items-center justify-center"
     >
       <Icon
         name="minilogo"
-        class="animate-spin text-white w-8 h-8"
+        class="animate-spin text-white w-8 h-8 min-h-screen"
       />
     </div>
 

@@ -44,16 +44,30 @@ export const useWalletStore = defineStore({
       shortenAddress(state.node.address)
   },
   actions: {
+    async getUserData (state: any) {
+      this.isLoading = true
+
+      let userData = {}
+
+      if (this.node) {
+        userData = groupUtxoByToken(
+          state.decryptedData,
+          state.nullifiers,
+          this.node.pvtkey
+        )
+      }
+
+      this.userData = userData
+      this.isLoading = false
+      this.state = state
+
+      return state
+    },
+
     async loadState () {
       this.isLoading = true
 
-      const { data } = await axios.get(`${RPC}?salt=268`, {
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        }
-      })
-
-      const state = await computeLocalTestnet(data, this.node) as any
+      const state = await computeLocalTestnet(this.node.pvtkey) as any
 
       let userData = null
 
@@ -78,6 +92,8 @@ export const useWalletStore = defineStore({
       this.node = node
 
       this.persistAuth(node)
+
+      return node
     },
 
     async reconnect () {

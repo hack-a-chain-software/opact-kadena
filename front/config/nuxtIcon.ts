@@ -19,6 +19,8 @@ export const nuxtIcon = {
     security: 'Security',
     walletConnect: 'WalletConnect',
     opactLogo: 'OpactLogo',
+    receiptSend: 'SendReceipt',
+    receiptReceive: 'ReceiveReceipt',
 
     // App Icons
     qr: 'QR',
