@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { computeLocalTestnet } from 'opact-sdk'
+// import { computeLocalTestnet } from 'opact-sdk'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
@@ -13,20 +13,27 @@ const data = reactive({
   showSettings: false
 })
 
-wallet.reconnect()
+// wallet.reconnect()
 
-useAsyncData(
-  'state',
-  async () => {
-    const res = await computeLocalTestnet(node.value.pvtkey)
+// useAsyncData(
+//   'state',
+//   async () => {
+//     const res = await computeLocalTestnet(node.value.pvtkey)
 
-    wallet.getUserData(res)
+//     wallet.getUserData(res)
 
-    return res
-  }, {
-    watch: [node]
-  }
-)
+//     return res
+//   }, {
+//     watch: [node]
+//   }
+// )
+
+onBeforeMount(() => {
+  (async () => {
+    await wallet.reconnect()
+    await wallet.loadState()
+  })()
+})
 
 const route = useRoute()
 
