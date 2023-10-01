@@ -14,12 +14,13 @@ const data = reactive({
   showSettings: false
 })
 
-const { data: state } = useLazyAsyncData(
+const { data: state } = await useLazyAsyncData(
   'state',
   () => computeLocalTestnet(cache.value.pvtkey)
 )
 
 watch(state, (newState) => {
+  console.log('state', newState)
   if (!newState) {
     return
   }
