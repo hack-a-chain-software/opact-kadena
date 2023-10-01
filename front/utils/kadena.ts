@@ -4,16 +4,16 @@ export const kadenaRPC = process.env.NODE_ENV !== 'development'
   ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
   : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
-export const getPactCodeForFaucet = (accountName: string) => {
-  return `(coin.create-account ${JSON.stringify(accountName)} (read-keyset "${accountName}")) (coin.coinbase ${JSON.stringify(accountName)} (read-keyset "${accountName}") 100.0)`
+export const getPactCodeForFaucet = (accountName: string, preffix = 'coin') => {
+  return `(${preffix}.create-account ${JSON.stringify(accountName)} (read-keyset "${accountName}")) (${preffix}.coinbase ${JSON.stringify(accountName)} (read-keyset "${accountName}") 100.0)`
 }
 
-export const getCapsForDeposit = (accountName: string, amount: number | string) => {
+export const getCapsForDeposit = (accountName: string, amount: number | string, preffix = 'coin') => {
   return [
     Pact.lang.mkCap(
       'Coin Transfer',
       'Capability to transfer designated amount of coin from sender to receiver',
-      'coin.TRANSFER',
+      `${preffix}.TRANSFER`,
       [accountName, 'opact-contract', Number(amount.toFixed(1))]
     )
   ]
@@ -46,11 +46,11 @@ export const computePactCode = ({
       "id": "${tokenSpec.id}",
       "refName":{
         "name":"${tokenSpec.refName.name}",
-        "namespace":""
+        "namespace":"${tokenSpec.refName.namespace}"
       },
       "refSpec":{
         "name":"${tokenSpec.refSpec.name}",
-        "namespace":""
+        "namespace":"${tokenSpec.refSpec.namespace}"
       }
     })`
 }

@@ -95,6 +95,7 @@ export default defineNuxtConfig({
     '/receive': { prerender: false },
     '/home': { prerender: false, ssr: false },
     '/transfer': { prerender: false, ssr: false },
+    '/history':  { prerender: false, ssr: false },
     '/deposit/nft': { prerender: false, ssr: false },
     '/deposit/token': { prerender: false, ssr: false },
     '/invoice/create': { prerender: false, ssr: false },

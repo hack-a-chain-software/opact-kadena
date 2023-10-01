@@ -163,7 +163,6 @@ const send = async () => {
             disabled:opacity-60
             disabled:cursor-not-allowed
           "
-          disabled
           @click.prevent="data.show = true"
         >
           <div v-if="!data.token">
@@ -270,7 +269,7 @@ const send = async () => {
     <SelectToken
       :show="data.show"
       @close="data.show = false"
-      @select="data.token = token"
+      @selected="data.token = $event"
     />
   </div>
 </template>

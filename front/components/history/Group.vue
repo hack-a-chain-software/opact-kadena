@@ -13,7 +13,7 @@ withDefaults(
 
 <template>
   <div
-    class="w-full pt-[24px]"
+    class="w-full pt-[60px]"
   >
     <div
       class="pb-3 pl-[40px]"

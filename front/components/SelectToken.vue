@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed, reactive } from 'vue'
 import {
   TransitionRoot,
   TransitionChild,
@@ -16,6 +17,10 @@ withDefaults(
   }
 )
 
+const data = reactive({
+  input: ''
+})
+
 const emit = defineEmits(['selected', 'close'])
 
 const close = () => {
@@ -31,15 +36,43 @@ const tokens = [
     id: 0,
     icon: '/kda.png',
     name: 'Kadena',
-    symbol: 'KDA'
+    symbol: 'KDA',
+    namespace: {
+      id: '',
+      refName: {
+        name: 'coin',
+        namespace: ''
+      },
+      refSpec: {
+        name: 'fungible-v2',
+        namespace: ''
+      }
+    }
   },
   {
     id: 1,
     icon: '/kdx.png',
     name: 'Kaddex',
-    symbol: 'KDX'
+    symbol: 'KDX',
+    namespace: {
+      id: '',
+      refName: {
+        name: 'opact-coin',
+        namespace: 'test'
+      },
+      refSpec: {
+        name: 'fungible-v2',
+        namespace: ''
+      }
+    }
   }
 ]
+
+const filtered = computed(() => {
+  return tokens.filter(({ name, symbol }: any) => {
+    return name.toLowerCase().includes(data.input.toLocaleLowerCase()) || symbol.toLowerCase().includes(data.input.toLocaleLowerCase())
+  })
+})
 </script>
 
 <template>
@@ -155,6 +188,7 @@ const tokens = [
 
               <div class="relative lg:!mt-6">
                 <input
+                  v-model="data.input"
                   placeholder="Search"
                   class="
                       p-4
@@ -198,7 +232,7 @@ const tokens = [
                     "
                 >
                   <button
-                    v-for="token in tokens"
+                    v-for="token in filtered"
                     :key="token.name"
                     class="
                         w-full

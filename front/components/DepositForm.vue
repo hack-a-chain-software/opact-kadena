@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { reactive, onMounted } from 'vue'
+import { reactive, watch } from 'vue'
 import { useWalletStore } from '~/stores/wallet'
 import { computeDepositParams } from '~/utils/sdk'
 
@@ -16,6 +16,7 @@ const data = reactive({
   error: '',
   amount: 0,
   balance: 0,
+  show: false,
   provider: null,
   loading: false,
   depositing: false,
@@ -23,13 +24,25 @@ const data = reactive({
   showCollapsible: false,
   depositMessage: 'Generating ZK Proof...',
   token: {
+    id: 0,
     icon: '/kda.png',
     name: 'Kadena',
-    symbol: 'KDA'
+    symbol: 'KDA',
+    namespace: {
+      id: '',
+      refName: {
+        name: 'coin',
+        namespace: ''
+      },
+      refSpec: {
+        name: 'fungible-v2',
+        namespace: ''
+      }
+    }
   }
 })
 
-const checkFunds = async () => {
+const checkFunds = async (prefix?: string) => {
   data.showConnect = false
 
   await nextTick()
@@ -45,23 +58,23 @@ const checkFunds = async () => {
       status,
       data: coinData
     }
-  } = await provider.value.coinDetails()
+  } = await provider.value.coinDetails(prefix)
 
   data.loading = false
 
   if (status === 'failure') {
+    data.balance = 0
+
     return
   }
 
   data.balance = coinData.balance
 }
 
-onMounted(() => {
-  if (!provider.value) {
-    return
-  }
+watch(() => data.token, (value) => {
+  const prefix = value.name === 'Kadena' ? 'coin' : 'test.opact-coin'
 
-  checkFunds()
+  checkFunds(prefix)
 })
 
 const deposit = async () => {
@@ -73,7 +86,9 @@ const deposit = async () => {
       node.value,
       Number(data.amount),
       state.value.commitments,
-      provider.value.account.account.publicKey
+      provider.value.account.account.publicKey,
+      '',
+      data.token.namespace,
     )
 
     await provider.value.transaction(
@@ -170,8 +185,9 @@ const deposit = async () => {
       </div>
 
       <button
-        v-if="!data.loading"
         class="mt-1"
+        :key="data.token.id"
+        v-if="!data.loading && provider"
         @click.prevent="data.amount = data.balance"
       >
         <span
@@ -193,7 +209,7 @@ const deposit = async () => {
             </span>
           </div>
 
-          <div>
+          <!-- <div>
             <button
               disabled
               class="
@@ -214,7 +230,7 @@ const deposit = async () => {
                 <Icon name="add" class="w-5 h-5" />
               </div>
             </button>
-          </div>
+          </div> -->
         </div>
 
         <button
@@ -228,8 +244,7 @@ const deposit = async () => {
             disabled:opacity-60
             disabled:cursor-not-allowed
           "
-          disabled
-          @click.prevent="() => {}"
+          @click.prevent="data.show = true"
         >
           <div v-if="!data.token">
             <span class="text-font-2 text-xxs font-medium">
@@ -363,6 +378,12 @@ const deposit = async () => {
       :show="data.showConnect"
       @close="data.showConnect = false"
       @connected="checkFunds()"
+    />
+
+    <SelectToken
+      :show="data.show"
+      @close="data.show = false"
+      @selected="data.token = $event"
     />
   </div>
 </template>

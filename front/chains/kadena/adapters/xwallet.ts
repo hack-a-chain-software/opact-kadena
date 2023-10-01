@@ -27,7 +27,7 @@ export const useProvider = () => {
   }
 
   // TODO: delete this
-  const coinDetails = async () => {
+  const coinDetails = async (prefix = 'coin') => {
     try {
       const accountName = account.value.account.publicKey
 
@@ -36,7 +36,7 @@ export const useProvider = () => {
       const createdAt = Math.round(new Date().getTime() / 1000) - 10
 
       const data = await Pact.fetch.local({
-        pactCode: `(coin.details ${JSON.stringify(accountName)})`,
+        pactCode: `(${prefix}.details ${JSON.stringify(accountName)})`,
         meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
       }, network)
 
@@ -57,11 +57,13 @@ export const useProvider = () => {
     loginCallback()
   }
 
-  const faucet = async () => {
+  const faucet = async (tokenSpec) => {
     const accountName = account.value.account.publicKey
     const publickey = account.value.account.publicKey
 
-    const pactCode = getPactCodeForFaucet(accountName)
+    const preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
+
+    const pactCode = getPactCodeForFaucet(accountName, preffix)
 
     const cmd = await kadena.request({
       data: {
@@ -120,7 +122,9 @@ export const useProvider = () => {
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-    const caps = getCapsForDeposit(accountName, extData.extAmount)
+    const preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
+
+    const caps = getCapsForDeposit(accountName, extData.extAmount, preffix)
 
     callbackProgress('Await sign...')
 
@@ -143,7 +147,8 @@ export const useProvider = () => {
                 name: tokenSpec.refSpec.name
               }],
               refName: {
-                name: tokenSpec.refName.name
+                name: tokenSpec.refName.name,
+                namespace: tokenSpec.refName.namespace || undefined
               }
             }
           },

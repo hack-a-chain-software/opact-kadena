@@ -48,7 +48,7 @@ const {
         <Transition name="fade" mode="out-in">
           <component
             :is="form[data.stepForm]"
-            @changeStep="($event) => data.stepForm = $event"
+            @changeStep="($event: any) => data.stepForm = $event"
           />
         </Transition>
       </div>

@@ -1,20 +1,29 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { useWalletStore } from '~/stores/wallet'
 
 const router = useRouter()
-
-const wallet = useWalletStore()
 
 const { provider, logout } = useExtensions()
 
 const data = reactive({
   error: '',
+  show: false,
   amount: 100,
   token: {
     icon: '/kda.png',
     name: 'Kadena',
-    symbol: 'KDA'
+    symbol: 'KDA',
+    namespace: {
+      id: '',
+      refName: {
+        name: 'coin',
+        namespace: ''
+      },
+      refSpec: {
+        name: 'fungible-v2',
+        namespace: ''
+      }
+    }
   },
   showGenerateLink: false,
   loading: false
@@ -24,9 +33,8 @@ const pay = async () => {
   try {
     data.loading = true
 
-    await provider.value.faucet()
+    await provider.value.faucet(data.token.namespace)
 
-    wallet.loadState()
     router.push('/home')
   } catch (e) {
     console.warn(e)
@@ -68,7 +76,6 @@ const pay = async () => {
 
           <div>
             <button
-              disabled
               class="
                 bg-gray-800
                 px-3
@@ -78,9 +85,8 @@ const pay = async () => {
                 space-x-1
                 w-max
                 items-center
-                cursor-not-allowed
               "
-              @click.prevent="() => {}"
+              @click.prevent="data.show = true"
             >
               <div class="shrink-0">
                 <img
@@ -138,5 +144,11 @@ const pay = async () => {
         <span class="text-font-1"> Confirm Payment </span>
       </button>
     </div>
+
+    <SelectToken
+      :show="data.show"
+      @close="data.show = false"
+      @selected="data.token = $event"
+    />
   </div>
 </template>

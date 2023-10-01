@@ -177,7 +177,7 @@ const redirect = (path: string, skip: boolean) => {
       >
         <img
           src="/bg-app.png"
-          class="w-full w-full"
+          class="w-full w-full max-h-[319px]"
         >
       </div>
 
