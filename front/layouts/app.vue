@@ -8,29 +8,19 @@ const wallet = useWalletStore()
 
 const router = useRouter()
 
-const { connected, isLoading } = storeToRefs(wallet)
+const { connected, isLoading, cache } = storeToRefs(wallet)
 
 const data = reactive({
   showSettings: false
 })
 
-const node = await wallet.reconnect()
-const state = await computeLocalTestnet(node.pvtkey) as any
+if (cache) {
+  const node = wallet.found(cache.value.phrase)
 
-wallet.getUserData(state)
-
-// onBeforeMount(() => {
-//   if (connected.value) {
-//     wallet.loadState()
-
-//     return
-//   }
-
-//   (async () => {
-//     await wallet.reconnect()
-//     await wallet.loadState()
-//   })()
-// })
+  const state = computeLocalTestnet(node.pvtkey).then((res) => {
+    wallet.getUserData(res)
+  }) as any
+}
 
 const route = useRoute()
 
