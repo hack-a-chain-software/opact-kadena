@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { watch, onBeforeMount } from 'vue'
 import { computeLocalTestnet } from 'opact-sdk'
 import { useWalletStore } from '~/stores/wallet'
 
@@ -20,7 +19,6 @@ const { data: state } = await useLazyAsyncData(
 )
 
 watch(state, (newState) => {
-  console.log('state', newState)
   if (!newState) {
     return
   }
