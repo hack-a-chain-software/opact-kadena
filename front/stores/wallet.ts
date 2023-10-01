@@ -87,7 +87,7 @@ export const useWalletStore = defineStore({
     },
 
     async found (mnemonic: '') {
-      const node: any = await getHDWalletFromMnemonic(mnemonic)
+      const node: any = getHDWalletFromMnemonic(mnemonic)
 
       this.node = node
 
@@ -96,12 +96,12 @@ export const useWalletStore = defineStore({
       return node
     },
 
-    async reconnect () {
+    reconnect () {
       if (!this.cache) {
         return
       }
 
-      return await this.found(this.cache.phrase)
+      return this.found(this.cache.phrase)
     },
 
     persistAuth (node: any) {
