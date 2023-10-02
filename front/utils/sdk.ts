@@ -171,10 +171,6 @@ export const computePaymentParams = async (
   amount: number,
   commitments?: any,
   sender?: string,
-  wallet = {
-    pubkey: 11266420894616539307519683389038109246654130435849311470670815520318096498921n,
-    pvtkey: 1482393132684423265528213543145697981060187089163992385907820405516567711584n
-  },
   selectedToken = {
     id: '',
     refName: {
@@ -185,7 +181,11 @@ export const computePaymentParams = async (
       name: 'fungible-v2',
       namespace: ''
     }
-  }
+  },
+  wallet = {
+    pubkey: 11266420894616539307519683389038109246654130435849311470670815520318096498921n,
+    pvtkey: 1482393132684423265528213543145697981060187089163992385907820405516567711584n
+  },
 ) => {
   const batch = await getDepositSoluctionBatch({
     commitments,

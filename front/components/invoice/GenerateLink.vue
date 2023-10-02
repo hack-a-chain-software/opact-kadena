@@ -37,7 +37,7 @@ const copyToClipboard = async (text: string) => {
 }
 
 const params = computed(() => {
-  return window.btoa(`${props.token}-${props.amount}-${wallet.node.hexPub}`)
+  return `token=${props.token}&amount=${props.amount}&pubkey=${wallet.node.hexPub}`
 })
 
 const emit = defineEmits(['close', 'connected'])
@@ -165,7 +165,7 @@ const close = () => {
                   "
                   @click.prevent="
                     copyToClipboard(
-                      `${baseUrl}/invoice/${params}`
+                      `${baseUrl}/invoice?${params}`
                     )
                   "
                 >
@@ -179,7 +179,7 @@ const close = () => {
                         group-active:text-blue-400
                       "
                       v-text="
-                        `${baseUrl}/invoice/${params}`
+                        `${baseUrl}/invoice?${params}`
                       "
                     />
                   </div>

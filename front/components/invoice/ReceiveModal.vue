@@ -29,7 +29,7 @@ const emit = defineEmits(['close', 'redirect'])
 
 
 const params = computed(() => {
-  return window.btoa(wallet.node.hexPub)
+  return `pubkey=${wallet.node.hexPub}`
 })
 
 const baseUrl =

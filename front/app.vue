@@ -31,6 +31,10 @@ useHead({
 </template>
 
 <style>
+body {
+  background: #060A0F;
+}
+
 .page-enter-active,
 .page-leave-active {
   transition: all 0.3s;

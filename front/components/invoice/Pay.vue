@@ -8,6 +8,7 @@ const { provider } = useExtensions()
 
 const {
   data,
+  token,
   pubkey,
   amount,
   params,
@@ -49,8 +50,6 @@ onBeforeMount(() => {
         commitments: []
       }) as any
 
-    console.log('commitments', commitments)
-
     data.commitments = commitments
     data.depositing = false
     data.depositMessage = 'Generating ZK Proof...'
@@ -66,7 +65,8 @@ const deposit = async () => {
       `0x${pubkey.value}`,
       Number(amount.value),
       data.commitments,
-      provider.value.account.account.publicKey
+      provider.value.account.account.publicKey,
+      token.value.namespace
     )
 
     await provider.value.transaction(
@@ -136,20 +136,19 @@ const deposit = async () => {
                 space-x-1
                 w-max
                 items-center
-                cursor-not-allowed
                 disabled:opacity-[0.8]
               "
-              :disabled="true"
+              @click.prevent="data.show = true"
             >
               <div class="shrink-0">
                 <img
-                  :src="data.token.icon"
+                  :src="token.icon"
                   class="w-5 h-5"
                 >
               </div>
 
               <div>
-                <span v-text="data.token.symbol" />
+                <span v-text="token.symbol" />
               </div>
             </button>
           </div>
@@ -173,6 +172,7 @@ const deposit = async () => {
     </div>
 
     <TxDetails
+      :fee="0"
       :amount="amount"
     />
 
@@ -207,7 +207,7 @@ const deposit = async () => {
     <SelectToken
       :show="data.show"
       @close="data.show = false"
-      @select="data.token = token"
+      @selected="data.token = $event"
     />
   </div>
 </template>

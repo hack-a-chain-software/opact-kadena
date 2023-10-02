@@ -7,9 +7,21 @@ const data = reactive({
   amount: 0,
   show: false,
   token: {
+    id: 0,
     icon: '/kda.png',
     name: 'Kadena',
-    symbol: 'KDA'
+    symbol: 'KDA',
+    namespace: {
+      id: '',
+      refName: {
+        name: 'coin',
+        namespace: ''
+      },
+      refSpec: {
+        name: 'fungible-v2',
+        namespace: ''
+      }
+    }
   },
   showGenerateLink: false
 })
@@ -114,7 +126,6 @@ const data = reactive({
             disabled:opacity-60
             disabled:cursor-not-allowed
           "
-          disabled
           @click.prevent="data.show = true"
         >
           <div v-if="!data.token">
@@ -165,7 +176,7 @@ const data = reactive({
     </div>
 
     <InvoiceGenerateLink
-      :token="1"
+      :token="data.token.id"
       :amount="data.amount"
       :show="data.showGenerateLink"
       @close="data.showGenerateLink = false"
@@ -174,7 +185,7 @@ const data = reactive({
     <SelectToken
       :show="data.show"
       @close="data.show = false"
-      @select="data.token = token"
+      @selected="data.token = $event"
     />
   </div>
 </template>
