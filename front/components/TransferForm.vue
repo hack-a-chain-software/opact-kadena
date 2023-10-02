@@ -23,9 +23,21 @@ const data = reactive({
   loadingMessage: 'Generating ZK Proof...',
   error: '',
   token: {
+    id: 0,
     icon: '/kda.png',
     name: 'Kadena',
-    symbol: 'KDA'
+    symbol: 'KDA',
+    namespace: {
+      id: '',
+      refName: {
+        name: 'coin',
+        namespace: ''
+      },
+      refSpec: {
+        name: 'fungible-v2',
+        namespace: ''
+      }
+    }
   },
   showCollapsible: false,
   addressTo: ''
@@ -44,7 +56,8 @@ const send = async () => {
         data.addressTo.replace('OZK', '').trim(),
         node.value,
         state.value.commitments,
-        userData.value[1]
+        userData.value[1],
+        data.token.namespace
       )
     } else {
       params = await computeWihtdrawParams(
@@ -52,11 +65,12 @@ const send = async () => {
         data.addressTo,
         node.value,
         state.value.commitments,
-        userData.value[1]
+        userData.value[1],
+        data.token.namespace
       )
     }
 
-    await sendPactTransaction(data.addressTo, params, () => {})
+    await sendPactTransaction(data.addressTo, params, (message: string) => data.loadingMessage = message)
 
     wallet.loadState()
     router.push('/home')

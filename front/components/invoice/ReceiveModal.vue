@@ -253,7 +253,7 @@ const redirect = () => {
                   "
                     @click.prevent="
                       copyToClipboard(
-                        `${baseUrl}/invoice/${params}`
+                        `${baseUrl}/invoice?${params}`
                       )
                     "
                   >
@@ -262,7 +262,7 @@ const redirect = () => {
                         class="text-xs text-font-1 break-words
                         group-active:text-blue-400"
                         v-text="
-                          `${baseUrl}/invoice/${params}`
+                          `${baseUrl}/invoice?${params}`
                         "
                       />
                     </div>

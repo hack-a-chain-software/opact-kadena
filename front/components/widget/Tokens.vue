@@ -161,57 +161,12 @@ const data = reactive({
         <div
           v-if="Object.keys(userData).length > 0"
         >
-          <div
-            v-for="{ balance, token } of userData"
+          <TokensItem
+            :token="token"
             :key="token.id"
-            class="
-              px-4
-              py-2.5
-              bg-gray-800
-              rounded-[8px]
-              h-[66px]
-              flex
-              items-center
-            "
-          >
-            <div class="pr-4">
-              <img src="/kda.png">
-            </div>
-
-            <div class="space-y-1">
-              <p
-                class="
-                  text-xs
-                  font-regular
-                  opacity-[0.9]
-                  text-font-1
-                "
-                v-text="token.symbol"
-              />
-
-              <p
-                class="
-                  text-font-2 text-xxs
-                  font-medium
-                  opacity-[0.9]
-                "
-              >
-                -
-              </p>
-            </div>
-
-            <div class="ml-auto">
-              <p
-                class="
-                  text-sm
-                  font-medium
-                  text-font-1
-                  opacity-[0.9]
-                "
-                v-text="balance.toString()"
-              />
-            </div>
-          </div>
+            :balance="balance"
+            v-for="{ balance, token } of userData"
+          />
         </div>
 
         <div
