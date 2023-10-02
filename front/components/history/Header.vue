@@ -1,14 +1,51 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { format } from 'date-fns'
 
 const data = reactive({
   range: [],
+  search: '',
+  type: 'all',
   showPicker: false,
 })
+
+const emit = defineEmits(['updateFilter', 'updateType', 'updateSearch'])
 
 const selectedPicker = (range: any) => {
   data.range = range
   data.showPicker = false
+
+  emit('updateFilter', range)
+}
+
+const selectedDate = computed(() => {
+  if (data.range.length === 0) {
+    return 'Selected Date'
+  }
+
+  return `${format(data.range[0] || new Date(), 'yyyy/MM/dd')} - ${format(data.range[1] || new Date(), 'yyyy/MM/dd')}`
+})
+
+const handlepicker = () => {
+  if (data.range.length === 0) {
+
+    data.showPicker = true
+
+    return
+  }
+
+  data.range = [],
+  emit('updateFilter', [])
+}
+
+const handleType = (value: any) => {
+  data.type = value
+
+  emit('updateType', data.type)
+}
+
+const handleSearch = (event: any) => {
+  emit('updateSearch', event.target.value)
 }
 </script>
 
@@ -39,7 +76,7 @@ const selectedPicker = (range: any) => {
     </div>
 
     <div
-      class="grid grid-cols-[2fr,1fr,1fr] gap-[24px]"
+      class="grid grid-cols-[1fr,auto] gap-[24px]"
     >
       <div
         class="border border-gray-600  rounded-[8px] flex items-cneter p-4 space-x-2"
@@ -52,6 +89,8 @@ const selectedPicker = (range: any) => {
         </div>
 
         <input
+          v-model="data.search"
+          @input="handleSearch"
           placeholder="Search"
           class="
             text-xs
@@ -64,8 +103,8 @@ const selectedPicker = (range: any) => {
       </div>
 
       <div
-        @click.prevent="data.showPicker = true"
-        class="border border-gray-600 rounded-[8px] p-4  flex items-center space-x-2 cursor-pointer"
+        @click.prevent="handlepicker()"
+        class="border border-gray-600 rounded-[8px] p-4  flex items-center space-x-2 cursor-pointer min-w-[267px] hover:opacity-80"
       >
         <div>
           <Icon
@@ -77,13 +116,22 @@ const selectedPicker = (range: any) => {
         <div>
           <span
             class="text-font-1 text-xxs"
-          >
-            Select date
-          </span>
+            v-text="selectedDate"
+          />
+        </div>
+
+        <div
+          v-if="data.range.length !== 0"
+          class="ml-auto"
+        >
+          <Icon
+            name="close"
+            class="w-5 h-5 text-blue-400 ml-3 mb-[2px]"
+          />
         </div>
       </div>
 
-      <div
+      <!-- <div
         class="border border-gray-600 rounded-[8px] p-4  flex items-center space-x-2 cursor-pointer"
       >
         <div>
@@ -100,31 +148,39 @@ const selectedPicker = (range: any) => {
             Filter
           </span>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div
       class="pt-[32px] flex items-center space-x-[24px]"
     >
       <button
+        @click.prevent="handleType('all')"
+        :class="data.type === 'all' && 'bg-blue-400'"
         class="px-4 py-2 text-xxs text-font-2 hover:bg-gray-800 rounded-[8px]"
       >
         All time
       </button>
 
       <button
+        @click.prevent="handleType('withdraw')"
+        :class="data.type === 'withdraw' && 'bg-blue-400'"
         class="px-4 py-2 text-xxs text-font-2 hover:bg-gray-800 rounded-[8px]"
       >
         Withdraw
       </button>
 
       <button
+        @click.prevent="handleType('deposit')"
+        :class="data.type === 'deposit' && 'bg-blue-400'"
         class="px-4 py-2 text-xxs text-font-2 hover:bg-gray-800 rounded-[8px]"
       >
         Deposit
       </button>
 
       <button
+        @click.prevent="handleType('transfer')"
+        :class="data.type === 'transfer' && 'bg-blue-400'"
         class="px-4 py-2 text-xxs text-font-2 hover:bg-gray-800 rounded-[8px]"
       >
         Transfer
