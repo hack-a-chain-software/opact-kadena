@@ -43,19 +43,31 @@ const formattedAmount = computed(() => {
   return formatBigNumberWithDecimals(props.amount, decimals)
 })
 
+const isNegative = computed(() => {
+  if (props.type === 'withdraw') {
+    return true
+  }
+
+  if (props.type === 'deposit') {
+    return false
+  }
+
+  return false
+})
+
+
 </script>
 
 <template>
   <div>
-    <div
+    <!-- <div
       class="pb-2"
     >
       <span
         v-text="formattedDate"
         class="text-xxs text-font-2"
       />
-    </div>
-
+    </div> -->
     <div>
       <div
         class="flex px-4 py-3 bg-gray-800 rounded-[8px] items-center"
@@ -88,8 +100,9 @@ const formattedAmount = computed(() => {
         >
           <span
             class="text-xs text-green-500"
+            :class="isNegative ? 'text-red-500' : 'text-green-500' "
           >
-            + {{ formattedAmount  }} KDA
+            {{ isNegative ? '-' : '+' }} {{ formattedAmount  }} KDA
           </span>
         </div>
       </div>

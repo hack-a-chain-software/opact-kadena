@@ -2,6 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
 
+const router = useRouter()
+
 const wallet = useWalletStore()
 
 const { state, node } = storeToRefs(wallet)
@@ -26,8 +28,8 @@ const { state, node } = storeToRefs(wallet)
         </div>
 
         <button
-          disabled
-          class="disabled:opacity-50 disabled:cursor-not-allowed"
+          @click.prevent="router.push('history')"
+          class="disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80"
         >
           <span
             class="text-xxs text-blue-400"

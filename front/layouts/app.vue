@@ -86,7 +86,7 @@ const redirect = (path: string, skip: boolean) => {
 
     <template v-else>
       <div
-        class="hidden lg:flex min-w-[260px] p-6 bg-[#0c1015] bg-blur-[6px] border-r-2 border-[#363B42] relative z-[2]"
+        class="hidden lg:flex min-w-[260px] p-6 bg-[#0c1015] bg-blur-[6px] border-r-2 border-[#363B42] relative z-[2] mb-[-40px]"
       >
         <div
           class="space-y-12"

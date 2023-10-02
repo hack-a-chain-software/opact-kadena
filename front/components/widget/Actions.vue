@@ -27,7 +27,7 @@ const data = reactive({
 
     <div class="gap-2 grid grid-cols-3">
       <button
-        class="bg-gray-800 rounded-[8px] h-[72px] px-4"
+        class="bg-gray-800 rounded-[8px] h-[72px] px-4 hover:opacity-80"
         @click.prevent="router.push('/transfer')"
       >
         <div class="pb-1">
@@ -42,7 +42,7 @@ const data = reactive({
       </button>
 
       <button
-        class="bg-gray-800 rounded-[8px] h-[72px] px-4"
+        class="bg-gray-800 rounded-[8px] h-[72px] px-4 hover:opacity-80"
         @click.prevent="data.showReceiveModal = true"
       >
         <div class="pb-1">
@@ -57,7 +57,7 @@ const data = reactive({
       </button>
 
       <button
-        class="bg-gray-800 rounded-[8px] px-4 h-[72px]"
+        class="bg-gray-800 rounded-[8px] px-4 h-[72px] hover:opacity-80"
         @click.prevent="router.push('/deposit/token')"
       >
         <div class="pb-1">

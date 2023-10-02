@@ -1,11 +1,8 @@
-
-import { log } from 'console';
-
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { format } from 'date-fns'
 import { shortenAddress } from '~/utils/string'
 import { getDecimals, formatBigNumberWithDecimals } from 'opact-sdk'
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
 const icons = {
   withdraw: 'receiptSend',
@@ -47,6 +44,18 @@ const formattedAmount = computed(() => {
   const decimals = getDecimals(12)
 
   return formatBigNumberWithDecimals(props.amount, decimals)
+})
+
+const isNegative = computed(() => {
+  if (props.type === 'withdraw') {
+    return true
+  }
+
+  if (props.type === 'deposit') {
+    return false
+  }
+
+  return false
 })
 
 </script>
@@ -105,9 +114,10 @@ const formattedAmount = computed(() => {
       class="text-end"
     >
       <span
-        class="text-xs text-green-500"
+        class="text-xs "
+        :class="isNegative ? 'text-red-500' : 'text-green-500' "
       >
-        + {{ formattedAmount  }} KDA
+        {{ isNegative ? '-' : '+' }} {{ formattedAmount  }} KDA
       </span>
     </div>
   </div>

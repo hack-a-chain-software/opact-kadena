@@ -32,6 +32,21 @@ useHead({
 
 <style>
 body {
+  background-color: #060a0f;
+}
+
+body::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  width: 8px !important;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 20px !important;
+  background-color: #202327cc !important;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5) !important;
+}
+
+body {
   background: #060A0F;
 }
 
