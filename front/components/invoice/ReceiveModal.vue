@@ -153,7 +153,7 @@ const redirect = () => {
                 >
                   <Icon
                     name="close"
-                    class="rotate-90 w-4 h-4 text-blue-400"
+                    class="rotate-90 w-4 h-4 text-blue-400 lg:w-6 lg:h-6"
                   />
                 </button>
               </div>
@@ -232,7 +232,7 @@ const redirect = () => {
 
               <div v-else>
                 <div>
-                  <span class="text-xxs text-font-2">
+                  <span class="text-xxs text-font-2 lg:text-sm">
                     Receive payments
                   </span>
                 </div>
@@ -258,7 +258,7 @@ const redirect = () => {
                   >
                     <div class="w-[calc(100%-40px)] text-left">
                       <span
-                        class="text-xs text-font-1 break-words
+                        class="text-xs lg:text-sm text-font-1 break-words
                         group-active:text-blue-400"
                         v-text="
                           `${baseUrl}/invoice?${params}`
