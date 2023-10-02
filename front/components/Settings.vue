@@ -1,14 +1,17 @@
 <script lang="ts" setup>
 import {
-  TransitionRoot,
-  TransitionChild,
   Dialog,
   DialogPanel,
-  DialogTitle
+  DialogTitle,
+  TransitionRoot,
+  TransitionChild,
 } from '@headlessui/vue'
+import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
+
+const { node } = storeToRefs(wallet)
 
 withDefaults(
   defineProps<{
@@ -91,37 +94,95 @@ const emit = defineEmits(['close'])
                 </DialogTitle>
               </div>
 
-              <button
-                class="
-                  w-full
-                  p-4
-                  bg-gray-700
-                  flex
-                  items-center
-                  justify-between
-                  rounded-[8px]
-                "
-                @click.prevent="wallet.logout()"
+              <div
+                class="space-y-1"
               >
                 <div>
-                  <span
-                    class="
-                      text-xs
-                      opacity-[0.9]
-                      text-font-1
-                    "
-                  >
-                    Logout
+                  <span class="lg:text-sm text-font-2 lg:text-font-1 text-xxs">
+                    Wallet Address
                   </span>
                 </div>
 
+                <button
+                  class="
+                    p-4
+                    rounded-[8px]
+                    bg-gray-700
+                    flex
+                    items-center
+                    justify-between
+                    gap-4
+                    w-full
+                    group
+                  "
+                  @click.prevent="
+                    copyToClipboard(
+                      `OZK${node.hexPub}`
+                    )
+                  "
+                >
+                  <div
+                    class="w-[calc(100%-40px)] text-left"
+                  >
+                    <span
+                      class="
+                        text-xs text-font-1
+                        break-words
+                        group-active:text-blue-400
+                      "
+                      v-text="
+                        `OZK${node.hexPub}`
+                      "
+                    />
+                  </div>
+
+                  <div class="w-6 h-6 text-font-1 group-active:text-blue-400">
+                    <Icon name="copy" class="w-6 h-6" />
+                  </div>
+                </button>
+              </div>
+
+              <div
+                class="space-y-1"
+              >
                 <div>
-                  <Icon
-                    name="logout"
-                    class="w-6 h-6 text-font-1"
-                  />
+                  <span class="lg:text-sm text-font-2 lg:text-font-1 text-xxs">
+                    Actions
+                  </span>
                 </div>
-              </button>
+
+                <button
+                  class="
+                    w-full
+                    p-4
+                    bg-gray-700
+                    flex
+                    items-center
+                    justify-between
+                    rounded-[8px]
+                  "
+                  @click.prevent="wallet.logout()"
+                >
+                  <div>
+                    <span
+                      class="
+                        text-xs
+                        opacity-[0.9]
+                        text-font-1
+                      "
+                    >
+                      Logout
+                    </span>
+                  </div>
+
+                  <div>
+                    <Icon
+                      name="logout"
+                      class="w-6 h-6 text-font-1"
+                    />
+                  </div>
+                </button>
+              </div>
             </DialogPanel>
           </TransitionChild>
         </div>

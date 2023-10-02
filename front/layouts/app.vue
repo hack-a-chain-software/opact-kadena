@@ -46,7 +46,7 @@ const routes = [
     disabled: false,
     path: 'settings',
     label: 'Settings',
-    icon: 'settings'
+    icon: 'iconSettings'
   }
 ]
 
@@ -86,15 +86,19 @@ const redirect = (path: string, skip: boolean) => {
 
     <template v-else>
       <div
-        class="hidden lg:flex min-w-[260px] p-6 bg-[#0c1015] bg-blur-[6px] border-r-2 border-[#363B42] relative z-[2] mb-[-40px]"
+        class="hidden lg:flex lg:max-w-[119px] xl:min-w-[260px] p-6 bg-[#0c1015] bg-blur-[6px] border-r-2 border-[#363B42] relative z-[2] mb-[-40px]"
       >
         <div
           class="space-y-12"
         >
-          <Icon
-            name="logo"
-            class="h-8 w-[190px]"
-          />
+          <div
+            class="w-[50px] xl:w-auto overflow-hidden"
+          >
+            <Icon
+              name="logo"
+              class="h-8 w-[190px]"
+            />
+          </div>
 
           <div>
             <ul
@@ -114,7 +118,9 @@ const redirect = (path: string, skip: boolean) => {
                   />
                 </div>
 
-                <div>
+                <div
+                  class="hidden xl:block"
+                >
                   <span
                     class="text-xs"
                     v-text="label"
@@ -237,7 +243,7 @@ const redirect = (path: string, skip: boolean) => {
             @click.prevent="data.showSettings = true"
           >
             <Icon
-              name="settings"
+              name="iconSettings"
               class="w-5 h-5 text-font-1"
             />
           </button>

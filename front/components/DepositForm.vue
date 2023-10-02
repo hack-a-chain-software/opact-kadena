@@ -193,7 +193,7 @@ const deposit = async () => {
         <span
           class="text-xxxs hover:underline"
           :class="data.balance > 0 ? 'text-green-500' : 'text-red-500'"
-          v-text="`Balance: ${data.balance}`"
+          v-text="`Balance: ${data.balance} ${data.token.symbol}`"
         />
       </button>
 

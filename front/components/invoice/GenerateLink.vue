@@ -145,7 +145,7 @@ const close = () => {
               </div>
 
               <div>
-                <span class="text-sm text-font-2 lg:text-font-1 text-xxs">
+                <span class="lg:text-sm text-font-2 lg:text-font-1 text-xxs">
                   Copy or share the payment link
                 </span>
               </div>
