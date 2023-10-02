@@ -7,6 +7,8 @@ import { computeWihtdrawParams, computeTransferParams } from '~/utils/sdk'
 
 const wallet = useWalletStore()
 
+const { provider, logout } = useExtensions()
+
 const {
   node,
   state,
@@ -19,6 +21,7 @@ const data = reactive({
   amount: 0,
   show: false,
   loading: false,
+  showConnect: false,
   showWalletConnector: false,
   loadingMessage: 'Generating ZK Proof...',
   error: '',
@@ -70,7 +73,16 @@ const send = async () => {
       )
     }
 
-    await sendPactTransaction(data.addressTo, params, (message: string) => data.loadingMessage = message)
+    if (data.token.id === 0) {
+      await sendPactTransaction(data.addressTo, params, (message: string) => data.loadingMessage = message)
+    } else {
+      await provider.value.transaction(
+        params,
+        (message: string) => data.loadingMessage = message,
+        true,
+        data.addressTo
+      )
+    }
 
     wallet.loadState()
     router.push('/home')
@@ -247,6 +259,32 @@ const send = async () => {
 
     <div class="mt-full lg:mt-[40px]">
       <button
+        v-if="!provider && data.token.id > 0 && !data.addressTo.includes('OZK')"
+        :disabled="!data.token || !data.amount"
+        class="
+          w-full
+          flex
+          items-center
+          justify-center
+          h-[44px]
+          py-3
+          px-4
+          rounded-[12px]
+          relative
+          disabled:cursor-not-allowed
+        "
+        :class="
+          !data.token || !data.amount
+            ? 'bg-gray-700'
+            : 'bg-blue-gradient'
+        "
+        @click.prevent="data.showConnect = true"
+      >
+        <span class="text-font-1"> Connect Wallet </span>
+      </button>
+
+      <button
+        v-else
         :disabled="
           !data.token || !data.amount || !data.addressTo
         "
@@ -276,8 +314,9 @@ const send = async () => {
     </div>
 
     <WalletConnector
-      :show="data.showWalletConnector"
-      @close="data.showWalletConnector = false"
+      :show="data.showConnect"
+      @close="data.showConnect = false"
+      @connected="data.showConnect = false"
     />
 
     <SelectToken

@@ -6,7 +6,6 @@ import {
   TransitionRoot,
   DialogTitle
 } from '@headlessui/vue'
-import { storeToRefs } from 'pinia';
 
 import { useWalletStore } from '~/stores/wallet'
 

@@ -24,6 +24,7 @@
     "@vue/runtime-core": "^3.3.4",
     "@vue/runtime-dom": "^3.3.4",
     "@vue/shared": "^3.3.4",
+    "@vuepic/vue-datepicker": "^7.0.0",
     "@vueuse/core": "^10.1.2",
     "@vueuse/motion": "^2.0.0",
     "@wagmi/core": "^1.3.7",

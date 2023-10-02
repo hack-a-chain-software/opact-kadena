@@ -19,6 +19,9 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxtjs/google-fonts'
   ],
+  build: {
+    transpile: ['@vuepic/vue-datepicker']
+  },
   postcss: {
     plugins: {
       tailwindcss: {},

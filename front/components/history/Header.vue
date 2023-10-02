@@ -1,5 +1,15 @@
 <script lang="ts" setup>
+import { reactive } from 'vue'
 
+const data = reactive({
+  range: [],
+  showPicker: false,
+})
+
+const selectedPicker = (range: any) => {
+  data.range = range
+  data.showPicker = false
+}
 </script>
 
 <template>
@@ -54,6 +64,7 @@
       </div>
 
       <div
+        @click.prevent="data.showPicker = true"
         class="border border-gray-600 rounded-[8px] p-4  flex items-center space-x-2 cursor-pointer"
       >
         <div>
@@ -119,5 +130,11 @@
         Transfer
       </button>
     </div>
+
+    <DatePicker
+      :show="data.showPicker"
+      @close="data.showPicker = false"
+      @selected="selectedPicker"
+    />
   </div>
 </template>

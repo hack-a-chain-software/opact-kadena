@@ -8,6 +8,23 @@ export const getPactCodeForFaucet = (accountName: string, preffix = 'coin') => {
   return `(${preffix}.create-account ${JSON.stringify(accountName)} (read-keyset "${accountName}")) (${preffix}.coinbase ${JSON.stringify(accountName)} (read-keyset "${accountName}") 100.0)`
 }
 
+export const getCapsForWithdraw = (accountName: string, amount: number | string, preffix = 'coin', receiver) => {
+  return [
+    Pact.lang.mkCap(
+      'Coin Transfer',
+      'Capability to transfer designated amount of coin from sender to receiver',
+      `${preffix}.TRANSFER`,
+      ['opact-contract', receiver, Number((extData.extAmount * (-1)).toFixed(1))]
+    ),
+    Pact.lang.mkCap(
+      'Coin Transfer for Gas',
+      'Capability to transfer gas fee from signer to gas payer',
+      'coin.TRANSFER',
+      [accountName, 'opact-gas-payer', Number((1).toFixed(1))]
+    )
+  ]
+}
+
 export const getCapsForDeposit = (accountName: string, amount: number | string, preffix = 'coin') => {
   return [
     Pact.lang.mkCap(
@@ -93,17 +110,19 @@ export const sendPactTransaction = async (
 
   callbackProgress('Sending your proof to relayer...')
 
+  const preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
+
   const cap1 = Pact.lang.mkCap(
     'Coin Transfer',
     'Capability to transfer designated amount of coin from sender to receiver',
-    'coin.TRANSFER',
+    `${preffix}.TRANSFER`,
     ['opact-contract', receiver, Number((extData.extAmount * (-1)).toFixed(1))]
   )
 
   const cap2 = Pact.lang.mkCap(
     'Coin Transfer for Gas',
     'Capability to transfer gas fee from sender to gas payer',
-    'coin.TRANSFER',
+    `${preffix}.TRANSFER`,
     ['opact-contract', 'opact-gas-payer', 1.0]
   )
 
@@ -132,7 +151,8 @@ export const sendPactTransaction = async (
           name: tokenSpec.refSpec.name
         }],
         refName: {
-          name: tokenSpec.refName.name
+          name: tokenSpec.refName.name,
+          namespace: tokenSpec.refName.namespace || undefined
         }
       }
     },

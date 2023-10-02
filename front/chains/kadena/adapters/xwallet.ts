@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import Pact from 'pact-lang-api'
-import { getPactCodeForFaucet, computePactCode } from '~/utils/kadena'
+import { getPactCodeForFaucet, computePactCode, getCapsForDeposit, getCapsForWithdraw } from '~/utils/kadena'
 
 const RPC = process.env.NODE_ENV !== 'development'
   ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
@@ -116,6 +116,8 @@ export const useProvider = () => {
       tokenSpec
     }: any,
     callbackProgress: any,
+    isWithdrawTransfer = false,
+    receiver = ''
   ) => {
     const accountName = account.value.account.publicKey
     const publickey = account.value.account.publicKey
@@ -124,7 +126,13 @@ export const useProvider = () => {
 
     const preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
 
-    const caps = getCapsForDeposit(accountName, extData.extAmount, preffix)
+    let caps
+
+    if (isWithdrawTransfer) {
+      caps = getCapsForWithdraw(accountName, extData.extAmount, preffix, receiver)
+    } else {
+      caps = getCapsForDeposit(accountName, extData.extAmount, preffix)
+    }
 
     callbackProgress('Await sign...')
 
