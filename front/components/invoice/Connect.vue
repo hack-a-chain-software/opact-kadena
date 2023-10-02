@@ -1,5 +1,20 @@
 <script lang="ts" setup>
 const emits = defineEmits(['changeStep'])
+import { shortenAddress } from '~/utils/string'
+
+const route = useRoute()
+
+const params = computed<any>(() => {
+  const {
+    amount = '',
+    pubkey = ''
+  } = route.query || {}
+
+  return {
+    amount,
+    pubkey
+  }
+})
 </script>
 
 <template>
@@ -10,14 +25,19 @@ const emits = defineEmits(['changeStep'])
       </span>
     </div>
 
-    <div class="pt-2">
-      <span class="text-xs text-font-2">
-        "Opact user" requested a payment of 100 KDA. Connect
-        your wallet to proceed.
+    <div class="pt-2 flex flex-col space-y-3">
+      <span class="text-xs text-font-2 break-words">
+        The user <span class="text-font-1">"OZK{{ shortenAddress(params.pubkey) }}"</span> requested a payment.
+      </span>
+
+      <span
+        class="text-xs text-font-2"
+      >
+        Connect your wallet to proceed.
       </span>
     </div>
 
-    <div class="pt-6">
+    <div class="pt-4">
       <button
         class="
           w-full

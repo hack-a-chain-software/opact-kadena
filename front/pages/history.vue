@@ -120,11 +120,28 @@ const receipts = computed(() => {
       @update-search="updateSearch($event)"
     />
 
-    <HistoryGroup
-      v-bind="receipt"
-      :key="receipt.date"
-      v-for="receipt in receipts"
-    />
+    <div
+      v-if="state.receipts.length > 0"
+      class="w-full"
+    >
+      <HistoryGroup
+        v-bind="receipt"
+        :key="receipt.date"
+        v-for="receipt in receipts"
+      />
+
+    </div>
+
+    <div
+      v-else
+      class="flex justify-center py-[200px]"
+    >
+      <span
+        class="text-font-1 text-md"
+      >
+        You don't have receipts
+      </span>
+    </div>
   </div>
 </template>
 

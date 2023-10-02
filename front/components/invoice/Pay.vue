@@ -137,7 +137,9 @@ const deposit = async () => {
                 w-max
                 items-center
                 disabled:opacity-[0.8]
+                disabled:cursor-not-allowed
               "
+              :disabled="!!params.tokenId"
               @click.prevent="data.show = true"
             >
               <div class="shrink-0">

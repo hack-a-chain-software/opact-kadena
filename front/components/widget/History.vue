@@ -42,65 +42,28 @@ const { state, node } = storeToRefs(wallet)
       <div
         class="flex flex-col gap-3"
       >
-        <HistoryWidgetItem
-          v-bind="receipt"
-          :key="receipt.date"
-          :pubkey="node.pubkey"
-          v-for="receipt in state.receipts.slice(0, 5)"
-        />
+        <div
+          v-if="state.receipts.length > 0"
+          class="flex flex-col gap-3"
+        >
+          <HistoryWidgetItem
+            v-bind="receipt"
+            :key="receipt.date"
+            :pubkey="node.pubkey"
+            v-for="receipt in state.receipts.slice(0, 5)"
+          />
+        </div>
 
-        <!-- <div>
-          <div
-            class="pb-2"
+        <div
+          v-else
+          class="flex justify-center py-[38px]"
+        >
+          <span
+            class="text-font-1 text-xs"
           >
-            <span
-              class="text-xxs text-font-2"
-            >
-              Sep 10, 2023
-            </span>
-          </div>
-
-          <div>
-            <div
-              class="flex px-4 py-3 bg-gray-800 rounded-[8px] items-center"
-            >
-              <div
-                class="w-[38px] h-[38px] rounded-full bg-gray-600 flex items-center justify-center mr-3"
-              >
-                <Icon
-                  name="arrow"
-                  class="text-white"
-                />
-              </div>
-
-              <div>
-                <span
-                  class="text-font-1 text-xs"
-                >
-                  Receive
-                </span>
-
-                <div>
-                  <span
-                    class="text-xxs text-font-2"
-                  >
-                    5f45x...121f
-                  </span>
-                </div>
-              </div>
-
-              <div
-                class="ml-auto"
-              >
-                <span
-                  class="text-xs text-green-500"
-                >
-                  +65 KDA
-                </span>
-              </div>
-            </div>
-          </div>
-        </div> -->
+            You don't have receipts
+          </span>
+        </div>
       </div>
     </div>
   </div>

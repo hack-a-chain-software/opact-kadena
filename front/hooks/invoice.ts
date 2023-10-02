@@ -92,15 +92,15 @@ export const useInvoice = () => {
 
   const params = computed<any>(() => {
     const {
-      tokenId = '',
+      token = '',
       amount = '',
       pubkey = ''
     } = route.query || {}
 
     return {
-      tokenId,
       amount,
-      pubkey
+      pubkey,
+      tokenId: token,
     }
   })
 
