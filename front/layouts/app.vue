@@ -1,75 +1,40 @@
 <script setup lang="ts">
+import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
-import { computeLocalTestnet } from 'opact-sdk'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
-const router = useRouter()
+const { connected, isLoading, node } = storeToRefs(wallet)
 
-const { connected, isLoading, cache } = storeToRefs(wallet)
+const computeState = (secret: any) => {
+  return new Promise((resolve) => {
+    const worker = new Worker('/data.41198612.js', { type: 'module' })
+    worker.postMessage({ input: { secret } })
 
-const data = reactive({
-  showSettings: false
+    worker.addEventListener('message', (e) => {
+      if (e.data.type === 'done') {
+        resolve(e.data.payload)
+        worker.terminate()
+      }
+    }, false)
+  })
+}
+
+onBeforeMount(() => {
+  wallet.reconnect()
 })
 
-const { data: state } = await useLazyAsyncData(
-  'state',
-  () => computeLocalTestnet(cache.value.pvtkey)
-)
-
-watch(state, (newState) => {
+watch(node, async (newState) => {
   if (!newState) {
     return
   }
 
-  wallet.reconnect()
-  wallet.getUserData(newState)
+  console.log('fooo', newState.pvtkey)
+
+  const state = await computeState(newState.pvtkey)
+  wallet.getUserData(state)
 })
-
-const route = useRoute()
-
-const routes = [
-  {
-    disabled: false,
-    path: 'home',
-    label: 'Home',
-    icon: 'wallet'
-  },
-  {
-    disabled: false,
-    path: 'history',
-    label: 'History',
-    icon: 'chart'
-  },
-  {
-    disabled: false,
-    path: 'settings',
-    label: 'Settings',
-    icon: 'iconSettings'
-  }
-]
-
-const titles = {
-  app: 'Dashboard',
-  send: 'Send Token',
-  receive: 'Receive',
-  deposit: 'Deposit'
-}
-
-const redirect = (path: string, skip: boolean) => {
-  if (skip) {
-    return
-  }
-
-  if (path === 'settings') {
-    data.showSettings = true
-
-    return
-  }
-
-  router.push(`/${path}`)
-}
 </script>
 
 <template>
@@ -85,179 +50,15 @@ const redirect = (path: string, skip: boolean) => {
     </div>
 
     <template v-else>
-      <div
-        class="hidden lg:flex lg:max-w-[119px] xl:min-w-[260px] p-6 bg-[#0c1015] bg-blur-[6px] border-r-2 border-[#363B42] relative z-[2] mb-[-40px]"
-      >
-        <div
-          class="space-y-12"
-        >
-          <div
-            class="w-[50px] xl:w-auto overflow-hidden"
-          >
-            <Icon
-              name="logo"
-              class="h-8 w-[190px]"
-            />
-          </div>
+      <LayoutSidebar />
 
-          <div>
-            <ul
-              class="space-y-6"
-            >
-              <li
-                v-for="{ label, icon, path, disabled } in routes"
-                :key="label"
-                :class="[route.name === path ? 'text-blue-400' : 'text-font-2 hover:bg-gray-800 cursor-pointer', disabled && '!cursor-not-allowed opacity-50']"
-                class="flex items-center py-3 px-4 rounded-xl space-x-2"
-                @click.prevent="redirect(path, disabled)"
-              >
-                <div>
-                  <Icon
-                    :name="icon"
-                    class="w-8 h-8"
-                  />
-                </div>
+      <LayoutTopbar />
 
-                <div
-                  class="hidden xl:block"
-                >
-                  <span
-                    class="text-xs"
-                    v-text="label"
-                  />
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="
-          absolute
-          right-0
-          h-[64px]
-          px-8
-          items-center
-          w-[calc(100%-260px)]
-          z-[10]
-          hidden
-          lg:flex
-          justify-between
-        "
-      >
-        <div>
-          <span
-            class="text-font-1 text-sm"
-            v-text="(titles[route.name])"
-          />
-        </div>
-
-        <button
-          @click.prevent="router.push('/faucet')"
-          class="
-            px-4
-            py-2
-            bg-[#0E1319]
-            border border-gray-600
-            rounded-[8px]
-            flex justify-center items-center gap-1
-            hover:opacity-80
-          "
-        >
-          <span
-            class="text-font-1 text-xxs"
-          >
-            Faucet
-          </span>
-
-          <Icon
-            name="chevron"
-            class="text-font-1 -rotate-90"
-          />
-        </button>
-      </div>
-
-      <div
-        class="absolute z-[0] w-full hidden lg:block min-w-[1920px] select-none pointer-events-none"
-      >
-        <img
-          src="/bg-app.png"
-          class="w-full w-full max-h-[319px]"
-        >
-      </div>
-
-      <div
-        class="
-          lg:hidden
-          h-[60px]
-          py-3
-          px-6
-          flex
-          justify-between
-          items-center
-          pt-8
-        "
-      >
-        <div>
-          <Icon name="minilogo" class="w-[30px] h-[30px]" />
-        </div>
-
-        <div>
-          <button
-            class="
-              flex
-              items-center
-              justify-center
-              rounded-[30px]
-              px-4
-              py-2.5
-              bg-gray-800
-              space-x-2
-            "
-          >
-            <span class="text-xxxs font-medium text-font-1">
-              KADENA
-            </span>
-
-            <div class="mr-[-4px]">
-              <Icon
-                name="chevron"
-                class="w-5 h-5 mb-0.5 text-white"
-              />
-            </div>
-          </button>
-        </div>
-
-        <div>
-          <button
-            class="
-              rounded-full
-              bg-gray-800
-              w-9
-              h-9
-              flex
-              items-center
-              justify-center
-            "
-            @click.prevent="data.showSettings = true"
-          >
-            <Icon
-              name="iconSettings"
-              class="w-5 h-5 text-font-1"
-            />
-          </button>
-        </div>
-      </div>
+      <LayoutBottombar />
 
       <div class="px-4 lg:w-full lg:pt-[96px] relative z-[2]">
         <slot />
       </div>
     </template>
-
-    <Settings
-      :show="data.showSettings"
-      @close="data.showSettings = false"
-    />
   </div>
 </template>

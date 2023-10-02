@@ -12,7 +12,7 @@ const emits = defineEmits(['changeStep'])
 
     <div class="pt-[32px]">
       <span class="text-xs text-font-1">
-        Found Account
+        Fund Account
       </span>
     </div>
 
