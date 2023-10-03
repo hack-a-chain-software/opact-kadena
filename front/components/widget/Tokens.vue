@@ -158,13 +158,13 @@ const data = reactive({
         class="pt-[16px] space-y-3"
       >
         <div
-          v-if="userData?.length > 0"
+          v-if="Object.keys(userData).length > 0"
         >
           <TokensItem
-            :token="token"
-            :balance="balance"
-            :key="`${token.id}-${balance.toString()}`"
-            v-for="{ balance, token } in userData"
+            :token="tree.token"
+            :balance="tree.balance"
+            v-for="tree of userData"
+            :key="`${tree.token.id}-${tree.balance.toString()}`"
           />
         </div>
 

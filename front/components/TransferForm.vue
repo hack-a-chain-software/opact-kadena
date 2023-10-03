@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
+import { tokens } from '~/utils/constants'
 import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 import { sendPactTransaction } from '~/utils/kadena'
@@ -9,7 +10,7 @@ import { computeWihtdrawParams, computeTransferParams } from '~/utils/sdk'
 const {
   state,
   userData,
-  updateUserData
+  loadAppState
 } = useAppState()
 
 const wallet = useWalletStore()
@@ -30,23 +31,7 @@ const data = reactive({
   showWalletConnector: false,
   loadingMessage: 'Generating ZK Proof...',
   error: '',
-  token: {
-    id: 1,
-    icon: '/kda.png',
-    name: 'Kadena',
-    symbol: 'KDA',
-    namespace: {
-      id: '',
-      refName: {
-        name: 'coin',
-        namespace: ''
-      },
-      refSpec: {
-        name: 'fungible-v2',
-        namespace: ''
-      }
-    }
-  },
+  token: tokens[0],
   showCollapsible: false,
   addressTo: ''
 })
@@ -64,7 +49,7 @@ const send = async () => {
         data.addressTo.replace('OZK', '').trim(),
         node.value,
         state.value.commitments,
-        userData.value[0],
+        userData.value[data.token.id],
         data.token.namespace
       )
     } else {
@@ -73,7 +58,7 @@ const send = async () => {
         data.addressTo,
         node.value,
         state.value.commitments,
-        userData.value[0],
+        userData.value[data.token.id],
         data.token.namespace
       )
     }
@@ -89,8 +74,8 @@ const send = async () => {
       )
     }
 
+    loadAppState(node.value.pvtkey)
     router.push('/home')
-    updateUserData(params.batch.utxosOut, params.batch.utxosIn, data.token.id, Number(data.amount), -1)
   } catch (e) {
     logout()
     console.warn(e)

@@ -34,19 +34,24 @@ export const useAppState = () => {
 
     const computedState = await computeState(secret)
 
-    const computedUserData = computeUserData(computedState, secret)
+    console.log(computedState)
 
-    console.log(computedUserData)
+    const computedUserData = computeUserData(computedState, secret)
 
     isLoading.value = false
     state.value = computedState
-    userData.value = [...Object.values(computedUserData)]
+    userData.value = computedUserData
   }
 
   const updateUserData = (utxosOut: any[], utxosIn: any[], tokenId: any, amount: any, flag = 1) => {
     isLoading.value = true
 
-    const treeBalance = userData.value.find(({ token }: any) => token.id === tokenId)
+    state.value.commitments = [
+      ...state.value.commitments,
+      ...utxosOut.map(({ hash }: any) => ({ value: hash.toString() }))
+    ]
+
+    const treeBalance = userData.value[tokenId]
 
     treeBalance.balance = treeBalance.balance + BigInt(formatInteger(amount * flag, 12))
 

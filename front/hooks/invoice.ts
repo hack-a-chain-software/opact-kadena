@@ -1,4 +1,5 @@
 import { reactive, computed } from 'vue'
+import { tokens } from '~/utils/constants'
 import pay from '~/components/invoice/Pay.vue'
 import success from '~/components/Success.vue'
 import provider from '~/components/Provider.vue'
@@ -10,43 +11,6 @@ const form = {
   success,
   provider
 }
-
-const tokens = [
-  {
-    id: 0,
-    icon: '/kda.png',
-    name: 'Kadena',
-    symbol: 'KDA',
-    namespace: {
-      id: '',
-      refName: {
-        name: 'coin',
-        namespace: ''
-      },
-      refSpec: {
-        name: 'fungible-v2',
-        namespace: ''
-      }
-    }
-  },
-  {
-    id: 1,
-    icon: '/kdx.png',
-    name: 'Kaddex',
-    symbol: 'KDX',
-    namespace: {
-      id: '',
-      refName: {
-        name: 'opact-coin',
-        namespace: 'test'
-      },
-      refSpec: {
-        name: 'fungible-v2',
-        namespace: ''
-      }
-    }
-  }
-]
 
 export type FormType = 'create' | 'connect' | 'recovery' | 'mnemonic' | 'verify'
 
@@ -69,23 +33,7 @@ export const useInvoice = () => {
     showConnect: false,
     depositMessage: 'Loading Metadata',
     showCollapsible: false,
-    token: {
-      id: 0,
-      icon: '/kda.png',
-      name: 'Kadena',
-      symbol: 'KDA',
-      namespace: {
-        id: '',
-        refName: {
-          name: 'coin',
-          namespace: ''
-        },
-        refSpec: {
-          name: 'fungible-v2',
-          namespace: ''
-        }
-      }
-    }
+    token: tokens[0]
   })
 
   const route = useRoute()
@@ -100,7 +48,7 @@ export const useInvoice = () => {
     return {
       amount,
       pubkey,
-      tokenId: token,
+      tokenId: token
     }
   })
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { tokens } from '~/utils/constants'
 
 const router = useRouter()
 
@@ -9,22 +10,7 @@ const data = reactive({
   error: '',
   show: false,
   amount: 100,
-  token: {
-    icon: '/kda.png',
-    name: 'Kadena',
-    symbol: 'KDA',
-    namespace: {
-      id: '',
-      refName: {
-        name: 'coin',
-        namespace: ''
-      },
-      refSpec: {
-        name: 'fungible-v2',
-        namespace: ''
-      }
-    }
-  },
+  token: tokens[0],
   showGenerateLink: false,
   loading: false
 })
