@@ -64,7 +64,7 @@ const send = async () => {
         data.addressTo.replace('OZK', '').trim(),
         node.value,
         state.value.commitments,
-        userData.value[1],
+        userData.value[0],
         data.token.namespace
       )
     } else {
@@ -73,7 +73,7 @@ const send = async () => {
         data.addressTo,
         node.value,
         state.value.commitments,
-        userData.value[1],
+        userData.value[0],
         data.token.namespace
       )
     }
