@@ -33,7 +33,7 @@ const select = (token: any) => {
 
 const tokens = [
   {
-    id: 0,
+    id: 1,
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA',
@@ -50,7 +50,7 @@ const tokens = [
     }
   },
   {
-    id: 1,
+    id: 2,
     icon: '/kdx.png',
     name: 'Kaddex',
     symbol: 'KDX',

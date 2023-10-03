@@ -5,7 +5,7 @@ import { computeDepositParams } from '~/utils/sdk'
 
 const form = {
   token,
-  deposit,
+  deposit
 }
 
 export type FormType = 'token' | 'deposit'
@@ -95,7 +95,6 @@ export const useDeposit = () => {
         return
       }
 
-      wallet.loadState()
       router.push('/home')
       logout()
     } catch (e) {

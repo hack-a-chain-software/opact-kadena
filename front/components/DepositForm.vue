@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { reactive, watch } from 'vue'
+import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 import { computeDepositParams } from '~/utils/sdk'
 
+const {
+  state,
+  loadAppState
+} = useAppState()
+
 const wallet = useWalletStore()
 
-const { node, state } = storeToRefs(wallet)
+const { node } = storeToRefs(wallet)
 
 const { provider, logout } = useExtensions()
 
@@ -24,7 +30,7 @@ const data = reactive({
   showCollapsible: false,
   depositMessage: 'Generating ZK Proof...',
   token: {
-    id: 0,
+    id: 1,
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA',
@@ -96,7 +102,7 @@ const deposit = async () => {
       (message: string) => data.depositMessage = message
     )
 
-    wallet.loadState()
+    loadAppState(node.value.pvtkey)
     router.push('/home')
   } catch (e) {
     console.warn(e)

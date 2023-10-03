@@ -63,7 +63,23 @@ export const useProvider = () => {
 
     const preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
 
-    const pactCode = getPactCodeForFaucet(accountName, preffix)
+    let withFund = false
+
+    try {
+      const {
+        result: {
+          status
+        }
+      } = await coinDetails(preffix)
+
+      if (status === 'failure') {
+        withFund = true
+      }
+    } catch(e) {
+      //
+    }
+
+    const pactCode = getPactCodeForFaucet(accountName, preffix, withFund)
 
     const cmd = await kadena.request({
       data: {

@@ -1,12 +1,17 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
+import { useAppState } from '~/hooks/state'
+
+const {
+  state
+} = useAppState()
 
 const router = useRouter()
 
 const wallet = useWalletStore()
 
-const { state, node } = storeToRefs(wallet)
+const { node } = storeToRefs(wallet)
 </script>
 
 <template>
@@ -43,14 +48,14 @@ const { state, node } = storeToRefs(wallet)
         class="flex flex-col gap-3"
       >
         <div
-          v-if="state.receipts.length > 0"
+          v-if="state?.receipts?.length > 0"
           class="flex flex-col gap-3"
         >
           <HistoryWidgetItem
             v-bind="receipt"
             :key="receipt.date"
             :pubkey="node.pubkey"
-            v-for="receipt in state.receipts.slice(0, 5)"
+            v-for="receipt in state?.receipts?.slice(0, 5)"
           />
         </div>
 

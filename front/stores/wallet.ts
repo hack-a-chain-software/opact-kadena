@@ -1,16 +1,7 @@
-import axios from 'axios'
 import { defineStore } from 'pinia'
-import {
-  groupUtxoByToken,
-  computeLocalTestnet,
-  getHDWalletFromMnemonic,
-} from 'opact-sdk'
-import { useAuthStorage } from '~/hooks/auth-storage'
+import { getHDWalletFromMnemonic } from 'opact-sdk'
 import { shortenAddress } from '~/utils/string'
-
-const RPC = process.env.NODE_ENV !== 'development'
-  ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata'
-  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
+import { useAuthStorage } from '~/hooks/auth-storage'
 
 export const useWalletStore = defineStore({
   id: 'opact-wallet',
@@ -19,14 +10,7 @@ export const useWalletStore = defineStore({
 
     return {
       cache,
-
-      balance: 0,
-
-      node: null,
-      state: null,
-      userData: null,
-
-      isLoading: true
+      node: null
     }
   },
 
@@ -44,48 +28,6 @@ export const useWalletStore = defineStore({
       shortenAddress(state.node.address)
   },
   actions: {
-    async getUserData (state: any) {
-      this.isLoading = true
-
-      let userData = {}
-
-      if (this.node) {
-        userData = groupUtxoByToken(
-          state.decryptedData,
-          state.nullifiers,
-          this.node.pvtkey
-        )
-      }
-
-      this.userData = userData
-      this.isLoading = false
-      this.state = state
-
-      return state
-    },
-
-    async loadState () {
-      this.isLoading = true
-
-      const state = await computeLocalTestnet(this.node.pvtkey) as any
-
-      let userData = null
-
-      if (this.node) {
-        userData = groupUtxoByToken(
-          state.decryptedData,
-          state.nullifiers,
-          this.node.pvtkey
-        )
-      }
-
-      this.state = state
-      this.isLoading = false
-      this.userData = userData
-
-      return state
-    },
-
     found (mnemonic: '') {
       const node: any = getHDWalletFromMnemonic(mnemonic)
 

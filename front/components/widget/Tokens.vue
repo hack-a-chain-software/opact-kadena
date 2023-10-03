@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/stores/wallet'
+import { useAppState } from '~/hooks/state'
 
-const wallet = useWalletStore()
-
-const { userData } = storeToRefs(wallet)
+const {
+  userData
+} = useAppState()
 
 const router = useRouter()
 
@@ -159,13 +158,13 @@ const data = reactive({
         class="pt-[16px] space-y-3"
       >
         <div
-          v-if="Object.keys(userData).length > 0"
+          v-if="userData?.length > 0"
         >
           <TokensItem
             :token="token"
-            :key="token.id"
             :balance="balance"
-            v-for="{ balance, token } of userData"
+            :key="`${token.id}-${balance.toString()}`"
+            v-for="{ balance, token } in userData"
           />
         </div>
 

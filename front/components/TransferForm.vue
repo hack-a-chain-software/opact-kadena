@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 import { sendPactTransaction } from '~/utils/kadena'
 import { computeWihtdrawParams, computeTransferParams } from '~/utils/sdk'
+
+const {
+  state,
+  userData,
+  loadAppState
+} = useAppState()
 
 const wallet = useWalletStore()
 
 const { provider, logout } = useExtensions()
 
 const {
-  node,
-  state,
-  userData,
+  node
 } = storeToRefs(wallet)
 
 const router = useRouter()
@@ -84,11 +89,12 @@ const send = async () => {
       )
     }
 
-    wallet.loadState()
+    loadAppState(node.value.pvtkey)
     router.push('/home')
   } catch (e) {
     console.warn(e)
   } finally {
+    logout()
     data.loading = false
     data.loadingMessage = 'Generating ZK Proof...'
   }

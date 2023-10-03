@@ -161,6 +161,7 @@ export const computeDepositParams = async (
   return {
     args,
     proof,
+    batch,
     extData,
     tokenSpec
   }

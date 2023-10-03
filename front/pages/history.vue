@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/stores/wallet'
 import { format, getDayOfYear, isWithinInterval } from 'date-fns'
+import { useAppState } from '~/hooks/state'
 
-const wallet = useWalletStore()
-
-const { state } = storeToRefs(wallet)
+const {
+  state
+} = useAppState()
 
 definePageMeta({
   layout: 'app',
@@ -20,8 +19,8 @@ useHead({
 const data = reactive<any>({
   range: [],
   filters: [
-    'search',
-  ],
+    'search'
+  ]
 })
 
 const range = ref([])
@@ -36,10 +35,9 @@ const filterValidation = {
       const flag = new Date(date)
 
       return isWithinInterval(flag, {
-          start: range.value[0] || new Date(),
-          end: range.value[1] || new Date()
-        }
-      )
+        start: range.value[0] || new Date(),
+        end: range.value[1] || new Date()
+      })
     }
   },
   type: {
@@ -99,7 +97,7 @@ const receipts = computed(() => {
     if (!acc[flag]) {
       acc[flag] = {
         receipts: [],
-        date: format(new Date(curr.date), 'MMM dd, yyyy'),
+        date: format(new Date(curr.date), 'MMM dd, yyyy')
       }
     }
 
@@ -125,11 +123,10 @@ const receipts = computed(() => {
       class="w-full"
     >
       <HistoryGroup
+        v-for="receipt in receipts"
         v-bind="receipt"
         :key="receipt.date"
-        v-for="receipt in receipts"
       />
-
     </div>
 
     <div

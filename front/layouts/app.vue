@@ -1,39 +1,28 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
+import { onBeforeMount } from 'vue'
+import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
-const { connected, isLoading, node } = storeToRefs(wallet)
+const {
+  isLoading,
+  loadAppState
+} = useAppState()
 
-const computeState = (secret: any) => {
-  return new Promise((resolve) => {
-    const worker = new Worker('/data.41198612.js', { type: 'module' })
-    worker.postMessage({ input: { secret } })
-
-    worker.addEventListener('message', (e) => {
-      if (e.data.type === 'done') {
-        resolve(e.data.payload)
-        worker.terminate()
-      }
-    }, false)
-  })
-}
+const { connected, node } = storeToRefs(wallet)
 
 onBeforeMount(() => {
   wallet.reconnect()
 })
 
-watch(node, async (newState) => {
-  if (!newState) {
+watch(node, (newNode) => {
+  if (!newNode) {
     return
   }
 
-  console.log('fooo', newState.pvtkey)
-
-  const state = await computeState(newState.pvtkey)
-  wallet.getUserData(state)
+  loadAppState(newNode.pvtkey)
 })
 </script>
 
@@ -41,7 +30,7 @@ watch(node, async (newState) => {
   <div class="min-h-screen pb-[40px] flex flex-col lg:flex-row lg:w-full bg-dark-blue overflow-hidden relative">
     <div
       v-if="!connected || isLoading"
-      class="h-full w-full flex items-center justify-center"
+      class="flex items-center justify-center absolute bg-dark-blue h-screen w-screen z-[99999]"
     >
       <Icon
         name="minilogo"
