@@ -21,7 +21,8 @@ const titles = {
           h-[64px]
           px-8
           items-center
-          w-[calc(100%-260px)]
+          w-[calc(100%-115px)]
+          xl:w-[calc(100%-260px)]
           z-[10]
           hidden
           lg:flex
