@@ -55,6 +55,7 @@ export const computeWihtdrawParams = async (
   return {
     args,
     proof,
+    batch,
     extData,
     tokenSpec
   }
@@ -108,6 +109,7 @@ export const computeTransferParams = async (
   return {
     args,
     proof,
+    batch,
     extData,
     tokenSpec
   }

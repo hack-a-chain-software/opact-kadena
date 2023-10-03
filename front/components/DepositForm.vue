@@ -7,7 +7,7 @@ import { computeDepositParams } from '~/utils/sdk'
 
 const {
   state,
-  loadAppState
+  updateUserData
 } = useAppState()
 
 const wallet = useWalletStore()
@@ -102,8 +102,8 @@ const deposit = async () => {
       (message: string) => data.depositMessage = message
     )
 
-    loadAppState(node.value.pvtkey)
     router.push('/home')
+    updateUserData(transactionArgs.batch.utxosOut, transactionArgs.batch.utxosIn, data.token.id, Number(data.amount))
   } catch (e) {
     console.warn(e)
     data.depositing = false

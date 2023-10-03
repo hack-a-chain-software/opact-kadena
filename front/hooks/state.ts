@@ -1,4 +1,4 @@
-import { groupUtxoByToken } from 'opact-sdk'
+import { groupUtxoByToken, formatInteger } from 'opact-sdk'
 
 const userState = () => useState<any>('opact:userstate', () => null)
 const useOpactState = () => useState<any>('opact:state', () => null)
@@ -48,7 +48,7 @@ export const useAppState = () => {
 
     const treeBalance = userData.value.find(({ token }: any) => token.id === tokenId)
 
-    treeBalance.balance = treeBalance.balance + BigInt(amount * flag)
+    treeBalance.balance = treeBalance.balance + BigInt(formatInteger(amount * flag, 12))
 
     if (flag > 0) {
       treeBalance.utxos = [...treeBalance.utxos, ...utxosOut]
@@ -66,7 +66,7 @@ export const useAppState = () => {
 
     treeBalance.utxos = [...treeBalance.utxos, ...utxosOut]
 
-    userData.value[tokenId] = treeBalance
+    userData.value = [treeBalance]
 
     isLoading.value = false
   }

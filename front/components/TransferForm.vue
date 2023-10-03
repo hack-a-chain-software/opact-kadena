@@ -9,7 +9,7 @@ import { computeWihtdrawParams, computeTransferParams } from '~/utils/sdk'
 const {
   state,
   userData,
-  loadAppState
+  updateUserData
 } = useAppState()
 
 const wallet = useWalletStore()
@@ -31,7 +31,7 @@ const data = reactive({
   loadingMessage: 'Generating ZK Proof...',
   error: '',
   token: {
-    id: 0,
+    id: 1,
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA',
@@ -78,7 +78,7 @@ const send = async () => {
       )
     }
 
-    if (data.token.id === 0) {
+    if (data.token.id === 1) {
       await sendPactTransaction(data.addressTo, params, (message: string) => data.loadingMessage = message)
     } else {
       await provider.value.transaction(
@@ -89,12 +89,12 @@ const send = async () => {
       )
     }
 
-    loadAppState(node.value.pvtkey)
     router.push('/home')
+    updateUserData(params.batch.utxosOut, params.batch.utxosIn, data.token.id, Number(data.amount), -1)
   } catch (e) {
+    logout()
     console.warn(e)
   } finally {
-    logout()
     data.loading = false
     data.loadingMessage = 'Generating ZK Proof...'
   }
@@ -265,7 +265,7 @@ const send = async () => {
 
     <div class="mt-full lg:mt-[40px]">
       <button
-        v-if="!provider && data.token.id > 0 && !data.addressTo.includes('OZK')"
+        v-if="!provider && data.token.id > 1 && !data.addressTo.includes('OZK')"
         :disabled="!data.token || !data.amount"
         class="
           w-full
