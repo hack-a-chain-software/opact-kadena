@@ -8,13 +8,13 @@ export const getPactCodeForFaucet = (accountName: string, preffix = 'coin', with
   return `${withFund && `(${preffix}.create-account ${JSON.stringify(accountName)} (read-keyset "${accountName}"))`} (${preffix}.coinbase ${JSON.stringify(accountName)} (read-keyset "${accountName}") 100.0)`
 }
 
-export const getCapsForWithdraw = (accountName: string, amount: number | string, preffix = 'coin', receiver: any) => {
+export const getCapsForWithdraw = (accountName: string, amount: any, preffix = 'coin', receiver: any) => {
   return [
     Pact.lang.mkCap(
       'Coin Transfer',
       'Capability to transfer designated amount of coin from sender to receiver',
       `${preffix}.TRANSFER`,
-      ['opact-contract', receiver, Number((amount * (-1))).toFixed(1)]
+      ['opact-contract', receiver, Number((amount * (-1)).toFixed(1))]
     ),
     Pact.lang.mkCap(
       'Coin Transfer for Gas',
@@ -31,7 +31,7 @@ export const getCapsForDeposit = (accountName: string, amount: number | string, 
       'Coin Transfer',
       'Capability to transfer designated amount of coin from sender to receiver',
       `${preffix}.TRANSFER`,
-      [accountName, 'opact-contract', Number(amount).toFixed(1)]
+      [accountName, 'opact-contract', Number(Number(amount).toFixed(1))]
     )
   ]
 }
@@ -93,14 +93,14 @@ export const checkFunds = async (accountName: string) => {
 }
 
 export const sendPactTransaction = async (
-  receiver,
+  receiver: any,
   {
     args,
     proof,
     extData,
     tokenSpec
-  },
-  callbackProgress
+  }: any,
+  callbackProgress: any
 ) => {
   const kp = Pact.crypto.genKeyPair()
 
