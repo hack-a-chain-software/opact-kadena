@@ -89,7 +89,7 @@ const isNegative = computed(() => {
 
           <div>
             <span
-              v-text="shortenAddress(props.sender)"
+              v-text="shortenAddress(type === 'withdraw' ? receiver as string : sender as string)"
               class="text-xxs text-font-2"
             />
           </div>
@@ -102,7 +102,7 @@ const isNegative = computed(() => {
             class="text-xs text-green-500"
             :class="isNegative ? 'text-red-500' : 'text-green-500' "
           >
-            {{ isNegative ? '-' : '+' }} {{ formattedAmount  }} KDA
+            {{ isNegative ? '-' : '+' }} {{ Number(amount).toFixed(1)  }} KDA
           </span>
         </div>
       </div>

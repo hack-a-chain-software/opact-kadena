@@ -151,8 +151,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(vue@3.3.4)
       opact-sdk:
-        specifier: ^1.0.43
-        version: 1.0.43
+        specifier: ^1.0.45
+        version: 1.0.45
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -7995,7 +7995,6 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-    dev: false
 
   /buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
@@ -15637,8 +15636,8 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@1.0.43:
-    resolution: {integrity: sha512-NJc0Rdw8dXG28ufT2pqpINI48UpbCaYa+FU+LHSFg9Sqhw/bcXmdTeTHmRgmWTCCU1216pg9lTle9hBnZKlo6w==}
+  /opact-sdk@1.0.45:
+    resolution: {integrity: sha512-ONz+3x02yWfssjMGvcSBXsR6kb4s8pZmHeGoz5TLWcZIpXJiEwd+tpmudjQdu3wI4w0gVwhis61zPUuKwy/ZPg==}
     dependencies:
       '@noble/hashes': 1.3.2
       '@peculiar/webcrypto': 1.4.3
@@ -19489,7 +19488,7 @@ packages:
   /unbzip2-stream@1.4.3:
     resolution: {integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==}
     dependencies:
-      buffer: 5.7.1
+      buffer: 5.2.1
       through: 2.3.8
     dev: true
 

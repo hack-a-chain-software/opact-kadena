@@ -50,6 +50,14 @@ const send = async () => {
         node.value,
         state.value.commitments,
         userData.value[0],
+        {
+          id: 0,
+          type: 'transfer',
+          sender: node.value.pubkey,
+          amount: Number(data.amount),
+          address: data.token.namespace.refName.name,
+          receiver: BigInt(`0x${data.addressTo.replace('OZK', '').trim()}`),
+        },
         data.token.namespace
       )
     } else {
@@ -59,6 +67,14 @@ const send = async () => {
         node.value,
         state.value.commitments,
         userData.value[0],
+        {
+          id: 0,
+          type: 'withdraw',
+          receiver: data.addressTo,
+          sender: node.value.pubkey,
+          amount: Number(data.amount),
+          address: data.token.namespace.refName.name,
+        },
         data.token.namespace
       )
     }

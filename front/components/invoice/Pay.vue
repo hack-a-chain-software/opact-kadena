@@ -66,6 +66,14 @@ const deposit = async () => {
       Number(amount.value),
       data.commitments,
       provider.value.account.account.publicKey,
+      {
+        id: 0,
+        type: 'deposit',
+        amount: Number(amount.value),
+        receiver: BigInt(`0x${pubkey.value}`),
+        address: data.token.namespace.refName.name,
+        sender: provider.value.account.account.publicKey,
+      },
       token.value.namespace
     )
 

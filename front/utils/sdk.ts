@@ -13,6 +13,7 @@ export const computeWihtdrawParams = async (
   wallet: any,
   commitments: any,
   treeBalance: any,
+  receiptsParams?: any,
   selectedToken = {
     id: '',
     refName: {
@@ -41,6 +42,7 @@ export const computeWihtdrawParams = async (
     batch,
     receiver,
     selectedToken,
+    receiptsParams,
     amount: amount * (-1),
     sender: wallet.pubkey.toString(),
     root: batch.roots.tree.toString()
@@ -67,6 +69,7 @@ export const computeTransferParams = async (
   wallet: any,
   commitments: any,
   treeBalance: any,
+  receiptsParams?: any,
   selectedToken = {
     id: '',
     refName: {
@@ -96,6 +99,7 @@ export const computeTransferParams = async (
     receiver,
     amount: 0,
     selectedToken,
+    receiptsParams,
     root: batch.roots.tree.toString(),
     sender: wallet.pubkey.toString()
   })
@@ -121,6 +125,7 @@ export const computeDepositParams = async (
   commitments?: any,
   sender?: any,
   receiver?: string,
+  receiptsParams?: any,
   selectedToken = {
     id: '',
     refName: {
@@ -151,6 +156,7 @@ export const computeDepositParams = async (
     sender,
     receiver,
     selectedToken,
+    receiptsParams,
     root: batch.roots.tree.toString()
   })
 
@@ -174,6 +180,7 @@ export const computePaymentParams = async (
   amount: number,
   commitments?: any,
   sender?: string,
+  receiptsParams?: any,
   selectedToken = {
     id: '',
     refName: {
@@ -207,6 +214,7 @@ export const computePaymentParams = async (
     amount,
     pubkey,
     selectedToken,
+    receiptsParams,
     receiver: pubkey,
     root: batch.roots.tree.toString(),
     sender: sender || wallet.pubkey.toString()
