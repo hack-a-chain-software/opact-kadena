@@ -5,6 +5,7 @@ const router = useRouter()
 
 const data = reactive({
   tab: 'tokens',
+  show: false,
   showReceiveModal: false
 })
 </script>
@@ -58,7 +59,7 @@ const data = reactive({
 
       <button
         class="bg-gray-800 rounded-[8px] px-4 h-[72px] hover:opacity-80"
-        @click.prevent="router.push('/deposit/token')"
+        @click.prevent="data.show = true"
       >
         <div class="pb-1">
           <Icon name="add" class="w-6 h-6 text-font-1" />
@@ -72,6 +73,11 @@ const data = reactive({
       </button>
     </div>
   </div>
+
+  <DepositModal
+    :show="data.show"
+    @close="data.show = false"
+  />
 
   <InvoiceReceiveModal
     :show="data.showReceiveModal"

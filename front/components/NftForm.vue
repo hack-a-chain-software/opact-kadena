@@ -21,7 +21,7 @@ const router = useRouter()
 
 const data = reactive({
   error: '',
-  amount: 0,
+  amount: 1,
   balance: 0,
   show: false,
   provider: null,
@@ -30,16 +30,10 @@ const data = reactive({
   showConnect: false,
   showCollapsible: false,
   depositMessage: 'Generating ZK Proof...',
-  token: tokens[0]
+  token: null
 })
 
-const checkFunds = async () => {
-  if (!data.token) {
-    return
-  }
-
-  const prefix = data.token.name === 'Kadena' ? 'coin' : 'test.opact-coin'
-
+const checkFunds = async (prefix?: string) => {
   data.showConnect = false
 
   await nextTick()
@@ -68,11 +62,17 @@ const checkFunds = async () => {
   data.balance = coinData.balance
 }
 
-watch(() => data.token, () => {
-  checkFunds()
+watch(() => data.token, (value) => {
+  const prefix = value.name === 'Kadena' ? 'coin' : 'test.opact-coin'
+
+  checkFunds(prefix)
 })
 
 const deposit = async () => {
+  if (!data.token) {
+    return
+  }
+
   data.error = ''
   data.depositing = true
 
@@ -156,84 +156,18 @@ const deposit = async () => {
 
         <div>
           <h1 class="text-xs text-font-1 font-medium">
-            Deposit
+            Deposit NFT
           </h1>
         </div>
       </div>
 
-      <div class="flex flex-col space-y-2 pt-[24px] lg:pt-0">
-        <div>
-          <h2 class="text-font-1 text-xxs font-medium">
-            Enter or select amount
-          </h2>
-        </div>
-
-        <div
-          class="flex justify-between items-center space-x-1"
-        >
-          <input
-            v-model="data.amount"
-            class="
-              h-[39px]
-              bg-transparent
-              text-xl
-              font-semibold
-              text-font-2
-              outline-none
-            "
-          >
-
-          <Icon name="pen" class="h-6 w-6 text-font-2 lg:hidden" />
-        </div>
-      </div>
-
-      <button
-        class="mt-1"
-        :key="data.token.id"
-        v-if="!data.loading && provider && data.token"
-        @click.prevent="data.amount = data.balance"
-      >
-        <span
-          class="text-xxxs hover:underline"
-          :class="data.balance > 0 ? 'text-green-500' : 'text-red-500'"
-          v-text="`Balance: ${data.balance} ${data.token.symbol}`"
-        />
-      </button>
-
-      <TokenAmounts
-        @selected="data.amount = $event"
-      />
-
-      <div class="pt-7">
+      <div class="pt-[24px] lg:pt-0">
         <div class="flex justify-between pb-2">
           <div>
             <span class="text-xxs font-medium text-font-1">
               Select Token
             </span>
           </div>
-
-          <!-- <div>
-            <button
-              disabled
-              class="
-                flex
-                items-center
-                space-x-2
-                text-blue-400
-                cursor-not-allowed
-                disabled:opacity-[0.8]
-              "
-              @click.prevent="step = 'token'"
-            >
-              <span class="text-xxs font-medium">
-                Import token
-              </span>
-
-              <div>
-                <Icon name="add" class="w-5 h-5" />
-              </div>
-            </button>
-          </div> -->
         </div>
 
         <button
@@ -241,12 +175,14 @@ const deposit = async () => {
             p-4
             flex
             w-full
+            items-center
             rounded-[8px]
             justify-between
             bg-gray-800
             disabled:opacity-60
             disabled:cursor-not-allowed
           "
+          :disabled="!provider"
           @click.prevent="data.show = true"
         >
           <div v-if="!data.token">
@@ -255,10 +191,10 @@ const deposit = async () => {
             </span>
           </div>
 
-          <div v-else class="space-x-2 flex items-center">
-            <img :src="data.token.icon" class="w-6 h-6">
+          <div v-else class="space-x-4 flex items-center">
+            <img :src="data?.token?.uri" class="h-[60px] w-[60px] rounded-[8px]">
 
-            <span v-text="data.token.name" />
+            <span v-text="data?.token?.name" class="text-xs" />
           </div>
 
           <div>
@@ -306,10 +242,10 @@ const deposit = async () => {
           </div>
         </div>
 
-        <TxDetails
+        <!-- <TxDetails
           fee="0"
           :amount="data.amount"
-        />
+        /> -->
       </template>
     </div>
 
@@ -326,7 +262,6 @@ const deposit = async () => {
     <div class="mt-full lg:mt-[40px]">
       <button
         v-if="!provider"
-        :disabled="!data.token || !data.amount"
         class="
           w-full
           flex
@@ -337,12 +272,7 @@ const deposit = async () => {
           px-4
           rounded-[12px]
           relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
+          disabled:cursor-not-allowed bg-blue-gradient
         "
         @click.prevent="data.showConnect = true"
       >
@@ -383,10 +313,11 @@ const deposit = async () => {
       @connected="checkFunds()"
     />
 
-    <SelectToken
+    <SelectNFT
       :show="data.show"
       @close="data.show = false"
       @selected="data.token = $event"
+      :accountName="provider?.account?.account?.publicKey"
     />
   </div>
 </template>

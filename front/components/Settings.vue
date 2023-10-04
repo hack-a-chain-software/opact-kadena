@@ -13,6 +13,14 @@ const wallet = useWalletStore()
 
 const { node } = storeToRefs(wallet)
 
+const copyToClipboard = async (value: string) => {
+  try {
+    await navigator.clipboard.writeText(value)
+  } catch (e) {
+    console.warn(e)
+  }
+}
+
 withDefaults(
   defineProps<{
     show: boolean;

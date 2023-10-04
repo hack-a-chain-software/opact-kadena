@@ -29,9 +29,7 @@ const {
       "
     >
       <Transition name="fade" mode="out-in">
-        <component
-          :is="form[data.stepForm]"
-        />
+        <NftForm/>
       </Transition>
     </div>
   </div>

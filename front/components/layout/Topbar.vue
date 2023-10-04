@@ -9,7 +9,8 @@ const titles = {
   receive: 'Receive',
   history: 'History',
   transfer: 'Send',
-  'deposit-token': 'Deposit Token'
+  'deposit-token': 'Deposit Token',
+  'deposit-nft': 'Deposit NFT',
 }
 </script>
 

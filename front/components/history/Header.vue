@@ -177,14 +177,6 @@ const handleSearch = (event: any) => {
       >
         Deposit
       </button>
-
-      <button
-        @click.prevent="handleType('transfer')"
-        :class="data.type === 'transfer' && 'bg-blue-400'"
-        class="px-4 py-2 text-xxs text-font-2 hover:bg-gray-800 rounded-[8px]"
-      >
-        Transfer
-      </button>
     </div>
 
     <DatePicker
