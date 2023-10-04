@@ -7,11 +7,6 @@ import { getDecimals, formatBigNumberWithDecimals } from 'opact-sdk'
 const icons = {
   withdraw: 'receiptSend',
   deposit: 'receiptReceive',
-  transfer: '',
-}
-
-const logo = {
-  transfer: 'minilogo',
 }
 
 const props = withDefaults(
@@ -28,22 +23,11 @@ const props = withDefaults(
 )
 
 const icon = computed(() => {
-  if (props.type === 'transfer') {
-    // return BigInt(`0x${props.receiver}`) !== props.pubkey ? 'receiptReceive' : 'receiptSend'
-    return 'receiptReceive'
-  }
-
   return icons[props.type]
 })
 
 const formattedDate = computed(() => {
   return format(new Date(props.date), 'MMM dd, yyyy')
-})
-
-const formattedAmount = computed(() => {
-  const decimals = getDecimals(12)
-
-  return formatBigNumberWithDecimals(props.amount, decimals)
 })
 
 const isNegative = computed(() => {
@@ -117,7 +101,7 @@ const isNegative = computed(() => {
         class="text-xs "
         :class="isNegative ? 'text-red-500' : 'text-green-500' "
       >
-        {{ isNegative ? '-' : '+' }} {{ Number(amount).toFixed(1)  }} KDA
+        {{ isNegative ? '-' : '+' }} {{ Number(amount).toFixed(1)  }}
       </span>
     </div>
   </div>

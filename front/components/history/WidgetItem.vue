@@ -1,9 +1,9 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { format } from 'date-fns'
 import { shortenAddress } from '~/utils/string'
 import { getDecimals, formatBigNumberWithDecimals } from 'opact-sdk'
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
 const icons = {
   withdraw: 'receiptSend',

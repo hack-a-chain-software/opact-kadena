@@ -55,8 +55,8 @@ export const computePactCode = ({
       "c":{"x":${proof.c.x},"y":${proof.c.y}}
     } {
       "sender":"${extData.sender}",
+      "extAmount":${extData.extAmount},
       "recipient":"${extData.recipient}",
-      "extAmount":${extData.extAmount.toFixed(1)},
       "encryptedReceipts": ["${extData.encryptedReceipts.join('" "')}"],
       "encryptedCommitments": ["${extData.encryptedCommitments.join('" "')}"]
     } {

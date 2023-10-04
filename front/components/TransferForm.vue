@@ -49,7 +49,7 @@ const send = async () => {
         data.addressTo.replace('OZK', '').trim(),
         node.value,
         state.value.commitments,
-        userData.value[0],
+        userData.value[data.token.namespace.refName.name],
         {
           id: 0,
           type: 'transfer',
@@ -66,7 +66,7 @@ const send = async () => {
         data.addressTo,
         node.value,
         state.value.commitments,
-        userData.value[0],
+        userData.value[data.token.namespace.refName.name],
         {
           id: 0,
           type: 'withdraw',
@@ -266,7 +266,7 @@ const send = async () => {
 
     <div class="mt-full lg:mt-[40px]">
       <button
-        v-if="!provider && data.token.id > 1 && !data.addressTo.includes('OZK')"
+        v-if="!provider && data.token.namespace.refName.name !== 'coin' && !data.addressTo.includes('OZK')"
         :disabled="!data.token || !data.amount"
         class="
           w-full

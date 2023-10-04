@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Pact from 'pact-lang-api'
 import { storeToRefs } from 'pinia'
 import { reactive, watch } from 'vue'
 import { tokens } from '~/utils/constants'

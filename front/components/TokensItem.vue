@@ -1,10 +1,12 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { tokens } from '~/utils/constants'
 import { getDecimals, formatBigNumberWithDecimals } from 'opact-sdk'
 
 const props = withDefaults(
   defineProps<{
+    address: any
     balance: any;
     token: any;
   }>(),
@@ -19,6 +21,9 @@ const formattedAmount = computed(() => {
   return formatBigNumberWithDecimals(props.balance, decimals)
 })
 
+const metadata = computed(() => {
+  return tokens.find(({ namespace }: any) => namespace.refName.name === props.address) || {}
+})
 </script>
 
 <template>
@@ -34,7 +39,7 @@ const formattedAmount = computed(() => {
     "
   >
     <div class="pr-4">
-      <img src="/kda.png">
+      <img :src="metadata.icon">
     </div>
 
     <div class="space-y-1">
@@ -45,7 +50,7 @@ const formattedAmount = computed(() => {
           opacity-[0.9]
           text-font-1
         "
-        v-text="token.symbol"
+        v-text="metadata.symbol"
       />
 
       <p

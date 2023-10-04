@@ -1,8 +1,55 @@
-import { groupUtxoByToken, formatInteger } from 'opact-sdk'
+import { formatInteger, getNullifier } from 'opact-sdk'
 
 const userState = () => useState<any>('opact:userstate', () => null)
 const useOpactState = () => useState<any>('opact:state', () => null)
 const useAppIsLoading = () => useState<any>('opact:isloading', () => true)
+
+export const groupUtxoByToken = (encrypted: any, nullifiers: any, secret: any) => {
+  return encrypted.reduce((acc: any, curr: any) => {
+    const utxo = {
+      id: Number(curr.id),
+      address: curr.address,
+      hash: BigInt(curr.hash),
+      token: BigInt(curr.token),
+      amount: BigInt(curr.amount),
+      pubkey: BigInt(curr.pubkey),
+      blinding: BigInt(curr.blinding),
+    }
+
+    const nullifier = getNullifier({
+      utxo,
+      secret
+    })
+
+    if (nullifiers.includes(nullifier.toString())) {
+      return acc
+    }
+
+    const {
+      address: {
+        name
+      }
+    } = utxo
+
+    if (!acc[name]) {
+      acc[name] = {
+        balance: 0n,
+        utxos: [],
+        token: {
+          decimals: 12,
+          symbol: 'KDA',
+          name: 'Kadena',
+          icon: '/kda.png'
+        }
+      }
+    }
+
+    acc[name].balance += utxo.amount
+    acc[name].utxos = [...acc[name].utxos, utxo]
+
+    return acc
+  }, {})
+}
 
 export const useAppState = () => {
   const userData = userState()
@@ -33,8 +80,6 @@ export const useAppState = () => {
     isLoading.value = true
 
     const computedState = await computeState(secret)
-
-    console.log(computedState)
 
     const computedUserData = computeUserData(computedState, secret)
 
