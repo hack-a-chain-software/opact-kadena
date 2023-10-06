@@ -34,7 +34,7 @@ export const useProvider = () => {
       data: {
         networkId: metadata.networkId,
         signingCmd: {
-          pactCode: `(free.poly-fungible-v2-reference.mint "${id}" "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" (read-keyset 'guard) 1.0)`,
+          pactCode: `(free.poly-fungible-v2-reference.mint "${id}" "${accountName}" (read-keyset 'guard) 1.0)`,
           ttl: 0,
           chainId: 0,
           gasLimit: 0,
