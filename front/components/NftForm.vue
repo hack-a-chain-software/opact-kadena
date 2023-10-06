@@ -84,8 +84,8 @@ const deposit = async () => {
       provider.value.account.account.publicKey,
       '',
       {
-        id: 0,
         type: 'deposit',
+        id: data.token.id,
         amount: Number(data.amount),
         receiver: node.value.pubkey,
         address: data.token.namespace.refName.name,

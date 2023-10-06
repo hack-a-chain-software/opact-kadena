@@ -13,6 +13,20 @@ const {
   data,
   form
 } = useFaucet()
+
+const handle = (step: any) => {
+  if (step === 'pay' && data.token === 'token') {
+    data.stepForm = step
+
+    return
+  } else if (step === 'pay' && data.token === 'nft') {
+    data.stepForm = 'faucetNft'
+
+    return
+  }
+
+  data.stepForm = step
+}
 </script>
 
 <template>
@@ -48,7 +62,9 @@ const {
         <Transition name="fade" mode="out-in">
           <component
             :is="form[data.stepForm]"
-            @changeStep="($event: any) => data.stepForm = $event"
+            :token="data.token"
+            @token="($event: any) => data.token = $event"
+            @changeStep="handle"
           />
         </Transition>
       </div>

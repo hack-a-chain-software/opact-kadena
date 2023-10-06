@@ -1,5 +1,11 @@
 <script lang="ts" setup>
-const emits = defineEmits(['changeStep'])
+defineProps({
+  token: {
+    type: String,
+    required: true
+  }
+})
+const emits = defineEmits(['changeStep', 'token'])
 </script>
 
 <template>
@@ -20,37 +26,55 @@ const emits = defineEmits(['changeStep'])
       class="pt-4"
     >
       <div
-        class="rounded-[8px] px-4 py-3 bg-gray-800 h-[64px] flex justify-between items-center border-[1px] border-blue-400"
+        class="rounded-[8px] px-4 py-3 bg-gray-800 h-[64px] flex justify-between items-center border-[1px] "
+        :class="token === 'token' ? ' border-blue-400' : 'border-transparent'"
+        @click.prevent="emits('token', 'token')"
       >
         <div>
           <span
             class="text-font-1 text-xs"
           >
-            100 KDA
+            Token
           </span>
         </div>
 
         <div>
           <Icon
+            v-if="token === 'token'"
             name="active"
+            class="w-6 h-6"
+          />
+
+          <Icon
+            v-else
+            name="ring"
             class="w-6 h-6"
           />
         </div>
       </div>
 
       <div
-        class="rounded-[8px] px-4 py-3 bg-gray-800 h-[64px] flex justify-between items-center  cursor-not-allowed opacity-50 mt-4"
+        class="rounded-[8px] px-4 py-3 bg-gray-800 h-[64px] flex border-[1px] justify-between items-center mt-4"
+        :class="token === 'nft' ? 'border-blue-400' : 'border-transparent'"
+        @click.prevent="emits('token', 'nft')"
       >
         <div>
           <span
             class="text-font-1 text-xs"
           >
-            NFT Token
+            NFT
           </span>
         </div>
 
         <div>
           <Icon
+            v-if="token === 'nft'"
+            name="active"
+            class="w-6 h-6"
+          />
+
+          <Icon
+            v-else
             name="ring"
             class="w-6 h-6"
           />

@@ -26,6 +26,152 @@ export const useProvider = () => {
     //
   }
 
+  const mintToken = async (id = 0) => {
+    const accountName = account.value.account.publicKey
+    const publickey = account.value.account.publicKey
+
+    const cmd = await kadena.request({
+      data: {
+        networkId: metadata.networkId,
+        signingCmd: {
+          pactCode: `(free.poly-fungible-v2-reference.mint "${id}" "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" (read-keyset 'guard) 1.0)`,
+          ttl: 0,
+          chainId: 0,
+          gasLimit: 0,
+          gasPrice: 0,
+          envData: {
+            guard: {
+              keys: [
+                publickey
+              ]
+            }
+          },
+          caps: [
+            Pact.lang.mkCap(
+              'Mint Token',
+              'Capability to mint token',
+              'free.poly-fungible-v2-reference.MINT',
+              [id + '', accountName + '', 1.0]
+            )
+          ],
+          sender: accountName,
+          networkId: metadata.networkId,
+          signingPubKey: publickey
+        }
+      },
+      networkId: metadata.networkId,
+      method: 'kda_requestSign'
+    })
+
+    const tx = await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
+
+    const {
+      result
+    } = await Pact.fetch.listen(
+      { listen: tx.requestKeys[0] },
+      RPC
+    )
+
+    console.log('result', result)
+
+    if (result.status === 'failure') {
+      throw new Error(result.error.message)
+    }
+
+    return result
+  }
+
+  const createAccount = async () => {
+    const accountName = account.value.account.publicKey
+    const publickey = account.value.account.publicKey
+
+    const cmd = await kadena.request({
+      data: {
+        networkId: metadata.networkId,
+        signingCmd: {
+          pactCode: `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`,
+          ttl: 0,
+          chainId: 0,
+          gasLimit: 0,
+          gasPrice: 0,
+          envData: {
+            manifest
+          },
+          sender: accountName,
+          networkId: metadata.networkId,
+          signingPubKey: publickey
+        }
+      },
+      networkId: metadata.networkId,
+      method: 'kda_requestSign'
+    })
+
+    const tx = await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
+
+    const {
+      result
+    } = await Pact.fetch.listen(
+      { listen: tx.requestKeys[0] },
+      RPC
+    )
+
+    console.log('result', result)
+
+    if (result.status === 'failure') {
+      throw new Error(result.error.message)
+    }
+
+    return result
+  }
+
+  const createToken = async (id = 0, manifest: any) => {
+    const accountName = account.value.account.publicKey
+    const publickey = account.value.account.publicKey
+
+    const cmd = await kadena.request({
+      data: {
+        networkId: metadata.networkId,
+        signingCmd: {
+          pactCode: `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`,
+          ttl: 0,
+          chainId: 0,
+          gasLimit: 0,
+          gasPrice: 0,
+          envData: {
+            manifest,
+            guard: {
+              keys: [
+                publickey
+              ]
+            }
+          },
+          sender: accountName,
+          networkId: metadata.networkId,
+          signingPubKey: publickey
+        }
+      },
+      networkId: metadata.networkId,
+      method: 'kda_requestSign'
+    })
+
+    const tx = await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
+
+    const {
+      result
+    } = await Pact.fetch.listen(
+      { listen: tx.requestKeys[0] },
+      RPC
+    )
+
+    console.log('result', result)
+
+    if (result.status === 'failure') {
+      throw new Error(result.error.message)
+    }
+
+    return result
+  }
+
   // TODO: delete this
   const coinDetails = async (prefix = 'coin') => {
     try {
@@ -75,7 +221,7 @@ export const useProvider = () => {
       if (status === 'failure') {
         withFund = true
       }
-    } catch(e) {
+    } catch (e) {
       //
     }
 
@@ -140,7 +286,11 @@ export const useProvider = () => {
 
     const pactCode = computePactCode({ args, proof, extData, tokenSpec })
 
-    const preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
+    let preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
+
+    if (tokenSpec.refName.name === 'poly-fungible-v2') {
+      preffix = 'free.poly-fungible-v2-reference'
+    }
 
     let caps
 
@@ -218,9 +368,12 @@ export const useProvider = () => {
     init,
     faucet,
     connect,
+    mintToken,
     disconnect,
+    createToken,
     transaction,
     coinDetails,
+    createAccount
   }
 }
 

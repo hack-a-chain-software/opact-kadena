@@ -53,15 +53,32 @@ watch(props, async (_props) => {
     const {
       result
     } = await Pact.fetch.local({
-      pactCode: `(test.opact-nft-2.get-ids)`,
+      pactCode: `(free.poly-fungible-v2-reference.ids-owned-by "${_props.accountName}")`,
       meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
     }, network)
 
-    data.tokens = result.data.map((id: string) => {
+    data.tokens = await Promise.all(result.data.map(async ({ id }: any) => {
+      const {
+        result: {
+          data: {
+            data
+          }
+        }
+      } = await Pact.fetch.local({
+        pactCode: `(free.poly-fungible-v2-reference.get-manifest "${id}")`,
+        meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
+      }, network)
+
+      const [
+        {
+          datum
+        }
+      ] = data
+
       return {
-        id: Number(id),
-        name: 'Back in the Apes #' + id,
-        uri: `${data.baseUrl}/${id}.jpeg`,
+        id,
+        name: datum.title,
+        uri: datum.assetUrl,
         namespace: {
           id,
           refName: {
@@ -69,14 +86,12 @@ watch(props, async (_props) => {
             namespace: 'test'
           },
           refSpec: {
-            name: 'poly-fungible-v1',
+            name: 'poly-fungible-v2',
             namespace: ''
           }
         }
       }
-    })
-
-
+    }))
   } catch (e) {
     console.warn(e)
   }
