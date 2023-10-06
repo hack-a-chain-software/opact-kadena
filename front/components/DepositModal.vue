@@ -7,8 +7,6 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 
-import { useWalletStore } from '~/stores/wallet'
-
 withDefaults(
   defineProps<{
     show: boolean;

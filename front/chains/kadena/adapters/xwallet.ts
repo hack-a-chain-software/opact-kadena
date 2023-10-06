@@ -81,49 +81,6 @@ export const useProvider = () => {
     return result
   }
 
-  const createAccount = async () => {
-    const accountName = account.value.account.publicKey
-    const publickey = account.value.account.publicKey
-
-    const cmd = await kadena.request({
-      data: {
-        networkId: metadata.networkId,
-        signingCmd: {
-          pactCode: `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`,
-          ttl: 0,
-          chainId: 0,
-          gasLimit: 0,
-          gasPrice: 0,
-          envData: {
-            manifest
-          },
-          sender: accountName,
-          networkId: metadata.networkId,
-          signingPubKey: publickey
-        }
-      },
-      networkId: metadata.networkId,
-      method: 'kda_requestSign'
-    })
-
-    const tx = await Pact.wallet.sendSigned(cmd.signedCmd, metadata.network)
-
-    const {
-      result
-    } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      RPC
-    )
-
-    console.log('result', result)
-
-    if (result.status === 'failure') {
-      throw new Error(result.error.message)
-    }
-
-    return result
-  }
-
   const createToken = async (id = 0, manifest: any) => {
     const accountName = account.value.account.publicKey
     const publickey = account.value.account.publicKey
@@ -372,8 +329,7 @@ export const useProvider = () => {
     disconnect,
     createToken,
     transaction,
-    coinDetails,
-    createAccount
+    coinDetails
   }
 }
 
