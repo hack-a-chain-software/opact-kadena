@@ -31,9 +31,9 @@ const createDatum = async ():Promise<any> => {
       envData: {
         uri,
         datum: {
-          assetUrl: `https://nft.hypercent.io/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhypercent-marketplace.appspot.com%2F380342f1-7ce9-5de4-8314-6a93090aeaca&w=3840&q=${randomId}`,
+          assetUrl: `https://d2k5a3kljnz265.cloudfront.net/nft/kadena-mining-club@kadena/${randomId}.webp?t=1687187457812`,
           creationDate: '2022-02-09',
-          title: `SLAYER #${randomId}`,
+          title: `Kadena Mining Club #${randomId}`,
           artistName: 'Mateus de Santana',
           properties: {
             supply: '1',
