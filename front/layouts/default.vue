@@ -17,6 +17,7 @@ const router = useRouter()
       lg:justify-start
       lg:gap-[48px]
       lg:pb-[80px]
+      lg:overflow-x-clip
     "
   >
     <div
