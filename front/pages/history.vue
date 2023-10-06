@@ -131,12 +131,19 @@ const receipts = computed(() => {
 
     <div
       v-else
-      class="flex justify-center py-[200px]"
+      class="flex justify-center py-[120px] flex-col items-center space-y-8"
     >
+      <div>
+        <img
+          class="min-w-[284px]"
+          src="/empty-receipts.png"
+        >
+      </div>
+
       <span
-        class="text-font-1 text-md"
+        class="text-font-2 text-[18px] font-[600]"
       >
-        You don't have receipts
+        You don't have any activity yet.
       </span>
     </div>
   </div>

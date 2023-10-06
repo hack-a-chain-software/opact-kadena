@@ -82,8 +82,8 @@ watch(props, async (_props) => {
         namespace: {
           id,
           refName: {
-            name: 'opact-nft-2',
-            namespace: 'test'
+            name: 'poly-fungible-v2-reference',
+            namespace: 'free'
           },
           refSpec: {
             name: 'poly-fungible-v2',

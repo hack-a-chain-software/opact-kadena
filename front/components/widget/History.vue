@@ -61,12 +61,19 @@ const { node } = storeToRefs(wallet)
 
         <div
           v-else
-          class="flex justify-center py-[38px]"
+          class="flex justify-center py-[38px] flex-col items-center space-y-8"
         >
+          <div>
+            <img
+              class="w-[120px]"
+              src="/empty-receipts.png"
+            >
+          </div>
+
           <span
-            class="text-font-1 text-xs"
+            class="text-font-2 text-[16px] font-[600]"
           >
-            You don't have receipts
+            You don't have any activity yet
           </span>
         </div>
       </div>

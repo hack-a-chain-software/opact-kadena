@@ -172,12 +172,19 @@ const data = reactive({
 
         <div
           v-else
-          class="flex justify-center py-[32px]"
+          class="flex justify-center py-[32px] flex-col items-center space-y-4"
         >
+          <div>
+            <img
+              src="/empty-tokens.png"
+              class="w-[218px]"
+            />
+          </div>
+
           <span
-            class="text-font-1 text-md"
+            class="text-font-2 text-[18px] font-[600]"
           >
-            You don't have any tokens
+            You don't have Tokens yet.
           </span>
         </div>
       </div>
