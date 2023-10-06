@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { reactive, watch } from 'vue'
+import { useAppState } from '~/hooks/state'
 import Pact from 'pact-lang-api'
 import {
   TransitionRoot,
@@ -9,6 +10,10 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 
+const {
+  userData,
+} = useAppState()
+
 const RPC = process.env.NODE_ENV !== 'development'
   ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
   : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
@@ -16,17 +21,14 @@ const RPC = process.env.NODE_ENV !== 'development'
 const props = withDefaults(
   defineProps<{
     show?: boolean,
-    accountName: ''
   }>(),
   {
     show: false,
-    accountName: ''
   }
 )
 
 const data = reactive({
   input: '',
-  baseUrl: 'https://ffgateway.infura-ipfs.io/ipfs/QmcABQEkMb6sTQ8bzwh4XdtkqHLTUeTkwbwzHSbsUn7mxG',
   tokens: []
 })
 
@@ -40,24 +42,19 @@ const select = (token: any) => {
   emit('selected', token)
 }
 
-watch(props, async (_props) => {
-  if (!_props.show) {
+watch(userData, async (newData) => {
+  if (!!!newData.nfts['poly-fungible-v2-reference']) {
     return
   }
+
+  const items = newData.nfts['poly-fungible-v2-reference'].utxos
 
   try {
     const network = RPC
 
     const createdAt = Math.round(new Date().getTime() / 1000) - 10
 
-    const {
-      result
-    } = await Pact.fetch.local({
-      pactCode: `(free.poly-fungible-v2-reference.ids-owned-by "${_props.accountName}")`,
-      meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
-    }, network)
-
-    data.tokens = await Promise.all(result.data.map(async ({ id }: any) => {
+    data.tokens = await Promise.all(items.map(async ({ id }: any) => {
       const {
         result: {
           data: {
@@ -73,7 +70,7 @@ watch(props, async (_props) => {
         {
           datum
         }
-       = data[0]
+      = data[0]
 
       return {
         id,
@@ -95,7 +92,7 @@ watch(props, async (_props) => {
   } catch (e) {
     console.warn(e)
   }
-})
+}, { immediate: true })
 </script>
 
 <template>

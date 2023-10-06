@@ -72,8 +72,6 @@ export const useProvider = () => {
       RPC
     )
 
-    console.log('result', result)
-
     if (result.status === 'failure') {
       throw new Error(result.error.message)
     }
@@ -119,8 +117,6 @@ export const useProvider = () => {
       { listen: tx.requestKeys[0] },
       RPC
     )
-
-    console.log('result', result)
 
     if (result.status === 'failure') {
       throw new Error(result.error.message)
@@ -245,16 +241,16 @@ export const useProvider = () => {
 
     let preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
 
-    if (tokenSpec.refName.name === 'poly-fungible-v2') {
+    if (tokenSpec.refName.name === 'poly-fungible-v2-reference') {
       preffix = 'free.poly-fungible-v2-reference'
     }
 
     let caps
 
     if (isWithdrawTransfer) {
-      caps = getCapsForWithdraw(accountName, extData.extAmount, preffix, receiver)
+      caps = getCapsForWithdraw(accountName, extData.extAmount, preffix, receiver, tokenSpec)
     } else {
-      caps = getCapsForDeposit(accountName, extData.extAmount, preffix)
+      caps = getCapsForDeposit(accountName, extData.extAmount, preffix, tokenSpec)
     }
 
     callbackProgress('Await sign...')
@@ -275,7 +271,8 @@ export const useProvider = () => {
             name: 'transact-deposit',
             'token-instance': {
               refSpec: [{
-                name: tokenSpec.refSpec.name
+                name: tokenSpec.refSpec.name,
+                namespace: tokenSpec.refSpec.namespace || undefined
               }],
               refName: {
                 name: tokenSpec.refName.name,

@@ -8,7 +8,24 @@ export const getPactCodeForFaucet = (accountName: string, preffix = 'coin', with
   return `${withFund && `(${preffix}.create-account ${JSON.stringify(accountName)} (read-keyset "${accountName}"))`} (${preffix}.coinbase ${JSON.stringify(accountName)} (read-keyset "${accountName}") 100.0)`
 }
 
-export const getCapsForWithdraw = (accountName: string, amount: any, preffix = 'coin', receiver: any) => {
+export const getCapsForWithdraw = (accountName: string, amount: any, preffix = 'coin', receiver: any, tokenSpec: any) => {
+  if (preffix.includes('poly-fungible-v2-reference')) {
+    return [
+      Pact.lang.mkCap(
+        'Mint Token',
+        'Capability to mint token',
+        `${preffix}.TRANSFER`,
+        [tokenSpec?.id || '', 'opact-contract', receiver, Number((amount * (-1)).toFixed(1))]
+      ),
+      Pact.lang.mkCap(
+        'Coin Transfer for Gas',
+        'Capability to transfer gas fee from signer to gas payer',
+        'coin.TRANSFER',
+        [accountName, 'opact-gas-payer', Number((1).toFixed(1))]
+      )
+    ]
+  }
+
   return [
     Pact.lang.mkCap(
       'Coin Transfer',
@@ -25,7 +42,18 @@ export const getCapsForWithdraw = (accountName: string, amount: any, preffix = '
   ]
 }
 
-export const getCapsForDeposit = (accountName: string, amount: number | string, preffix = 'coin') => {
+export const getCapsForDeposit = (accountName: string, amount: number | string, preffix = 'coin', tokenSpec = {}) => {
+  if (preffix.includes('poly-fungible-v2-reference')) {
+    return [
+      Pact.lang.mkCap(
+        'Mint Token',
+        'Capability to mint token',
+        `${preffix}.TRANSFER`,
+        [tokenSpec?.id || '', accountName, 'opact-contract', Number(Number(amount).toFixed(1))]
+      )
+    ]
+  }
+
   return [
     Pact.lang.mkCap(
       'Coin Transfer',
@@ -67,7 +95,7 @@ export const computePactCode = ({
       },
       "refSpec":{
         "name":"${tokenSpec.refSpec.name}",
-        "namespace":"${tokenSpec.refSpec.namespace}"
+        "namespace":"${tokenSpec.refSpec.namespace || ''}"
       }
     })`
 }

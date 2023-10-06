@@ -36,9 +36,28 @@ export const useAppState = () => {
 
     const computedUserData = computeUserData(computedState, secret)
 
+    const tokens: any = {}
+
+    if (computedUserData.coin) {
+      tokens.coin = computedUserData.coin
+    }
+
+    if (computedUserData['opact-coin']) {
+      tokens['opact-coin'] = computedUserData['opact-coin']
+    }
+
+    const nfts: any = {}
+
+    if (computedUserData['poly-fungible-v2-reference']) {
+      nfts['poly-fungible-v2-reference'] = computedUserData['poly-fungible-v2-reference']
+    }
+
     isLoading.value = false
     state.value = computedState
-    userData.value = computedUserData
+    userData.value = {
+      nfts,
+      tokens,
+    }
   }
 
   const updateUserData = (utxosOut: any[], utxosIn: any[], tokenId: any, amount: any, flag = 1) => {

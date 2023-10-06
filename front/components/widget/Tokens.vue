@@ -81,7 +81,7 @@ const data = reactive({
       <div class="lg:hidden pt-[24px] gap-2 grid grid-cols-3">
         <button
           class="bg-gray-800 rounded-[8px] py-3 px-4"
-          @click.prevent="router.push('/transfer')"
+          @click.prevent="router.push('/transfer/token')"
         >
           <div class="pb-2">
             <Icon name="send" class="w-6 h-6" />
@@ -158,14 +158,14 @@ const data = reactive({
         class="pt-[16px] space-y-3"
       >
         <div
-          v-if="Object.keys(userData).length > 0"
+          v-if="Object.keys(userData.tokens).length > 0"
           class="space-y-3"
         >
           <TokensItem
             :address="key"
             :token="tree.token"
             :balance="tree.balance"
-            v-for="(tree, key) of userData"
+            v-for="(tree, key) of userData.tokens"
             :key="`${tree.token.id}-${tree.balance.toString()}`"
           />
         </div>
@@ -191,20 +191,35 @@ const data = reactive({
 
       <div
         v-else
-        class="pb-[90px] lg:pb-0 grid grid-cols-2 gap-3 pt-3 lg:grid-cols-3 xl:grid-cols-3"
+        class="pb-[90px] lg:pb-0"
       >
         <div
-          v-for="n in 8"
-          :key="n"
-          class="pb-4 px-2 pt-2 rounded-[8px] bg-gray-800 lg:max-w-[204px]"
+          v-if="Object.keys(userData.nfts).length > 0"
+          class="grid grid-cols-2 gap-3 pt-3 lg:grid-cols-3 xl:grid-cols-3"
         >
-          <img src="/nft.png" class="rounded-[8px] w-[150px] h-[150px] mx-auto lg:min-w-[180px] lg:min-h-[182px]">
+          <NftItem
+            :id="utxo.id"
+            :key="utxo.hash"
+            v-for="(utxo, i) of userData.nfts['poly-fungible-v2-reference'].utxos"
+          />
+        </div>
 
-          <div class="pt-3">
-            <span class="text-font-1 text-xxs">
-              Back in the Apes #9786
-            </span>
+        <div
+          v-else
+          class="flex justify-center py-[32px] flex-col items-center space-y-4"
+        >
+          <div>
+            <img
+              src="/empty-tokens.png"
+              class="w-[218px]"
+            />
           </div>
+
+          <span
+            class="text-font-2 text-[18px] font-[600]"
+          >
+            You don't have Tokens yet.
+          </span>
         </div>
       </div>
     </div>

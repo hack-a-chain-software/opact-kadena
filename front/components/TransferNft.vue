@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
-import { tokens } from '~/utils/constants'
 import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 import { sendPactTransaction } from '~/utils/kadena'
@@ -15,25 +14,60 @@ const {
 
 const wallet = useWalletStore()
 
-const { provider, logout } = useExtensions()
+const { node } = storeToRefs(wallet)
 
-const {
-  node
-} = storeToRefs(wallet)
+const { provider, logout } = useExtensions()
 
 const router = useRouter()
 
 const data = reactive({
-  amount: 0,
-  show: false,
-  loading: false,
-  showConnect: false,
-  showWalletConnector: false,
-  loadingMessage: 'Generating ZK Proof...',
   error: '',
-  token: tokens[0],
+  amount: 1,
+  balance: 0,
+  show: false,
+  provider: null,
+  loading: false,
+  depositing: false,
+  showConnect: false,
   showCollapsible: false,
-  addressTo: ''
+  addressTo: '',
+  depositMessage: 'Generating ZK Proof...',
+  token: null
+})
+
+const checkFunds = async (prefix?: string) => {
+  data.showConnect = false
+
+  await nextTick()
+
+  if (!provider.value) {
+    return
+  }
+
+  data.loading = true
+
+  const {
+    result: {
+      status,
+      data: coinData
+    }
+  } = await provider.value.coinDetails(prefix)
+
+  data.loading = false
+
+  if (status === 'failure') {
+    data.balance = 0
+
+    return
+  }
+
+  data.balance = coinData.balance
+}
+
+watch(() => data.token, (value) => {
+  const prefix = value.name === 'Kadena' ? 'coin' : 'test.opact-coin'
+
+  checkFunds(prefix)
 })
 
 const send = async () => {
@@ -49,7 +83,7 @@ const send = async () => {
         data.addressTo.replace('OZK', '').trim(),
         node.value,
         state.value.commitments,
-        userData.value.tokens[data.token.namespace.refName.name],
+        userData.value.nfts[data.token.namespace.refName.name],
         {
           id: 0,
           type: 'transfer',
@@ -66,7 +100,7 @@ const send = async () => {
         data.addressTo,
         node.value,
         state.value.commitments,
-        userData.value.tokens[data.token.namespace.refName.name],
+        userData.value.nfts[data.token.namespace.refName.name],
         {
           id: 0,
           type: 'withdraw',
@@ -79,12 +113,12 @@ const send = async () => {
       )
     }
 
-    if (data.token.id === 1) {
-      await sendPactTransaction(data.addressTo, params, (message: string) => data.loadingMessage = message)
+    if (data.addressTo.includes('OZK')) {
+      await sendPactTransaction(data.addressTo, params, (message: string) => data.depositMessage = message)
     } else {
       await provider.value.transaction(
         params,
-        (message: string) => data.loadingMessage = message,
+        (message: string) => data.depositMessage = message,
         true,
         data.addressTo
       )
@@ -97,7 +131,7 @@ const send = async () => {
     console.warn(e)
   } finally {
     data.loading = false
-    data.loadingMessage = 'Generating ZK Proof...'
+    data.depositMessage = 'Generating ZK Proof...'
   }
 }
 </script>
@@ -147,42 +181,18 @@ const send = async () => {
 
         <div>
           <h1 class="text-xs text-font-1 font-medium">
-            Send Token
+            Deposit NFT
           </h1>
         </div>
       </div>
 
-      <div class="flex flex-col space-y-2 pt-[24px] lg:pt-0">
-        <div>
-          <h2 class="text-font-1 text-xxs font-medium">
-            Amount
-          </h2>
-        </div>
-
-        <div
-          class="flex justify-between items-center space-x-1"
-        >
-          <input
-            v-model="data.amount"
-            class="
-              h-[39px]
-              bg-transparent
-              text-xl
-              font-semibold
-              text-font-2
-              outline-none
-            "
-          >
-
-          <Icon name="pen" class="h-6 w-6 text-font-2" />
-        </div>
-      </div>
-
-      <div class="pt-7">
+      <div class="pt-[24px] lg:pt-0">
         <div class="flex justify-between pb-2">
-          <span class="text-xxs font-medium text-font-1">
-            Select Token
-          </span>
+          <div>
+            <span class="text-xxs font-medium text-font-1">
+              Select Token
+            </span>
+          </div>
         </div>
 
         <button
@@ -190,6 +200,7 @@ const send = async () => {
             p-4
             flex
             w-full
+            items-center
             rounded-[8px]
             justify-between
             bg-gray-800
@@ -204,10 +215,10 @@ const send = async () => {
             </span>
           </div>
 
-          <div v-else class="space-x-2 flex items-center">
-            <img :src="data.token.icon" class="w-6 h-6">
+          <div v-else class="space-x-4 flex items-center">
+            <img :src="data?.token?.uri" class="h-[60px] w-[60px] rounded-[8px]">
 
-            <span v-text="data.token.name" />
+            <span v-text="data?.token?.name" class="text-xs" />
           </div>
 
           <div>
@@ -248,25 +259,65 @@ const send = async () => {
         </div>
       </div>
 
-      <TxDetails
-        :fee="1"
-        :amount="data.amount"
-      />
+      <template v-if="provider">
+        <div class="pt-[18px]">
+          <div class="flex justify-between pb-2">
+            <span class="text-xxs font-medium text-font-1">
+              Your Wallet
+            </span>
+          </div>
+
+          <div
+            class="
+              p-4
+              flex
+              w-full
+              rounded-[8px]
+              bg-gray-800
+              space-x-2
+            "
+          >
+            <div>
+              <Icon
+                :name="provider.metadata.icon"
+                class="w-6 h-6"
+              />
+            </div>
+
+            <div
+              class="max-w-[calc(100%-32px)] break-words"
+            >
+              <p
+                class="text-xxs font-meidum text-font-1"
+                v-text="
+                  provider?.account?.address ||
+                    provider.account?.account?.account
+                "
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- <TxDetails
+          fee="0"
+          :amount="data.amount"
+        /> -->
+      </template>
     </div>
 
     <div
       v-if="data.error"
-      class="mt-2 max-w-full break-words"
+      class="mt-2"
     >
       <span
-        v-text="data.error + '*'"
         class="text-xs text-red-500"
+        v-text="data.error + '*'"
       />
     </div>
 
     <div class="mt-full lg:mt-[40px]">
       <button
-        v-if="!provider && data.token.namespace.refName.name !== 'coin' && !data.addressTo.includes('OZK')"
+        v-if="!provider && data.token && !data.addressTo.includes('OZK')"
         :disabled="!data.token || !data.amount"
         class="
           w-full
@@ -314,7 +365,7 @@ const send = async () => {
         "
         @click.prevent="send()"
       >
-        <span class="text-font-1"> {{ data.loading ? data.loadingMessage : 'Send Token' }} </span>
+        <span class="text-font-1"> {{ data.loading ? data.depositMessage : 'Send Token' }} </span>
 
         <Icon v-if="data.loading" name="spinner" class="animate-spin text-white ml-[12px]" />
       </button>
@@ -323,10 +374,10 @@ const send = async () => {
     <WalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
-      @connected="data.showConnect = false"
+      @connected="checkFunds()"
     />
 
-    <SelectToken
+    <SelectOwnNft
       :show="data.show"
       @close="data.show = false"
       @selected="data.token = $event"

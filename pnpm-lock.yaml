@@ -154,8 +154,8 @@ importers:
         specifier: 2.0.0-beta.11
         version: 2.0.0-beta.11(vue@3.3.4)
       opact-sdk:
-        specifier: ^1.0.54
-        version: 1.0.54
+        specifier: ^1.0.57
+        version: 1.0.57
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -11428,7 +11428,7 @@ packages:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
     dependencies:
-      flat-cache: 3.1.0
+      flat-cache: 3.1.1
 
   /file-js@0.3.0:
     resolution: {integrity: sha512-nZlX1pxpV6Mt8BghM3Z150bpsCT1zqil97UryusstZLSs9caYAe0Wph2UKPC3awfM2Dq4ri1Sv99KuK4EIImlA==}
@@ -11589,8 +11589,8 @@ packages:
     resolution: {integrity: sha512-b50ZBpDfp/Nru120IdeS0IyqbVjOien1OSdWMDdcxS9uVHLV668xndNkEnn9t1WFOvc5aw1owl6l4N8mP5mkKg==}
     dev: false
 
-  /flat-cache@3.1.0:
-    resolution: {integrity: sha512-OHx4Qwrrt0E4jEIcI5/Xb+f+QmJYNj2rrK8wiIdQOIrB9WrrJL8cjZvXdXuBTkkEwEqLycb5BeZDV1o2i9bTew==}
+  /flat-cache@3.1.1:
+    resolution: {integrity: sha512-/qM2b3LUIaIgviBQovTLvijfyOQXPtSRnRK26ksj2J7rzPIecePUIpJsZ4T02Qg+xiAEKIs5K8dsHEd+VaKa/Q==}
     engines: {node: '>=12.0.0'}
     dependencies:
       flatted: 3.2.9
@@ -15680,8 +15680,8 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@1.0.54:
-    resolution: {integrity: sha512-YsKg0pqW62siW62mlBbHhAAtXQLSmYUPR7cvyZuD3A7PTgvBEMnCgQ1f8idJv3QtN5d60TVU38CWUvzoY04uBQ==}
+  /opact-sdk@1.0.57:
+    resolution: {integrity: sha512-DNCuik+267YflnOaKBbtpE/js83hLMlmkWjPDLoUOdK/9LZo5ICgJZ+jVzYRZGIlW8yIYMMpaJeOatoeBSY4jg==}
     dependencies:
       '@noble/hashes': 1.3.2
       '@peculiar/webcrypto': 1.4.3

@@ -45,6 +45,8 @@ export const useWalletStore = defineStore({
         return
       }
 
+      console.log(this.cache)
+
       return this.found(this.cache.phrase)
     },
 

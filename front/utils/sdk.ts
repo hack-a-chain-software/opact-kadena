@@ -85,6 +85,7 @@ export const computeTransferParams = async (
   const batch = await getTransferSolutionBatch({
     commitments,
     treeBalance,
+    selectedToken,
     senderWallet: wallet,
     totalRequired: amount,
     receiverPubkey: `0x${receiver}`
