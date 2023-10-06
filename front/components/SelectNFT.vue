@@ -40,8 +40,10 @@ const select = (token: any) => {
   emit('selected', token)
 }
 
-watch(props, async (_props) => {
-  if (!_props.show) {
+watch(() => props.show, async (show) => {
+  if (!show) {
+    data.tokens = []
+
     return
   }
 
@@ -53,11 +55,26 @@ watch(props, async (_props) => {
     const {
       result
     } = await Pact.fetch.local({
-      pactCode: `(free.poly-fungible-v2-reference.ids-owned-by "${_props.accountName}")`,
+      pactCode: `(free.poly-fungible-v2-reference.ids-owned-by "${props.accountName}")`,
       meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
     }, network)
 
-    data.tokens = await Promise.all(result.data.map(async ({ id }: any) => {
+    data.tokens = (await Promise.all(result.data.map(async ({ id }: any) => {
+      const {
+        result: {
+          status,
+          error,
+          data: detailData,
+        }
+      } = await Pact.fetch.local({
+        pactCode: `(free.poly-fungible-v2-reference.details "${id}" "${props.accountName}")`,
+        meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
+      }, network)
+
+      if (status === 'failure' || detailData.balance === 0) {
+        return
+      }
+
       const {
         result: {
           data: {
@@ -91,7 +108,7 @@ watch(props, async (_props) => {
           }
         }
       }
-    }))
+    }))).filter((item: any) => !!item)
   } catch (e) {
     console.warn(e)
   }
@@ -216,6 +233,7 @@ watch(props, async (_props) => {
                       grid grid-cols-3
                       divide divide-y-[1px] divide-gray-700
                     "
+                    v-if="data.tokens.length > 0"
                 >
                   <button
                     v-for="token in data.tokens"
@@ -259,6 +277,13 @@ watch(props, async (_props) => {
                       />
                     </div>
                   </button>
+                </div>
+
+                <div
+                  v-else
+                  class="h-[180px] flex items-center justify-center"
+                >
+                  <Icon name="spinner" class="animate-spin text-white ml-[12px]" />
                 </div>
               </div>
             </DialogPanel>

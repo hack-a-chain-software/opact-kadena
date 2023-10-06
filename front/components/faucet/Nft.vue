@@ -21,7 +21,7 @@ const createDatum = async ():Promise<any> => {
 
   const min = Math.ceil(1)
 
-  const max = Math.floor(500)
+  const max = Math.floor(100)
 
   const randomId = Math.floor(Math.random() * (max - min + 1)) + min
 
@@ -31,9 +31,9 @@ const createDatum = async ():Promise<any> => {
       envData: {
         uri,
         datum: {
-          assetUrl: `https://ffgateway.infura-ipfs.io/ipfs/QmcABQEkMb6sTQ8bzwh4XdtkqHLTUeTkwbwzHSbsUn7mxG/${randomId}.jpeg`,
+          assetUrl: `https://nft.hypercent.io/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhypercent-marketplace.appspot.com%2F380342f1-7ce9-5de4-8314-6a93090aeaca&w=3840&q=${randomId}`,
           creationDate: '2022-02-09',
-          title: `Back in the Apes No.${randomId}`,
+          title: `SLAYER #${randomId}`,
           artistName: 'Mateus de Santana',
           properties: {
             supply: '1',
@@ -136,9 +136,9 @@ const pay = async () => {
           "
         >
           <div class="space-x-4 flex items-center">
-            <img :src="`https://ffgateway.infura-ipfs.io/ipfs/QmcABQEkMb6sTQ8bzwh4XdtkqHLTUeTkwbwzHSbsUn7mxG/1.jpeg`" class="h-[60px] w-[60px] rounded-[8px]">
+            <img :src="`https://nft.hypercent.io/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhypercent-marketplace.appspot.com%2F380342f1-7ce9-5de4-8314-6a93090aeaca&w=3840&q=2`" class="h-[60px] w-[60px] rounded-[8px]">
 
-            <span class="text-xs" v-text="`Back in the Apes #?`" />
+            <span class="text-xs" v-text="`Alpha Slayers Club`" />
           </div>
         </button>
       </div>
