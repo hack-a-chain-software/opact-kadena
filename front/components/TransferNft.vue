@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 import { sendPactTransaction } from '~/utils/kadena'
-import { computeWihtdrawParams, computeTransferParams } from '~/utils/sdk'
+import { computeWihtdrawParamsForNFT, computeTransferParamsForNFT } from '~/utils/sdk'
 
 const {
   state,
@@ -78,7 +78,7 @@ const send = async () => {
     let params = null
 
     if (data.addressTo.includes('OZK')) {
-      params = await computeTransferParams(
+      params = await computeTransferParamsForNFT(
         Number(data.amount),
         data.addressTo.replace('OZK', '').trim(),
         node.value,
@@ -95,7 +95,7 @@ const send = async () => {
         data.token.namespace
       )
     } else {
-      params = await computeWihtdrawParams(
+      params = await computeWihtdrawParamsForNFT(
         Number(data.amount),
         data.addressTo,
         node.value,

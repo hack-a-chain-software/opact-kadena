@@ -4,6 +4,7 @@ import {
   base64urlToBigInt,
   getDepositSoluctionBatch,
   computeTransactionParams,
+  getTransferSolutionBatchForNft,
   getTransferSolutionBatch
 } from 'opact-sdk'
 
@@ -27,6 +28,100 @@ export const computeWihtdrawParams = async (
   }
 ) => {
   const batch = await getTransferSolutionBatch({
+    commitments,
+    treeBalance,
+    selectedToken,
+    senderWallet: wallet,
+    totalRequired: amount
+  })
+
+  const {
+    args,
+    extData,
+    tokenSpec
+  } = computeTransactionParams({
+    batch,
+    receiver,
+    selectedToken,
+    receiptsParams,
+    amount: amount * (-1),
+    sender: wallet.pubkey.toString(),
+    root: batch.roots.tree.toString()
+  })
+
+  const proof = await computeProof({
+    batch,
+    wallet,
+    message: poseidon([base64urlToBigInt(args.extDataHash)])
+  })
+
+  return {
+    args,
+    proof,
+    batch,
+    extData,
+    tokenSpec
+  }
+}
+
+export const computeTransferParamsForNFT = async (
+  amount: number,
+  receiver: string,
+  wallet: any,
+  commitments: any,
+  treeBalance: any,
+  receiptsParams?: any,
+  selectedToken: any,
+) => {
+  const batch = await getTransferSolutionBatchForNft({
+    commitments,
+    treeBalance,
+    selectedToken,
+    senderWallet: wallet,
+    totalRequired: amount,
+    receiverPubkey: `0x${receiver}`
+  })
+
+  const {
+    args,
+    extData,
+    tokenSpec
+  } = computeTransactionParams({
+    batch,
+    receiver,
+    amount: 0,
+    selectedToken,
+    receiptsParams,
+    root: batch.roots.tree.toString(),
+    sender: wallet.pubkey.toString()
+  })
+
+  const proof = await computeProof({
+    batch,
+    wallet,
+    message: poseidon([base64urlToBigInt(args.extDataHash)])
+  })
+
+  return {
+    args,
+    proof,
+    batch,
+    extData,
+    tokenSpec
+  }
+
+}
+
+export const computeWihtdrawParamsForNFT = async (
+  amount: number,
+  receiver: string,
+  wallet: any,
+  commitments: any,
+  treeBalance: any,
+  receiptsParams?: any,
+  selectedToken: any
+) => {
+  const batch = await getTransferSolutionBatchForNft({
     commitments,
     treeBalance,
     selectedToken,
