@@ -1,9 +1,12 @@
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { format } from 'date-fns'
+import Pact from 'pact-lang-api'
+import { computed, watch, reactive } from 'vue'
 import { shortenAddress } from '~/utils/string'
-import { getDecimals, formatBigNumberWithDecimals } from 'opact-sdk'
+
+const RPC = process.env.NODE_ENV !== 'development'
+  ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
+  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 const icons = {
   withdraw: 'receiptSend',
@@ -13,7 +16,9 @@ const icons = {
 
 const props = withDefaults(
   defineProps<{
+    id: any;
     pubkey: any;
+    address: any;
     type: string;
     date?: number;
     receiver?: string;
@@ -25,22 +30,16 @@ const props = withDefaults(
   }
 )
 
+const state = reactive({
+  datum: null
+})
+
 const icon = computed(() => {
   if (props.type === 'transfer') {
     return props.receiver === props.pubkey ? 'receiptReceive' : 'receiptSend'
   }
 
   return icons[props.type]
-})
-
-const formattedDate = computed(() => {
-  return format(new Date(props.date), 'MMM dd, yyyy')
-})
-
-const formattedAmount = computed(() => {
-  const decimals = getDecimals(12)
-
-  return formatBigNumberWithDecimals(props.amount, decimals)
 })
 
 const isNegative = computed(() => {
@@ -54,6 +53,41 @@ const isNegative = computed(() => {
 
   return false
 })
+
+const metadata = computed(() => {
+  if (props.address !== 'poly-fungible-v2-reference') {
+    return tokens.find((token) => token.namespace.refName.name === props.address)
+  }
+
+  return tokens[1]
+})
+
+watch(() => props.address, async (newProps) => {
+  if (newProps !== 'poly-fungible-v2-reference' || !newProps || props.id.toString() === '0') {
+    return
+  }
+
+  const createdAt = Math.round(new Date().getTime() / 1000) - 10
+
+  const {
+    result: {
+      data: {
+        data
+      }
+    }
+  } = await Pact.fetch.local({
+    pactCode: `(free.poly-fungible-v2-reference.get-manifest "${props.id}")`,
+    meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
+  }, RPC)
+
+  const [
+    {
+      datum
+    }
+  ] = data
+
+  state.datum = datum
+}, { immediate: true })
 
 
 </script>
@@ -97,13 +131,37 @@ const isNegative = computed(() => {
 
         <div
           class="ml-auto"
+          v-if="address !== 'poly-fungible-v2-reference'"
         >
           <span
             class="text-xs text-green-500"
             :class="isNegative ? 'text-red-500' : 'text-green-500' "
           >
-            {{ isNegative ? '-' : '+' }} {{ Number(amount).toFixed(1)  }} KDA
+            {{ isNegative ? '-' : '+' }} {{ Number(amount).toFixed(1)  }}  {{ metadata?.symbol }}
           </span>
+        </div>
+
+        <div
+          v-else-if="state.datum"
+          :title="state.datum?.title"
+          class="flex pl-4 justify-end space-x-2 ml-auto items-center"
+        >
+          <div>
+            <img
+              loading="lazy"
+              :src="state.datum?.assetUrl"
+              class="w-[45px] h-[45px] rounded-[8px]"
+            />
+          </div>
+
+          <div
+            class="w-[80px] line-clamp-2 text-font-1 "
+          >
+            <span
+              v-text="state.datum?.title"
+              class="text-xxs text-font-1"
+            />
+          </div>
         </div>
       </div>
     </div>

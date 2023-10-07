@@ -136,7 +136,7 @@ const pay = async () => {
           "
         >
           <div class="space-x-4 flex items-center">
-            <img :src="`https://nft.hypercent.io/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhypercent-marketplace.appspot.com%2F380342f1-7ce9-5de4-8314-6a93090aeaca&w=3840&q=2`" class="h-[60px] w-[60px] rounded-[8px]">
+            <img :src="`https://d2k5a3kljnz265.cloudfront.net/nft/kadena-mining-club@kadena/1.webp`" class="h-[60px] w-[60px] rounded-[8px]">
 
             <span class="text-xs" v-text="`Alpha Slayers Club`" />
           </div>

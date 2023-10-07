@@ -71,6 +71,10 @@ watch(() => data.token, (value) => {
 })
 
 const send = async () => {
+  if (!data.token) {
+    return
+  }
+
   try {
     data.loading = true
     data.error = ''
@@ -85,7 +89,7 @@ const send = async () => {
         state.value.commitments,
         userData.value.nfts[data.token.namespace.refName.name],
         {
-          id: 0,
+          id: data.token.id,
           type: 'transfer',
           sender: node.value.pubkey,
           amount: Number(data.amount),

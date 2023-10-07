@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-withDefaults(
+const props = withDefaults(
   defineProps<{
     date?: any;
     receipts?: any;
@@ -29,8 +29,8 @@ withDefaults(
     >
       <HistoryItem
         v-bind="receipt"
-        :key="receipt.date + 'sub'"
-        v-for="receipt in receipts"
+        :key="receipt.date + 'sub' + id"
+        v-for="(receipt, id) in receipts"
       />
     </div>
   </div>

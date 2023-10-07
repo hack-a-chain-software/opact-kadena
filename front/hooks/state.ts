@@ -52,6 +52,8 @@ export const useAppState = () => {
       nfts['poly-fungible-v2-reference'] = computedUserData['poly-fungible-v2-reference']
     }
 
+    console.log('computedState', computedState)
+
     isLoading.value = false
     state.value = computedState
     userData.value = {
