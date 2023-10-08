@@ -4,7 +4,7 @@ import { format, getDayOfYear, isWithinInterval } from 'date-fns'
 import { useAppState } from '~/hooks/state'
 
 const {
-  state
+  receipts: receiptState
 } = useAppState()
 
 definePageMeta({
@@ -85,10 +85,12 @@ const updateFilter = (value: any) => {
 }
 
 const filtered = computed(() => {
-  return state.value.receipts.filter((receipt: any) => {
+  return receiptState.value.filter((receipt: any) => {
     return data.filters.every((filter: string) => filterValidation[filter].check(receipt))
   })
 })
+
+console.log(receiptState.value)
 
 const receipts = computed(() => {
   return filtered.value.reduce((acc: any, curr: any) => {
@@ -119,7 +121,7 @@ const receipts = computed(() => {
     />
 
     <div
-      v-if="state.receipts.length > 0"
+      v-if="receiptState?.length > 0"
       class="w-full"
     >
       <HistoryGroup

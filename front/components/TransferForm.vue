@@ -48,7 +48,6 @@ const send = async () => {
         Number(data.amount),
         data.addressTo.replace('OZK', '').trim(),
         node.value,
-        state.value.commitments,
         userData.value.tokens[data.token.namespace.refName.name],
         {
           id: 0,
@@ -65,7 +64,6 @@ const send = async () => {
         Number(data.amount),
         data.addressTo,
         node.value,
-        state.value.commitments,
         userData.value.tokens[data.token.namespace.refName.name],
         {
           id: 0,

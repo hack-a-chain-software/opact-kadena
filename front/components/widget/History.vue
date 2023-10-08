@@ -4,7 +4,7 @@ import { useWalletStore } from '~/stores/wallet'
 import { useAppState } from '~/hooks/state'
 
 const {
-  state
+  receipts
 } = useAppState()
 
 const router = useRouter()
@@ -48,14 +48,14 @@ const { node } = storeToRefs(wallet)
         class="flex flex-col gap-3"
       >
         <div
-          v-if="state?.receipts?.length > 0"
+          v-if="receipts?.length > 0"
           class="flex flex-col gap-3"
         >
           <HistoryWidgetItem
             v-bind="receipt"
             :key="receipt.date"
             :pubkey="node.pubkey"
-            v-for="receipt in state?.receipts?.slice(0, 5)"
+            v-for="receipt in receipts?.slice(0, 5)"
           />
         </div>
 

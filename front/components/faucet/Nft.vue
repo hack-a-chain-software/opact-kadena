@@ -98,7 +98,6 @@ const pay = async () => {
     await provider.value.mintToken(id)
 
     router.push('/home')
-    logout()
   } catch (e) {
     console.warn(e)
   } finally {

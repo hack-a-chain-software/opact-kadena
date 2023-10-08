@@ -80,7 +80,6 @@ const deposit = async () => {
     const transactionArgs = await computeDepositParams(
       node.value,
       Number(data.amount),
-      state.value.commitments,
       provider.value.account.account.publicKey,
       '',
       {

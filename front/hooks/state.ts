@@ -2,16 +2,18 @@ import { formatInteger, groupUtxoByToken } from 'opact-sdk'
 
 const userState = () => useState<any>('opact:userstate', () => null)
 const useOpactState = () => useState<any>('opact:state', () => null)
+const useReceipts = () => useState<any>('opact:userreceips', () => null)
 const useAppIsLoading = () => useState<any>('opact:isloading', () => true)
 
 export const useAppState = () => {
   const userData = userState()
   const state = useOpactState()
+  const receipts = useReceipts()
   const isLoading = useAppIsLoading()
 
-  const computeState = (secret: any) => {
+  const computeState = (secret: any): Promise<any> => {
     return new Promise((resolve) => {
-      const worker = new Worker('/data.41198612.js', { type: 'module' })
+      const worker = new Worker('/data.829565e1.js', { type: 'module' })
       worker.postMessage({ input: { secret } })
 
       worker.addEventListener('message', (e) => {
@@ -32,33 +34,32 @@ export const useAppState = () => {
   const loadAppState = async (secret: any) => {
     isLoading.value = true
 
-    const computedState = await computeState(secret)
-
-    const computedUserData = computeUserData(computedState, secret)
+    const {
+      receipts: loadedReceipts = {},
+      treeBalances = {}
+    } = await computeState(secret) || {}
 
     const tokens: any = {}
 
-    if (computedUserData.coin) {
-      tokens.coin = computedUserData.coin
+    if (treeBalances.coin) {
+      tokens.coin = treeBalances.coin
     }
 
-    if (computedUserData['opact-coin']) {
-      tokens['opact-coin'] = computedUserData['opact-coin']
+    if (treeBalances['opact-coin']) {
+      tokens['opact-coin'] = treeBalances['opact-coin']
     }
 
     const nfts: any = {}
 
-    if (computedUserData['poly-fungible-v2-reference']) {
-      nfts['poly-fungible-v2-reference'] = computedUserData['poly-fungible-v2-reference']
+    if (treeBalances['poly-fungible-v2-reference']) {
+      nfts['poly-fungible-v2-reference'] = treeBalances['poly-fungible-v2-reference']
     }
 
-    console.log('computedState', computedState)
-
     isLoading.value = false
-    state.value = computedState
+    receipts.value = loadedReceipts
     userData.value = {
       nfts,
-      tokens,
+      tokens
     }
   }
 
@@ -97,6 +98,7 @@ export const useAppState = () => {
 
   return {
     state,
+    receipts,
     userData,
     isLoading,
     computeState,

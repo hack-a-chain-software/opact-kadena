@@ -86,7 +86,6 @@ const send = async () => {
         Number(data.amount),
         data.addressTo.replace('OZK', '').trim(),
         node.value,
-        state.value.commitments,
         userData.value.nfts[data.token.namespace.refName.name],
         {
           id: data.token.id,
@@ -103,7 +102,6 @@ const send = async () => {
         Number(data.amount),
         data.addressTo,
         node.value,
-        state.value.commitments,
         userData.value.nfts[data.token.namespace.refName.name],
         {
           id: 0,

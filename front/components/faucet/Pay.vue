@@ -22,7 +22,6 @@ const pay = async () => {
     await provider.value.faucet(data.token.namespace)
 
     router.push('/home')
-    logout()
   } catch (e) {
     console.warn(e)
   } finally {

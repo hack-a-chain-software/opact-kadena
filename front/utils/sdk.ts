@@ -12,7 +12,6 @@ export const computeWihtdrawParams = async (
   amount: number,
   receiver: string,
   wallet: any,
-  commitments: any,
   treeBalance: any,
   receiptsParams?: any,
   selectedToken = {
@@ -28,7 +27,6 @@ export const computeWihtdrawParams = async (
   }
 ) => {
   const batch = await getTransferSolutionBatch({
-    commitments,
     treeBalance,
     selectedToken,
     senderWallet: wallet,
@@ -68,13 +66,11 @@ export const computeTransferParamsForNFT = async (
   amount: number,
   receiver: string,
   wallet: any,
-  commitments: any,
   treeBalance: any,
   receiptsParams?: any,
   selectedToken: any,
 ) => {
   const batch = await getTransferSolutionBatchForNft({
-    commitments,
     treeBalance,
     selectedToken,
     senderWallet: wallet,
@@ -116,13 +112,11 @@ export const computeWihtdrawParamsForNFT = async (
   amount: number,
   receiver: string,
   wallet: any,
-  commitments: any,
   treeBalance: any,
   receiptsParams?: any,
   selectedToken: any
 ) => {
   const batch = await getTransferSolutionBatchForNft({
-    commitments,
     treeBalance,
     selectedToken,
     senderWallet: wallet,
@@ -162,7 +156,6 @@ export const computeTransferParams = async (
   amount: number,
   receiver: string,
   wallet: any,
-  commitments: any,
   treeBalance: any,
   receiptsParams?: any,
   selectedToken = {
@@ -178,7 +171,6 @@ export const computeTransferParams = async (
   }
 ) => {
   const batch = await getTransferSolutionBatch({
-    commitments,
     treeBalance,
     selectedToken,
     senderWallet: wallet,
@@ -218,7 +210,6 @@ export const computeTransferParams = async (
 export const computeDepositParams = async (
   wallet: any,
   amount: number,
-  commitments?: any,
   sender?: any,
   receiver?: string,
   receiptsParams?: any,
@@ -235,7 +226,6 @@ export const computeDepositParams = async (
   }
 ) => {
   const batch = await getDepositSoluctionBatch({
-    commitments,
     selectedToken,
     treeBalance: {},
     senderWallet: wallet,
@@ -274,7 +264,6 @@ export const computeDepositParams = async (
 export const computePaymentParams = async (
   pubkey: any,
   amount: number,
-  commitments?: any,
   sender?: string,
   receiptsParams?: any,
   selectedToken = {
@@ -294,7 +283,6 @@ export const computePaymentParams = async (
   },
 ) => {
   const batch = await getDepositSoluctionBatch({
-    commitments,
     selectedToken,
     senderWallet: wallet,
     totalRequired: amount,
