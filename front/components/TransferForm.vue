@@ -77,7 +77,7 @@ const send = async () => {
       )
     }
 
-    if (data.token.id === 1) {
+    if (data.token.id === 1 || data.addressTo.includes('OZK')) {
       await sendPactTransaction(data.addressTo, params, (message: string) => data.loadingMessage = message)
     } else {
       await provider.value.transaction(
