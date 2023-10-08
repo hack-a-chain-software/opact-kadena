@@ -46,7 +46,7 @@ const redirect = (path: string, skip: boolean) => {
 
 <template>
   <div
-    class="hidden lg:flex lg:max-w-[119px] xl:min-w-[260px] p-6 bg-[#0c1015] bg-blur-[6px] border-r-2 border-[#363B42] relative z-[2] mb-[-40px]"
+    class="hidden lg:flex lg:max-w-[119px] xl:min-w-[260px] p-6 bg-[#0c1015] bg-blur-[6px] border-r-2 border-[#363B42] z-[2] mb-[-40px] fixed top-0 h-screen top-0 z-[999]"
   >
     <div
       class="space-y-12"

@@ -47,9 +47,15 @@ watch(node, (newNode) => {
 
       <LayoutBottombar />
 
-      <div class="px-4 lg:w-full lg:pt-[96px] relative z-[2]">
+      <div class="px-4 lg:w-full lg:pt-[96px] relative z-[2] pl-4 lg:pl-[135px] xl:pl-[276px] ">
         <slot />
       </div>
     </template>
   </div>
 </template>
+
+<style>
+body {
+  position: relative
+}
+</style>
