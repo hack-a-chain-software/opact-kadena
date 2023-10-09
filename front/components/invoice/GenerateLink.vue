@@ -12,6 +12,8 @@ import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
+const { $toaster } = useNuxtApp()
+
 const props = withDefaults(
   defineProps<{
     show: boolean;
@@ -31,6 +33,11 @@ const baseUrl =
 const copyToClipboard = async (text: string) => {
   try {
     await navigator.clipboard.writeText(text)
+
+    $toaster.info({
+      type: 'info',
+      title: 'Link Copied',
+    })
   } catch (e) {
     console.warn(e)
   }

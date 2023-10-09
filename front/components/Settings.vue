@@ -11,11 +11,18 @@ import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
+const { $toaster } = useNuxtApp()
+
 const { node } = storeToRefs(wallet)
 
 const copyToClipboard = async (value: string) => {
   try {
     await navigator.clipboard.writeText(value)
+
+    $toaster.info({
+      type: 'info',
+      title: 'Wallet Address Copied',
+    })
   } catch (e) {
     console.warn(e)
   }

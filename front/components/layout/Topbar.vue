@@ -11,6 +11,8 @@ const titles = {
   transfer: 'Send',
   'deposit-token': 'Deposit Token',
   'deposit-nft': 'Deposit NFT',
+  'transfer-nft': 'Send NFT',
+  'transfer-token': 'Send Token',
 }
 </script>
 

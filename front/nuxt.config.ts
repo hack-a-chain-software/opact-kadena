@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-icon',
     '@pinia/nuxt',
+    '@cssninja/nuxt-toaster',
     '@nuxt/image-edge',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
@@ -21,6 +22,9 @@ export default defineNuxtConfig({
   ],
   build: {
     transpile: ['@vuepic/vue-datepicker']
+  },
+  toaster: {
+    installPlugin: false
   },
   postcss: {
     plugins: {

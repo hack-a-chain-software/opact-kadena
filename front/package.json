@@ -60,6 +60,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@cssninja/nuxt-toaster": "^0.3.12",
     "@nuxt/image": "^1.0.0-rc.1",
     "@nuxt/schema": "3.5.1",
     "@nuxtjs/fontaine": "^0.2.5",

@@ -2,6 +2,8 @@
 import { reactive } from 'vue'
 import { generateMnemonic } from 'opact-sdk'
 
+const { $toaster } = useNuxtApp()
+
 const data = reactive({
   mnemonic: ''
 })
@@ -11,6 +13,11 @@ const emits = defineEmits(['changeStep', 'mnemonic'])
 const copyToClipboard = async () => {
   try {
     await navigator.clipboard.writeText(data.mnemonic)
+
+    $toaster.info({
+      type: 'info',
+      title: 'Mnemonic Copied',
+    })
   } catch (e) {
     console.warn(e)
   }

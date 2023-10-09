@@ -211,6 +211,9 @@ importers:
         specifier: ^0.32.11
         version: 0.32.11
     devDependencies:
+      '@cssninja/nuxt-toaster':
+        specifier: ^0.3.12
+        version: 0.3.12(vue@3.3.4)
       '@nuxt/image':
         specifier: ^1.0.0-rc.1
         version: 1.0.0-rc.1
@@ -1924,6 +1927,19 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
     optional: true
+
+  /@cssninja/nuxt-toaster@0.3.12(vue@3.3.4):
+    resolution: {integrity: sha512-k6yE/e9/Na4XJBC1dNjUctOvKpjWywnw1gEmAIbryn0cITmOMwiJckqC7QEXGxY8Pr2OhLFVYGQurAncf4pp0A==}
+    dependencies:
+      '@nuxt/kit': 3.7.4
+      '@vueuse/core': 10.1.2(vue@3.3.4)
+      defu: 6.1.2
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - rollup
+      - supports-color
+      - vue
+    dev: true
 
   /@csstools/cascade-layer-name-parser@1.0.5(@csstools/css-parser-algorithms@2.3.2)(@csstools/css-tokenizer@2.2.1):
     resolution: {integrity: sha512-v/5ODKNBMfBl0us/WQjlfsvSlYxfZLhNMVIsuCPib2ulTwGKYbKJbwqw671+qH9Y4wvWVnu7LBChvml/wBKjFg==}

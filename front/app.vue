@@ -26,6 +26,7 @@ useHead({
   <Html lang="en" />
   <NuxtLoadingIndicator />
   <NuxtLayout>
+    <!-- <div id="nt-container" class="absolute inset-0 z-[9999999999999999999999999999]"/> -->
     <NuxtPage />
   </NuxtLayout>
 </template>
