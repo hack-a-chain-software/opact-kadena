@@ -29,8 +29,6 @@ onBeforeMount(async () => {
   json = await res.json()
 
   data.kdxInDolar = json.market_data.current_price.usd
-
-  console.log('data', data)
 })
 
 const balance = computed(() => {

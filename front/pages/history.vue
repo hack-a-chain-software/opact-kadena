@@ -90,8 +90,6 @@ const filtered = computed(() => {
   })
 })
 
-console.log(receiptState.value)
-
 const receipts = computed(() => {
   return filtered.value.reduce((acc: any, curr: any) => {
     const flag = getDayOfYear(new Date(curr.date))
