@@ -60,8 +60,8 @@ const max = computed(() => {
   const decimals = getDecimals(12)
 
   return data.token.name === 'Kadena'
-    ? formatBigNumberWithDecimals(userData.value.tokens.coin.balance, decimals)
-    : formatBigNumberWithDecimals(userData.value.tokens['opact-coin'].balance, decimals)
+    ? formatBigNumberWithDecimals(userData?.value?.tokens?.coin?.balance || 0, decimals)
+    : formatBigNumberWithDecimals(userData?.value?.tokens['opact-coin']?.balance || 0, decimals)
 })
 
 const send = async () => {

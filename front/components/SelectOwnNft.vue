@@ -206,7 +206,10 @@ watch(userData, async (newData) => {
                 </button>
               </div>
 
-              <div>
+              <div
+
+              v-if="data.tokens.length > 0"
+              >
                 <div
                   class="
                       gap-3
@@ -257,6 +260,24 @@ watch(userData, async (newData) => {
                     </div>
                   </button>
                 </div>
+              </div>
+
+              <div
+                v-else
+                class="flex justify-center py-[32px] flex-col items-center space-y-4"
+              >
+                <div>
+                  <img
+                    src="/empty-tokens.png"
+                    class="w-[218px]"
+                  />
+                </div>
+
+                <span
+                  class="text-font-2 text-[18px] font-[600]"
+                >
+                  You don't have NFTs yet.
+                </span>
               </div>
             </DialogPanel>
           </TransitionChild>
