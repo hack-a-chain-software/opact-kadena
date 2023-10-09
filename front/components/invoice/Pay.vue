@@ -1,10 +1,44 @@
 <script lang="ts" setup>
-import axios from 'axios'
-import { onBeforeMount } from 'vue'
+import { Money3Component } from 'v-money3'
 import { useInvoice } from '~/hooks/invoice'
 import { computePaymentParams } from '~/utils/sdk'
 
 const { provider } = useExtensions()
+
+const checkFunds = async () => {
+  if (!data.token) {
+    return
+  }
+
+  const prefix = data.token.name === 'Kadena' ? 'coin' : 'test.opact-coin'
+
+  data.showConnect = false
+
+  await nextTick()
+
+  if (!provider.value) {
+    return
+  }
+
+  data.loading = true
+
+  const {
+    result: {
+      status,
+      data: coinData
+    }
+  } = await provider.value.coinDetails(prefix)
+
+  data.loading = false
+
+  if (status === 'failure') {
+    data.balance = 0
+
+    return
+  }
+
+  data.balance = coinData.balance
+}
 
 const {
   data,
@@ -17,45 +51,6 @@ const {
 
 const emits = defineEmits(['changeStep'])
 
-// TODO: SEND THIS TO NUXTCONFIG
-const RPC = process.env.NODE_ENV !== 'development'
-  ? 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/getdata'
-  : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:5000/getdata'
-
-onBeforeMount(() => {
-  (async () => {
-    data.depositing = true
-    const { data: dataApi } = await axios.get(`${RPC}?salt=268`, {
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      }
-    })
-
-    const { commitments } = dataApi
-      .sort((a: any, b: any) => a.txid - b.txid)
-      .map(({ events }: any) => events)
-      .reduce((acc: any, curr: any) => acc.concat(curr), [])
-      .reduce((curr: any, event: any) => {
-        if (event.name === 'new-commitment') {
-          const commitment = {
-            value: event.params[0].int,
-            order: event.params[1].int
-          }
-
-          curr.commitments = [...curr.commitments, commitment]
-        }
-
-        return curr
-      }, {
-        commitments: []
-      }) as any
-
-    data.commitments = commitments
-    data.depositing = false
-    data.depositMessage = 'Generating ZK Proof...'
-  })()
-})
-
 const deposit = async () => {
   data.error = ''
   data.depositing = true
@@ -64,10 +59,9 @@ const deposit = async () => {
     const transactionArgs = await computePaymentParams(
       `0x${pubkey.value}`,
       Number(amount.value),
-      data.commitments,
       provider.value.account.account.publicKey,
       {
-        id: 0,
+        id: "0",
         type: 'deposit',
         amount: Number(amount.value),
         receiver: BigInt(`0x${pubkey.value}`),
@@ -85,10 +79,16 @@ const deposit = async () => {
     emits('changeStep', 'success')
   } catch (e) {
     console.warn(e)
+    data.error = e.message
+  } finally {
     data.depositing = false
     data.depositMessage = "Computing UTXO's Values..."
   }
 }
+
+watch(() => data.token, () => {
+  checkFunds()
+}, { immediate: true })
 </script>
 
 <template>
@@ -105,19 +105,29 @@ const deposit = async () => {
           <span class="text-xxs text-font-2"> Value </span>
         </div>
 
-        <div class="mt-2 p-4 rounded-[8px] flex items-center justify-between bg-gray-700">
+        <div class="mt-2 p-4 rounded-[8px] flex items-center justify-between bg-gray-700"
+          :class="params?.amount && 'opacity-60'">
           <div class="flex-grow">
-            <input
+            <Money3Component
+              placeholder="0"
               v-if="!params?.amount"
               v-model="data.amount"
-              placeholder="0"
+              v-bind="data.config"
               class="
+                h-[39px]
                 bg-transparent
-                text-xl text-font-1
-                outline-none
+                text-xl
                 w-full
+                px-0
+                font-semibold
+                text-font-1
+                !outline-none
+                !border-none
+                focus:ring-0
+                disabled:opacity-60
+                disabled:cursor-not-allowed
               "
-            >
+            />
 
             <input
               v-else
@@ -144,7 +154,7 @@ const deposit = async () => {
                 space-x-1
                 w-max
                 items-center
-                disabled:opacity-[0.8]
+                disabled:opacity-60
                 disabled:cursor-not-allowed
               "
               :disabled="!!params.tokenId"
@@ -163,10 +173,23 @@ const deposit = async () => {
             </button>
           </div>
         </div>
+
+        <button
+          class="mt-1"
+          :key="data.token.id"
+          v-if="!data.loading && provider && data.token"
+          @click.prevent="data.amount = data.balance"
+        >
+          <span
+            class="text-xxxs hover:underline"
+            :class="data.balance > 0 ? 'text-green-500' : 'text-red-500'"
+            v-text="`Balance: ${data.balance} ${data.token.symbol}`"
+          />
+        </button>
       </div>
     </div>
 
-    <div class="pt-4 lg:pt-8">
+    <div class="pt-4 lg:pt-2">
       <div>
         <div>
           <span class="text-xxs text-font-2"> to </span>
@@ -176,14 +199,22 @@ const deposit = async () => {
           :value="pubkey"
           :readonly="params?.pubkey"
           :class="'cursor-not-allowed'"
-          class="mt-2 p-4 bg-gray-700 rounded-[8px] text-xs break-words w-full outline-none"
+          class="mt-2 p-4 bg-gray-700 rounded-[8px] text-xs break-words w-full outline-none opacity-60"
         >
       </div>
     </div>
 
     <TxDetails
       :fee="0"
+      v-if="amount > 0"
       :amount="amount"
+    />
+
+    <Warning
+      type="error"
+      class="mt-2"
+      v-if="data.error"
+      :label="data.error + '*'"
     />
 
     <div class="pt-6 lg:pt-[40px]">
@@ -200,6 +231,7 @@ const deposit = async () => {
           rounded-[12px]
           relative
           disabled:cursor-not-allowed
+          disabled:opacity-60
         "
         :class="
           buttonIsDisabled

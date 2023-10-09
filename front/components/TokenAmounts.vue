@@ -1,5 +1,14 @@
-<script setup langt="ts">
+<script setup lang="ts">
 const amounts = [1, 10, 100]
+
+withDefaults(
+  defineProps<{
+    disabled?: boolean
+  }>(),
+  {
+    disabled: false,
+  }
+)
 
 const emit = defineEmits(['selected'])
 </script>
@@ -16,7 +25,10 @@ const emit = defineEmits(['selected'])
         border-gray-700
         p-3
         rounded-full
+        disabled:opacity-60
+        disabled:cursor-not-allowed
       "
+      :disabled="disabled"
       @click.prevent="emit('selected', amount)"
     >
       <span

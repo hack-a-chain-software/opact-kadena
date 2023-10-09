@@ -129,8 +129,8 @@ const send = async () => {
     loadAppState(node.value.pvtkey)
     router.push('/home')
   } catch (e) {
-    logout()
     console.warn(e)
+    data.error = e.message
   } finally {
     data.loading = false
     data.depositMessage = 'Generating ZK Proof...'
@@ -307,15 +307,12 @@ const send = async () => {
       </template>
     </div>
 
-    <div
-      v-if="data.error"
+    <Warning
+      type="error"
       class="mt-2"
-    >
-      <span
-        class="text-xs text-red-500"
-        v-text="data.error + '*'"
-      />
-    </div>
+      v-if="data.error"
+      :label="data.error + '*'"
+    />
 
     <div class="mt-full lg:mt-[40px]">
       <button

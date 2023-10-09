@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useDepositForm } from '~/hooks/deposit'
-
 definePageMeta({
   layout: 'app',
   middleware: 'auth'
@@ -9,11 +7,6 @@ definePageMeta({
 useHead({
   title: 'Deposit NFT'
 })
-
-const {
-  data,
-  form
-} = useDepositForm()
 </script>
 
 <template>

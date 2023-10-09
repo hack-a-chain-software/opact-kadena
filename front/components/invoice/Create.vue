@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { Money3Component } from 'v-money3'
 import { tokens } from '~/utils/constants'
 
 const router = useRouter()
@@ -8,7 +9,21 @@ const data = reactive({
   amount: 0,
   show: false,
   token: tokens[0],
-  showGenerateLink: false
+  showGenerateLink: false,
+  config: {
+    masked: false,
+    prefix: '',
+    suffix: '',
+    thousands: '',
+    decimal: '.',
+    precision: 1,
+    disableNegative: false,
+    min: 0,
+    allowBlank: false,
+    minimumNumberOfCharacters: 0,
+    shouldRound: true,
+    focusOnRight: false,
+  }
 })
 </script>
 
@@ -70,21 +85,23 @@ const data = reactive({
         <div
           class="flex justify-between items-center space-x-1"
         >
-          <input
+          <Money3Component
             v-model="data.amount"
+            v-bind="data.config"
             class="
               h-[39px]
               bg-transparent
               text-xl
+              w-full
+              px-0
               font-semibold
               text-font-2
-              outline-none
+              !outline-none
+              !border-none
+              focus:ring-0
+              disabled:opacity-60
+              disabled:cursor-not-allowed
             "
-          >
-
-          <Icon
-            name="pen"
-            class="min-w-[24px] min-h-[24px] text-font-2 lg:invisible"
           />
         </div>
       </div>

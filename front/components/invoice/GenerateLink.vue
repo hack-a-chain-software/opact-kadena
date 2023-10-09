@@ -16,7 +16,7 @@ const props = withDefaults(
   defineProps<{
     show: boolean;
     token: number;
-    amount: number;
+    amount: number | string;
   }>(),
   {
     show: false

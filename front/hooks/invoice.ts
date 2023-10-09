@@ -21,7 +21,7 @@ export const RPC =
 
 export const useInvoice = () => {
   const data = reactive<any>({
-    amount: '',
+    amount: 0,
     error: '',
     address: '',
     show: false,
@@ -31,9 +31,23 @@ export const useInvoice = () => {
     commitments: null,
     depositing: false,
     showConnect: false,
-    depositMessage: 'Loading Metadata',
+    depositMessage: 'Syncing Metadata',
     showCollapsible: false,
-    token: tokens[0]
+    token: tokens[0],
+    config: {
+      masked: false,
+      prefix: '',
+      suffix: '',
+      thousands: '',
+      decimal: '.',
+      precision: 1,
+      disableNegative: false,
+      min: 0,
+      allowBlank: false,
+      minimumNumberOfCharacters: 0,
+      shouldRound: true,
+      focusOnRight: false,
+    }
   })
 
   const route = useRoute()
@@ -62,7 +76,7 @@ export const useInvoice = () => {
     return tokens.find(({ id }: any) => id === Number(tokenId.value)) || data.token
   })
 
-  const buttonIsDisabled = computed(() => !pubkey.value || !amount.value)
+  const buttonIsDisabled = computed(() => !pubkey.value || !amount.value || data.balance < Number(amount.value) || amount.value === '0.0')
 
   return {
     data,

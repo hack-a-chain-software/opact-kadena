@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { storeToRefs } from 'pinia'
+import { Money3Component } from 'v-money3'
 import { tokens } from '~/utils/constants'
 import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 import { sendPactTransaction } from '~/utils/kadena'
+import { formatBigNumberWithDecimals, getDecimals } from 'opact-sdk'
 import { computeWihtdrawParams, computeTransferParams } from '~/utils/sdk'
 
 const {
@@ -33,7 +35,33 @@ const data = reactive({
   error: '',
   token: tokens[0],
   showCollapsible: false,
-  addressTo: ''
+  addressTo: '',
+  config: {
+    masked: false,
+    prefix: '',
+    suffix: '',
+    thousands: '',
+    decimal: '.',
+    precision: 1,
+    disableNegative: false,
+    min: 0,
+    allowBlank: false,
+    minimumNumberOfCharacters: 0,
+    shouldRound: true,
+    focusOnRight: false,
+  }
+})
+
+const max = computed(() => {
+  if (!data.token) {
+    return 0
+  }
+
+  const decimals = getDecimals(12)
+
+  return data.token.name === 'Kadena'
+    ? formatBigNumberWithDecimals(userData.value.tokens.coin.balance, decimals)
+    : formatBigNumberWithDecimals(userData.value.tokens['opact-coin'].balance, decimals)
 })
 
 const send = async () => {
@@ -91,8 +119,8 @@ const send = async () => {
     loadAppState(node.value.pvtkey)
     router.push('/home')
   } catch (e) {
-    logout()
     console.warn(e)
+    data.error = e.message
   } finally {
     data.loading = false
     data.loadingMessage = 'Generating ZK Proof...'
@@ -160,21 +188,40 @@ const send = async () => {
         <div
           class="flex justify-between items-center space-x-1"
         >
-          <input
+          <Money3Component
+            :max="max"
             v-model="data.amount"
+            v-bind="data.config"
             class="
               h-[39px]
               bg-transparent
               text-xl
+              w-full
+              px-0
               font-semibold
-              text-font-2
-              outline-none
+              text-font-1
+              !outline-none
+              !border-none
+              focus:ring-0
+              disabled:opacity-60
+              disabled:cursor-not-allowed
             "
-          >
-
-          <Icon name="pen" class="h-6 w-6 text-font-2" />
+          />
         </div>
       </div>
+
+      <button
+        class="mt-1"
+        :key="data.token.id"
+        v-if="max"
+        @click.prevent="data.amount = max"
+      >
+        <span
+          class="text-xxxs hover:underline"
+          :class="max > 0 ? 'text-green-500' : 'text-red-500'"
+          v-text="`Balance: ${max} ${data.token.symbol}`"
+        />
+      </button>
 
       <div class="pt-7">
         <div class="flex justify-between pb-2">
@@ -191,6 +238,7 @@ const send = async () => {
             rounded-[8px]
             justify-between
             bg-gray-800
+            hover:opacity-90
             disabled:opacity-60
             disabled:cursor-not-allowed
           "
@@ -236,31 +284,22 @@ const send = async () => {
               outline-none
             "
           >
-
-          <div class="absolute top-3 right-4">
-            <Icon
-              name="pen"
-              class="h-6 w-6 rotate-[-90deg]"
-            />
-          </div>
         </div>
       </div>
 
       <TxDetails
         :fee="1"
+        v-if="data.amount > 0"
         :amount="data.amount"
       />
     </div>
 
-    <div
+    <Warning
+      type="error"
+      class="mt-2"
       v-if="data.error"
-      class="mt-2 max-w-full break-words"
-    >
-      <span
-        v-text="data.error + '*'"
-        class="text-xs text-red-500"
-      />
-    </div>
+      :label="data.error + '*'"
+    />
 
     <div class="mt-full lg:mt-[40px]">
       <button
@@ -306,7 +345,7 @@ const send = async () => {
           disabled:cursor-not-allowed
         "
         :class="
-          !data.token || !data.amount || !data.addressTo
+          !data.token || !data.amount || !data.addressTo || data.amount > max || data.amount <= 0
             ? 'bg-gray-700'
             : 'bg-blue-gradient'
         "

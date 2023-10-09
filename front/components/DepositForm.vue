@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import Pact from 'pact-lang-api'
 import { storeToRefs } from 'pinia'
 import { reactive, watch } from 'vue'
+import { Money3Component } from 'v-money3'
 import { tokens } from '~/utils/constants'
 import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 import { computeDepositParams } from '~/utils/sdk'
 
 const {
-  state,
   loadAppState
 } = useAppState()
 
@@ -16,7 +15,7 @@ const wallet = useWalletStore()
 
 const { node } = storeToRefs(wallet)
 
-const { provider, logout } = useExtensions()
+const { provider } = useExtensions()
 
 const router = useRouter()
 
@@ -31,7 +30,21 @@ const data = reactive({
   showConnect: false,
   showCollapsible: false,
   depositMessage: 'Generating ZK Proof...',
-  token: tokens[0]
+  token: tokens[0],
+  config: {
+    masked: false,
+    prefix: '',
+    suffix: '',
+    thousands: '',
+    decimal: '.',
+    precision: 1,
+    disableNegative: false,
+    min: 0,
+    allowBlank: false,
+    minimumNumberOfCharacters: 0,
+    shouldRound: true,
+    focusOnRight: false,
+  }
 })
 
 const checkFunds = async () => {
@@ -103,10 +116,10 @@ const deposit = async () => {
     router.push('/home')
   } catch (e) {
     console.warn(e)
-    data.depositing = false
-    data.depositMessage = "Computing UTXO's Values..."
+    data.error = e.message
   } finally {
-    logout()
+    data.depositing = false
+    data.depositMessage = 'Generating ZK Proof...'
   }
 }
 </script>
@@ -163,7 +176,10 @@ const deposit = async () => {
 
       <div class="flex flex-col space-y-2 pt-[24px] lg:pt-0">
         <div>
-          <h2 class="text-font-1 text-xxs font-medium">
+          <h2
+            class="text-font-1 text-xxs font-medium"
+            :class="!provider && 'opacity-60 cursor-not-allowed'"
+          >
             Enter or select amount
           </h2>
         </div>
@@ -171,19 +187,26 @@ const deposit = async () => {
         <div
           class="flex justify-between items-center space-x-1"
         >
-          <input
+          <Money3Component
+            :max="data.balance"
+            :disabled="!provider"
             v-model="data.amount"
+            v-bind="data.config"
             class="
               h-[39px]
               bg-transparent
               text-xl
+              w-full
+              px-0
               font-semibold
               text-font-2
-              outline-none
+              !outline-none
+              !border-none
+              focus:ring-0
+              disabled:opacity-60
+              disabled:cursor-not-allowed
             "
-          >
-
-          <Icon name="pen" class="h-6 w-6 text-font-2 lg:hidden" />
+          />
         </div>
       </div>
 
@@ -201,39 +224,17 @@ const deposit = async () => {
       </button>
 
       <TokenAmounts
+        :disabled="!provider"
         @selected="data.amount = $event"
       />
 
       <div class="pt-7">
         <div class="flex justify-between pb-2">
           <div>
-            <span class="text-xxs font-medium text-font-1">
+            <span class="text-xxs font-medium text-font-1" :class="!provider && 'opacity-60 cursor-not-allowed'">
               Select Token
             </span>
           </div>
-
-          <!-- <div>
-            <button
-              disabled
-              class="
-                flex
-                items-center
-                space-x-2
-                text-blue-400
-                cursor-not-allowed
-                disabled:opacity-[0.8]
-              "
-              @click.prevent="step = 'token'"
-            >
-              <span class="text-xxs font-medium">
-                Import token
-              </span>
-
-              <div>
-                <Icon name="add" class="w-5 h-5" />
-              </div>
-            </button>
-          </div> -->
         </div>
 
         <button
@@ -244,9 +245,11 @@ const deposit = async () => {
             rounded-[8px]
             justify-between
             bg-gray-800
+            hover:opacity-90
             disabled:opacity-60
             disabled:cursor-not-allowed
           "
+          :disabled="!provider"
           @click.prevent="data.show = true"
         >
           <div v-if="!data.token">
@@ -308,20 +311,18 @@ const deposit = async () => {
 
         <TxDetails
           fee="0"
+          v-if="data.amount > 0 && data.balance !== 0 && data.balance >= data.amount"
           :amount="data.amount"
         />
       </template>
     </div>
 
-    <div
-      v-if="data.error"
+    <Warning
+      type="error"
       class="mt-2"
-    >
-      <span
-        class="text-xs text-red-500"
-        v-text="data.error + '*'"
-      />
-    </div>
+      v-if="data.error"
+      :label="data.error + '*'"
+    />
 
     <div class="mt-full lg:mt-[40px]">
       <button
@@ -351,7 +352,7 @@ const deposit = async () => {
 
       <button
         v-else
-        :disabled="!data.token || !data.amount"
+        :disabled="!data.token || !data.amount || data.balance === 0"
         class="
           w-full
           flex
@@ -365,7 +366,7 @@ const deposit = async () => {
           disabled:cursor-not-allowed
         "
         :class="
-          !data.token || !data.amount
+          !data.token || !data.amount || data.balance === 0
             ? 'bg-gray-700'
             : 'bg-blue-gradient'
         "
