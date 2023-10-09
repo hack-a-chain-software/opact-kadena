@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, onBeforeMount, computed } from 'vue'
+import { getDecimals, formatBigNumberWithDecimals } from 'opact-sdk'
 import { useAppState } from '~/hooks/state'
 
 const {
@@ -10,7 +11,41 @@ const router = useRouter()
 
 const data = reactive({
   tab: 'tokens',
+  kdxInDolar: 0,
+  kadenaInDolar: 0,
   showReceiveModal: false
+})
+
+onBeforeMount(async () => {
+  let res = await fetch('https://api.coingecko.com/api/v3/coins/kadena?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw')
+
+  let json = await res.json()
+
+  data.kadenaInDolar = json.market_data.current_price.usd
+
+  res =  await fetch('https://api.coingecko.com/api/v3/coins/kaddex?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw')
+
+  json = await res.json()
+
+  data.kdxInDolar = json.market_data.current_price.usd
+
+  console.log('data', data)
+})
+
+const balance = computed(() => {
+  const decimals = getDecimals(12)
+
+  return ((
+    formatBigNumberWithDecimals(
+      (userData.value?.tokens['coin']?.balance || 0),
+      decimals
+    ) as any * data.kadenaInDolar
+  ) + (
+    formatBigNumberWithDecimals(
+      (userData.value?.tokens['opact-coin']?.balance || 0),
+      decimals
+    ) as any * data.kdxInDolar
+  )).toFixed(2)
 })
 </script>
 
@@ -41,7 +76,7 @@ const data = reactive({
           <div class="flex items-center space-x-4">
             <div>
               <span class="text-lg font-medium text-font-1">
-                0 USD
+                {{ balance }} USD
               </span>
             </div>
 

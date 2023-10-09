@@ -1,6 +1,6 @@
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, reactive, onBeforeMount } from 'vue'
 import { tokens } from '~/utils/constants'
 import { getDecimals, formatBigNumberWithDecimals } from 'opact-sdk'
 
@@ -15,6 +15,11 @@ const props = withDefaults(
   }
 )
 
+const data = reactive({
+  kdxInDolar: 0,
+  kadenaInDolar: 0,
+})
+
 const formattedAmount = computed(() => {
   const decimals = getDecimals(12)
 
@@ -23,6 +28,31 @@ const formattedAmount = computed(() => {
 
 const metadata = computed(() => {
   return tokens.find(({ namespace }: any) => namespace.refName.name === props.address) || {}
+})
+
+onBeforeMount(async () => {
+  let res = await fetch('https://api.coingecko.com/api/v3/coins/kadena?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw')
+
+  let json = await res.json()
+
+  data.kadenaInDolar = json.market_data.current_price.usd
+
+  res =  await fetch('https://api.coingecko.com/api/v3/coins/kaddex?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw')
+
+  json = await res.json()
+
+  data.kdxInDolar = json.market_data.current_price.usd
+})
+
+const balance = computed(() => {
+  const decimals = getDecimals(12)
+
+  return ((
+    formatBigNumberWithDecimals(
+      (props.balance || 0),
+      decimals
+    ) as any * (props.address === 'coin' ? data.kadenaInDolar : data.kdxInDolar)
+  )).toFixed(2)
 })
 </script>
 
@@ -60,7 +90,7 @@ const metadata = computed(() => {
           opacity-[0.9]
         "
       >
-        -
+        $ {{ balance }}
       </p>
     </div>
 
