@@ -12,6 +12,7 @@ const router = useRouter()
 const data = reactive({
   tab: 'tokens',
   kdxInDolar: 0,
+  visible: true,
   kadenaInDolar: 0,
   showReceiveModal: false
 })
@@ -74,15 +75,28 @@ const balance = computed(() => {
           </div>
 
           <div class="flex items-center space-x-4">
-            <div>
+            <div
+              v-if="data.visible"
+            >
               <span class="text-lg font-medium text-font-1">
                 {{ balance }} USD
               </span>
             </div>
 
-            <div>
-              <Icon name="visible" class="w-6 h-6" />
+            <div
+              v-else
+            >
+              <span class="text-lg font-medium text-font-1">
+                ***** USD
+              </span>
             </div>
+
+            <button
+              class="text-white hover:text-blue-400"
+              @click.prevent="data.visible = !data.visible"
+            >
+              <Icon name="visible" class="w-6 h-6" />
+            </button>
           </div>
         </div>
 

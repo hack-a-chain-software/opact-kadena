@@ -30,7 +30,7 @@
 
       <div class="pt-2 text-center">
         <span class="text-xxs font-medium text-font-2">
-          Lorem ipsum dolor sit amet, consectetur adipiscing
+          Thank you for using Opact Invoices
         </span>
       </div>
     </div>
