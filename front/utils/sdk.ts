@@ -8,24 +8,14 @@ import {
   getTransferSolutionBatch
 } from 'opact-sdk'
 
-export const computeWihtdrawParams = async (
-  amount: number,
-  receiver: string,
-  wallet: any,
-  treeBalance: any,
-  receiptsParams?: any,
-  selectedToken = {
-    id: '',
-    refName: {
-      name: 'coin',
-      namespace: ''
-    },
-    refSpec: {
-      name: 'fungible-v2',
-      namespace: ''
-    }
-  }
-) => {
+export const computeWihtdrawParams = async ({
+  amount,
+  receiver,
+  wallet,
+  treeBalance,
+  receiptsParams,
+  selectedToken
+}: any) => {
   const batch = await getTransferSolutionBatch({
     treeBalance,
     selectedToken,
@@ -34,9 +24,8 @@ export const computeWihtdrawParams = async (
   })
 
   const {
-    args,
     extData,
-    tokenSpec
+    message,
   } = computeTransactionParams({
     batch,
     receiver,
@@ -50,26 +39,25 @@ export const computeWihtdrawParams = async (
   const proof = await computeProof({
     batch,
     wallet,
-    message: poseidon([base64urlToBigInt(args.extDataHash)])
+    message,
   })
 
   return {
-    args,
     proof,
     batch,
     extData,
-    tokenSpec
+    tokenSpec: selectedToken
   }
 }
 
-export const computeTransferParamsForNFT = async (
-  amount: number,
-  receiver: string,
-  wallet: any,
-  treeBalance: any,
-  receiptsParams?: any,
-  selectedToken: any,
-) => {
+export const computeTransferParamsForNFT = async ({
+  amount,
+  receiver,
+  wallet,
+  treeBalance,
+  receiptsParams,
+  selectedToken,
+}: any) => {
   const batch = await getTransferSolutionBatchForNft({
     treeBalance,
     selectedToken,
@@ -79,9 +67,8 @@ export const computeTransferParamsForNFT = async (
   })
 
   const {
-    args,
     extData,
-    tokenSpec
+    message
   } = computeTransactionParams({
     batch,
     receiver,
@@ -95,27 +82,26 @@ export const computeTransferParamsForNFT = async (
   const proof = await computeProof({
     batch,
     wallet,
-    message: poseidon([base64urlToBigInt(args.extDataHash)])
+    message
   })
 
   return {
-    args,
     proof,
     batch,
     extData,
-    tokenSpec
+    tokenSpec: selectedToken
   }
 
 }
 
-export const computeWihtdrawParamsForNFT = async (
-  amount: number,
-  receiver: string,
-  wallet: any,
-  treeBalance: any,
-  receiptsParams?: any,
-  selectedToken: any
-) => {
+export const computeWihtdrawParamsForNFT = async ({
+  amount,
+  receiver,
+  wallet,
+  treeBalance,
+  receiptsParams,
+  selectedToken
+}: any) => {
   const batch = await getTransferSolutionBatchForNft({
     treeBalance,
     selectedToken,
@@ -124,9 +110,8 @@ export const computeWihtdrawParamsForNFT = async (
   })
 
   const {
-    args,
     extData,
-    tokenSpec
+    message,
   } = computeTransactionParams({
     batch,
     receiver,
@@ -140,36 +125,25 @@ export const computeWihtdrawParamsForNFT = async (
   const proof = await computeProof({
     batch,
     wallet,
-    message: poseidon([base64urlToBigInt(args.extDataHash)])
+    message
   })
 
   return {
-    args,
     proof,
     batch,
     extData,
-    tokenSpec
+    tokenSpec: selectedToken
   }
 }
 
-export const computeTransferParams = async (
-  amount: number,
-  receiver: string,
-  wallet: any,
-  treeBalance: any,
-  receiptsParams?: any,
-  selectedToken = {
-    id: '',
-    refName: {
-      name: 'coin',
-      namespace: ''
-    },
-    refSpec: {
-      name: 'fungible-v2',
-      namespace: ''
-    }
-  }
-) => {
+export const computeTransferParams = async ({
+  amount,
+  receiver,
+  wallet,
+  treeBalance,
+  receiptsParams,
+  selectedToken
+}: any) => {
   const batch = await getTransferSolutionBatch({
     treeBalance,
     selectedToken,
@@ -179,9 +153,8 @@ export const computeTransferParams = async (
   })
 
   const {
-    args,
     extData,
-    tokenSpec
+    message,
   } = computeTransactionParams({
     batch,
     receiver,
@@ -195,36 +168,25 @@ export const computeTransferParams = async (
   const proof = await computeProof({
     batch,
     wallet,
-    message: poseidon([base64urlToBigInt(args.extDataHash)])
+    message
   })
 
   return {
-    args,
     proof,
     batch,
     extData,
-    tokenSpec
+    tokenSpec: selectedToken
   }
 }
 
-export const computeDepositParams = async (
-  wallet: any,
-  amount: number,
-  sender?: any,
-  receiver?: string,
-  receiptsParams?: any,
-  selectedToken = {
-    id: '',
-    refName: {
-      name: 'coin',
-      namespace: ''
-    },
-    refSpec: {
-      name: 'fungible-v2',
-      namespace: ''
-    }
-  }
-) => {
+export const computeDepositParams = async ({
+  wallet,
+  amount,
+  sender,
+  receiver,
+  receiptsParams,
+  selectedToken,
+}: any) => {
   const batch = await getDepositSoluctionBatch({
     selectedToken,
     treeBalance: {},
@@ -233,9 +195,8 @@ export const computeDepositParams = async (
   })
 
   const {
-    args,
     extData,
-    tokenSpec
+    message
   } = await computeTransactionParams({
     batch,
     amount,
@@ -249,39 +210,28 @@ export const computeDepositParams = async (
   const proof = await computeProof({
     batch,
     wallet,
-    message: poseidon([base64urlToBigInt(args.extDataHash)])
+    message,
   })
 
   return {
-    args,
     proof,
     batch,
     extData,
-    tokenSpec
+    tokenSpec: selectedToken
   }
 }
 
-export const computePaymentParams = async (
-  pubkey: any,
-  amount: number,
-  sender?: string,
-  receiptsParams?: any,
-  selectedToken = {
-    id: '',
-    refName: {
-      name: 'coin',
-      namespace: ''
-    },
-    refSpec: {
-      name: 'fungible-v2',
-      namespace: ''
-    }
-  },
+export const computePaymentParams = async ({
+  pubkey,
+  amount,
+  sender,
+  selectedToken,
+  receiptsParams,
   wallet = {
     pubkey: 11266420894616539307519683389038109246654130435849311470670815520318096498921n,
     pvtkey: 1482393132684423265528213543145697981060187089163992385907820405516567711584n
   },
-) => {
+}: any) => {
   const batch = await getDepositSoluctionBatch({
     selectedToken,
     senderWallet: wallet,
@@ -290,9 +240,8 @@ export const computePaymentParams = async (
   })
 
   const {
-    args,
+    message,
     extData,
-    tokenSpec
   } = await computeTransactionParams({
     batch,
     amount,
@@ -307,13 +256,12 @@ export const computePaymentParams = async (
   const proof = await computeProof({
     batch,
     wallet,
-    message: poseidon([base64urlToBigInt(args.extDataHash)])
+    message
   })
 
   return {
-    args,
     proof,
     extData,
-    tokenSpec
+    tokenSpec: selectedToken
   }
 }

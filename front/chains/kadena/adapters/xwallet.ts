@@ -225,7 +225,6 @@ export const useProvider = () => {
 
   const transaction = async (
     {
-      args,
       proof,
       extData,
       tokenSpec
@@ -237,8 +236,6 @@ export const useProvider = () => {
     const accountName = account.value.account.publicKey
     const publickey = account.value.account.publicKey
 
-    const pactCode = computePactCode({ args, proof, extData, tokenSpec })
-
     let preffix = tokenSpec.refName.name === 'coin' ? 'coin' : `test.${tokenSpec.refName.name}`
 
     if (tokenSpec.refName.name === 'poly-fungible-v2-reference') {
@@ -248,10 +245,12 @@ export const useProvider = () => {
     let caps
 
     if (isWithdrawTransfer) {
-      caps = getCapsForWithdraw(accountName, extData.extAmount, preffix, receiver, tokenSpec)
+      caps = getCapsForWithdraw(accountName, extData.tokenAmount, preffix, receiver, tokenSpec)
     } else {
-      caps = getCapsForDeposit(accountName, extData.extAmount, preffix, tokenSpec)
+      caps = getCapsForDeposit(accountName, extData.tokenAmount, preffix, tokenSpec)
     }
+
+    const pactCode = computePactCode({ proof, extData })
 
     callbackProgress('Await sign...')
 
@@ -269,6 +268,11 @@ export const useProvider = () => {
           envData: {
             language: 'Pact',
             name: 'transact-deposit',
+            'recipient-guard': {
+              keys: [
+                receiver || publickey
+              ]
+            },
             'token-instance': {
               refSpec: [{
                 name: tokenSpec.refSpec.name,

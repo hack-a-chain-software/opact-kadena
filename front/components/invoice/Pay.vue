@@ -56,11 +56,11 @@ const deposit = async () => {
   data.depositing = true
 
   try {
-    const transactionArgs = await computePaymentParams(
-      `0x${pubkey.value}`,
-      Number(amount.value),
-      provider.value.account.account.publicKey,
-      {
+    const transactionArgs = await computePaymentParams({
+      pubkey: `0x${pubkey.value}`,
+      amount: Number(amount.value),
+      sender: provider.value.account.account.publicKey,
+      receiptsParams: {
         id: "0",
         type: 'deposit',
         amount: Number(amount.value),
@@ -68,8 +68,8 @@ const deposit = async () => {
         address: data.token.namespace.refName.name,
         sender: provider.value.account.account.publicKey,
       },
-      token.value.namespace
-    )
+      selectedToken: token.value.namespace
+    })
 
     await provider.value.transaction(
       transactionArgs,

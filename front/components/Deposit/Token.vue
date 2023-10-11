@@ -1,127 +1,13 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { reactive, watch } from 'vue'
-import { Money3Component } from 'v-money3'
-import { tokens } from '~/utils/constants'
-import { useAppState } from '~/hooks/state'
-import { useWalletStore } from '~/stores/wallet'
-import { computeDepositParams } from '~/utils/sdk'
+import { useDepositToken } from '~/hooks/deposit-token'
 
 const {
-  loadAppState
-} = useAppState()
-
-const wallet = useWalletStore()
-
-const { node } = storeToRefs(wallet)
-
-const { provider } = useExtensions()
-
-const router = useRouter()
-
-const data = reactive({
-  error: '',
-  amount: 0,
-  balance: 0,
-  show: false,
-  provider: null,
-  loading: false,
-  depositing: false,
-  showConnect: false,
-  showCollapsible: false,
-  depositMessage: 'Generating ZK Proof...',
-  token: tokens[0],
-  config: {
-    masked: false,
-    prefix: '',
-    suffix: '',
-    thousands: '',
-    decimal: '.',
-    precision: 1,
-    disableNegative: false,
-    min: 0,
-    allowBlank: false,
-    minimumNumberOfCharacters: 0,
-    shouldRound: true,
-    focusOnRight: false,
-  }
-})
-
-const checkFunds = async () => {
-  if (!data.token) {
-    return
-  }
-
-  const prefix = data.token.name === 'Kadena' ? 'coin' : 'test.opact-coin'
-
-  data.showConnect = false
-
-  await nextTick()
-
-  if (!provider.value) {
-    return
-  }
-
-  data.loading = true
-
-  const {
-    result: {
-      status,
-      data: coinData
-    }
-  } = await provider.value.coinDetails(prefix)
-
-  data.loading = false
-
-  if (status === 'failure') {
-    data.balance = 0
-
-    return
-  }
-
-  data.balance = coinData.balance
-}
-
-watch(() => data.token, () => {
-  checkFunds()
-})
-
-const deposit = async () => {
-  data.error = ''
-  data.depositing = true
-
-  try {
-    const transactionArgs = await computeDepositParams(
-      node.value,
-      Number(data.amount),
-      provider.value.account.account.publicKey,
-      '',
-      {
-        id: 0,
-        type: 'deposit',
-        amount: Number(data.amount),
-        receiver: node.value.pubkey,
-        address: data.token.namespace.refName.name,
-        sender: provider.value.account.account.publicKey,
-      },
-      data.token.namespace,
-    )
-
-    await provider.value.transaction(
-      transactionArgs,
-      (message: string) => data.depositMessage = message
-    )
-
-    loadAppState(node.value.pvtkey)
-    router.push('/home')
-  } catch (e) {
-    console.warn(e)
-    data.error = e.message
-  } finally {
-    data.depositing = false
-    data.depositMessage = 'Generating ZK Proof...'
-  }
-}
+  data,
+  router,
+  provider,
+  checkFunds,
+  sendDeposit,
+} = useDepositToken()
 </script>
 
 <template>
@@ -174,58 +60,11 @@ const deposit = async () => {
         </div>
       </div>
 
-      <div class="flex flex-col space-y-2 pt-[24px] lg:pt-0">
-        <div>
-          <h2
-            class="text-font-1 text-xxs font-medium"
-            :class="!provider && 'opacity-60 cursor-not-allowed'"
-          >
-            Enter or select amount
-          </h2>
-        </div>
-
-        <div
-          class="flex justify-between items-center space-x-1"
-        >
-          <Money3Component
-            :max="data.balance"
-            :disabled="!provider"
-            v-model="data.amount"
-            v-bind="data.config"
-            class="
-              h-[39px]
-              bg-transparent
-              text-xl
-              w-full
-              px-0
-              font-semibold
-              text-font-2
-              !outline-none
-              !border-none
-              focus:ring-0
-              disabled:opacity-60
-              disabled:cursor-not-allowed
-            "
-          />
-        </div>
-      </div>
-
-      <button
-        class="mt-1"
-        :key="data.token.id"
-        v-if="!data.loading && provider && data.token"
-        @click.prevent="data.amount = data.balance"
-      >
-        <span
-          class="text-xxxs hover:underline"
-          :class="data.balance > 0 ? 'text-green-500' : 'text-red-500'"
-          v-text="`Balance: ${data.balance} ${data.token.symbol}`"
-        />
-      </button>
-
-      <TokenAmounts
+      <InputMoney
+        :token="data.token"
         :disabled="!provider"
-        @selected="data.amount = $event"
+        v-model="data.amount"
+        :balance="data.balance"
       />
 
       <div class="pt-7">
@@ -370,11 +209,11 @@ const deposit = async () => {
             ? 'bg-gray-700'
             : 'bg-blue-gradient'
         "
-        @click.prevent="deposit()"
+        @click.prevent="sendDeposit()"
       >
-        <span class="text-font-1"> {{ data.depositing ? data.depositMessage : 'Deposit' }} </span>
+        <span class="text-font-1"> {{ data.loading ? data.progress : 'Deposit' }} </span>
 
-        <Icon v-if="data.depositing" name="spinner" class="animate-spin text-white ml-[12px]" />
+        <Icon v-if="data.loading" name="spinner" class="animate-spin text-white ml-[12px]" />
       </button>
     </div>
 

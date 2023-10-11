@@ -65,42 +65,27 @@ export const getCapsForDeposit = (accountName: string, amount: number | string, 
 }
 
 export const computePactCode = ({
-  args,
   proof,
   extData,
-  tokenSpec
 }: any) => {
   return `(test.opact.transact {
-      "root": ${args.root},
-      "outputCommitments": [${args.outputCommitments.join(' ')}],
-      "publicAmount": ${args.publicAmount.toString()}.0,
-      "extDataHash": "${args.extDataHash}",
-      "tokenHash": "${args.tokenHash}"
-    } {
       "public_values":[${proof.public_values.join(' ')}],
       "a":{"x": ${proof.a.x}, "y": ${proof.a.y} },
       "b":{"x":[${proof.b.x.join(' ')}],"y":[${proof.b.y.join(' ')}]},
       "c":{"x":${proof.c.x},"y":${proof.c.y}}
     } {
       "sender":"${extData.sender}",
-      "extAmount":${extData.extAmount},
       "recipient":"${extData.recipient}",
+      "tokenType": "${extData.tokenType}",
+      "tokenAmount":${extData.tokenAmount},
+      "tokenId": "${extData.tokenId}",
+      "outputCommitments": [${extData.outputCommitments.join(' ')}],
       "encryptedReceipts": ["${extData.encryptedReceipts.join('" "')}"],
       "encryptedCommitments": ["${extData.encryptedCommitments.join('" "')}"]
-    } {
-      "id": "${tokenSpec.id}",
-      "refName":{
-        "name":"${tokenSpec.refName.name}",
-        "namespace":"${tokenSpec.refName.namespace}"
-      },
-      "refSpec":{
-        "name":"${tokenSpec.refSpec.name}",
-        "namespace":"${tokenSpec.refSpec.namespace || ''}"
-      }
     })`
 }
 
-export const checkFunds = async (accountName: string) => {
+export const getTokenDetails = async (accountName: string, prefix: string) => {
   const createdAt = Math.round(new Date().getTime() / 1000) - 10
 
   const {
@@ -109,7 +94,7 @@ export const checkFunds = async (accountName: string) => {
       data,
     }
   } = await Pact.fetch.local({
-    pactCode: `(coin.details ${JSON.stringify(accountName)})`,
+    pactCode: `(${prefix}.details ${JSON.stringify(accountName)})`,
     meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
   }, kadenaRPC)
 
@@ -123,7 +108,6 @@ export const checkFunds = async (accountName: string) => {
 export const sendPactTransaction = async (
   receiver: any,
   {
-    args,
     proof,
     extData,
     tokenSpec
@@ -132,7 +116,7 @@ export const sendPactTransaction = async (
 ) => {
   const kp = Pact.crypto.genKeyPair()
 
-  const pactCode = computePactCode({ args, proof, extData, tokenSpec })
+  const pactCode = computePactCode({ proof, extData })
 
   const createdAt = Math.round(new Date().getTime() / 1000) - 10
 
@@ -144,7 +128,7 @@ export const sendPactTransaction = async (
     'Coin Transfer',
     'Capability to transfer designated amount of coin from sender to receiver',
     `${preffix}.TRANSFER`,
-    ['opact-contract', receiver, Number((extData.extAmount * (-1)).toFixed(1))]
+    ['opact-contract', receiver, Number((extData.tokenAmount * (-1)).toFixed(1))]
   )
 
   const cap2 = Pact.lang.mkCap(
@@ -174,6 +158,11 @@ export const sendPactTransaction = async (
     envData: {
       language: 'Pact',
       name: 'transact-deposit',
+      'recipient-guard': {
+        keys: [
+          receiver
+        ]
+      },
       'token-instance': {
         refSpec: [{
           name: tokenSpec.refSpec.name

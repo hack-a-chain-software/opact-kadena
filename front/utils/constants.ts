@@ -1,6 +1,6 @@
 export const tokens = [
   {
-    id: 1,
+    id: '0',
     icon: '/kda.png',
     name: 'Kadena',
     symbol: 'KDA',
@@ -17,7 +17,7 @@ export const tokens = [
     }
   },
   {
-    id: 2,
+    id: '0',
     icon: '/kdx.png',
     name: 'Kaddex',
     symbol: 'KDX',
@@ -34,3 +34,20 @@ export const tokens = [
     }
   }
 ]
+
+export const moneyConfig = {
+  prefix: '',
+  suffix: '',
+  decimal: '.',
+  thousands: '',
+
+  precision: 1,
+  masked: false,
+  shouldRound: true,
+  allowBlank: false,
+  focusOnRight: false,
+  disableNegative: true,
+
+  min: 0,
+  minimumNumberOfCharacters: 0,
+}

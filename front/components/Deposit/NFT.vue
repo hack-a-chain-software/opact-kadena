@@ -1,113 +1,12 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { reactive, watch } from 'vue'
-import { tokens } from '~/utils/constants'
-import { useAppState } from '~/hooks/state'
-import { useWalletStore } from '~/stores/wallet'
-import { computeDepositParams } from '~/utils/sdk'
+import { useDepositToken } from '~/hooks/deposit-token'
 
 const {
-  state,
-  loadAppState
-} = useAppState()
-
-const wallet = useWalletStore()
-
-const { node } = storeToRefs(wallet)
-
-const { provider, logout } = useExtensions()
-
-const router = useRouter()
-
-const data = reactive({
-  error: '',
-  amount: 1,
-  balance: 0,
-  show: false,
-  provider: null,
-  loading: false,
-  depositing: false,
-  showConnect: false,
-  showCollapsible: false,
-  depositMessage: 'Generating ZK Proof...',
-  token: null
-})
-
-const checkFunds = async (prefix?: string) => {
-  data.showConnect = false
-
-  await nextTick()
-
-  if (!provider.value) {
-    return
-  }
-
-  data.loading = true
-
-  const {
-    result: {
-      status,
-      data: coinData
-    }
-  } = await provider.value.coinDetails(prefix)
-
-  data.loading = false
-
-  if (status === 'failure') {
-    data.balance = 0
-
-    return
-  }
-
-  data.balance = coinData.balance
-}
-
-watch(() => data.token, (value) => {
-  const prefix = value.name === 'Kadena' ? 'coin' : 'test.opact-coin'
-
-  checkFunds(prefix)
-})
-
-const deposit = async () => {
-  if (!data.token) {
-    return
-  }
-
-  data.error = ''
-  data.depositing = true
-
-  try {
-    const transactionArgs = await computeDepositParams(
-      node.value,
-      Number(data.amount),
-      provider.value.account.account.publicKey,
-      '',
-      {
-        type: 'deposit',
-        id: data.token.id,
-        amount: Number(data.amount),
-        receiver: node.value.pubkey,
-        address: data.token.namespace.refName.name,
-        sender: provider.value.account.account.publicKey,
-      },
-      data.token.namespace,
-    )
-
-    await provider.value.transaction(
-      transactionArgs,
-      (message: string) => data.depositMessage = message
-    )
-
-    loadAppState(node.value.pvtkey)
-    router.push('/home')
-  } catch (e) {
-    console.warn(e)
-    data.error = e.message
-  } finally {
-    data.depositing = false
-    data.depositMessage = "Computing UTXO's Values..."
-  }
-}
+  data,
+  router,
+  provider,
+  sendDeposit,
+} = useDepositToken(1, null as any)
 </script>
 
 <template>
@@ -295,18 +194,18 @@ const deposit = async () => {
             ? 'bg-gray-700'
             : 'bg-blue-gradient'
         "
-        @click.prevent="deposit()"
+        @click.prevent="sendDeposit()"
       >
-        <span class="text-font-1"> {{ data.depositing ? data.depositMessage : 'Deposit' }} </span>
+        <span class="text-font-1"> {{ data.loading ? data.progress : 'Deposit' }} </span>
 
-        <Icon v-if="data.depositing" name="spinner" class="animate-spin text-white ml-[12px]" />
+        <Icon v-if="data.loading" name="spinner" class="animate-spin text-white ml-[12px]" />
       </button>
     </div>
 
     <WalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
-      @connected="checkFunds()"
+      @connected="data.showConnect = false"
     />
 
     <SelectNFT

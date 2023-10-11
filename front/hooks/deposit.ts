@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 import token from '~/components/TokenForm.vue'
-import deposit from '~/components/DepositForm.vue'
+import deposit from '~/components/Deposit/Token.vue'
 
 const form = {
   token,

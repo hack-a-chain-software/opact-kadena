@@ -22,7 +22,7 @@ useHead({
       "
     >
       <Transition name="fade" mode="out-in">
-        <NftForm/>
+        <DepositNFT/>
       </Transition>
     </div>
   </div>

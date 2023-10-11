@@ -82,12 +82,12 @@ const send = async () => {
     let params = null
 
     if (data.addressTo.includes('OZK')) {
-      params = await computeTransferParamsForNFT(
-        Number(data.amount),
-        data.addressTo.replace('OZK', '').trim(),
-        node.value,
-        userData.value.nfts[data.token.namespace.refName.name],
-        {
+      params = await computeTransferParamsForNFT({
+        amount: Number(data.amount),
+        receiver: data.addressTo.replace('OZK', '').trim(),
+        wallet: node.value,
+        treeBalance: userData.value.nfts[data.token.namespace.refName.name],
+        receiptsParams: {
           id: data.token.id,
           type: 'transfer',
           sender: node.value.pubkey,
@@ -95,15 +95,15 @@ const send = async () => {
           address: data.token.namespace.refName.name,
           receiver: BigInt(`0x${data.addressTo.replace('OZK', '').trim()}`),
         },
-        data.token.namespace
-      )
+        selectedToken: data.token.namespace
+      })
     } else {
-      params = await computeWihtdrawParamsForNFT(
-        Number(data.amount),
-        data.addressTo,
-        node.value,
-        userData.value.nfts[data.token.namespace.refName.name],
-        {
+      params = await computeWihtdrawParamsForNFT({
+        amount: Number(data.amount),
+        receiver: data.addressTo,
+        wallet: node.value,
+        treeBalance: userData.value.nfts[data.token.namespace.refName.name],
+        receiptsParams: {
           id: 0,
           type: 'withdraw',
           receiver: data.addressTo,
@@ -111,8 +111,8 @@ const send = async () => {
           amount: Number(data.amount),
           address: data.token.namespace.refName.name,
         },
-        data.token.namespace
-      )
+        selectedToken: data.token.namespace
+      })
     }
 
     if (data.addressTo.includes('OZK')) {

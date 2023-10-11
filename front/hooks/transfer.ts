@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 import success from '~/components/Success.vue'
-import transfer from '~/components/TransferForm.vue'
+import transfer from '~/components/Send/Token.vue'
 
 const form = {
   transfer,

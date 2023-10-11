@@ -72,12 +72,12 @@ const send = async () => {
     let params = null
 
     if (data.addressTo.includes('OZK')) {
-      params = await computeTransferParams(
-        Number(data.amount),
-        data.addressTo.replace('OZK', '').trim(),
-        node.value,
-        userData.value.tokens[data.token.namespace.refName.name],
-        {
+      params = await computeTransferParams({
+        amount: Number(data.amount),
+        receiver: data.addressTo.replace('OZK', '').trim(),
+        wallet: node.value,
+        treeBalance: userData.value.tokens[data.token.namespace.refName.name],
+        receiptsParams: {
           id: 0,
           type: 'transfer',
           sender: node.value.pubkey,
@@ -85,15 +85,15 @@ const send = async () => {
           address: data.token.namespace.refName.name,
           receiver: BigInt(`0x${data.addressTo.replace('OZK', '').trim()}`),
         },
-        data.token.namespace
-      )
+        selectedToken: data.token.namespace
+      })
     } else {
-      params = await computeWihtdrawParams(
-        Number(data.amount),
-        data.addressTo,
-        node.value,
-        userData.value.tokens[data.token.namespace.refName.name],
-        {
+      params = await computeWihtdrawParams({
+        amount: Number(data.amount),
+        receiver: data.addressTo,
+        wallet: node.value,
+        treeBalance: userData.value.tokens[data.token.namespace.refName.name],
+        receiptsParams: {
           id: 0,
           type: 'withdraw',
           receiver: data.addressTo,
@@ -101,11 +101,11 @@ const send = async () => {
           amount: Number(data.amount),
           address: data.token.namespace.refName.name,
         },
-        data.token.namespace
-      )
+        selectedToken: data.token.namespace
+      })
     }
 
-    if (data.token.id === 1 || data.addressTo.includes('OZK')) {
+    if (data.token.name === 'Kadena' || data.addressTo.includes('OZK')) {
       await sendPactTransaction(data.addressTo, params, (message: string) => data.loadingMessage = message)
     } else {
       await provider.value.transaction(
