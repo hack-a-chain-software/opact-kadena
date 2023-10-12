@@ -23,7 +23,7 @@ useHead({
       "
     >
       <Transition name="fade" mode="out-in">
-        <TransferNft/>
+        <SendNFT/>
       </Transition>
     </div>
   </div>
