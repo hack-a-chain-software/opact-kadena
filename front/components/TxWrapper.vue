@@ -39,7 +39,8 @@ watch(() => props.disabled, (disabled) => {
 
 <template>
   <div
-    v-if="!disabled"
+    v-show="!disabled"
+    v-motion-slide-visible-top
     class="mt-full lg:mt-[32px]"
   >
     <div

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { validatePubkey } from 'opact-sdk'
 import { reactive, watch } from 'vue'
 import { debounce  } from '~/utils/debounce'
 
@@ -19,6 +20,7 @@ const data = reactive({
   isValid: false,
   isLoading: false,
   isKAccount: false,
+  isOZKAccount: false,
   isRegistered: false,
 })
 
@@ -27,10 +29,29 @@ const handleInput = (event: any) => {
 }
 
 const verifyAddress = debounce(async (token: any, address: any) => {
-  data.isValid = false
   data.isLoading = true
 
   const prefix = props.token.name === 'Kadena' ? 'coin' : 'test.opact-coin'
+
+  if(address.startsWith('OZK')) {
+    data.isOZKAccount = true
+
+    try {
+      const isValidOpactAddress = validatePubkey(address)
+
+      if (isValidOpactAddress) {
+        data.isValid = true
+      }
+    } catch (e) {
+      data.isRegistered = true
+
+      console.warn(e)
+    } finally {
+      data.isLoading = false
+    }
+
+    return
+  }
 
   try {
     await getTokenDetails(address, prefix)
@@ -63,17 +84,11 @@ watch(() => [props.token, props.modelValue], (values: any) => {
 
   data.isValid = false
   data.isKAccount = false
+  data.isOZKAccount = false
   data.isRegistered = false
 
   emits('isValidAddress', false)
 
-  if (address && address.startsWith('OZK')) {
-    emits('isValidAddress', true)
-
-    data.isValid = true
-
-    return
-  }
   // TODO: validate if opact pubkey is in curve
   if (!token || !address || address && address.length < 3) {
     return
@@ -114,6 +129,7 @@ watch(() => [props.token, props.modelValue], (values: any) => {
           rounded-[8px]
           border
           text-xs
+          break-words
           border-transparent
           justify-between
           bg-gray-800
@@ -126,7 +142,7 @@ watch(() => [props.token, props.modelValue], (values: any) => {
     <Warning
       class="mt-4"
       type="warning"
-      v-show="data.isRegistered"
+      v-show="data.isRegistered && !data.isOZKAccount"
       v-motion-slide-visible-top
       label="Receiver address is not registered"
       desc="Opact can register a Single-Key Account to proceed with your transfer."
@@ -139,6 +155,15 @@ watch(() => [props.token, props.modelValue], (values: any) => {
       v-motion-slide-visible-top
       label="Single-Key Account"
       desc="The address is not registered, but we will register this account for you."
+    />
+
+    <Warning
+      class="mt-4"
+      type="warning"
+      v-motion-slide-visible-top
+      label="Invalid Opact address"
+      v-show="data.isRegistered && data.isOZKAccount"
+      desc="The address sent is not valid. Please check the address and try again."
     />
   </div>
 </template>
