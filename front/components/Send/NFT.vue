@@ -72,7 +72,7 @@ const {
       />
 
       <ProviderUser
-        v-if="provider && !isInternalTransfer && data.token?.name !== 'Kadena'"
+        v-if="provider && !isInternalTransfer"
         :provider="provider"
       />
 
