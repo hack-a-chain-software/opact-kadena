@@ -3,9 +3,12 @@ import { useDepositToken } from '~/hooks/deposit-token'
 
 const {
   data,
+  node,
   router,
   provider,
+  isDisabledNFT,
   sendDeposit,
+  showConnectWalletButton,
 } = useDepositToken(1, null as any)
 </script>
 
@@ -59,160 +62,58 @@ const {
         </div>
       </div>
 
-      <div class="pt-[24px] lg:pt-0">
-        <div class="flex justify-between pb-2">
-          <div>
-            <span class="text-xxs font-medium text-font-1">
-              Select Token
-            </span>
-          </div>
-        </div>
+      <SelectNFT
+        :show="data.show"
+        :token="data.token"
+        :disabled="!provider"
+        @open="data.show = true"
+        @close="data.show = false"
+        @selected="data.token = $event"
+        :accountName="provider?.account?.account?.publicKey"
+      />
 
-        <button
-          class="
-            p-4
-            flex
-            w-full
-            items-center
-            rounded-[8px]
-            justify-between
-            bg-gray-800
-            disabled:opacity-60
-            disabled:cursor-not-allowed
-          "
-          :disabled="!provider"
-          @click.prevent="data.show = true"
-        >
-          <div v-if="!data.token">
-            <span class="text-font-2 text-xxs font-medium">
-              Choose Token
-            </span>
-          </div>
+      <ProviderUser
+        v-if="provider && data.token?.name !== 'Kadena'"
+        :provider="provider"
+        label="Your Wallet"
+      />
 
-          <div v-else class="space-x-4 flex items-center">
-            <img :src="data?.token?.uri" class="h-[60px] w-[60px] rounded-[8px]">
-
-            <span v-text="data?.token?.name" class="text-xs" />
-          </div>
-
-          <div>
-            <Icon name="chevron" class="rotate-[-90deg]" />
-          </div>
-        </button>
-      </div>
-
-      <template v-if="provider">
-        <div class="pt-[18px]">
-          <div class="flex justify-between pb-2">
-            <span class="text-xxs font-medium text-font-1">
-              Your Wallet
-            </span>
-          </div>
-
-          <div
-            class="
-              p-4
-              flex
-              w-full
-              rounded-[8px]
-              bg-gray-800
-              space-x-2
-            "
-          >
-            <div>
-              <Icon
-                :name="provider.metadata.icon"
-                class="w-6 h-6"
-              />
-            </div>
-
-            <div
-              class="max-w-[calc(100%-32px)] break-words"
-            >
-              <p
-                class="text-xxs font-meidum text-font-1"
-                v-text="
-                  provider?.account?.address ||
-                    provider.account?.account?.account
-                "
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- <TxDetails
-          fee="0"
-          :amount="data.amount"
-        /> -->
-      </template>
+      <TxWrapperNFT
+        :token="data.token"
+        :amount="data.amount"
+        :disabled="isDisabledNFT"
+        :receiver="'OZK' + node.hexPub"
+        :sender="provider?.account?.address || provider?.account?.account?.account"
+      />
     </div>
 
     <Warning
       type="error"
-      class="mt-2"
+      class="mt-4"
       v-if="data.error"
       :label="data.error + '*'"
     />
 
-    <div class="mt-full lg:mt-[40px]">
-      <button
-        v-if="!provider"
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed bg-blue-gradient
-        "
-        @click.prevent="data.showConnect = true"
-      >
-        <span class="text-font-1"> Connect Wallet </span>
-      </button>
+    <AppButton
+      label="Connect Wallet"
+      class="mt-full lg:mt-[40px]"
+      v-if="showConnectWalletButton"
+      @click.prevent="data.showConnect = true"
+    />
 
-      <button
-        v-else
-        :disabled="!data.token || !data.amount"
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="sendDeposit()"
-      >
-        <span class="text-font-1"> {{ data.loading ? data.progress : 'Deposit' }} </span>
-
-        <Icon v-if="data.loading" name="spinner" class="animate-spin text-white ml-[12px]" />
-      </button>
-    </div>
+    <AppButton
+      v-else
+      :loading="data.loading"
+      @click="sendDeposit()"
+      :disabled="isDisabledNFT"
+      class="mt-full lg:mt-[40px]"
+      :label="data.loading ? data.progress : 'Deposit NFT'"
+    />
 
     <WalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
       @connected="data.showConnect = false"
-    />
-
-    <SelectNFT
-      :show="data.show"
-      @close="data.show = false"
-      @selected="data.token = $event"
-      :accountName="provider?.account?.account?.publicKey"
     />
   </div>
 </template>

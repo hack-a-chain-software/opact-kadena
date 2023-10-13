@@ -3,10 +3,13 @@ import { useDepositToken } from '~/hooks/deposit-token'
 
 const {
   data,
+  node,
   router,
   provider,
+  isDisabled,
   checkFunds,
   sendDeposit,
+  showConnectWalletButton,
 } = useDepositToken()
 </script>
 
@@ -67,166 +70,56 @@ const {
         :balance="data.balance"
       />
 
-      <div class="pt-7">
-        <div class="flex justify-between pb-2">
-          <div>
-            <span class="text-xxs font-medium text-font-1" :class="!provider && 'opacity-60 cursor-not-allowed'">
-              Select Token
-            </span>
-          </div>
-        </div>
+      <ProviderUser
+        v-if="provider"
+        label="Payer"
+        :provider="provider"
+      />
 
-        <button
-          class="
-            p-4
-            flex
-            w-full
-            rounded-[8px]
-            justify-between
-            bg-gray-800
-            hover:opacity-90
-            disabled:opacity-60
-            disabled:cursor-not-allowed
-          "
-          :disabled="!provider"
-          @click.prevent="data.show = true"
-        >
-          <div v-if="!data.token">
-            <span class="text-font-2 text-xxs font-medium">
-              Choose Token
-            </span>
-          </div>
+      <SelectToken
+        :show="data.show"
+        :token="data.token"
+        @open="data.show = true"
+        @close="data.show = false"
+        @selected="data.token = $event"
+      />
 
-          <div v-else class="space-x-2 flex items-center">
-            <img :src="data.token.icon" class="w-6 h-6">
-
-            <span v-text="data.token.name" />
-          </div>
-
-          <div>
-            <Icon name="chevron" class="rotate-[-90deg]" />
-          </div>
-        </button>
-      </div>
-
-      <template v-if="provider">
-        <div class="pt-[18px]">
-          <div class="flex justify-between pb-2">
-            <span class="text-xxs font-medium text-font-1">
-              Your Wallet
-            </span>
-          </div>
-
-          <div
-            class="
-              p-4
-              flex
-              w-full
-              rounded-[8px]
-              bg-gray-800
-              space-x-2
-            "
-          >
-            <div>
-              <Icon
-                :name="provider.metadata.icon"
-                class="w-6 h-6"
-              />
-            </div>
-
-            <div
-              class="max-w-[calc(100%-32px)] break-words"
-            >
-              <p
-                class="text-xxs font-meidum text-font-1"
-                v-text="
-                  provider?.account?.address ||
-                    provider.account?.account?.account
-                "
-              />
-            </div>
-          </div>
-        </div>
-
-        <TxDetails
-          fee="0"
-          v-if="data.amount > 0 && data.balance !== 0 && data.balance >= data.amount"
-          :amount="data.amount"
-        />
-      </template>
+      <TxWrapper
+        :token="data.token"
+        :amount="data.amount"
+        :receiver="'OZK' + node.hexPub"
+        :sender="provider?.account?.address || provider?.account?.account?.account"
+        :disabled="isDisabled"
+      />
     </div>
 
     <Warning
       type="error"
-      class="mt-2"
+      class="mt-4"
       v-if="data.error"
       :label="data.error + '*'"
     />
 
-    <div class="mt-full lg:mt-[40px]">
-      <button
-        v-if="!provider"
-        :disabled="!data.token || !data.amount"
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="data.showConnect = true"
-      >
-        <span class="text-font-1"> Connect Wallet </span>
-      </button>
+    <AppButton
+      label="Connect Wallet"
+      class="mt-full lg:mt-[40px]"
+      v-if="showConnectWalletButton"
+      @click.prevent="data.showConnect = true"
+    />
 
-      <button
-        v-else
-        :disabled="!data.token || !data.amount || data.balance === 0"
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount || data.balance === 0
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="sendDeposit()"
-      >
-        <span class="text-font-1"> {{ data.loading ? data.progress : 'Deposit' }} </span>
-
-        <Icon v-if="data.loading" name="spinner" class="animate-spin text-white ml-[12px]" />
-      </button>
-    </div>
+    <AppButton
+      v-else
+      :disabled="isDisabled"
+      :loading="data.loading"
+      @click="sendDeposit()"
+      class="mt-full lg:mt-[40px]"
+      :label="data.loading ? data.progress : 'Send Token'"
+    />
 
     <WalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
       @connected="checkFunds()"
-    />
-
-    <SelectToken
-      :show="data.show"
-      @close="data.show = false"
-      @selected="data.token = $event"
     />
   </div>
 </template>

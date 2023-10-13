@@ -17,7 +17,7 @@ const { $toaster } = useNuxtApp()
 const props = withDefaults(
   defineProps<{
     show: boolean;
-    token: number;
+    token: number | string;
     amount: number | string;
   }>(),
   {

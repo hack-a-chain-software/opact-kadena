@@ -5,29 +5,53 @@ import { debounce  } from '~/utils/debounce'
 const props = withDefaults(
   defineProps<{
     token: any;
+    label?: string
     modelValue: string
   }>(),
   {
-    //
+    label: 'Send to'
   }
 )
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'isValidAddress'])
 
 const data = reactive({
-  error: '',
   warning: '',
+  isValid: false,
+  isLoading: false,
+  isKAccount: false,
+  isRegistered: false,
 })
 
+const handleInput = (event: any) => {
+  emits('update:modelValue', event.target.value)
+}
+
 const verifyAddress = debounce(async (token: any, address: any) => {
-  data.error = ''
+  data.isValid = false
+  data.isLoading = true
 
   const prefix = props.token.name === 'Kadena' ? 'coin' : 'test.opact-coin'
 
   try {
-    const details = await getTokenDetails(address, prefix)
+    await getTokenDetails(address, prefix)
+
+    data.isValid = true
+
+    emits('isValidAddress', true)
   } catch (e) {
     console.warn(e)
-    data.error = e.message
+
+    if (address.startsWith('K:')) {
+      data.isKAccount = true
+
+      emits('isValidAddress', true)
+
+      return
+    }
+
+    data.isRegistered = true
+  } finally {
+    data.isLoading = false
   }
 }, 1000)
 
@@ -37,9 +61,21 @@ watch(() => [props.token, props.modelValue], (values: any) => {
     address
   ] = values
 
-  if (!token || !address) {
-    data.error = ''
+  data.isValid = false
+  data.isKAccount = false
+  data.isRegistered = false
 
+  emits('isValidAddress', false)
+
+  if (address && address.startsWith('OZK')) {
+    emits('isValidAddress', true)
+
+    data.isValid = true
+
+    return
+  }
+  // TODO: validate if opact pubkey is in curve
+  if (!token || !address || address && address.length < 3) {
     return
   }
 
@@ -48,23 +84,37 @@ watch(() => [props.token, props.modelValue], (values: any) => {
 </script>
 
 <template>
-  <div class="pt-4">
-    <div class="flex justify-between pb-2">
-      <span class="text-xxs font-medium text-font-1">
-        Send to
-      </span>
+  <div class="pt-4 lg:pt-8">
+    <div class="flex justify-between pb-4 relative z-[1]">
+      <span class="text-xs font-medium text-font-1"
+        v-text="props.label"
+      />
     </div>
 
-    <div class="relative">
+    <div
+      v-if="data.isLoading"
+      class="relative p-4 w-full h-[58px] rounded-[8px] flex items-center justify-center bg-gray-800 z-[1]"
+    >
+      <Icon name="spinner" class="animate-spin text-white ml-[12px]" />
+    </div>
+
+    <div
+      v-else
+      class="relative z-[1]"
+    >
       <input
         :value="props.modelValue"
-        @input="emits('update:modelValue', ($event?.target as any)?.value)"
+        @input="handleInput"
         placeholder="Address..."
+        :class="data.isValid && '!border-blue-400'"
         class="
           p-4
           flex
           w-full
           rounded-[8px]
+          border
+          text-xs
+          border-transparent
           justify-between
           bg-gray-800
           text-font-1
@@ -74,11 +124,21 @@ watch(() => [props.token, props.modelValue], (values: any) => {
     </div>
 
     <Warning
-      class="mt-2"
-      type="error"
-      v-if="data.error"
-      v-model="data.error"
-      label="Receiver address is not founded*"
+      class="mt-4"
+      type="warning"
+      v-show="data.isRegistered"
+      v-motion-slide-visible-top
+      label="Receiver address is not founded"
+      desc="Opact can register a Single-Key Account to proceed with your transfer."
+    />
+
+    <Warning
+      class="mt-4"
+      type="warning"
+      v-show="data.isKAccount"
+      v-motion-slide-visible-top
+      label="Single-Key Account"
+      desc="The address is not registered, but we will register this account for you."
     />
   </div>
 </template>

@@ -93,11 +93,33 @@ export const useDepositToken = (amount = 0, token = tokens[0]) => {
     checkFunds()
   })
 
+  const showConnectWalletButton = computed(() => {
+    if (!provider.value) {
+      return true
+    }
+
+    return false
+  })
+
+  const isDisabled = computed(() => {
+    return Number(data.balance) <= 0
+      || Number(data.amount) >= Number(data.balance)
+      || Number(data.amount) <= 0
+  })
+
+  const isDisabledNFT = computed(() => {
+    return !data.token || !provider.value
+  })
+
   return {
     data,
+    node,
     router,
     provider,
     checkFunds,
+    isDisabled,
     sendDeposit,
+    isDisabledNFT,
+    showConnectWalletButton,
   }
 }

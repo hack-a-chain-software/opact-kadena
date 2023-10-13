@@ -38,7 +38,9 @@ module.exports = {
         'card-gradient': 'linear-gradient(181.92deg, #0D1116 5.93%, #202428 98.38%)',
         'inverted-card-gradient': 'linear-gradient(181.92deg, #202428 5.93%, #0D1116 98.38%)',
         'opact-gradient': 'linear-gradient(264.6deg, #AD51FF 12.18%, #1A92FF 91.42%)',
-        'blue-gradient': 'linear-gradient(225deg, #1B6DFF 6.97%, #1A92FF 95.31%)',
+        'blue-gradient': 'linear-gradient(to right, #1A92FF, #1B6DFF, #1A92FF, #1B6DFF)',
+        'blue-gradient-2': 'linear-gradient(to right, #1B6DFF, #1B6DFF, #1B6DFF, #1B6DFF)',
+        'gray-gradient': 'linear-gradient(to right, #383B3F, #383B3F, #383B3F, #383B3F)',
         'purple-gradient': 'linear-gradient(225deg, #8050E4 6.97%, #AD51FF 95.31%)'
       },
 

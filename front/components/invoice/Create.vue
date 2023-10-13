@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { Money3Component } from 'v-money3'
 import { tokens } from '~/utils/constants'
 
 const router = useRouter()
@@ -10,20 +9,6 @@ const data = reactive({
   show: false,
   token: tokens[0],
   showGenerateLink: false,
-  config: {
-    masked: false,
-    prefix: '',
-    suffix: '',
-    thousands: '',
-    decimal: '.',
-    precision: 1,
-    disableNegative: false,
-    min: 0,
-    allowBlank: false,
-    minimumNumberOfCharacters: 0,
-    shouldRound: true,
-    focusOnRight: false,
-  }
 })
 </script>
 
@@ -75,119 +60,32 @@ const data = reactive({
         </div>
       </div>
 
-      <div class="flex flex-col space-y-2 pt-[24px] lg:pt-0">
-        <div>
-          <h2 class="text-font-1 text-xxs font-medium">
-            Enter or select amount
-          </h2>
-        </div>
-
-        <div
-          class="flex justify-between items-center space-x-1"
-        >
-          <Money3Component
-            v-model="data.amount"
-            v-bind="data.config"
-            class="
-              h-[39px]
-              bg-transparent
-              text-xl
-              w-full
-              px-0
-              font-semibold
-              text-font-2
-              !outline-none
-              !border-none
-              focus:ring-0
-              disabled:opacity-60
-              disabled:cursor-not-allowed
-            "
-          />
-        </div>
-      </div>
-
-      <TokenAmounts
-        @selected="data.amount = $event"
+      <InputMoney
+        :token="data.token"
+        v-model="data.amount"
       />
 
-      <div class="pt-7">
-        <div class="flex justify-between pb-2">
-          <span class="text-xxs font-medium text-font-1">
-            Select Token
-          </span>
-        </div>
-
-        <button
-          class="
-            p-4
-            flex
-            w-full
-            rounded-[8px]
-            justify-between
-            bg-gray-800
-            disabled:opacity-60
-            disabled:cursor-not-allowed
-          "
-          @click.prevent="data.show = true"
-        >
-          <div v-if="!data.token">
-            <span class="text-font-2 text-xxs font-medium">
-              Choose Token
-            </span>
-          </div>
-
-          <div v-else class="space-x-2 flex items-center">
-            <img :src="data.token.icon" class="w-6 h-6">
-
-            <span v-text="data.token.name" />
-          </div>
-
-          <div>
-            <Icon name="chevron" class="rotate-[-90deg]" />
-          </div>
-        </button>
-      </div>
+      <SelectToken
+        :show="data.show"
+        :token="data.token"
+        @open="data.show = true"
+        @close="data.show = false"
+        @selected="data.token = $event"
+      />
     </div>
 
-    <div class="mt-full lg:mt-[40px]">
-      <button
-        :disabled="!data.token || !data.amount"
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="data.showGenerateLink = true"
-      >
-        <span class="text-font-1">
-          Generate payment link
-        </span>
-      </button>
-    </div>
+    <AppButton
+      :disabled="Number(data.amount) <= 0"
+      class="mt-full lg:mt-[40px]"
+      label="Generate payment link"
+      @click="data.showGenerateLink = true"
+    />
 
     <InvoiceGenerateLink
       :token="data.token.id"
       :amount="data.amount"
       :show="data.showGenerateLink"
       @close="data.showGenerateLink = false"
-    />
-
-    <SelectToken
-      :show="data.show"
-      @close="data.show = false"
-      @selected="data.token = $event"
     />
   </div>
 </template>

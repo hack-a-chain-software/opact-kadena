@@ -14,7 +14,7 @@ const emit = defineEmits(['selected'])
 </script>
 
 <template>
-  <div class="pt-6 space-x-2">
+  <div class="pt-4 space-x-2">
     <button
       v-for="amount in amounts"
       :key="amount"
@@ -32,7 +32,7 @@ const emit = defineEmits(['selected'])
       @click.prevent="emit('selected', amount)"
     >
       <span
-        class="text-xxs text-font-2 group-active:text-blue-400 font-medium"
+        class="text-xxs text-font-2 group-active:text-blue-400 font-[500]"
         v-text="amount"
       />
     </button>

@@ -3,10 +3,14 @@ import { useSendToken } from '~/hooks/send-token'
 
 const {
   data,
+  node,
   router,
-  balance,
   provider,
+  balance,
+  isDisabled,
   sendTransfer,
+  isInternalTransfer,
+  showConnectWalletButton,
 } = useSendToken()
 </script>
 
@@ -66,155 +70,61 @@ const {
         v-model="data.amount"
       />
 
-      <div class="pt-7">
-        <div class="flex justify-between pb-2">
-          <span class="text-xxs font-medium text-font-1">
-            Select Token
-          </span>
-        </div>
+      <ProviderUser
+        v-if="provider && !isInternalTransfer && data.token.name !== 'Kadena'"
+        :provider="provider"
+      />
 
-        <button
-          class="
-            p-4
-            flex
-            w-full
-            rounded-[8px]
-            justify-between
-            bg-gray-800
-            hover:opacity-90
-            disabled:opacity-60
-            disabled:cursor-not-allowed
-          "
-          @click.prevent="data.show = true"
-        >
-          <div v-if="!data.token">
-            <span class="text-font-2 text-xxs font-medium">
-              Choose Token
-            </span>
-          </div>
-
-          <div v-else class="space-x-2 flex items-center">
-            <img :src="data.token.icon" class="w-6 h-6">
-
-            <span v-text="data.token.name" />
-          </div>
-
-          <div>
-            <Icon name="chevron" class="rotate-[-90deg]" />
-          </div>
-        </button>
-      </div>
+      <SelectToken
+        :show="data.show"
+        :token="data.token"
+        @open="data.show = true"
+        @close="data.show = false"
+        @selected="data.token = $event"
+      />
 
       <InputAddress
         :token="data.token"
         v-model="data.addressTo"
+        @isValidAddress="data.isValidAddress = $event"
       />
 
-      <!-- <div class="pt-4">
-        <div class="flex justify-between pb-2">
-          <span class="text-xxs font-medium text-font-1">
-            Send to
-          </span>
-        </div>
-
-        <div class="relative">
-          <input
-            v-model="data.addressTo"
-            placeholder="Address..."
-            class="
-              p-4
-              flex
-              w-full
-              rounded-[8px]
-              justify-between
-              bg-gray-800
-              text-font-1
-              outline-none
-            "
-          >
-        </div>
-      </div> -->
-
-      <TxDetails
-        :fee="1"
-        v-if="data.amount > 0"
+      <TxWrapper
+        :token="data.token"
         :amount="data.amount"
+        :receiver="data.addressTo"
+        :sender="'OZK' + node.hexPub"
+        :disabled="isDisabled"
       />
     </div>
 
     <Warning
       type="error"
-      class="mt-2"
+      class="mt-4"
       v-if="data.error"
       :label="data.error + '*'"
     />
 
-    <div class="mt-full lg:mt-[40px]">
-      <button
-        v-if="!provider && data.token.namespace.refName.name !== 'coin' && !data.addressTo.includes('OZK')"
-        :disabled="!data.token || !data.amount"
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="data.showConnect = true"
-      >
-        <span class="text-font-1"> Connect Wallet </span>
-      </button>
+    <AppButton
+      label="Connect Wallet"
+      class="mt-full lg:mt-[40px]"
+      v-if="showConnectWalletButton"
+      @click.prevent="data.showConnect = true"
+    />
 
-      <button
-        v-else
-        :disabled="
-          !data.token || !data.amount || !data.addressTo
-        "
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount || !data.addressTo || data.amount > Number(balance) || data.amount <= 0
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="sendTransfer()"
-      >
-        <span class="text-font-1"> {{ data.loading ? data.progress : 'Send Token' }} </span>
-
-        <Icon v-if="data.loading" name="spinner" class="animate-spin text-white ml-[12px]" />
-      </button>
-    </div>
+    <AppButton
+      v-else
+      :disabled="isDisabled"
+      :loading="data.loading"
+      @click="sendTransfer()"
+      class="mt-full lg:mt-[40px]"
+      :label="data.loading ? data.progress : 'Send Token'"
+    />
 
     <WalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
       @connected="data.showConnect = false"
-    />
-
-    <SelectToken
-      :show="data.show"
-      @close="data.show = false"
-      @selected="data.token = $event"
     />
   </div>
 </template>

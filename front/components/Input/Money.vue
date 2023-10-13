@@ -5,6 +5,7 @@ import { moneyConfig } from '~/utils/constants'
 const props = withDefaults(
   defineProps<{
     token?: any
+    withLabel?: boolean
     disabled?: boolean
     balance?: number | string
     modelValue: string | number
@@ -13,6 +14,7 @@ const props = withDefaults(
     balance: 0,
     token: null,
     disabled: false,
+    withLabel: true,
   }
 )
 
@@ -23,10 +25,13 @@ const emits = defineEmits(['update:modelValue'])
   <div
     class="pt-[24px] lg:pt-0"
   >
-    <div class="flex flex-col space-y-2">
-      <div>
+    <div class="flex flex-col">
+      <div
+        v-if="withLabel"
+        class="pb-4"
+      >
         <h2
-          class="text-font-1 text-xxs font-medium"
+          class="text-font-1 text-xs font-medium"
           :class="props.disabled && 'opacity-60 cursor-not-allowed'"
         >
           Enter or select amount
@@ -34,7 +39,7 @@ const emits = defineEmits(['update:modelValue'])
       </div>
 
       <div
-        class="flex justify-between items-center space-x-1"
+        class="flex justify-between items-center"
       >
         <Money3Component
           :max="balance"
@@ -42,6 +47,7 @@ const emits = defineEmits(['update:modelValue'])
           :modelValue="props.modelValue"
           @update:modelValue="emits('update:modelValue', $event)"
           v-bind="moneyConfig"
+          :class="Number(props.modelValue) <= 0 && 'text-[#C6454B]/80'"
           class="
             h-[39px]
             bg-transparent
@@ -50,6 +56,7 @@ const emits = defineEmits(['update:modelValue'])
             px-0
             font-semibold
             text-font-2
+            leading-[140%]
             !outline-none
             !border-none
             focus:ring-0
@@ -61,9 +68,8 @@ const emits = defineEmits(['update:modelValue'])
     </div>
 
     <button
-      class="mt-1"
       :key="props.balance"
-      v-if="!props.disabled"
+      v-if="!props.disabled && props.balance"
       @click.prevent="emits('update:modelValue', props.balance)"
     >
       <span

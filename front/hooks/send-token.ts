@@ -21,6 +21,8 @@ export const useSendToken = () => {
     showCollapsible: false,
     showWalletConnector: false,
 
+    isValidAddress: false,
+
     token: tokens[0],
   })
 
@@ -47,6 +49,29 @@ export const useSendToken = () => {
     return data.token.name === 'Kadena'
       ? formatBigNumberWithDecimals(userData?.value?.tokens?.coin?.balance || 0, decimals)
       : formatBigNumberWithDecimals(userData?.value?.tokens['opact-coin']?.balance || 0, decimals)
+  })
+
+  const isInternalTransfer = computed(() => {
+    if (data.addressTo.includes('OZK')) {
+      return true
+    }
+
+    return false
+  })
+
+  const showConnectWalletButton = computed(() => {
+    if (data.token.name !== 'Kadena' && !provider.value && !isInternalTransfer.value) {
+      return true
+    }
+
+    return false
+  })
+
+  const isDisabled = computed(() => {
+    return !data.isValidAddress
+      || Number(balance) <= 0
+      || data.amount > Number(balance)
+      || data.amount <= 0
   })
 
   const sendTransfer = async () => {
@@ -114,9 +139,13 @@ export const useSendToken = () => {
 
   return {
     data,
+    node,
     router,
     balance,
     provider,
+    isDisabled,
     sendTransfer,
+    isInternalTransfer,
+    showConnectWalletButton,
   }
 }

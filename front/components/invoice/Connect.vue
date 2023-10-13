@@ -37,25 +37,10 @@ const params = computed<any>(() => {
       </span>
     </div>
 
-    <div class="pt-4">
-      <button
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-          bg-blue-gradient
-        "
-        @click.prevent="emits('changeStep', 'provider')"
-      >
-        <span class="text-font-1"> Connect Wallet </span>
-      </button>
-    </div>
+    <AppButton
+      label="Connect Wallet"
+      class="mt-full lg:mt-4"
+      @click.prevent="emits('changeStep', 'provider')"
+    />
   </div>
 </template>

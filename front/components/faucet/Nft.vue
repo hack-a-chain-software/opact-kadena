@@ -79,11 +79,16 @@ const data = reactive({
   show: false,
   amount: 100,
   token: tokens[0],
+  progress: 'Sending TX',
   showGenerateLink: false,
   loading: false
 })
 
 const pay = async () => {
+  if (data.loading) {
+    return
+  }
+
   try {
     data.loading = true
 
@@ -114,80 +119,47 @@ const pay = async () => {
       </span>
     </div>
 
-    <div class="pt-4">
-      <div class="pb-2">
-        <div>
-          <span class="text-xxs text-font-1 lg:text-xs"> Random NFT </span>
-        </div>
-
-        <button
-          class="
-            mt-2
-            p-4
-            flex
-            w-full
-            items-center
-            rounded-[8px]
-            justify-between
-            bg-gray-800
-            disabled:opacity-60
-            disabled:cursor-not-allowed
-          "
-        >
-          <div class="space-x-4 flex items-center">
-            <img :src="`https://d2k5a3kljnz265.cloudfront.net/nft/kadena-mining-club@kadena/1.webp`" class="h-[60px] w-[60px] rounded-[8px]">
-
-            <span class="text-xs" v-text="`Alpha Slayers Club`" />
-          </div>
-        </button>
+    <div class="pt-[32px]">
+      <div
+        class="pb-4"
+      >
+        <span class="text-xxs text-font-1 lg:text-xs"> Random Alpha Slayers Club </span>
       </div>
-    </div>
 
-    <div class="pt-4 lg:pt-8">
-      <div>
-        <div>
-          <span class="text-xxs lg:text-xs text-font-1"> Your account name </span>
-        </div>
-
-        <div class="mt-2 p-4 bg-gray-700 rounded-[8px] cursor-not-allowed">
-          <span class="text-xs break-words">
-            {{ provider?.account?.address ||
-              provider?.account?.account?.account }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-6 lg:pt-[40px]">
       <button
-        :disabled="!data.token || !data.amount"
         class="
-          w-full
+          p-4
           flex
+          w-full
+          rounded-[8px]
+          justify-between
           items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
+          bg-gray-800
+          hover:opacity-90
+          disabled:opacity-60
+          border border-blue-400
           disabled:cursor-not-allowed
         "
-        :class="
-          !data.token || !data.amount
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="pay()"
       >
-        <span class="text-font-1"> Confirm Payment </span>
+        <div class="space-x-4 flex items-center">
+          <img :src="`https://d2k5a3kljnz265.cloudfront.net/nft/kadena-mining-club@kadena/1.webp`" class="h-[60px] w-[60px] rounded-[8px]">
+
+          <span class="text-xs" v-text="`Alpha Slayers Club#?`" />
+        </div>
       </button>
     </div>
 
-    <SelectToken
-      :show="data.show"
-      @close="data.show = false"
-      @selected="data.token = $event"
+    <ProviderUser
+      v-if="provider"
+      label="Wallet Receiver"
+      :provider="provider"
+    />
+
+    <AppButton
+      :loading="data.loading"
+      @click="pay()"
+      class="mt-full lg:mt-[40px]"
+      :label="data.loading ? data.progress : 'Get Random NFT'"
     />
   </div>
 </template>

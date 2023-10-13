@@ -18,6 +18,7 @@ export const useSendNFT = () => {
     showConnect: false,
     showCollapsible: false,
     showWalletConnector: false,
+    isValidAddress: false,
 
     token: null
   })
@@ -34,6 +35,26 @@ export const useSendNFT = () => {
   const wallet = useWalletStore()
 
   const { node } = storeToRefs(wallet)
+
+  const isInternalTransfer = computed(() => {
+    if (data.addressTo.includes('OZK')) {
+      return true
+    }
+
+    return false
+  })
+
+  const showConnectWalletButton = computed(() => {
+    if (!provider.value && !isInternalTransfer.value) {
+      return true
+    }
+
+    return false
+  })
+
+  const isDisabled = computed(() => {
+    return !data.isValidAddress || !data.token
+  })
 
   const sendTransfer = async () => {
     if (!data.token) {
@@ -104,8 +125,12 @@ export const useSendNFT = () => {
 
   return {
     data,
+    node,
     router,
     provider,
+    isDisabled,
     sendTransfer,
+    isInternalTransfer,
+    showConnectWalletButton,
   }
 }

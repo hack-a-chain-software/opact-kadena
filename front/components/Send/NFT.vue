@@ -3,9 +3,13 @@ import { useSendNFT } from '~/hooks/send-nft';
 
 const {
   data,
+  node,
   router,
   provider,
+  isDisabled,
   sendTransfer,
+  isInternalTransfer,
+  showConnectWalletButton,
 } = useSendNFT()
 </script>
 
@@ -59,198 +63,61 @@ const {
         </div>
       </div>
 
-      <div class="pt-[24px] lg:pt-0">
-        <div class="flex justify-between pb-2">
-          <div>
-            <span class="text-xxs font-medium text-font-1">
-              Select Token
-            </span>
-          </div>
-        </div>
+      <SelectOwnNFT
+        :show="data.show"
+        :token="data.token"
+        @open="data.show = true"
+        @close="data.show = false"
+        @selected="data.token = $event"
+      />
 
-        <button
-          class="
-            p-4
-            flex
-            w-full
-            items-center
-            rounded-[8px]
-            justify-between
-            bg-gray-800
-            disabled:opacity-60
-            disabled:cursor-not-allowed
-          "
-          @click.prevent="data.show = true"
-        >
-          <div v-if="!data.token">
-            <span class="text-font-2 text-xxs font-medium">
-              Choose Token
-            </span>
-          </div>
+      <ProviderUser
+        v-if="provider && !isInternalTransfer && data.token?.name !== 'Kadena'"
+        :provider="provider"
+      />
 
-          <div v-else class="space-x-4 flex items-center">
-            <img :src="data?.token?.uri" class="h-[60px] w-[60px] rounded-[8px]">
+      <InputAddress
+        :token="data.token"
+        v-model="data.addressTo"
+        @isValidAddress="data.isValidAddress = $event"
+      />
 
-            <span v-text="data?.token?.name" class="text-xs" />
-          </div>
-
-          <div>
-            <Icon name="chevron" class="rotate-[-90deg]" />
-          </div>
-        </button>
-      </div>
-
-      <div class="pt-4">
-        <div class="flex justify-between pb-2">
-          <span class="text-xxs font-medium text-font-1">
-            Send to
-          </span>
-        </div>
-
-        <div class="relative">
-          <input
-            v-model="data.addressTo"
-            placeholder="Address..."
-            class="
-              p-4
-              flex
-              w-full
-              rounded-[8px]
-              justify-between
-              bg-gray-800
-              text-font-1
-              outline-none
-            "
-          >
-
-          <div class="absolute top-3 right-4">
-            <Icon
-              name="pen"
-              class="h-6 w-6 rotate-[-90deg]"
-            />
-          </div>
-        </div>
-      </div>
-
-      <template v-if="provider">
-        <div class="pt-[18px]">
-          <div class="flex justify-between pb-2">
-            <span class="text-xxs font-medium text-font-1">
-              Your Wallet
-            </span>
-          </div>
-
-          <div
-            class="
-              p-4
-              flex
-              w-full
-              rounded-[8px]
-              bg-gray-800
-              space-x-2
-            "
-          >
-            <div>
-              <Icon
-                :name="provider.metadata.icon"
-                class="w-6 h-6"
-              />
-            </div>
-
-            <div
-              class="max-w-[calc(100%-32px)] break-words"
-            >
-              <p
-                class="text-xxs font-meidum text-font-1"
-                v-text="
-                  provider?.account?.address ||
-                    provider.account?.account?.account
-                "
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- <TxDetails
-          fee="0"
-          :amount="data.amount"
-        /> -->
-      </template>
+      <TxWrapperNFT
+        :token="data.token"
+        :amount="data.amount"
+        :receiver="data.addressTo"
+        :sender="'OZK' + node.hexPub"
+        :disabled="isDisabled"
+      />
     </div>
 
     <Warning
       type="error"
-      class="mt-2"
+      class="mt-4"
       v-if="data.error"
       :label="data.error + '*'"
     />
 
-    <div class="mt-full lg:mt-[40px]">
-      <button
-        v-if="!provider && data.token && !data.addressTo.includes('OZK')"
-        :disabled="!data.token || !data.amount"
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="data.showConnect = true"
-      >
-        <span class="text-font-1"> Connect Wallet </span>
-      </button>
+    <AppButton
+      label="Connect Wallet"
+      class="mt-full lg:mt-[40px]"
+      v-if="showConnectWalletButton"
+      @click.prevent="data.showConnect = true"
+    />
 
-      <button
-        v-else
-        :disabled="
-          !data.token || !data.amount || !data.addressTo
-        "
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-        "
-        :class="
-          !data.token || !data.amount || !data.addressTo
-            ? 'bg-gray-700'
-            : 'bg-blue-gradient'
-        "
-        @click.prevent="sendTransfer()"
-      >
-        <span class="text-font-1"> {{ data.loading ? data.progress : 'Send Token' }} </span>
-
-        <Icon v-if="data.loading" name="spinner" class="animate-spin text-white ml-[12px]" />
-      </button>
-    </div>
+    <AppButton
+      v-else
+      :disabled="isDisabled"
+      :loading="data.loading"
+      @click="sendTransfer()"
+      class="mt-full lg:mt-[40px]"
+      :label="data.loading ? data.progress : 'Send Token'"
+    />
 
     <WalletConnector
       :show="data.showConnect"
       @close="data.showConnect = false"
       @connected="data.showConnect = false"
-    />
-
-    <SelectOwnNft
-      :show="data.show"
-      @close="data.show = false"
-      @selected="data.token = $event"
     />
   </div>
 </template>
