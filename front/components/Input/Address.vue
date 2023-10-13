@@ -128,7 +128,7 @@ watch(() => [props.token, props.modelValue], (values: any) => {
       type="warning"
       v-show="data.isRegistered"
       v-motion-slide-visible-top
-      label="Receiver address is not founded"
+      label="Receiver address is not registered"
       desc="Opact can register a Single-Key Account to proceed with your transfer."
     />
 

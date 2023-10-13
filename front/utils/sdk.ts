@@ -1,7 +1,5 @@
 import {
-  poseidon,
   computeProof,
-  base64urlToBigInt,
   getDepositSoluctionBatch,
   computeTransactionParams,
   getTransferSolutionBatchForNft,
@@ -228,8 +226,8 @@ export const computePaymentParams = async ({
   selectedToken,
   receiptsParams,
   wallet = {
-    pubkey: 11266420894616539307519683389038109246654130435849311470670815520318096498921n,
-    pvtkey: 1482393132684423265528213543145697981060187089163992385907820405516567711584n
+    pubkey: "11266420894616539307519683389038109246654130435849311470670815520318096498921",
+    pvtkey: "1482393132684423265528213543145697981060187089163992385907820405516567711584"
   },
 }: any) => {
   const batch = await getDepositSoluctionBatch({
