@@ -82,7 +82,7 @@ const {
         :token="data.token"
         :amount="data.amount"
         :disabled="isDisabledNFT"
-        :receiver="'OZK' + node.hexPub"
+        :receiver="node.address"
         :sender="provider?.account?.address || provider?.account?.account?.account"
       />
     </div>

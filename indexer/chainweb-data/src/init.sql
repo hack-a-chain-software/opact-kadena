@@ -164,20 +164,20 @@ CREATE OR REPLACE FUNCTION skip_write()
 
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON transfers
-FOR EACH ROW
-WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE skip_write();
+-- CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON transfers
+-- FOR EACH ROW
+-- WHEN (pg_trigger_depth() < 1)
+-- EXECUTE PROCEDURE skip_write();
 
-CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON signers
-FOR EACH ROW
-WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE skip_write();
+-- CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON signers
+-- FOR EACH ROW
+-- WHEN (pg_trigger_depth() < 1)
+-- EXECUTE PROCEDURE skip_write();
 
-CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON minerkeys
-FOR EACH ROW
-WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE skip_write();
+-- CREATE OR REPLACE TRIGGER skip_write BEFORE INSERT OR UPDATE ON minerkeys
+-- FOR EACH ROW
+-- WHEN (pg_trigger_depth() < 1)
+-- EXECUTE PROCEDURE skip_write();
 
 -- Add trigger on events table
 
@@ -205,10 +205,10 @@ $BODY$
 
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE TRIGGER check_event BEFORE INSERT OR UPDATE ON events
-FOR EACH ROW
-WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE check_opact_event();
+-- CREATE OR REPLACE TRIGGER check_event BEFORE INSERT OR UPDATE ON events
+-- FOR EACH ROW
+-- WHEN (pg_trigger_depth() < 1)
+-- EXECUTE PROCEDURE check_opact_event();
 
 -- Add trigger on transactions table
 
@@ -249,7 +249,7 @@ $BODY$
 
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE TRIGGER check_opact_transactions BEFORE INSERT OR UPDATE ON transactions
-FOR EACH ROW
-WHEN (pg_trigger_depth() < 1)
-EXECUTE PROCEDURE check_opact_transactions();
+-- CREATE OR REPLACE TRIGGER check_opact_transactions BEFORE INSERT OR UPDATE ON transactions
+-- FOR EACH ROW
+-- WHEN (pg_trigger_depth() < 1)
+-- EXECUTE PROCEDURE check_opact_transactions();

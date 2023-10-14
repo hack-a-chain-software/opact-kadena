@@ -30,7 +30,7 @@ const emit = defineEmits(['close', 'redirect'])
 
 
 const params = computed(() => {
-  return `pubkey=${wallet.node.hexPub}`
+  return `pubkey=${wallet.node.address}`
 })
 
 const baseUrl =

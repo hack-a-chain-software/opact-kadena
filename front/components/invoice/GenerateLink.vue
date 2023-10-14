@@ -44,7 +44,7 @@ const copyToClipboard = async (text: string) => {
 }
 
 const params = computed(() => {
-  return `token=${props.token}&amount=${props.amount}&pubkey=${wallet.node.hexPub}`
+  return `token=${props.token}&amount=${props.amount}&pubkey=${wallet.node.address}`
 })
 
 const emit = defineEmits(['close', 'connected'])

@@ -1,4 +1,5 @@
 import {
+  stripOZK,
   computeProof,
   getDepositSoluctionBatch,
   computeTransactionParams,
@@ -61,7 +62,7 @@ export const computeTransferParamsForNFT = async ({
     selectedToken,
     senderWallet: wallet,
     totalRequired: amount,
-    receiverPubkey: `0x${receiver}`
+    receiverPubkey: `0x${stripOZK(receiver)}`
   })
 
   const {
@@ -147,7 +148,7 @@ export const computeTransferParams = async ({
     selectedToken,
     senderWallet: wallet,
     totalRequired: amount,
-    receiverPubkey: `0x${receiver}`
+    receiverPubkey: `0x${stripOZK(receiver)}`
   })
 
   const {

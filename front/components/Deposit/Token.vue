@@ -87,7 +87,7 @@ const {
       <TxWrapper
         :token="data.token"
         :amount="data.amount"
-        :receiver="'OZK' + node.hexPub"
+        :receiver="node.address"
         :sender="provider?.account?.address || provider?.account?.account?.account"
         :disabled="isDisabled"
       />

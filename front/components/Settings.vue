@@ -131,9 +131,7 @@ const emit = defineEmits(['close'])
                     group
                   "
                   @click.prevent="
-                    copyToClipboard(
-                      `OZK${node.hexPub}`
-                    )
+                    copyToClipboard(node.address)
                   "
                 >
                   <div
@@ -145,9 +143,7 @@ const emit = defineEmits(['close'])
                         break-words
                         group-active:text-blue-400
                       "
-                      v-text="
-                        `OZK${node.hexPub}`
-                      "
+                      v-text="node.address"
                     />
                   </div>
 

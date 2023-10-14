@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { stripOZK } from 'opact-sdk'
 import { Money3Component } from 'v-money3'
 import { useInvoice } from '~/hooks/invoice'
 import { computePaymentParams } from '~/utils/sdk'
@@ -57,14 +58,14 @@ const deposit = async () => {
 
   try {
     const transactionArgs = await computePaymentParams({
-      pubkey: `0x${pubkey.value}`,
+      pubkey: `0x${stripOZK(pubkey.value)}`,
       amount: Number(amount.value),
       sender: provider.value.account.account.publicKey,
       receiptsParams: {
         id: "0",
         type: 'deposit',
         amount: Number(amount.value),
-        receiver: BigInt(`0x${pubkey.value}`),
+        receiver: BigInt(`0x${stripOZK(pubkey.value)}`),
         address: data.token.namespace.refName.name,
         sender: provider.value.account.account.publicKey,
       },

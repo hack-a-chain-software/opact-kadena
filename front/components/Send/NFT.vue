@@ -86,7 +86,7 @@ const {
         :token="data.token"
         :amount="data.amount"
         :receiver="data.addressTo"
-        :sender="'OZK' + node.hexPub"
+        :sender="node.address"
         :disabled="isDisabled"
       />
     </div>
