@@ -1,3 +1,5 @@
+(namespace (read-msg 'ns))
+
 (module fungible-v2-reference GOV
 
     @doc "A minimal implementation of the 'fungible-v2' standard."
@@ -180,6 +182,22 @@
         (credit receiver receiver-guard amount))
       )
   
+      (defun coinbase:string (account:string account-guard:guard amount:decimal)
+        @doc "Internal function for the initial creation of coins.  This function \
+        \cannot be used outside of the coin contract."
+    
+        @model [ (property (valid-account account))
+                (property (> amount 0.0))
+              ]
+    
+        ;(validate-account account)
+        (enforce-unit amount)
+    
+        ;(require-capability (COINBASE))
+        ;(with-capability (CREDIT account)
+          (credit account account-guard amount))
+        ;)
+      
   
     (defschema crosschain-schema
       @doc "Schema for yielded value in cross-chain transfers"

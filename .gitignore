@@ -26,7 +26,7 @@ out
 out_tests
 .pact-history
 .draft
-lib.repl
+lib*.repl
 *.env
 **/.env
 **/node_modules
@@ -34,3 +34,7 @@ pact
 scripts
 log
 .deploy
+.vercel
+out
+out_tests
+transaction_*.circom
