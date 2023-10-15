@@ -20,7 +20,7 @@ wip
 /tests/*.js
 .pact-history
 .draft
-lib.repl
+lib*.repl
 *.env
 **/.env
 **/node_modules
@@ -33,3 +33,4 @@ log
 .vercel
 out
 out_tests
+transaction_*.circom

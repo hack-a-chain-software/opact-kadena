@@ -1,4 +1,6 @@
-(module coin GOVERNANCE
+(namespace (read-msg 'ns))
+
+(module opact-coin GOVERNANCE
 
     @doc "'coin' represents the Kadena Coin Contract. This contract provides both the \
     \buy/redeem gas support in the form of 'fund-tx', as well as transfer,       \
@@ -33,10 +35,10 @@
     ; --------------------------------------------------------------------------
     ; Capabilities
   
-    (defcap GOVERNANCE ()
-      true
-      ;(enforce false "Enforce non-upgradeability")
-    )
+    (defcap GOVERNANCE () true)
+
+    ;  (defcap GOVERNANCE ()
+    ;    (enforce-guard (keyset-ref-guard 'opact-admin)))
   
     (defcap GAS ()
       "Magic capability to protect gas buy and redeem"

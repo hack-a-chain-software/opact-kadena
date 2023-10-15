@@ -1,7 +1,12 @@
 (namespace (read-msg 'ns))
 
-(module groth16-<%= n_public - 7 %>x2 MODULE_ADMIN
-    (defcap MODULE_ADMIN () true)
+(module groth16-<%= n_public - 7 %>x2 GOVERNANCE
+    (defcap GOVERNANCE () true)
+
+    ;  (defcap GOVERNANCE ()
+    ;      "makes sure only admin account can update the smart contract"
+    ;      (enforce-guard (at 'guard (coin.details "opact-deployer")))
+    ;  )
 
     (defschema G1Point
         "Structure representing a G1 point."

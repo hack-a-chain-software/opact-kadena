@@ -1,28 +1,34 @@
-(define-namespace 'test (sig-keyset) (sig-keyset))
-(env-data { "ns" : "test", "name" : "merkle" })
-
-(load "../../poseidon/src/lib.repl")
-(load "../src/lib.repl")
+(define-namespace 'free (sig-keyset) (sig-keyset))
+(env-data { "ns" : "free", "name" : "merkle" })
 
 (env-gasmodel "table")
-(env-gaslimit 10000000)
+(env-gaslimit 150000)
 (env-gas 0)
 
-(expect "merkle" {"root": 17768327531739137635329022207868489980356191875146762173607799814888012541462, "index": 1} (insert-leaf 1))
-
-(print {"Total gas": (env-gas)})
+(load "../src/lib.repl")
+(print {"Total gas (deploy)": (env-gas)})
 (env-gas 0)
 
-(expect "merkle" {"root": 15831936945112555863238493351843930027916667404464948928031517068302210072385, "index": 2} (insert-leaf 2))
+(expect "merkle" {"root": 75384953468489046983911671876400248222449372029672832467076510649225676077, "index": 1} (insert-leaf 0))
 
-(print {"Total gas": (env-gas)})
+(print {"Total gas (insert-leaf)": (env-gas)})
 (env-gas 0)
 
-(expect "merkle" {"root": 4852806347291050551478200157621574287500434197552751173261587703452862367219, "index": 3} (insert-leaf 3))
+(expect "merkle" {"root": 7100261737961175651894661471628070425717871781918545820690660904436371636492, "index": 2} (insert-leaf 1))
 
-(print {"Total gas": (env-gas)})
+(print {"Total gas (insert-leaf)": (env-gas)})
 (env-gas 0)
 
-(expect "merkle" {"root": 3330844108758711782672220159612173083623710937399719017074673646455206473965, "index": 4} (insert-leaf 4))
+(expect "merkle" {"root": 433691966820481170835612732662415018601648678037719227187608695860310427976, "index": 3} (insert-leaf 2))
 
-(print {"Total gas": (env-gas)})
+(print {"Total gas (insert-leaf)": (env-gas)})
+(env-gas 0)
+
+(expect "merkle" {"root": 7098826222200342209188065928557332008815532855779868708346378343137310353829, "index": 4} (insert-leaf 3))
+
+(print {"Total gas (insert-leaf)": (env-gas)})
+(env-gas 0)
+
+(expect "merkle" {"root": 5761155846399808156424816482501372050616463271338541789615967734134838540609, "index": 5} (insert-leaf 4))
+
+(print {"Total gas (insert-leaf)": (env-gas)})

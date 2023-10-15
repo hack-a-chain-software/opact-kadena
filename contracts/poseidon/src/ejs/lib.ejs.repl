@@ -1,7 +1,12 @@
 (namespace (read-msg 'ns))
 
-(module poseidon MODULE_ADMIN
-    (defcap MODULE_ADMIN () true)
+(module poseidon GOVERNANCE
+    (defcap GOVERNANCE () true)
+
+    ;  (defcap GOVERNANCE ()
+    ;      "makes sure only admin account can update the smart contract"
+    ;      (enforce-guard (at 'guard (coin.details "opact-deployer")))
+    ;  )
 
     (defun sig(in:integer)
         (

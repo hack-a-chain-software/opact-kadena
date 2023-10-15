@@ -1,7 +1,12 @@
 (namespace (read-msg 'ns))
 
-(module opact MODULE_ADMIN
-    (defcap MODULE_ADMIN () true)
+(module opact GOVERNANCE
+    (defcap GOVERNANCE () true)
+
+    ;  (defcap GOVERNANCE ()
+    ;      "makes sure only admin account can update the smart contract"
+    ;      (enforce-guard (at 'guard (coin.details "opact-deployer")))
+    ;  )
 
     (defschema G1Point
         "Structure representing a G1 point."
@@ -15,27 +20,6 @@
         y: [integer]
     )
 
-    ;  (defschema Proof
-    ;      "Structure representing a proof."
-    ;      public_values: [integer]
-    ;      a: object{G1Point}
-    ;      b: object{G1Point}
-    ;      c: object{G1Point}
-    ;      z: object{G1Point}
-    ;      t_1: object{G1Point}
-    ;      t_2: object{G1Point}
-    ;      t_3: object{G1Point}
-    ;      eval_a: integer
-    ;      eval_b: integer
-    ;      eval_c: integer
-    ;      eval_s1: integer
-    ;      eval_s2: integer
-    ;      eval_zw: integer
-    ;      eval_r: integer
-    ;      wxi: object{G1Point}
-    ;      wxi_w: object{G1Point}
-    ;  )
-
     (defschema Proof
         "Structure representing a proof."
         public_values: [integer]
@@ -44,25 +28,16 @@
         c: object{G1Point}
     )
 
-    (defschema args
-        "Structure representing the arguments to the transact function."
-        root: integer
-        outputCommitments: [integer]
-        publicAmount: decimal
-        extDataHash: string
-        tokenHash: string
-    )
-
     (defschema ext-data
         "Structure representing a ext-data."
         sender: string
         recipient: string
-        extAmount: decimal
-        relayer: integer
-        fee: decimal
-        encryptedOutput1: integer
-        encryptedOutput2: integer
-        encryptedValue: integer
+        tokenType: string
+        tokenAmount: integer
+        tokenId: string
+        encryptedReceipts: [string]
+        encryptedCommitments: [string]
+        outputCommitments: [integer]
     )
 
     (defschema token-reference
@@ -91,19 +66,28 @@
 
     (deftable nullifierHashes:{NullifierHashesSchema})
 
-    (defcap new-commitment(commitment: integer index: integer encryptedOutput: integer)
+    (defcap new-commitment(commitment: integer index: integer)
       @event
       true
     )
 
-    (defcap new-nullifier(nullifier: integer)
+    (defcap new-nullifier(nullifier: [integer])
       @event
       true
     )
 
-    (defcap new-transaction(encryptedValue: integer)
+    (defcap new-transaction(encryptedValue: string)
       @event
       true
+    )
+
+    (defcap new-encrypted-output(encryptedOutput: string)
+      @event
+      true
+    )
+
+    (defun reset-nullifiers ()
+        (map (set-nullifierHash-to-zero) (select nullifierHashes (where 'value (< 0))))
     )
 
     (defun is-spent (nullifier:integer)
@@ -117,24 +101,31 @@
     (defconst FIELD_SIZE 21888242871839275222246405745257275088548364400416034343698204186575808495617)
     (defconst MAX_EXT_AMOUNT 10000000000.0)
     (defconst MAX_FEE 10000000000.0)
+    (defconst FEE 1.0)
+    (defconst AMOUNT_DECIMALS 12.0)
 
-    (defun calculate-public-amount (amount:decimal fee:decimal)
-        (enforce (< fee MAX_FEE) "Invalid fee")
-        (enforce (and (> amount (* MAX_EXT_AMOUNT -1.0)) (< amount MAX_EXT_AMOUNT)) "Invalid ext amount")
+    (defun calculate-public-amount (amount-integer:integer fee:decimal)
         (
             let*
             (
-                (publicAmount amount)
+                (amount (/ amount-integer (^ 10 AMOUNT_DECIMALS)))
+                (publicAmount amount-integer)
             )
-            (if (>= publicAmount 0.0)
+            (enforce (< fee MAX_FEE) "Invalid fee")
+            (enforce (and (> amount (* MAX_EXT_AMOUNT -1)) (< amount MAX_EXT_AMOUNT)) "Invalid ext amount")
+            (if (>= publicAmount 0)
                 publicAmount
-                (- FIELD_SIZE publicAmount)
+                (- FIELD_SIZE (* publicAmount -1))
             )
         )
     )
 
+    (defun opact-contract-guard() (create-module-guard "opact-contract-guard"))
+
     (defun initialize (maximumDepositAmount:decimal)
         (configure-limits maximumDepositAmount)
+        ;(coin.create-account "opact-deployer" (opact-contract-guard))
+        ;(coin.rotate "opact-contract" (opact-contract-guard))
     )
 
     (defun configure-limits (maximumDepositAmount:decimal)
@@ -146,18 +137,21 @@
 
     (defun set-nullifierHash (value:integer)
         (write nullifierHashes (int-to-str 10 value) { "value": value }))
+    
+    (defun set-nullifierHash-to-zero (obj:object{NullifierHashesSchema})
+        (write nullifierHashes (int-to-str 10 (at 'value obj)) { "value": 0 }))
 
     (defun verify-with-length (n:integer proof:object{Proof})
-        (if (= n 1) (at 'paired (groth16-1x2.verify proof))
-            (if (= n 2) (at 'paired (groth16-2x2.verify proof))
-                (if (= n 3) (at 'paired (groth16-3x2.verify proof))
-                    (if (= n 4) (at 'paired (groth16-4x2.verify proof))
-                        (if (= n 5) (at 'paired (groth16-5x2.verify proof))
-                            (if (= n 6) (at 'paired (groth16-6x2.verify proof))
-                                (if (= n 7) (at 'paired (groth16-7x2.verify proof))
-                                    (if (= n 8) (at 'paired (groth16-8x2.verify proof))
-                                        (if (= n 9) (at 'paired (groth16-9x2.verify proof))
-                                            (if (= n 10) (at 'paired (groth16-10x2.verify proof))
+        (if (= n 1) (at 'paired (free.groth16-1x2.verify proof))
+            (if (= n 2) (at 'paired (free.groth16-2x2.verify proof))
+                (if (= n 3) (at 'paired (free.groth16-3x2.verify proof))
+                    (if (= n 4) (at 'paired (free.groth16-4x2.verify proof))
+                        (if (= n 5) (at 'paired (free.groth16-5x2.verify proof))
+                            (if (= n 6) (at 'paired (free.groth16-6x2.verify proof))
+                                (if (= n 7) (at 'paired (free.groth16-7x2.verify proof))
+                                    (if (= n 8) (at 'paired (free.groth16-8x2.verify proof))
+                                        (if (= n 9) (at 'paired (free.groth16-9x2.verify proof))
+                                            (if (= n 10) (at 'paired (free.groth16-10x2.verify proof))
                                                 (enforce false "Invalid number of inputs")
                                             )
                                         )
@@ -174,7 +168,7 @@
     (defun verify-proof (proof:object{Proof})
         (let* 
             ((public-values (at 'public_values proof))
-             (length-utxos-in (- (length public-values) 7))) ; subtract: root, subtree_root, utxo_out_hash[2], token, delta, message_hash; the remaining are utxos_in
+             (length-utxos-in (- (length public-values) 7)))
             (enforce (and (>= length-utxos-in 1) (<= length-utxos-in 10)) "Invalid number of inputs")
             (verify-with-length length-utxos-in proof)
         )
@@ -187,15 +181,29 @@
          max-deposit-amount:decimal 
          token:module{fungible-v2})
         (enforce (<= amount max-deposit-amount) "amount is larger than maximumDepositAmount")
-        (token::transfer sender recipient amount)
+        (token::transfer-create sender recipient (opact-contract-guard) amount)
     )
-    
-    (defun withdraw-fungible-v2
+
+    (defun withdraw-fungible-v2-transfer
         (sender:string 
-         recipient:string 
+         recipient:string
+         recipient-guard:guard
          amount:decimal 
          token:module{fungible-v2})
-        (token::transfer sender recipient amount)
+         (coin.transfer sender "opact-gas-payer" FEE)
+         (token::transfer-create sender recipient recipient-guard (- amount FEE))
+    )
+
+    (defun withdraw-fungible-v2
+        (sender:string 
+         recipient:string
+         recipient-guard:guard
+         amount:decimal 
+         token:module{fungible-v2})
+        (if (= (format "{}" [(read-msg "token-instance")]) "coin")
+            (withdraw-fungible-v2-transfer sender recipient recipient-guard amount token)
+            (token::transfer-create sender recipient recipient-guard amount)
+        )
     )
 
     (defun deposit-poly-fungible-v1
@@ -206,102 +214,157 @@
          token:module{poly-fungible-v1}
          token-id:string)
         (enforce (<= amount max-deposit-amount) "amount is larger than maximumDepositAmount")
-        (token::transfer token-id sender recipient amount)
+        (token::transfer-create token-id sender recipient (opact-contract-guard) amount)
+    )
+
+    (defun deposit-poly-fungible-v2
+        (sender:string
+         recipient:string 
+         amount:decimal 
+         max-deposit-amount:decimal 
+         token:module{kip.poly-fungible-v2}
+         token-id:string)
+        (enforce (<= amount max-deposit-amount) "amount is larger than maximumDepositAmount")
+        (token::transfer-create token-id sender recipient (opact-contract-guard) amount)
     )
     
     (defun withdraw-poly-fungible-v1
         (sender:string 
-         recipient:string 
+         recipient:string
+         recipient-guard:guard
          amount:decimal 
          token:module{poly-fungible-v1}
          token-id:string)
-        (token::transfer token-id sender recipient amount)
+        (token::transfer-create token-id sender recipient recipient-guard amount)
     )
 
-    (defun emit-event-new-nullifier (nullifier:integer)
-        (emit-event (new-nullifier nullifier))
+    (defun withdraw-poly-fungible-v2
+        (sender:string 
+         recipient:string
+         recipient-guard:guard
+         amount:decimal 
+         token:module{kip.poly-fungible-v2}
+         token-id:string)
+        (token::transfer-create token-id sender recipient recipient-guard amount)
     )
 
-    (defun transact (args:object{args} proof:object{Proof} ext-data:object{ext-data} token-spec:object{token})
+    (defun transact (proof:object{Proof} ext-data:object{ext-data})
         (
             let*
             (
-                (valid-data (validate-transact args proof ext-data token-spec))
+                (valid-data (validate-transact proof ext-data))
                 (sender (at 'sender ext-data))
                 (recipient (at 'recipient ext-data))
-                (amount (at 'extAmount ext-data))
+                (amount (/ (at 'tokenAmount ext-data) (^ 10 AMOUNT_DECIMALS)))
+                (recipient-guard (read-msg 'recipient-guard))
                 (maximum-deposit-amount (get-maximum-deposit-amount))
-                (fee (at 'fee ext-data))
-                
                 (token-instance (read-msg 'token-instance))
-                (token-name (at 'name (at 'refSpec token-spec)))
-                (token-id (at 'id token-spec))
-                (public-amount (calculate-public-amount (at 'extAmount ext-data) (at 'fee ext-data)))
+                (token-type (at 'tokenType ext-data))
+                (token-id (at 'tokenId ext-data))
             )
+            (enforce (or (or (= token-type "fungible-v2") (= token-type "poly-fungible-v1")) (= token-type "poly-fungible-v2")) "Invalid token type")
 
-            (if (> fee 0.0) (coin.transfer sender "opact-gas-payer" fee) "")
+            (if (and (= token-type "fungible-v2") (> amount 0.0)) (deposit-fungible-v2 sender "opact-contract" amount maximum-deposit-amount token-instance) "")
+            (if (and (= token-type "fungible-v2") (< amount 0.0)) (withdraw-fungible-v2 "opact-contract" recipient recipient-guard (- amount) token-instance) "")
+            
+            (if (and (= token-type "poly-fungible-v1") (> amount 0.0)) (deposit-poly-fungible-v1 sender "opact-contract" amount maximum-deposit-amount token-instance token-id) "")
+            (if (and (= token-type "poly-fungible-v2") (> amount 0.0)) (deposit-poly-fungible-v2 sender "opact-contract" amount maximum-deposit-amount token-instance token-id) "")
+            
+            (if (and (= token-type "poly-fungible-v1") (< amount 0.0)) (withdraw-poly-fungible-v1 "opact-contract" recipient recipient-guard (- amount) token-instance token-id) "")
+            (if (and (= token-type "poly-fungible-v2") (< amount 0.0)) (withdraw-poly-fungible-v2 "opact-contract" recipient recipient-guard (- amount) token-instance token-id) "")
 
-            (if (and (= token-name "fungible-v2") (> amount 0.0)) (deposit-fungible-v2 sender "opact-contract" amount maximum-deposit-amount token-instance) "")
-            (if (and (= token-name "fungible-v2") (< amount 0.0)) (withdraw-fungible-v2 "opact-contract" recipient (- amount) token-instance) "")
-            (if (and (= token-name "poly-fungible-v1") (> amount 0.0)) (deposit-poly-fungible-v1 sender "opact-contract" amount maximum-deposit-amount token-instance token-id) "")
-            (if (and (= token-name "poly-fungible-v1") (< amount 0.0)) (withdraw-poly-fungible-v1 "opact-contract" recipient (- amount) token-instance token-id) "")
-
-            (event-transact args proof ext-data)
+            (event-transact proof ext-data)
             {
                 "valid-data": valid-data
             }
         )
     )
 
-    (defun validate-transact (args:object{args} proof:object{Proof} ext-data:object{ext-data} token-spec:object{token})
+    (defun validate-transact (proof:object{Proof} ext-data:object{ext-data})
         (
             let*
             (
+                ;  root,
+                ;  subtree_root,
+                ;  nullifier,
+                ;  utxo_out_hash,
+                ;  token,
+                ;  delta,
+                ;  message_hash
+
                 (public-values (at 'public_values proof))
-                (public-amount (calculate-public-amount (at 'extAmount ext-data) (at 'fee ext-data)))
-                (is-known-root (merkle.is-known-root (at 'root args)))
-                (input-nullifiers public-values)
-                (were-spent (map (is-spent) input-nullifiers))
-                (token-spec-hashed (hash token-spec))
-                (ext-data-hashed (hash ext-data))
+                (public-root (at 0 public-values))
+                (public-token (at (- (length public-values) 3) public-values))
+                (public-amount (at (- (length public-values) 2) public-values))
+                (public-message-hash (at (- (length public-values) 1) public-values))
+                (public-nullifiers public-values)
+                (were-spent (map (is-spent) public-nullifiers))
+                (is-known-root (free.merkle.is-known-root public-root))
+
+                (ext-data-concat (concat [
+                    (at 'sender ext-data) "," 
+                    (at 'recipient ext-data) "," 
+                    (at 'tokenType ext-data) "," 
+                    (format "{}" [(at 'tokenAmount ext-data)]) "," 
+                    (at 'tokenId ext-data) "," 
+                    (concat (at 'encryptedReceipts ext-data)) "," 
+                    (concat (at 'encryptedCommitments ext-data)) "," 
+                    (concat (map (int-to-str 10) (at 'outputCommitments ext-data)))
+                ]))
+                
+                (ext-data-hash (hash ext-data-concat))
+                (public-token-concat (format "{}" [(read-msg "token-instance")]))
+                (public-token-calculated (poseidon-hash (str-to-int 64 (hash public-token-concat))))
+                (public-amount-calculated (calculate-public-amount (at 'tokenAmount ext-data) FEE))
+                (public-message-hash-calculated (poseidon-hash (str-to-int 64 ext-data-hash)))
             )
-            (enforce (= token-spec-hashed (at 'tokenHash args)) "Invalid token hash")
-            (enforce 
-                (= 
-                    (format "{}.{}" [(at 'namespace (at 'refName token-spec)) (at 'name (at 'refName token-spec))])
-                    (format "{}" [(read-msg "token-instance")] )
-                ) "Invalid token instance")
-            (enforce (= is-known-root true) "Invalid merkle root")
-            (map (validate-spent) were-spent)
-            (enforce (= (at 'publicAmount args) public-amount) "Invalid public amount")
             (enforce (= (verify-proof proof) true) "Invalid transaction proof")
-            (enforce (= ext-data-hashed (at 'extDataHash args)) "Invalid ext-data hash")
+            (enforce (= public-amount public-amount-calculated) "Invalid public amount")
+            (enforce (= public-message-hash-calculated public-message-hash) "Invalid message hash")
+            (enforce (= public-token-calculated public-token) "Invalid token")
+            (enforce (= is-known-root true) "Invalid merkle root")
+
+            (map (validate-spent) were-spent)
             {
-                "ext-data-hashed": ext-data-hashed
-                ,"token-spec-hashed": token-spec-hashed
+                "ext-data-hash": ext-data-hash
+                ,"public-message-hash-calculated": public-message-hash-calculated
+                ,"public-message-hash": public-message-hash
+                ,"public-token": public-token
+                ,"public-token-calculated": public-token-calculated
                 ,"public-amount": public-amount
+                ,"public-amount-calculated": public-amount-calculated
+                ,"public-token-concat": public-token-concat
             }
         )
     )
 
-    (defun event-transact (args:object{args} proof:object{Proof} ext-data:object{ext-data})
+    (defun emit-event-new-commitment (output-commitment: integer)
+        (emit-event (new-commitment output-commitment (at 'index (free.merkle.insert-leaf output-commitment))))
+    )
+
+    (defun emit-event-encrypted-value (encrypted-value: string)
+        (emit-event (new-transaction encrypted-value))
+    )
+
+    (defun emit-event-encrypted-output (encrypted-output: string)
+        (emit-event (new-encrypted-output encrypted-output))
+    )
+
+    (defun event-transact (proof:object{Proof} ext-data:object{ext-data})
         (
             let*
             (
-                (output-commitments (at 'outputCommitments args))
-                (encrypted-output_0 (at 'encryptedOutput1 ext-data))
-                (encrypted-output_1 (at 'encryptedOutput2 ext-data))
-                (encrypted-value (at 'encryptedValue ext-data))
+                (output-commitments (at 'outputCommitments ext-data))
+                (encrypted-output (at 'encryptedCommitments ext-data))
+                (encrypted-value (at 'encryptedReceipts ext-data))
                 (public-values (at 'public_values proof))
-                (input-nullifiers public-values)
-                (output-commitment_0 (at 0 output-commitments))
-                (output-commitment_1 (at 1 output-commitments))
+                (public-nullifiers (drop 2 (take (- (length public-values) 3) public-values)))
             )
-            (map (set-nullifierHash) input-nullifiers)
-            (emit-event (new-commitment output-commitment_0 (at 'index (merkle.insert-leaf output-commitment_0)) encrypted-output_0))
-            (emit-event (new-commitment output-commitment_1 (at 'index (merkle.insert-leaf output-commitment_1)) encrypted-output_1))
-            (emit-event (new-transaction encrypted-value))
-            (map (emit-event-new-nullifier) input-nullifiers)
+            (map (set-nullifierHash) public-nullifiers)
+            (map (emit-event-new-commitment) output-commitments)
+            (map (emit-event-encrypted-output) encrypted-output)
+            (map (emit-event-encrypted-value) encrypted-value)
+            (emit-event (new-nullifier public-nullifiers))
         )
     )
 )
@@ -309,3 +372,4 @@
 (create-table nullifierHashes)
 (create-table limits)
 (initialize 1000000000000.0)
+; (reset-nullifiers)
