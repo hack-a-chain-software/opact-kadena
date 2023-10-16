@@ -1,15 +1,54 @@
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
+
+let ssr = false
+
+if (process.env.NODE_ENV !== 'development') {
+  ssr = true
+}
+
 export default defineNuxtConfig({
+  ssr,
   extends: ['./apps/site'],
   modules: [
     'nuxt-icon',
     '@pinia/nuxt',
-    '@nuxt/image',
+    '@cssninja/nuxt-toaster',
+    '@nuxt/image-edge',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@nuxtjs/tailwindcss',
     '@vueuse/motion/nuxt',
     '@nuxtjs/google-fonts'
   ],
+  build: {
+    transpile: ['@vuepic/vue-datepicker']
+  },
+  toaster: {
+    installPlugin: false
+  },
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {}
+    }
+  },
+  image: {
+    provider: 'ipx'
+  },
+  vite: {
+    optimizeDeps: {
+      esbuildOptions: {
+        define: {
+          global: 'globalThis'
+        },
+        plugins: [
+          NodeGlobalsPolyfillPlugin({
+            buffer: true
+          }) as any
+        ]
+      }
+    }
+  },
   motion: {
     directives: {
       'pop-bottom': {
@@ -33,6 +72,7 @@ export default defineNuxtConfig({
     }
   },
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       link: [
         {
@@ -56,6 +96,15 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { prerender: true },
-    '/wallet': { prerender: true }
+    '/auth': { prerender: false },
+    '/home': { prerender: false },
+    '/wallet': { prerender: true },
+    '/tickets': { prerender: true },
+    '/receive': { prerender: false },
+    '/history': { prerender: false },
+    '/transfer': { prerender: false },
+    '/deposit/nft': { prerender: false },
+    '/deposit/token': { prerender: false },
+    '/invoice/create': { prerender: false }
   }
 })

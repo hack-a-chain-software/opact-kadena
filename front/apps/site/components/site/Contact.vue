@@ -23,7 +23,7 @@ const onSubmit = async () => {
 
   try {
     await useFetch(
-      'https://formsubmit.co/ajax/mateus@opact.io',
+      'https://formsubmit.co/ajax/opact@hackachain.io',
       {
         method: 'POST',
         headers: {
@@ -78,8 +78,8 @@ const onSubmit = async () => {
 
       <div class="pb-[38px] md:pb-8">
         <h3 class="font-medium leading-normal md:text-xl">
-          Like our ZK solutions or need a different one?
-          Let’s chat!
+          Like our solutions or need a different one? Let’s
+          chat!
         </h3>
       </div>
 
@@ -145,7 +145,7 @@ const onSubmit = async () => {
             />
           </div>
 
-          <div>
+          <div class="z-[2] relative">
             <p
               class="
                 font-medium
@@ -154,7 +154,14 @@ const onSubmit = async () => {
                 md:text-xl
               "
             >
-              Or get in touch with us on Telegram
+              Or get in touch with us on
+              <a
+                href="https://t.me/hackachain"
+                target="_blank"
+                type="link"
+                class="underline cursor-pointer"
+                >Telegram</a
+              >
             </p>
           </div>
         </div>

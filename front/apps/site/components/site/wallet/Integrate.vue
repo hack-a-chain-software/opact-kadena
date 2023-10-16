@@ -75,10 +75,10 @@
 
     <template #cta>
       <Button
-        disabled
         with-icon
         variant="secondary"
-        text="Read more"
+        text="Talk to our team"
+        href="#contact"
       />
     </template>
   </Container>
