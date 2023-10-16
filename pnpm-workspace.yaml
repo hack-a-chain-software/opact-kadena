@@ -1,5 +1,6 @@
 packages:
   - 'front'
+  - 'contracts/**'
   - 'indexer/**'
   - 'terraform'
   - 'circom2'
