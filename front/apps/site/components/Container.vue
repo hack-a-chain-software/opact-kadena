@@ -6,11 +6,13 @@ withDefaults(
     text?: string;
     cta?: string;
     to?: string;
+    disabled?: boolean;
     center?: boolean;
     size?: 'lg' | 'xl';
   }>(),
   {
     center: false,
+    disabled: false,
     size: 'lg',
     cta: '',
     to: '',
@@ -119,8 +121,10 @@ const sizes = {
           <Button
             withIcon
             :href="to"
-            variant="secondary"
             :text="cta"
+            target="_blank"
+            variant="secondary"
+            :disabled="disabled"
           />
         </slot>
       </div>

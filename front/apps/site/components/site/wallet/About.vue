@@ -11,7 +11,6 @@
     "
     cta="Learn more"
     size="xl"
-    to="#contact"
   >
     <template #after>
       <SiteFigureBlue />
@@ -69,10 +68,10 @@
 
     <template #cta>
       <Button
-        disabled
         with-icon
         variant="secondary"
         text="Read more"
+        href="https://respected-meat-54f.notion.site/Opact-Ecosystem-Implementation-Proposal-20bbc821f2be4c09aff25795c548ae79?pvs=4"
       />
     </template>
   </Container>

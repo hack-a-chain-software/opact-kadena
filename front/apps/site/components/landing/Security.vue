@@ -3,7 +3,7 @@
     id="security"
     class="pt-[40px] md:pt-[60px] lg:pt-20"
   >
-    <Container cta="Learn more" size="xl">
+    <Container cta="Learn more" size="xl" disabled>
       <template #before>
         <div
           class="

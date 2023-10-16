@@ -1,5 +1,6 @@
 <template>
   <Container
+    to="https://docs.tickets.opact.io/"
     id="documentation"
     cta="Opact Documentation"
     class="flex-1"
