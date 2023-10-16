@@ -1,13 +1,25 @@
 (define-namespace 'free (sig-keyset) (sig-keyset))
-(env-data { "ns" : "free", "name" : "merkle" })
+
+(env-data 
+    { 'ns : "free"
+    , 'name : "merkle"
+    , 'user1 : ["user1-keys"] 
+    })
+(env-keys ["user1-keys"])
 
 (env-gasmodel "table")
 (env-gaslimit 150000)
 (env-gas 0)
 
 (load "../src/lib.repl")
+
+(define-keyset "free.opact-admin" (read-keyset "user1"))
+
 (print {"Total gas (deploy)": (env-gas)})
 (env-gas 0)
+
+(init-admin (read-keyset "user1"))
+(initialize)
 
 (expect "merkle" {"root": 75384953468489046983911671876400248222449372029672832467076510649225676077, "index": 1} (insert-leaf 0))
 

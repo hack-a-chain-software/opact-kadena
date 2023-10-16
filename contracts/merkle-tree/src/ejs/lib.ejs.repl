@@ -1,12 +1,9 @@
 (namespace (read-msg 'ns))
 
 (module merkle GOVERNANCE
-    (defcap GOVERNANCE () true)
-
-    ;  (defcap GOVERNANCE ()
-    ;      "makes sure only admin account can update the smart contract"
-    ;      (enforce-guard (at 'guard (coin.details "opact-deployer")))
-    ;  )
+    (defcap GOVERNANCE ()
+        (enforce-keyset "free.opact-admin")
+    )
 
     (defschema FilledSubtreesSchema
         "Schema for the filledSubtrees table"
@@ -33,44 +30,52 @@
         (at 'next_index (read state "0")))
 
     (defun set-current-root-index (current_root_index:integer)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (update state "0" {"current_root_index": current_root_index}))
     
     (defun set-next-index (next_index:integer)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (update state "0" {"next_index": next_index}))
 
     (defun set-filled-subtrees (key:string value:integer)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (write filledSubtrees key { "value": value }))
 
     (defun insert-root (key:string value:integer)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (write roots key { "value": value }))
 
     (defun blake-hash (left:string right:string)
         (hash [left right]))
 
     (defun initialize()
+        (with-capability (GOVERNANCE)
         <% for (let i = 0; i < level; i++) { %>
             (set-filled-subtrees "<%= i %>" (poseidon-zeros <%= i %>))
         <% } %>
 
-        (insert-root "0" (poseidon-zeros 0))
+            (insert-root "0" (poseidon-zeros 0))
 
-        (insert state "0" {
-            "current_root_index": 0,
-            "next_index": 0
-        })
+            (insert state "0" {
+                "current_root_index": 0,
+                "next_index": 0
+            })
+        )
     )
 
     (defun reset()
+        (with-capability (GOVERNANCE)
         <% for (let i = 0; i < level; i++) { %>
             (set-filled-subtrees "<%= i %>" (poseidon-zeros <%= i %>))
         <% } %>
 
-        (insert-root "0" (poseidon-zeros 0))
+            (insert-root "0" (poseidon-zeros 0))
 
-        (write state "0" {
-            "current_root_index": 0,
-            "next_index": 0
-        })
+            (write state "0" {
+                "current_root_index": 0,
+                "next_index": 0
+            })
+        )
     )
 
     (defun blake-zeros (i:integer)
@@ -196,7 +201,21 @@
         )
     )
 
+    (defconst MODULE_KEY "M")
+
+    (defschema admin
+        guard:guard
+    )
+    
+    (deftable admins:{admin})
+
+    (defun init-admin (guard:guard)
+        (with-capability (GOVERNANCE)
+            (insert admins MODULE_KEY {'guard: guard}))
+    )
+
     (defun insert-leaf (leaf:integer)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (
             let*
             (
@@ -248,4 +267,4 @@
 (create-table roots)
 (create-table filledSubtrees)
 (create-table state)
-(initialize)
+(create-table admins)

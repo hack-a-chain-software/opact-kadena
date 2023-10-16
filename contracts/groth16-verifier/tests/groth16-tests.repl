@@ -1,7 +1,13 @@
-(define-namespace 'test (sig-keyset) (sig-keyset))
-(env-data { 'ns: 'test })
+(define-namespace 'free (sig-keyset) (sig-keyset))
+(env-data 
+    { 'ns: 'free 
+    , "user1" : ["user1-keys"]
+    }
+)
 
 (load "../src/lib-3x2.repl")
+
+(define-keyset "free.opact-admin" (read-keyset "user1"))
 
 (env-gasmodel "table")
 (env-gaslimit 150000)

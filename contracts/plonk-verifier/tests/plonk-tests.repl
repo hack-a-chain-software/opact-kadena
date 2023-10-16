@@ -1,6 +1,13 @@
-; pact
+(define-namespace 'free (sig-keyset) (sig-keyset))
+(env-data 
+    { 'ns: 'free 
+    , "user1" : ["user1-keys"]
+    }
+)
 
 (load "../src/lib.repl")
+
+(define-keyset "free.opact-admin" (read-keyset "user1"))
 
 (expect "check-value" true (check-value 1 2))
 
