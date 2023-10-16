@@ -16,7 +16,6 @@ export const useDepositToken = (amount = 0, token = tokens[0]) => {
 
     show: false,
     loading: false,
-    showConnect: false,
     showCollapsible: false,
   })
 
@@ -70,8 +69,6 @@ export const useDepositToken = (amount = 0, token = tokens[0]) => {
   }
 
   const checkFunds = async () => {
-    data.showConnect = false
-
     await nextTick()
 
     if (!data.token || !provider.value) {

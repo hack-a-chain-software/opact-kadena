@@ -17,7 +17,6 @@ export const useSendToken = () => {
 
     show: false,
     loading: false,
-    showConnect: false,
     showCollapsible: false,
     showWalletConnector: false,
 

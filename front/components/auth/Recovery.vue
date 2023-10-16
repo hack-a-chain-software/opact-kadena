@@ -42,6 +42,7 @@ const toPaste = async () => {
   <div
     class="text-white max-w-[450px]
       lg:h-auto
+      lg:mt-[150px]
       lg:p-6
       lg:bg-gray-900
       lg:w-[546px]
@@ -82,7 +83,20 @@ const toPaste = async () => {
     </div>
 
     <div class="pt-[32px] lg:pt-0">
-      <div>
+      <div
+        class="flex space-x-4 items-center"
+      >
+        <button
+          class="
+            flex
+            items-center
+            space-x-[4px]
+          "
+          @click.prevent="emits('changeStep', 'connect')"
+        >
+          <Icon name="chevronLeft" class="h-8 w-8" />
+        </button>
+
         <h2 class="text-md text-font-1 font-medium">
           Setup Your Secure Passphrase
         </h2>
@@ -152,29 +166,11 @@ const toPaste = async () => {
       </div>
 
       <div class="pt-[250px] lg:pt-[56px]">
-        <button
+        <ButtonInline
+          label="Create Wallet"
           :disabled="!!!data.phrase"
-          class="
-            w-full
-            flex
-            items-center
-            justify-center
-            h-[44px]
-            py-3
-            px-4
-            rounded-[12px]
-            relative
-            disabled:cursor-not-allowed
-          "
-          :class="
-            !!!data.phrase
-              ? 'bg-gray-700'
-              : 'bg-blue-gradient'
-          "
           @click.prevent="recovery()"
-        >
-          <span class="text-font-1"> Create Wallet </span>
-        </button>
+        />
       </div>
     </div>
   </div>

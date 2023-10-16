@@ -37,7 +37,7 @@ const params = computed<any>(() => {
       </span>
     </div>
 
-    <AppButton
+    <ButtonInline
       label="Connect Wallet"
       class="mt-full lg:mt-4"
       @click.prevent="emits('changeStep', 'provider')"

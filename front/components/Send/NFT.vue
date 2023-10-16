@@ -98,26 +98,17 @@ const {
       :label="data.error + '*'"
     />
 
-    <AppButton
-      label="Connect Wallet"
-      class="mt-full lg:mt-[40px]"
+    <SelectWallet
       v-if="showConnectWalletButton"
-      @click.prevent="data.showConnect = true"
     />
 
-    <AppButton
+    <ButtonInline
       v-else
       :disabled="isDisabled"
       :loading="data.loading"
       @click="sendTransfer()"
       class="mt-full lg:mt-[40px]"
       :label="data.loading ? data.progress : 'Send Token'"
-    />
-
-    <WalletConnector
-      :show="data.showConnect"
-      @close="data.showConnect = false"
-      @connected="data.showConnect = false"
     />
   </div>
 </template>

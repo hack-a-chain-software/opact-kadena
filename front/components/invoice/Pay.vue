@@ -13,8 +13,6 @@ const checkFunds = async () => {
 
   const prefix = data.token.name === 'Kadena' ? 'coin' : 'test.opact-coin'
 
-  data.showConnect = false
-
   await nextTick()
 
   if (!provider.value) {
@@ -256,7 +254,7 @@ watch(() => data.token, () => {
       :label="data.error + '*'"
     />
 
-    <AppButton
+    <ButtonInline
       :loading="data.depositing"
       @click="deposit()"
       :disabled="buttonIsDisabled"

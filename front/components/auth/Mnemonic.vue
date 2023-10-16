@@ -37,6 +37,7 @@ onMounted(() => {
     class="text-white max-w-[450px]
       lg:h-auto
       lg:p-6
+      lg:mt-[150px]
       lg:bg-gray-900
       lg:w-[546px]
       lg:border-2 lg:border-gray-600 lg:rounded-[12px]"
@@ -75,7 +76,20 @@ onMounted(() => {
     </div>
 
     <div class="pt-[32px] lg:pt-0">
-      <div>
+      <div
+        class="flex space-x-4 items-center"
+      >
+        <button
+          class="
+            flex
+            items-center
+            space-x-[4px]
+          "
+          @click.prevent="emits('changeStep', 'connect')"
+        >
+          <Icon name="chevronLeft" class="h-8 w-8" />
+        </button>
+
         <h2 class="text-md text-font-1 font-medium">
           Setup Your Secure Passphrase
         </h2>
@@ -147,25 +161,10 @@ onMounted(() => {
       </div>
 
       <div class="pt-[165px] lg:pt-[56px]">
-        <button
-          class="
-            w-full
-            flex
-            items-center
-            justify-center
-            bg-blue-gradient
-            h-[44px]
-            py-3
-            px-4
-            rounded-[12px]
-            relative
-          "
+        <ButtonInline
+          label="Next"
           @click.prevent="emits('changeStep', 'verify')"
-        >
-          <span class="text-font-1 text-xs font-medium">
-            Continue
-          </span>
-        </button>
+        />
       </div>
     </div>
   </div>

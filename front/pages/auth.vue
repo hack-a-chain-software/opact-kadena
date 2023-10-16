@@ -2,7 +2,11 @@
 import { useAuth } from '~/hooks/auth'
 
 useHead({
-  title: 'Auth'
+  title: 'Auth',
+})
+
+definePageMeta({
+  layout: 'auth'
 })
 
 const {

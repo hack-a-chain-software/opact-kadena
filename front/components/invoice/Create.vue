@@ -74,7 +74,7 @@ const data = reactive({
       />
     </div>
 
-    <AppButton
+    <ButtonInline
       :disabled="Number(data.amount) <= 0"
       class="mt-full lg:mt-[40px]"
       label="Generate payment link"

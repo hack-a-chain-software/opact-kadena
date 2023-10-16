@@ -9,46 +9,57 @@ const emits = defineEmits(['changeStep'])
 </script>
 
 <template>
-  <div class="flex flex-col lg:flex-row lg:items-start h-full pt-[56px] pb-[80px] lg:pt-[0] lg:pb-0 lg:mt-[-64px] lg:px-0 lg:max-w-full lg:overflow-x-clip lg:items-center">
+  <div
+    class="
+      flex flex-col lg:flex-row lg:items-start pt-[56px] pb-[80px] lg:pt-[0] lg:px-0 lg:max-w-full lg:overflow-x-clip h-full
+      lg:grid lg:grid-cols-[minmax(auto,820px)_424px] lg:w-full lg:justify-center
+    "
+  >
     <div class="lg:hidden flex items-center justify-center h-[42px]">
       <Logo class="flex justify-center mb-5" />
     </div>
 
     <div
-      class="
-        flex
-        items-center
-        justify-center
-        w-full
-        max-h-[410px]
-        lg:h-full
-        lg:max-h-max
-        lg:z-[-1]
-        lg:relative
-        lg:max-w-[50%]
-        xl:max-w-[60%]
-        lg:overflow-y-clip
-      "
+      class="lg:hidden"
     >
       <figure class="">
         <img
           src="/auth-bg.png"
           alt="Hero illustration"
           quality="100"
-          class="min-w-[608px] h-[507px] lg:min-w-[1057px] lg:min-h-[880px] lg:h-[880px]"
-          sizes="xs:861px xxl:1057px"
+          class="w-full 2xl: max-w-[1057px]"
+          sizes=""
         >
       </figure>
     </div>
 
     <div
-      class="flex-col lg:mr-[0%] lg:w-full lg:flex lg:items-center"
+      class="relative hidden lg:block"
+    >
+      <figure class="
+        absolute
+        left-0 top-0
+        lg:left-[-10%]
+        select-none pointer-events-none z-[0]"
+      >
+        <img
+          src="/auth-bg.png"
+          alt="Hero illustration"
+          quality="100"
+          class="min-w-[665px] lg:max-w-[130%] xl:max-w-[1057px] pointer-events-none"
+          sizes=""
+        >
+      </figure>
+    </div>
+
+    <div
+      class="flex-col lg:mr-[0%] lg:w-full lg:flex lg:items-center relative z-[1] lg:mt-[min(50%,calc((100vh-350px)/2))] lg:p-[32px]"
     >
       <div
-        class="lg:max-w-[424px]"
+        class="lg:max-w-[360px]"
       >
         <div class="flex flex-col space-y-[16px] max-w-[400px]">
-          <h2 class="text-lg font-medium text-font-1">
+          <h2 class="text-lg font-medium text-font-1 lg:text-xl lg:font-[600]">
             Your private address
           </h2>
 
@@ -59,41 +70,18 @@ const emits = defineEmits(['changeStep'])
         </div>
 
         <div class="flex flex-col space-y-[16px] pt-[32px]">
-          <button
-            class="
-              flex
-              items-center
-              justify-center
-              bg-blue-gradient
-              h-[44px]
-              py-3
-              px-4
-              rounded-[12px]
-              relative
-            "
-            @click.prevent="data.show = true"
-          >
-            <span class="text-font-1"> Create Wallet </span>
-          </button>
 
-          <button
-            class="
-              flex
-              items-center
-              justify-center
-              h-[44px]
-              py-[11px]
-              px-4
-              rounded-[12px]
-              text-font-1
-              border border-font-1
-            "
+          <ButtonInline
+            label="Create Wallet"
+            @click.prevent="data.show = true"
+          />
+
+          <ButtonOutline
+            label="Recover Wallet"
             @click.prevent="emits('changeStep', 'recovery')"
-          >
-            <span class="text-font-1"> Recover Wallet </span>
-          </button>
+          />
         </div>
-    </div>
+      </div>
     </div>
 
     <AuthGetStartedModal

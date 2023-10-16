@@ -155,7 +155,7 @@ const pay = async () => {
       :provider="provider"
     />
 
-    <AppButton
+    <ButtonInline
       :loading="data.loading"
       @click="pay()"
       class="mt-full lg:mt-[40px]"

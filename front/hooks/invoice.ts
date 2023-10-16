@@ -30,7 +30,6 @@ export const useInvoice = () => {
     provider: null,
     commitments: null,
     depositing: false,
-    showConnect: false,
     depositMessage: 'Syncing Metadata',
     showCollapsible: false,
     token: tokens[0],

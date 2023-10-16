@@ -15,7 +15,6 @@ export const useSendNFT = () => {
 
     show: false,
     loading: false,
-    showConnect: false,
     showCollapsible: false,
     showWalletConnector: false,
     isValidAddress: false,

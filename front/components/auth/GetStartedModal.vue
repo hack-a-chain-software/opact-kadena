@@ -96,25 +96,10 @@ const emit = defineEmits(['close', 'create'])
               </div>
 
               <div class="pt-6">
-                <button
-                  class="
-                  flex
-                  items-center
-                  justify-center
-                  bg-blue-gradient
-                  h-[44px]
-                  py-3
-                  px-4
-                  rounded-[12px]
-                  relative
-                  w-full
-                "
-                  @click="emit('create')"
-                >
-                  <span class="text-font-1">
-                    Get started
-                  </span>
-                </button>
+                <ButtonInline
+                  label="Get started"
+                  @click.prevent="emit('create')"
+                />
               </div>
             </DialogPanel>
           </TransitionChild>

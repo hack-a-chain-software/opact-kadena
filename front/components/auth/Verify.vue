@@ -56,6 +56,7 @@ const isDisabled = computed(() => {
       lg:p-6
       lg:bg-gray-900
       lg:w-[546px]
+      lg:mt-[150px]
       lg:border-2 lg:border-gray-600 lg:rounded-[12px]"
   >
     <div
@@ -94,7 +95,27 @@ const isDisabled = computed(() => {
     </div>
 
     <div class="pt-[32px] lg:pt-0">
-      <div>
+      <div
+        class="flex items-center relative"
+      >
+        <button
+          class="
+            items-center
+            space-x-[4px]
+            h-6
+            absolute
+            top-0
+            right-0
+            hidden
+            lg:flex
+          "
+          @click.prevent="emits('changeStep', 'connect')"
+        >
+          <span class="text-blue-400 text-xxs font-medium">
+            Reset
+          </span>
+        </button>
+
         <h2 class="text-md text-font-1 font-medium">
           Verify Phrase
         </h2>
@@ -131,27 +152,11 @@ const isDisabled = computed(() => {
       </div>
 
       <div class="pt-[397px] lg:pt-[56px]">
-        <button
+        <ButtonInline
+          label="Create Wallet"
           :disabled="!isDisabled"
-          class="
-            w-full
-            flex
-            items-center
-            justify-center
-            h-[44px]
-            py-3
-            px-4
-            rounded-[12px]
-            relative
-            disabled:cursor-not-allowed
-          "
-          :class="
-            !isDisabled ? 'bg-gray-700' : 'bg-blue-gradient'
-          "
           @click.prevent="create()"
-        >
-          <span class="text-font-1"> Create Wallet </span>
-        </button>
+        />
       </div>
     </div>
   </div>

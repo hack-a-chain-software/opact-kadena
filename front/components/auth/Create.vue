@@ -10,6 +10,7 @@ const emits = defineEmits(['changeStep'])
       lg:p-6
       lg:bg-gray-900
       lg:w-[546px]
+      lg:mt-[150px]
       lg:border-2 lg:border-gray-600 lg:rounded-[12px]
     "
   >
@@ -47,7 +48,20 @@ const emits = defineEmits(['changeStep'])
     </div>
 
     <div class="pt-8 lg:pt-0">
-      <div>
+      <div
+        class="flex space-x-4 items-center"
+      >
+        <button
+          class="
+            flex
+            items-center
+            space-x-[4px]
+          "
+          @click.prevent="emits('changeStep', 'connect')"
+        >
+          <Icon name="chevronLeft" class="h-8 w-8" />
+        </button>
+
         <h2 class="text-font-1 text-md font-medium">
           Choose a Security Method
         </h2>
