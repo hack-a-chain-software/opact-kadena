@@ -7,7 +7,13 @@
 (define-namespace 'test (sig-keyset) (sig-keyset))
 (define-namespace 'free (sig-keyset) (sig-keyset))
 
-(env-data { 'ns: 'free })
+(env-keys ["user1-keys", "user2-keys", "user3-keys", "user4-keys"])
+
+(env-data 
+    { 'ns: 'free 
+    , "user1" : ["user1-keys"]
+    }
+)
 
 ; load dependencies
 
@@ -21,10 +27,9 @@
 (load "../../groth16-verifier/src/lib-8x2.repl")
 (load "../../groth16-verifier/src/lib-9x2.repl")
 (load "../../groth16-verifier/src/lib-10x2.repl")
-
-; (load "../../plonk-verifier/src/lib.repl")
-; (load "../../poseidon/src/lib.repl")
 (load "../../merkle-tree/src/lib.repl")
+
+(define-keyset "free.opact-admin" (read-keyset "user1"))
 
 (env-data { 'ns: 'test })
 
@@ -36,12 +41,12 @@
 (load "kip/0011/fungible-util.pact")
 (load "kip/0011/poly-fungible-reference.pact")
 
-(load "../src/contract.pact")
-
 ; setup
 
 (create-table coin.coin-table)
 (create-table fungible-v2-reference.ledger)
+
+(load "../src/contract.pact")
 
 (env-data 
 { "user1" : ["user1-keys"]
@@ -50,12 +55,9 @@
 , "user4" : ["user4-keys"]
 })
 
-(env-keys ["user1-keys", "user2-keys", "user3-keys", "user4-keys"])
-
 (coin.create-account "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" (read-keyset "user1")) ; sender
 (coin.create-account "opact-gas-payer" (read-keyset "user4"))
 (coin.create-account "recipient-address" (read-keyset "user2"))
-(coin.create-account "opact-contact" (opact-contract-guard))
 
 (test-capability (coin.CREDIT "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131"))
 (test-capability (coin.CREDIT "opact-gas-payer"))
@@ -63,24 +65,19 @@
 (test-capability (coin.CREDIT "opact-contract"))
 
 (coin.credit "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" (read-keyset "user1") 100.0)
-; (coin.credit "opact-gas-payer" (read-keyset "user4") 100.0)
 (coin.credit "recipient-address" (read-keyset "user2") 100.0)
-; (coin.credit "opact-contract" (opact-contract-guard) 100.0)
 
 ; fungible tokens - deposit
 
 (test-capability (coin.TRANSFER "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" "opact-contract" 10.0))
 (test-capability (coin.TRANSFER "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" "opact-gas-payer" 2.0))
-; (test-capability (coin.TRANSFER "opact-contract" "opact-gas-payer" 1.0))
 
-; test.fungible-v2.reference
 (test.fungible-v2-reference.create-account "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" (read-keyset "user1")) ; sender
 (test-capability (test.fungible-v2-reference.CREDIT "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131"))
 (test.fungible-v2-reference.credit "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" (read-keyset "user1") 100.0)
 (test-capability (test.fungible-v2-reference.TRANSFER "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" "opact-contract" 10.0))
-; (test-capability (test.fungible-v2-reference.TRANSFER "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" "opact-gas-payer" 2.0))
 
-(free.merkle.insert-leaf 0) ; -> 75384953468489046983911671876400248222449372029672832467076510649225676077
+(test-capability (free.merkle.GOVERNANCE))
 
 (env-gasmodel "table")
 (env-gaslimit 10000000)
@@ -89,8 +86,6 @@
 (env-data { 
     "token-instance": {"refName": {"name": "coin"},
                        "refSpec": [{"name": "fungible-v2"}]},
-    ;  "token-instance": {"refName": {"name": "fungible-v2-reference","namespace": "test"},
-    ;                     "refSpec": [{"name": "fungible-v2"}]},
     "recipient-guard": {}
 })
 
@@ -114,10 +109,6 @@
 
 (expect "deposit - sender balance (native)" 90.0 (coin.get-balance "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131"))
 (expect "deposit - contract balance (fungible)" 10.0 (coin.get-balance "opact-contract"))
-; (expect "deposit - recipient balance (fungible)" 100.0 (coin.get-balance "recipient-address"))
-
-;  (expect "deposit - sender balance (native)" 90.0 (test.fungible-v2-reference.get-balance "045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131"))
-;  (expect "deposit - contract balance (fungible)" 10.0 (test.fungible-v2-reference.get-balance "opact-contract"))
 (expect "deposit - gas payer balance (native)" 0.0 (coin.get-balance "opact-gas-payer"))
 
 ;  ;; setup

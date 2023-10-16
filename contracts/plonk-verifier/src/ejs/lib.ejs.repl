@@ -1,10 +1,9 @@
-(module plonk GOVERNANCE
-    (defcap GOVERNANCE () true)
+(namespace (read-msg 'ns))
 
-    ;  (defcap GOVERNANCE ()
-    ;      "makes sure only admin account can update the smart contract"
-    ;      (enforce-guard (at 'guard (coin.details "opact-deployer")))
-    ;  )
+(module plonk GOVERNANCE
+    (defcap GOVERNANCE ()
+        (enforce-keyset "free.opact-admin")
+    )
 
     (defschema G1Point
         "Structure representing a G1 point."

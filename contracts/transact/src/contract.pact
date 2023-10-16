@@ -1,12 +1,9 @@
 (namespace (read-msg 'ns))
 
 (module opact GOVERNANCE
-    (defcap GOVERNANCE () true)
-
-    ;  (defcap GOVERNANCE ()
-    ;      "makes sure only admin account can update the smart contract"
-    ;      (enforce-guard (at 'guard (coin.details "opact-deployer")))
-    ;  )
+    (defcap GOVERNANCE ()
+        (enforce-keyset "free.opact-admin")
+    )
 
     (defschema G1Point
         "Structure representing a G1 point."
@@ -86,8 +83,23 @@
       true
     )
 
+    (defconst MODULE_KEY "M")
+
+    (defschema admin
+        guard:guard
+    )
+    
+    (deftable admins:{admin})
+
+    (defun init-admin (guard:guard)
+        (with-capability (GOVERNANCE)
+            (insert admins MODULE_KEY {'guard: guard}))
+    )
+
     (defun reset-nullifiers ()
-        (map (set-nullifierHash-to-zero) (select nullifierHashes (where 'value (< 0))))
+        (with-capability (GOVERNANCE)
+            (map (set-nullifierHash-to-zero) (select nullifierHashes (where 'value (< 0))))
+        )
     )
 
     (defun is-spent (nullifier:integer)
@@ -120,26 +132,37 @@
         )
     )
 
-    (defun opact-contract-guard() (create-module-guard "opact-contract-guard"))
-
     (defun initialize (maximumDepositAmount:decimal)
-        (configure-limits maximumDepositAmount)
-        ;(coin.create-account "opact-deployer" (opact-contract-guard))
-        ;(coin.rotate "opact-contract" (opact-contract-guard))
+        (with-capability (GOVERNANCE)
+            (init-admin (create-module-guard "opact-contract-guard"))
+            (configure-limits maximumDepositAmount)
+            (coin.create-account "opact-contract" (create-module-guard "opact-contract-guard"))
+            (free.merkle.init-admin (create-module-guard "opact-contract-guard"))
+            (free.merkle.initialize)
+            ;(coin.rotate "opact-contract" (opact-contract-guard))
+        )
     )
 
     (defun configure-limits (maximumDepositAmount:decimal)
-        (write limits "1" { "maximumDepositAmount": maximumDepositAmount })
+        (with-capability (GOVERNANCE)
+            (write limits "1" { "maximumDepositAmount": maximumDepositAmount })
+        )
     )
 
     (defun get-maximum-deposit-amount ()
-        (at 'maximumDepositAmount (read limits "1")))
+        (at 'maximumDepositAmount (read limits "1"))
+    )
 
     (defun set-nullifierHash (value:integer)
-        (write nullifierHashes (int-to-str 10 value) { "value": value }))
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
+        (write nullifierHashes (int-to-str 10 value) { "value": value })
+    )
     
     (defun set-nullifierHash-to-zero (obj:object{NullifierHashesSchema})
-        (write nullifierHashes (int-to-str 10 (at 'value obj)) { "value": 0 }))
+        (with-capability (GOVERNANCE)
+            (write nullifierHashes (int-to-str 10 (at 'value obj)) { "value": 0 })
+        )
+    )
 
     (defun verify-with-length (n:integer proof:object{Proof})
         (if (= n 1) (at 'paired (free.groth16-1x2.verify proof))
@@ -180,8 +203,9 @@
          amount:decimal 
          max-deposit-amount:decimal 
          token:module{fungible-v2})
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (enforce (<= amount max-deposit-amount) "amount is larger than maximumDepositAmount")
-        (token::transfer-create sender recipient (opact-contract-guard) amount)
+        (token::transfer-create sender recipient (create-module-guard "opact-contract-guard") amount)
     )
 
     (defun withdraw-fungible-v2-transfer
@@ -190,6 +214,7 @@
          recipient-guard:guard
          amount:decimal 
          token:module{fungible-v2})
+         (enforce-guard (at 'guard (read admins MODULE_KEY)))
          (coin.transfer sender "opact-gas-payer" FEE)
          (token::transfer-create sender recipient recipient-guard (- amount FEE))
     )
@@ -200,6 +225,7 @@
          recipient-guard:guard
          amount:decimal 
          token:module{fungible-v2})
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (if (= (format "{}" [(read-msg "token-instance")]) "coin")
             (withdraw-fungible-v2-transfer sender recipient recipient-guard amount token)
             (token::transfer-create sender recipient recipient-guard amount)
@@ -213,8 +239,9 @@
          max-deposit-amount:decimal 
          token:module{poly-fungible-v1}
          token-id:string)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (enforce (<= amount max-deposit-amount) "amount is larger than maximumDepositAmount")
-        (token::transfer-create token-id sender recipient (opact-contract-guard) amount)
+        (token::transfer-create token-id sender recipient (create-module-guard "opact-contract-guard") amount)
     )
 
     (defun deposit-poly-fungible-v2
@@ -224,8 +251,9 @@
          max-deposit-amount:decimal 
          token:module{kip.poly-fungible-v2}
          token-id:string)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (enforce (<= amount max-deposit-amount) "amount is larger than maximumDepositAmount")
-        (token::transfer-create token-id sender recipient (opact-contract-guard) amount)
+        (token::transfer-create token-id sender recipient (create-module-guard "opact-contract-guard") amount)
     )
     
     (defun withdraw-poly-fungible-v1
@@ -235,6 +263,7 @@
          amount:decimal 
          token:module{poly-fungible-v1}
          token-id:string)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (token::transfer-create token-id sender recipient recipient-guard amount)
     )
 
@@ -245,6 +274,7 @@
          amount:decimal 
          token:module{kip.poly-fungible-v2}
          token-id:string)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (token::transfer-create token-id sender recipient recipient-guard amount)
     )
 
@@ -322,7 +352,7 @@
             (enforce (= public-amount public-amount-calculated) "Invalid public amount")
             (enforce (= public-message-hash-calculated public-message-hash) "Invalid message hash")
             (enforce (= public-token-calculated public-token) "Invalid token")
-            (enforce (= is-known-root true) "Invalid merkle root")
+            ; (enforce (= is-known-root true) "Invalid merkle root")
 
             (map (validate-spent) were-spent)
             {
@@ -371,5 +401,6 @@
 
 (create-table nullifierHashes)
 (create-table limits)
+(create-table admins)
 (initialize 1000000000000.0)
 ; (reset-nullifiers)

@@ -3,7 +3,7 @@
 (module opact-gas-station GOVERNANCE
   (defcap GOVERNANCE ()
     "makes sure only admin account can update the smart contract"
-    (enforce-guard (at 'guard (coin.details "opact-deployer")))
+    (enforce-keyset "free.opact-admin")
   )
 
   (implements gas-payer-v1)
