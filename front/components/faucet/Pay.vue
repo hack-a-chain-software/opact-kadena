@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { useAppState } from '~/hooks/state'
 import { tokens } from '~/utils/constants'
+
+const { isLoading } = useAppState()
 
 const router = useRouter()
 
@@ -22,6 +25,7 @@ const pay = async () => {
 
     await provider.value.faucet(data.token.namespace)
 
+    isLoading.value = true
     router.push('/home')
   } catch (e) {
     console.warn(e)

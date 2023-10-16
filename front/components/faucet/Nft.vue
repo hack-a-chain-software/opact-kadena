@@ -4,6 +4,9 @@ import Pact from 'pact-lang-api'
 import { toHex } from 'ethereum-cryptography/utils'
 import { getRandomBytesSync } from 'ethereum-cryptography/random'
 import { tokens } from '~/utils/constants'
+import { useAppState } from '~/hooks/state'
+
+const { isLoading } = useAppState()
 
 const router = useRouter()
 
@@ -111,6 +114,7 @@ const pay = async () => {
 
     await provider.value.mintToken(id)
 
+    isLoading.value = true
     router.push('/home')
   } catch (e) {
     console.warn(e)

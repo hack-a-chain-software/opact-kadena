@@ -129,7 +129,7 @@ const balance = computed(() => {
       >
         <button
           class="bg-gray-800 rounded-[8px] py-3 px-4"
-          @click.prevent="router.push('/transfer/token')"
+          @click.prevent="router.push('/send/token')"
         >
           <div class="pb-2">
             <Icon name="send" class="w-6 h-6" />

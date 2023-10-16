@@ -7,7 +7,10 @@ import {
   TransitionChild
 } from '@headlessui/vue'
 import { storeToRefs } from 'pinia'
+import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
+
+const { isLoading } = useAppState()
 
 const wallet = useWalletStore()
 
@@ -38,6 +41,11 @@ withDefaults(
 )
 
 const emit = defineEmits(['close'])
+
+const logout = () => {
+  isLoading.value = true
+  wallet.logout()
+}
 </script>
 
 <template>
@@ -188,7 +196,7 @@ const emit = defineEmits(['close'])
                     justify-between
                     rounded-[8px]
                   "
-                  @click.prevent="wallet.logout()"
+                  @click.prevent="logout()"
                 >
                   <div>
                     <span
