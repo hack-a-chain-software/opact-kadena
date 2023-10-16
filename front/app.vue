@@ -48,7 +48,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 body {
-  background: #060A0F;
+  background: #060a0f;
 }
 
 .page-enter-active,
