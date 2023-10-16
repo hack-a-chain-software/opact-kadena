@@ -75,17 +75,25 @@ onBeforeMount(() => {
       bg-gray-800
     "
   >
-    <img
-      v-if="data.token"
-      :src="data.token.uri"
+    <div
       class="
+        w-full
+        aspect-square
+        max-h-max
+        overflow-hidden
+        flex
+        items-center
+        justify-center
+        max-h-[180px]
         rounded-[8px]
-        w-[150px]
-        h-[150px]
-        mx-auto
-        lg:min-w-[180px] lg:min-h-[182px]
       "
-    />
+    >
+      <img
+        v-if="data.token"
+        :src="data.token.uri"
+        class="rounded-[8px] mx-auto"
+      />
+    </div>
 
     <div class="pt-3" v-if="data.token">
       <span class="text-font-1 text-xxs">

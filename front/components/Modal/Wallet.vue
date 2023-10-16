@@ -156,26 +156,10 @@ const close = () => {
                 </div>
 
                 <div>
-                  <button
-                    class="
-                      w-full
-                      flex
-                      items-center
-                      justify-center
-                      h-[44px]
-                      py-3
-                      px-4
-                      rounded-[12px]
-                      relative
-                      disabled:cursor-not-allowed
-                      bg-blue-gradient
-                    "
+                  <ButtonInline
+                    label="Connect Wallet"
                     @click.prevent="data.show = true"
-                  >
-                    <span class="text-font-1">
-                      Connect Wallet
-                    </span>
-                  </button>
+                  />
                 </div>
               </template>
 

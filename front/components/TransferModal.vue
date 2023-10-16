@@ -154,7 +154,7 @@ const close = () => {
                     w-full
                   "
                   @click.prevent="
-                    router.push('/transfer/token')
+                    router.push('/send/token')
                   "
                 >
                   <div>
@@ -186,9 +186,7 @@ const close = () => {
                     rounded-[8px]
                     w-full
                   "
-                  @click.prevent="
-                    router.push('/transfer/nft')
-                  "
+                  @click.prevent="router.push('/send/nft')"
                 >
                   <div>
                     <span

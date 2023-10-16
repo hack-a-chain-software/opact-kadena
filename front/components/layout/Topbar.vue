@@ -30,7 +30,6 @@ const titles = {
       hidden
       lg:flex
       justify-between
-      transition-all
     "
     :class="
       route.name === 'home'

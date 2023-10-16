@@ -94,24 +94,10 @@ const emits = defineEmits(['changeStep', 'token'])
     </div>
 
     <div class="pt-6">
-      <button
-        class="
-          w-full
-          flex
-          items-center
-          justify-center
-          h-[44px]
-          py-3
-          px-4
-          rounded-[12px]
-          relative
-          disabled:cursor-not-allowed
-          bg-blue-gradient
-        "
+      <ButtonInline
+        label="Connect Wallet"
         @click.prevent="emits('changeStep', 'provider')"
-      >
-        <span class="text-font-1"> Connect Wallet </span>
-      </button>
+      />
     </div>
   </div>
 </template>
