@@ -25,7 +25,7 @@ export const useSendNFT = () => {
     token: null
   })
 
-  const { userData, loadAppState } = useAppState()
+  const { userData, updateUserData } = useAppState()
 
   const { provider } = useExtensions()
 
@@ -127,7 +127,14 @@ export const useSendNFT = () => {
         )
       }
 
-      loadAppState(node.value.pvtkey)
+      updateUserData(
+        {
+          ...params,
+          token: data.token,
+          tokenType: 'nfts'
+        },
+        -1
+      )
       router.push('/home')
     } catch (e) {
       console.warn(e)

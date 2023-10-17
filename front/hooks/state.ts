@@ -1,4 +1,4 @@
-import { formatInteger, groupUtxoByToken } from 'opact-sdk'
+import { groupUtxoByToken } from 'opact-sdk'
 
 const userState = () =>
   useState<any>('opact:userstate', () => null)
@@ -14,6 +14,8 @@ export const useAppState = () => {
   const state = useOpactState()
   const receipts = useReceipts()
   const isLoading = useAppIsLoading()
+
+  const { $toaster } = useNuxtApp()
 
   const computeState = (secret: any): Promise<any> => {
     return new Promise((resolve) => {
@@ -75,42 +77,54 @@ export const useAppState = () => {
     }
   }
 
-  const updateUserData = (
-    utxosOut: any[],
-    utxosIn: any[],
-    tokenId: any,
-    amount: any,
-    flag = 1
-  ) => {
+  const updateUserData = (args: any, flag = 1) => {
+    const {
+      batch,
+      token,
+      tokenType,
+      extData: { tokenAmount }
+    } = args
+
     isLoading.value = true
 
-    state.value.commitments = [
-      ...state.value.commitments,
-      ...utxosOut.map(({ hash }: any) => ({
-        value: hash.toString()
-      }))
-    ]
+    const name = token.namespace.refName.name
 
-    const treeBalance = userData.value[tokenId]
+    let treeBalance = userData.value[tokenType][name]
+
+    if (!treeBalance) {
+      treeBalance = {
+        token: {
+          ...token,
+          decimals: 12
+        },
+        utxos: [],
+        balance: BigInt(0)
+      }
+    }
 
     treeBalance.balance =
-      treeBalance.balance +
-      BigInt(formatInteger(amount * flag, 12))
+      treeBalance.balance + BigInt(tokenAmount)
 
     if (flag > 0) {
       treeBalance.utxos = [
         ...treeBalance.utxos,
-        ...utxosOut
+        ...batch.utxosOut.filter(
+          ({ amount }: any) => amount > 0
+        )
       ]
 
-      userData.value = [treeBalance]
+      userData.value[tokenType][name] = treeBalance
 
       isLoading.value = false
+
+      $toaster.success({
+        title: 'Deposit sent'
+      })
 
       return
     }
 
-    const blindings = utxosIn.map(
+    const blindings = batch.utxosIn.map(
       ({ blinding }: any) => blinding
     )
 
@@ -118,11 +132,21 @@ export const useAppState = () => {
       ({ blinding }: any) => !blindings.includes(blinding)
     )
 
-    treeBalance.utxos = [...treeBalance.utxos, ...utxosOut]
+    treeBalance.utxos = [
+      ...treeBalance.utxos,
+      ...batch.utxosOut.filter(
+        ({ amount }: any) => amount > 0
+      )
+    ]
 
-    userData.value = [treeBalance]
+    userData.value[tokenType][name] = treeBalance
 
     isLoading.value = false
+
+    $toaster.success({
+      type: 'success',
+      title: 'Transfer sent'
+    })
   }
 
   return {

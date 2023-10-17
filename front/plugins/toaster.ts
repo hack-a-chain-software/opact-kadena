@@ -46,6 +46,14 @@ export default defineNuxtPlugin(() => {
         })
       )
     },
+    success (options: ToasterOptions) {
+      nt.show(() =>
+        h(MyToast, {
+          ...options,
+          type: 'success'
+        })
+      )
+    },
     close () {
       // close all toasts
       nt.clearAll()

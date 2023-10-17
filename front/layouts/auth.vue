@@ -32,6 +32,19 @@ const data = reactive({
 
     <div
       class="
+        absolute
+        z-[-10]
+        w-full
+        hidden
+        h-[520px]
+        lg:block
+      "
+    >
+      <img src="/bg-app.png" class="w-full h-[520px]" />
+    </div>
+
+    <div
+      class="
         px-4
         lg:px-0
         overflow-x-clip

@@ -9,7 +9,7 @@ const {
   isDisabledNFT,
   sendDeposit,
   showConnectWalletButton
-} = useDepositToken(1, null as any)
+} = useDepositToken(1, null as any, 'nfts')
 </script>
 
 <template>

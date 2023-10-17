@@ -43,7 +43,7 @@ const handleClick = (event: any) => {
       hover:opacity-80
       border-[2px] border-gray-600
       disabled:cursor-not-allowed
-      active:bg-blue-gradient-2
+      active:bg-gray-600
     "
     @click.prevent="handleClick"
   >

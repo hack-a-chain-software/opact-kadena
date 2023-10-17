@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useAuth } from '~/hooks/auth'
-
 useHead({
   title: 'Auth'
 })
