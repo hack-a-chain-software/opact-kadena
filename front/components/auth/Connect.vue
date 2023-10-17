@@ -13,6 +13,7 @@ const emits = defineEmits(['changeStep'])
     class="
       flex flex-col
       lg:flex-row lg:items-start
+      bg-dark-blue
       pt-[56px]
       pb-[80px]
       lg:pt-[0] lg:px-0 lg:max-w-full lg:overflow-x-clip
@@ -47,13 +48,23 @@ const emits = defineEmits(['changeStep'])
       </figure>
     </div>
 
-    <div class="relative hidden lg:block">
+    <div
+      class="
+        relative
+        hidden
+        lg:flex
+        overflow-visible
+        w-full
+        relative
+      "
+    >
       <figure
         class="
           absolute
           left-0
           top-0
-          lg:left-[-10%]
+          left-1/2
+          -translate-x-1/2
           select-none
           pointer-events-none
           z-[0]
@@ -64,7 +75,7 @@ const emits = defineEmits(['changeStep'])
           alt="Hero illustration"
           quality="100"
           class="
-            min-w-[665px]
+            min-w-[1057px]
             lg:max-w-[130%]
             xl:max-w-[1057px]
             pointer-events-none
@@ -92,13 +103,19 @@ const emits = defineEmits(['changeStep'])
               text-lg
               font-medium
               text-font-1
-              lg:text-xl lg:font-[600]
+              lg:text-xl lg:font-[500]
             "
           >
             Your private address
           </h2>
 
-          <p class="text-xs text-font-2 font-regular">
+          <p
+            class="
+              text-xs text-font-2
+              font-regular
+              lg:font-xs lg:font-[400] lg:leading-[140%]
+            "
+          >
             Choose how you want to connect. Web3 like you
             never imagined.
           </p>
@@ -107,7 +124,14 @@ const emits = defineEmits(['changeStep'])
         <div class="flex flex-col space-y-[16px] pt-[32px]">
           <ButtonInline
             label="Create Wallet"
+            class="lg:hidden"
             @click.prevent="data.show = true"
+          />
+
+          <ButtonInline
+            label="Create Wallet"
+            class="hidden lg:flex"
+            @click.prevent="emits('changeStep', 'create')"
           />
 
           <ButtonOutline

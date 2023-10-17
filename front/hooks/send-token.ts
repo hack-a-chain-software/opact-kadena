@@ -31,7 +31,7 @@ export const useSendToken = () => {
     token: tokens[0]
   })
 
-  const { userData, loadAppState } = useAppState()
+  const { userData, updateUserData } = useAppState()
 
   const { provider } = useExtensions()
 
@@ -160,7 +160,14 @@ export const useSendToken = () => {
         )
       }
 
-      loadAppState(node.value.pvtkey)
+      updateUserData(
+        {
+          ...params,
+          token: data.token,
+          tokenType: 'tokens'
+        },
+        -1
+      )
       router.push('/home')
     } catch (e) {
       console.warn(e)

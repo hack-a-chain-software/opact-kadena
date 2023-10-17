@@ -53,82 +53,16 @@ const isDisabled = computed(() => {
 </script>
 
 <template>
-  <div
-    class="
-      text-white
-      max-w-[450px]
-      lg:h-auto
-      lg:p-6
-      lg:bg-gray-900
-      lg:w-[546px]
-      lg:mt-[150px]
-      lg:border-2
-      lg:border-gray-600
-      lg:rounded-[12px]
-    "
-  >
-    <div
-      class="
-        w-full
-        py-4
-        flex
-        justify-center
-        relative
-        items-center
-        lg:hidden
-      "
-    >
-      <button
-        class="
-          flex
-          items-center
-          space-x-[4px]
-          h-6
-          absolute
-          top-4
-          left-0
-        "
-        @click.prevent="emits('changeStep', 'connect')"
-      >
-        <span class="text-blue-400 text-xxs font-medium">
-          Restart
-        </span>
-      </button>
+  <FormLayout>
+    <FormHeader
+      title="Create Wallet"
+      subtitle="Verify Phrase"
+      @changeStep="emits('changeStep', 'mnemonic')"
+    />
 
-      <div>
-        <h1 class="text-xs text-font-1 font-medium">
-          Create Wallet
-        </h1>
-      </div>
-    </div>
-
-    <div class="pt-[32px] lg:pt-0">
-      <div class="flex items-center relative">
-        <button
-          class="
-            items-center
-            space-x-[4px]
-            h-6
-            absolute
-            top-0
-            right-0
-            hidden
-            lg:flex
-          "
-          @click.prevent="emits('changeStep', 'connect')"
-        >
-          <span class="text-blue-400 text-xxs font-medium">
-            Reset
-          </span>
-        </button>
-
-        <h2 class="text-md text-font-1 font-medium">
-          Verify Phrase
-        </h2>
-      </div>
-
-      <div class="pt-[16px] pb-[32px]">
-        <p class="text-xs font-regular text-font-2">
+    <div class="pt-4">
+      <div class="pb-6">
+        <p class="text-xs font-regular text-font-2 lg:">
           Enter the following word from your recovery phrase
           to complete the setup process.
         </p>
@@ -141,6 +75,7 @@ const isDisabled = computed(() => {
 
         <input
           v-model="data.word"
+          :class="isDisabled && 'border-blue-400'"
           placeholder="Enter the corresponding word"
           class="
             text-xxs text-font-2
@@ -156,14 +91,12 @@ const isDisabled = computed(() => {
           "
         />
       </div>
-
-      <div class="pt-[397px] lg:pt-[56px]">
-        <ButtonInline
-          label="Create Wallet"
-          :disabled="!isDisabled"
-          @click.prevent="create()"
-        />
-      </div>
     </div>
-  </div>
+
+    <FormFooter
+      :disabled="!isDisabled"
+      @click.prevent="create()"
+      label="Verify & Create Wallet"
+    />
+  </FormLayout>
 </template>

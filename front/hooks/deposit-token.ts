@@ -7,11 +7,14 @@ import { computeDepositParams } from '~/utils/sdk'
 
 export const useDepositToken = (
   amount = 0,
-  token = tokens[0]
+  token = tokens[0],
+  tokenType = 'tokens'
 ) => {
   const data = reactive({
     token,
     amount,
+    tokenType,
+
     balance: 0,
 
     error: '',
@@ -22,7 +25,7 @@ export const useDepositToken = (
     showCollapsible: false
   })
 
-  const { loadAppState } = useAppState()
+  const { updateUserData } = useAppState()
 
   const { provider } = useExtensions()
 
@@ -58,7 +61,11 @@ export const useDepositToken = (
         (message: string) => (data.progress = message)
       )
 
-      loadAppState(node.value.pvtkey)
+      updateUserData({
+        ...transactionArgs,
+        token: data.token,
+        tokenType: data.tokenType
+      })
       router.push('/home')
     } catch (e) {
       console.warn(e)

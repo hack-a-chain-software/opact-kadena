@@ -47,6 +47,8 @@ const verifyAddress = debounce(async (_, address: any) => {
 
       if (isValidOpactAddress) {
         data.isValid = true
+
+        emits('isValidAddress', true)
       }
     } catch (e) {
       data.isRegistered = true

@@ -39,71 +39,27 @@ const toPaste = async () => {
 </script>
 
 <template>
-  <div
-    class="
-      text-white
-      max-w-[450px]
-      lg:h-auto
-      lg:mt-[150px]
-      lg:p-6
-      lg:bg-gray-900
-      lg:w-[546px]
-      lg:border-2
-      lg:border-gray-600
-      lg:rounded-[12px]
-    "
-  >
-    <div
-      class="
-        w-full
-        py-4
-        flex
-        justify-center
-        relative
-        items-center
-        lg:hidden
-      "
-    >
-      <button
-        class="
-          flex
-          items-center
-          space-x-[4px]
-          h-6
-          absolute
-          top-4
-          left-0
-        "
-        @click.prevent="emits('changeStep', 'connect')"
-      >
-        <Icon name="chevronLeft" class="h-6 w-6" />
-      </button>
+  <FormLayout>
+    <FormHeader
+      title="Create Wallet"
+      subtitle="Setup Your Secure Passphrase"
+      @changeStep="emits('changeStep', 'connect')"
+    />
 
-      <div>
-        <h1 class="text-xs text-font-1 font-medium">
-          Recover Wallet
-        </h1>
-      </div>
-    </div>
-
-    <div class="pt-[32px] lg:pt-0">
-      <div class="flex space-x-4 items-center">
-        <button
-          class="flex items-center space-x-[4px]"
-          @click.prevent="emits('changeStep', 'connect')"
+    <div class="pt-4">
+      <div class="pb-6">
+        <p
+          class="
+            text-font-2
+            font-regular
+            text-xs
+            lg:text-xs lg:font-[400] lg:leading-[22.4px]
+          "
         >
-          <Icon name="chevronLeft" class="h-8 w-8" />
-        </button>
-
-        <h2 class="text-md text-font-1 font-medium">
-          Setup Your Secure Passphrase
-        </h2>
-      </div>
-
-      <div class="pt-4 pb-[32px]">
-        <p class="text-font-2 font-regular text-xs">
-          Paste your passphrase below to recover your
-          account.
+          Write down the following words in order and keep
+          them somewhere safe. Anyone with access to it will
+          also have access to your account! You’ll be asked
+          to verify your passphrase next.
         </p>
       </div>
 
@@ -113,6 +69,7 @@ const toPaste = async () => {
           gap-[12px]
           relative
           group
+          lg:p-4
           cursor-pointer
         "
       >
@@ -126,7 +83,8 @@ const toPaste = async () => {
               select-none
               text-xxs
               font-medium
-              text-font-1
+              text-font-2
+              lg:text-xxs lg:font-[500] lg:leading-[19.6px]
             "
             v-text="i + 1"
           />
@@ -137,13 +95,16 @@ const toPaste = async () => {
               text-xxs
               font-medium
               text-font-1
+              lg:text-xxs
+              font-[500]
+              leading-[19.6px]
             "
             v-text="splited[i] || '-'"
           />
         </div>
       </div>
 
-      <div class="pt-4 flex justify-end">
+      <div class="pt-2 flex justify-end">
         <button
           class="
             px-3
@@ -162,14 +123,11 @@ const toPaste = async () => {
           <Icon name="copy" class="h-6 w-6" />
         </button>
       </div>
-
-      <div class="pt-[250px] lg:pt-[56px]">
-        <ButtonInline
-          label="Create Wallet"
-          :disabled="!!!data.phrase"
-          @click.prevent="recovery()"
-        />
-      </div>
     </div>
-  </div>
+
+    <FormFooter
+      label="Recovery"
+      @click.prevent="recovery()"
+    />
+  </FormLayout>
 </template>

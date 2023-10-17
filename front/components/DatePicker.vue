@@ -1126,7 +1126,7 @@ const onRangeEnd = () => {
 }
 
 .dp__theme_light {
-  --dp-background-color: #202428;
+  --dp-background-color: #21262d;
   --dp-text-color: white;
   --dp-hover-color: #1e427e;
   --dp-hover-text-color: white;

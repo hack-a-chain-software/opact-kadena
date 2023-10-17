@@ -2,7 +2,7 @@
 const props = defineProps<{
   title: string;
   message?: string;
-  type: 'info' | 'error';
+  type: 'info' | 'error' | 'success' | 'warning';
 }>()
 
 // const {
@@ -23,7 +23,7 @@ const types = {
     background: 'bg-[#0F326F]'
   },
   success: {
-    icon: 'Info',
+    icon: 'Check',
     background: 'bg-[#1A4633]'
   },
   warning: {
@@ -40,7 +40,7 @@ const types = {
 <template>
   <div
     class="rounded-[8px] px-4 py-3 flex w-[440px]"
-    :class="[types[props.type].background]"
+    :class="types[props.type].background"
   >
     <div class="pr-2">
       <Icon

@@ -51,3 +51,7 @@ export const moneyConfig = {
   min: 0,
   minimumNumberOfCharacters: 0
 }
+
+export const nftAccounts = []
+
+export const tokenAccounts = []
