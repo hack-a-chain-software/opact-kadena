@@ -1,4 +1,3 @@
-b
 <script setup lang="ts">
 import { twMerge } from 'tailwind-merge'
 import { computed } from 'vue'
@@ -38,7 +37,7 @@ const variants: Variants = {
   primary: {
     parent:
       'bg-opact-gradient p-[2px] inline-flex items-center justify-center lg:h-[28px] xl:h-[36px]',
-    children: `bg-dark-blue w-full h-full flex items-center justify-center
+    children: `bg-dark-blue w-full h-full flex items-center justify-center !w-full
         lg:text-[13px]
         lg:leading-[20px]
         lg:font-normal

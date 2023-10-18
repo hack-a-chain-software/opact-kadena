@@ -6,7 +6,7 @@ withDefaults(
     disabled?: boolean;
   }>(),
   {
-    disabled: true,
+    disabled: false,
     text: '',
     icon: ''
   }
@@ -28,7 +28,7 @@ withDefaults(
       lg:pl-[16px] lg:pr-[16px] lg:space-x-[8px] lg:h-[40px]
       relative
       overflow-hidden
-      cursor-not-allowed
+      cursor-pointer
     "
     :class="
       !disabled &&

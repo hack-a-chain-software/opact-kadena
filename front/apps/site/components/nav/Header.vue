@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const redirect = (path = 'https://tickets.opact.io') => {
+  window.open(path, '_blank')
+}
+</script>
+
 <template>
   <header
     class="left-0 top-0 w-full z-[10] pb-10 absolute"
@@ -14,7 +20,9 @@
     >
       <div
         class="
+          mx-auto
           w-full
+          max-w-[1500px]
           px-[16px]
           sm:px-[32px]
           lg:px-[30px]
@@ -34,10 +42,10 @@
         <NavLinks />
 
         <Button
-          disabled
           with-icon
           variant="nav"
-          text="Coming soon"
+          text="Launch App"
+          @click="redirect"
           class="hidden lg:block !h-[36px]"
         />
 
