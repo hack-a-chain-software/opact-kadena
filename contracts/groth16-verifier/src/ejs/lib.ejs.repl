@@ -1,0 +1,117 @@
+(namespace (read-msg 'ns))
+
+(module groth16-<%= n_public - 7 %>x2 GOVERNANCE
+    (defcap GOVERNANCE ()
+        (enforce-keyset "free.opact-admin")
+    )
+
+    (defschema G1Point
+        "Structure representing a G1 point."
+        x: integer
+        y: integer
+    )
+    
+    (defschema G2Point
+        "Structure representing a G2 point."
+        x: [integer]
+        y: [integer]
+    )
+
+    (defschema Verifier
+        "Structure representing the verifier."
+        n_public: integer
+        alfa1: object{G1Point}
+        beta2: object{G2Point}
+        gamma2: object{G2Point}
+        delta2: object{G2Point}
+        ic: [object{G1Point}]
+        snark_scalar_field: integer
+    )
+
+    (defschema Proof
+        "Structure representing a proof."
+        public_values: [integer]
+        a: object{G1Point}
+        b: object{G2Point}
+        c: object{G1Point}
+    )
+
+    (defun verify (proof:object{Proof})
+        (
+            let* 
+            (
+                (input (at 'public_values proof))
+                (enforce (+ (length input) 1) "verifier-bas-input")
+                
+                (verifier_init 
+                    { 
+                        "n_public": <%= n_public %>,
+                        "alfa1": { "x": <%= alfa1.x %>, "y": <%= alfa1.y %> },
+                        "beta2": { "x": [<%= String(beta2.x).replace(","," ") %>], "y": [<%= String(beta2.y).replace(",", " ") %>] },
+                        "gamma2": { "x": [<%= String(gamma2.x).replace(","," ") %>], "y": [<%= String(gamma2.y).replace(",", " ") %>] },
+                        "delta2": { "x": [<%= String(delta2.x).replace(","," ") %>], "y": [<%= String(delta2.y).replace(",", " ") %>] },
+                        "ic": [<% for (let i = 0; i < ic.length; i++) {
+                            if (i == ic.length - 1) { %>
+                                { "x": <%= ic[i].x %>, "y": <%= ic[i].y %> }<% } else { %>
+                                { "x": <%= ic[i].x %>, "y": <%= ic[i].y %> },<% } }
+                            %>
+                        ],
+                        "snark_scalar_field": 21888242871839275222246405745257275088548364400416034343698204186575808495617
+                    }
+                )
+
+                (vk_x { "x": 0, "y": 0 })
+                (ic_0 (at 0 (at 'ic verifier_init)))
+                (vk_x_0 (point-add 'g1 vk_x ic_0))
+                (snark_scalar_field (at 'snark_scalar_field verifier_init))
+
+                <% for (let i = 1; i <= n_public; i++) { %>
+                    (input_<%= i %> (at <%= i - 1 %> input))
+                    (enforce (< input_<%= i %> snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_<%= i %> (at <%= i %> (at 'ic verifier_init)))
+                    (vk_y_<%= i %> (scalar-mult 'g1 ic_<%= i %> input_<%= i %>))
+                    (vk_x_<%= i %> (point-add 'g1 vk_x_<%= i-1 %> vk_y_<%= i %>))
+                <% } %>
+                (a1 (negate (at 'a proof)))
+                (a2 (at 'b proof))
+                (b1 (at 'alfa1 verifier_init))
+                (b2 (at 'beta2 verifier_init))
+                (c1 vk_x_<%= n_public %>)
+                (c2 (at 'gamma2 verifier_init))
+                (d1 (at 'c proof))
+                (d2 (at 'delta2 verifier_init))
+            )
+            (check-pairing a1 a2 b1 b2 c1 c2 d1 d2)
+        )   
+    )
+
+    (defun negate(p:object{G1Point})
+        (
+            let*
+            (
+                (q 21888242871839275222246405745257275088696311157297823662689037894645226208583)
+                (x (at 'x p))
+                (y (at 'y p))
+            )
+            (if (= p {"x": 0, "y": 0})
+                {"x": 0, "y": 0}
+                {"x": x, "y": (- q (mod y q))}
+            )
+        )
+    )
+
+    (defun check-pairing(a1:object{G1Point} a2:object{G2Point} b1:object{G1Point} b2:object{G2Point} c1:object{G1Point} c2:object{G2Point} d1:object{G1Point} d2:object{G2Point})
+        (
+            let*
+            (
+                (p1 [a1 b1 c1 d1])
+                (p2 [a2 b2 c2 d2])
+                (paired (pairing-check p1 p2))
+            )
+            {
+                "paired": paired
+            }
+        )
+    )
+)

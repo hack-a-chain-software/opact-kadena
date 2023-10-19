@@ -1,0 +1,100 @@
+(namespace (read-msg 'ns))
+
+(module poseidon GOVERNANCE
+    (defcap GOVERNANCE ()
+        (enforce-keyset "free.opact-admin")
+    )
+
+    (defun sig(in:integer)
+        (
+            let*
+            (
+                (in2 (mulmod in in))
+                (in4 (mulmod in2 in2))
+            )
+            (mulmod in4 in)
+        )
+    )
+
+    (defun ark(in:integer c:integer)
+        (summod in c)
+    )
+
+    (defun mix(in1:integer in2:integer in3:integer i:integer)
+        (
+            let*
+            (
+                (lc 0)
+            <% for(let j = 0; j < t; j++) { %>
+                (lc (summod lc (mulmod (getMatrix i <%= j %>) in<%= j+1 %>)))
+            <% } %>
+            )
+            lc
+        )
+    )
+
+    (defun mulmod(a:integer b:integer)
+        (mod (* a b) <%= p %>)
+    )
+
+    (defun summod(a:integer b:integer)
+        (mod (+ a b) <%= p %>)
+    )
+
+    (defun c(i:integer)
+        (
+            let*
+            (
+                (c_data [
+                    <% for (let i = 0; i < c.length; i++) {%> <%= c[i] %><% } %>
+                ])
+            )
+            (at i c_data)
+        )
+    )
+
+    (defun getMatrix(i:integer j:integer)
+        (
+            let*
+            (
+                (m_data [
+                    <% for (let i = 0; i < m.length; i++) {%>
+                        [<% for (let j = 0; j < m[i].length; j++) { %> <%= m[i][j] %><% } %>]
+                    <% } %>
+                ])
+            )
+            (at j (at i m_data))
+        )
+    )
+
+    (defun ca(m0:integer m1:integer m2:integer j:integer i:integer)
+        (ark (mix m0 m1 m2 j) (c i))
+    )
+
+    (defun poseidon(inputs:[integer])
+        (
+            let*
+            (
+        <% for (let i = 0; i < (parseInt(nRoundsF) + parseInt(nRoundsP)); i++) {
+    for(let j = 0; j < t; j++) {
+        if (i == 0) {
+            if (j < nInputs) { %>(a<%= j %> (ark (at <%= j %> inputs) (c <%= i %>))) <% 
+            } else { %>(a<%= j %> (ark 0 (c <%= i %>))) <% }
+            } else { %>(a<%= j %> (ca m0 m1 m2 <%=j%> <%= i %>))
+        <% }
+    }
+    if ((i<(parseInt(nRoundsF)/2)) || (i>= (parseInt(nRoundsP) + parseInt(nRoundsF)/2))) {
+        for(let j = 0; j < t; j++) {
+            %>(m<%= j %> (sig a<%= j %>)) <% 
+        }} else { 
+            %>(m0 (sig a0)) <%
+            for(let j = 1; j < t; j++) { 
+                %>(m<%= j %> a<%= j %>) <% }
+        }}
+                (roundIndex = (parseInt(nRoundsF) + (parseInt(nRoundsP) - 1))) %>
+                (out (mix m0 m1 m2 0))
+            )
+            out
+        )
+    )
+)

@@ -1,0 +1,62 @@
+name: Contracts Checks
+
+on:
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install Pact
+        run: |
+          wget https://github.com/hack-a-chain-software/pact/releases/download/v4.7.0-hackachain/pact-4.7.0-hackachain-x86_64.zip
+          sudo apt-get install unzip
+          unzip pact-4.7.0-hackachain-x86_64.zip -d pact
+          chmod +x pact/pact
+          sudo mv pact/pact /usr/local/bin
+
+      - name: Install dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install --no-frozen-lockfile
+
+      # Generate modules
+
+      - name: Run generate-plonk
+        run: pnpm contracts generate-plonk
+
+      - name: Run generate-groth16
+        run: pnpm contracts generate-groth16
+
+      - name: Run generate-poseidon
+        run: pnpm contracts generate-poseidon
+
+      - name: Run generate-merkle
+        run: pnpm contracts generate-merkle
+
+      # Test modules
+
+      # - name: Run test-plonk
+      #   run: pnpm contracts test-plonk
+
+      - name: Run test-groth16
+        run: pnpm contracts test-groth16
+
+      - name: Run test-poseidon
+        run: pnpm contracts test-poseidon
+
+      - name: Run test-merkle
+        run: pnpm contracts test-merkle
+
+      - name: Run test-transact
+        run: pnpm contracts test-transact

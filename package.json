@@ -7,7 +7,8 @@
     "terraform": "pnpm --filter terraform",
     "circuits": "pnpm --filter circuits",
     "postinstall": "npx lefthook install -a",
-    "lint": "eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix"
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path .prettierignore --fix",
+    "contracts": "pnpm --filter contracts"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.5",

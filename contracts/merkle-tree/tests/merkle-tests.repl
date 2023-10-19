@@ -1,0 +1,46 @@
+(define-namespace 'free (sig-keyset) (sig-keyset))
+
+(env-data 
+    { 'ns : "free"
+    , 'name : "merkle"
+    , 'user1 : ["user1-keys"] 
+    })
+(env-keys ["user1-keys"])
+
+(env-gasmodel "table")
+(env-gaslimit 150000)
+(env-gas 0)
+
+(load "../src/lib.repl")
+
+(define-keyset "free.opact-admin" (read-keyset "user1"))
+
+(print {"Total gas (deploy)": (env-gas)})
+(env-gas 0)
+
+(init-admin (read-keyset "user1"))
+(initialize)
+
+(expect "merkle" {"root": 75384953468489046983911671876400248222449372029672832467076510649225676077, "index": 1} (insert-leaf 0))
+
+(print {"Total gas (insert-leaf)": (env-gas)})
+(env-gas 0)
+
+(expect "merkle" {"root": 7100261737961175651894661471628070425717871781918545820690660904436371636492, "index": 2} (insert-leaf 1))
+
+(print {"Total gas (insert-leaf)": (env-gas)})
+(env-gas 0)
+
+(expect "merkle" {"root": 433691966820481170835612732662415018601648678037719227187608695860310427976, "index": 3} (insert-leaf 2))
+
+(print {"Total gas (insert-leaf)": (env-gas)})
+(env-gas 0)
+
+(expect "merkle" {"root": 7098826222200342209188065928557332008815532855779868708346378343137310353829, "index": 4} (insert-leaf 3))
+
+(print {"Total gas (insert-leaf)": (env-gas)})
+(env-gas 0)
+
+(expect "merkle" {"root": 5761155846399808156424816482501372050616463271338541789615967734134838540609, "index": 5} (insert-leaf 4))
+
+(print {"Total gas (insert-leaf)": (env-gas)})
