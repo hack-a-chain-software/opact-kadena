@@ -70,7 +70,7 @@ resource "aws_instance" "chainweb_data" {
 resource "aws_instance" "chainweb_node" {
   ami = "ami-053b0d53c279acc90"
 
-  instance_type = "t2.large"
+  instance_type = "t3.xlarge"
 
   associate_public_ip_address = true
 
@@ -98,7 +98,7 @@ resource "aws_instance" "chainweb_node" {
 
   root_block_device {
     volume_type = "gp2"
-    volume_size = 256
+    volume_size = 420
   }
 
   provisioner "remote-exec" {

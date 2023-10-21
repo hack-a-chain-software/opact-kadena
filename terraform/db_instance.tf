@@ -3,13 +3,13 @@ resource "aws_db_instance" "chainweb_database" {
   identifier        = "chainweb-database"
   engine            = "postgres"
   db_name        = "indexer"
-  engine_version    = "14.6"
+  engine_version    = "14.7"
   instance_class    = "db.t3.medium"
   username          = var.db_username
   password          = var.db_password
   publicly_accessible = true
   skip_final_snapshot = true
-  allocated_storage    = 25
+  allocated_storage    = 120
   storage_type         = "gp2"
   multi_az             = false
 

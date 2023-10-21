@@ -12,6 +12,7 @@ services:
   # ########################################################################## #
   # Database Initialization
   chainweb-initialize-db:
+    restart: "no"
     container_name: chainweb-initialize-db
     image: larsk/rsync
     volumes:

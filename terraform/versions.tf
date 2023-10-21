@@ -16,8 +16,10 @@ terraform {
     region = "us-east-1"
     bucket = "terraform213"
     key = "terraform.tfstate"
-    endpoint = "s3.us-east-1.amazonaws.com"
     skip_region_validation  = true
     skip_credentials_validation = true
+    endpoints = {
+      s3 = "https://s3.us-east-1.amazonaws.com"
+    }
   }
 }

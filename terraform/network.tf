@@ -88,31 +88,23 @@ resource "aws_network_acl" "indexer" {
   vpc_id     = "${aws_vpc.indexer.id}"
   subnet_ids = "${aws_subnet.indexer.*.id}"
 
-  ingress {
-    protocol   = "tcp"
-    rule_no    = 101
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 1789
-    to_port    = 1789
-  }
 
   ingress {
-    protocol   = "tcp"
-    rule_no    = 102
+    protocol   = "-1"
+    rule_no    = 100
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 443
-    to_port    = 443
+    from_port  = 0
+    to_port    = 0
   }
 
-  ingress {
-    protocol   = "tcp"
-    rule_no    = 103
+  egress {
+    protocol   = "-1"
+    rule_no    = 100
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 80
-    to_port    = 80
+    from_port  = 0
+    to_port    = 0
   }
 
   tags = {

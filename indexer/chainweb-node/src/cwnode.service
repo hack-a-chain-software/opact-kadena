@@ -4,7 +4,7 @@ Description=This service starts cwnode
 [Service]
 WorkingDirectory=/home/ubuntu/chainweb-node
 ExecStart=docker compose up -d
-Restart=always
+Restart=no
 
 [Install]
 WantedBy=multi-user.target
