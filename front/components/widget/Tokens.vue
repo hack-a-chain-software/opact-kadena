@@ -215,7 +215,7 @@ const balance = computed(() => {
             :balance="tree.balance"
             v-for="(tree, key) of userData.tokens"
             :key="`${
-              tree.token.id
+              tree?.token?.id
             }-${tree.balance.toString()}`"
           />
         </div>

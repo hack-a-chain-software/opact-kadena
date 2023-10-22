@@ -1,4 +1,5 @@
 import { groupUtxoByToken } from 'opact-sdk'
+import { useStateStorage } from './state-starage'
 
 const userState = () =>
   useState<any>('opact:userstate', () => null)
@@ -17,12 +18,26 @@ export const useAppState = () => {
 
   const { $toaster } = useNuxtApp()
 
-  const computeState = (secret: any): Promise<any> => {
+  const { get, store } = useStateStorage()
+
+  const computeState = (
+    secret: any,
+    currentId: any,
+    storedUtxos: any,
+    storedReceipts: any
+  ): Promise<any> => {
     return new Promise((resolve) => {
-      const worker = new Worker('/data.829565e1.js', {
+      const worker = new Worker('/data.69a0031b.js', {
         type: 'module'
       })
-      worker.postMessage({ input: { secret } })
+      worker.postMessage({
+        input: {
+          secret,
+          currentId,
+          storedUtxos,
+          storedReceipts
+        }
+      })
 
       worker.addEventListener(
         'message',
@@ -47,10 +62,25 @@ export const useAppState = () => {
   const loadAppState = async (secret: any) => {
     isLoading.value = true
 
+    const { currentId, storedUtxos, storedReceipts } =
+      get()
+
+    console.log('currentId', currentId)
+    console.log('storedUtxos', storedUtxos)
+    console.log('storedReceipts', storedReceipts)
+
     const {
-      receipts: loadedReceipts = {},
-      treeBalances = {}
-    } = (await computeState(secret)) || {}
+      lastId,
+      treeBalances = {},
+      receipts: loadedReceipts = {}
+    } = (await computeState(
+      secret,
+      currentId,
+      storedUtxos,
+      storedReceipts
+    )) || {}
+
+    console.log('treeBalances', treeBalances)
 
     const tokens: any = {}
 
@@ -75,6 +105,8 @@ export const useAppState = () => {
       nfts,
       tokens
     }
+
+    store(userData.value, loadedReceipts, lastId)
   }
 
   const updateUserData = (args: any, flag = 1) => {
@@ -121,6 +153,8 @@ export const useAppState = () => {
         title: 'Deposit sent'
       })
 
+      store(userData.value)
+
       return
     }
 
@@ -141,6 +175,8 @@ export const useAppState = () => {
 
     userData.value[tokenType][name] = treeBalance
 
+    store(userData.value)
+
     isLoading.value = false
 
     $toaster.success({
@@ -150,10 +186,13 @@ export const useAppState = () => {
   }
 
   return {
+    // States
     state,
     receipts,
     userData,
     isLoading,
+
+    // Functions
     computeState,
     loadAppState,
     updateUserData,
