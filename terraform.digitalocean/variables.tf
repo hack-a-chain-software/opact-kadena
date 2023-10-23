@@ -23,7 +23,7 @@ variable "project_id" {
 variable "db_sync_server" {
   description = "Kadena chainweb-node host"
   type        = string
-  default     = "us-w1.chainweb.com"
+  default     = "us-e1.chainweb.com"
 }
 
 variable "kadena_network" {

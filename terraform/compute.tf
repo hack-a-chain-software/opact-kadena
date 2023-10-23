@@ -58,7 +58,7 @@ resource "aws_instance" "chainweb_data" {
       "echo \"CWD_DB_PASS=${aws_db_instance.chainweb_database.password}\" | sudo tee -a .env",
       "echo \"CWD_DB_PORT=5432\" | sudo tee -a .env",
       "echo \"CWD_DB_NAME=indexer\" | sudo tee -a .env",
-      "echo \"CWD_NODE=146.190.198.163\" | sudo tee -a .env",
+      "echo \"CWD_NODE=52.205.76.224\" | sudo tee -a .env",
       "sudo setfacl --modify user:ubuntu:rw /var/run/docker.sock",
       "sudo docker compose up chainweb-data -d",
     ]
