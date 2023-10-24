@@ -10,17 +10,23 @@ export const useStateStorage = (
   }
 
   const get = async () => {
-    const utxos = await localforage.getItem(utxosKey) as any
+    const utxos = (await localforage.getItem(
+      utxosKey
+    )) as any
 
-    const storedUtxos = (utxos || []).map(
-      (item: any) => JSON.parse(item)
+    const storedUtxos = (utxos || []).map((item: any) =>
+      JSON.parse(item)
     )
 
-    const current = await localforage.getItem(currentIdKey) as any
+    const current = (await localforage.getItem(
+      currentIdKey
+    )) as any
 
     const currentId = current || 268
 
-    const receipts = await localforage.getItem(receiptsKey) as any
+    const receipts = (await localforage.getItem(
+      receiptsKey
+    )) as any
 
     const storedReceipts = receipts || []
 
