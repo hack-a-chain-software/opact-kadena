@@ -63,7 +63,7 @@ export const useAppState = () => {
     isLoading.value = true
 
     const { currentId, storedUtxos, storedReceipts } =
-      get()
+      await get()
 
     console.log('currentId', currentId)
     console.log('storedUtxos', storedUtxos)

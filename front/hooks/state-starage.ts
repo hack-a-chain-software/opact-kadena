@@ -1,19 +1,28 @@
-import {
-  getData,
-  setData
-} from 'nuxt-storage/local-storage'
+import localforage from 'localforage'
 
 export const useStateStorage = (
   utxosKey = 'opact-wallet:state:cache',
   currentIdKey = 'opact-wallet:state:id:cache',
   receiptsKey = 'opact-wallet:receipts:cache'
 ) => {
-  const get = () => {
-    const storedUtxos = (getData(utxosKey) || []).map(
+  const exists = async (path: string): Promise<boolean> => {
+    return (await localforage.getItem(path)) != null
+  }
+
+  const get = async () => {
+    const utxos = await localforage.getItem(utxosKey) as any
+
+    const storedUtxos = (utxos || []).map(
       (item: any) => JSON.parse(item)
     )
-    const currentId = getData(currentIdKey) || 268
-    const storedReceipts = getData(receiptsKey) || []
+
+    const current = await localforage.getItem(currentIdKey) as any
+
+    const currentId = current || 268
+
+    const receipts = await localforage.getItem(receiptsKey) as any
+
+    const storedReceipts = receipts || []
 
     return {
       storedUtxos,
@@ -56,18 +65,19 @@ export const useStateStorage = (
       })
     )
 
-    setData(utxosKey, map)
-    setData(receiptsKey, receipts)
+    localforage.setItem(utxosKey, map)
+    localforage.setItem(receiptsKey, receipts)
 
     if (currentId) {
-      setData(currentIdKey, currentId)
+      localforage.setItem(currentIdKey, currentId)
     }
   }
 
   const clear = () => {
-    setData(utxosKey, [])
-    setData(receiptsKey, [])
+    localforage.setItem(utxosKey, [])
+    localforage.setItem(receiptsKey, [])
+    localforage.setItem(currentIdKey, 268)
   }
 
-  return { store, clear, get }
+  return { store, clear, get, exists }
 }
