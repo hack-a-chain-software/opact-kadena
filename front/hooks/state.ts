@@ -65,6 +65,10 @@ export const useAppState = () => {
     const { currentId, storedUtxos, storedReceipts } =
       await get()
 
+    console.log('currentId', currentId)
+    console.log('storedUtxos', storedUtxos)
+    console.log('storedReceipts', storedReceipts)
+
     const {
       lastId,
       treeBalances = {},

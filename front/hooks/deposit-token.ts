@@ -25,7 +25,7 @@ export const useDepositToken = (
     showCollapsible: false
   })
 
-  const { updateUserData } = useAppState()
+  const { loadAppState } = useAppState()
 
   const { provider } = useExtensions()
 
@@ -61,11 +61,12 @@ export const useDepositToken = (
         (message: string) => (data.progress = message)
       )
 
-      updateUserData({
-        ...transactionArgs,
-        token: data.token,
-        tokenType: data.tokenType
-      })
+      loadAppState(node.value.pvtkey)
+      // updateUserData({
+      //   ...transactionArgs,
+      //   token: data.token,
+      //   tokenType: data.tokenType
+      // })
       router.push('/home')
     } catch (e) {
       console.warn(e)

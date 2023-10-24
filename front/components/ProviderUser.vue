@@ -60,7 +60,7 @@ withDefaults(
                 '' ||
                 provider?.account?.account?.account ||
                 '',
-              20
+              6
             )
           "
         />
