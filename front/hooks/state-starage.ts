@@ -22,7 +22,7 @@ export const useStateStorage = (
       currentIdKey
     )) as any
 
-    const currentId = current || 268
+    const currentId = current || 725
 
     const receipts = (await localforage.getItem(
       receiptsKey
@@ -82,7 +82,7 @@ export const useStateStorage = (
   const clear = () => {
     localforage.setItem(utxosKey, [])
     localforage.setItem(receiptsKey, [])
-    localforage.setItem(currentIdKey, 268)
+    localforage.setItem(currentIdKey, 725)
   }
 
   return { store, clear, get, exists }
