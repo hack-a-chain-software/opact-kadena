@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { getHDWalletFromMnemonic } from 'opact-sdk'
 import { shortenAddress } from '~/utils/string'
 import { useAuthStorage } from '~/hooks/auth-storage'
+import { useStateStorage } from '~/hooks/state-starage'
 
 export const useWalletStore = defineStore({
   id: 'opact-wallet',
@@ -67,9 +68,12 @@ export const useWalletStore = defineStore({
 
     logout () {
       const { clear } = useAuthStorage()
+      const { clear: clearState } = useStateStorage()
+
       const router = useRouter()
 
       clear(['phrase', 'providers'])
+      clearState()
 
       this.node = null
       this.cache = null
