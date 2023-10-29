@@ -1,9 +1,47 @@
 <script setup lang="ts">
-// import { reactive } from 'vue'
+import { reactive } from 'vue'
+const router = useRouter()
 
-// const data = reactive({
-//   showSettings: false
-// })
+const route = useRoute()
+
+const data = reactive({
+  showSettings: false
+})
+
+const routes = [
+  {
+    disabled: false,
+    path: 'home',
+    label: 'Home',
+    icon: 'wallet'
+  },
+  {
+    disabled: false,
+    path: 'history',
+    label: 'History',
+    icon: 'chart'
+  },
+  {
+    disabled: false,
+    path: 'settings',
+    label: 'Settings',
+    icon: 'iconSettings'
+  }
+]
+
+const redirect = (path: string, skip: boolean) => {
+  if (skip) {
+    return
+  }
+
+  if (path === 'settings') {
+    data.showSettings = true
+
+    return
+  }
+
+  router.push(`/${path}`)
+}
 </script>
 
 <template>
@@ -11,7 +49,7 @@
     class="
       lg:hidden
       py-3
-      z-[999999999]
+      z-[9]
       fixed
       bottom-0
       left-0
@@ -23,46 +61,38 @@
       border-t-[0.5px] border-[#5F6267]
     "
   >
-    <button class="space-y-[4px]">
-      <div>
-        <Icon name="wallet" class="text-blue-400 w-6 h-6" />
-      </div>
-
-      <div>
-        <span class="text-blue-400 text-xxxs font-medium">
-          Home
-        </span>
-      </div>
-    </button>
-
     <button
-      disabled
-      class="space-y-1 opacity-[0.5] cursor-not-allowed"
+      v-for="{
+        label,
+        icon,
+        path,
+        disabled,
+      } in routes"
+      :key="'mobile:'+label"
+      :class="[
+        route.name === path
+          ? 'text-blue-400'
+          : 'text-font-2 hover:bg-gray-800 cursor-pointer',
+        disabled && '!cursor-not-allowed opacity-50',
+      ]"
+      class="space-y-[4px]"
+      @click.prevent="redirect(path, disabled)"
     >
       <div>
-        <Icon name="chart" class="text-font-1 w-6 h-6" />
+        <Icon :name="icon" class="w-6 h-6" />
       </div>
 
       <div>
-        <span class="text-font-1 text-xxxs font-medium">
-          History
-        </span>
+        <span
+          v-text="label"
+          class="text-xxxs font-medium"
+        />
       </div>
     </button>
 
-    <button
-      disabled
-      class="space-y-1 opacity-[0.5] cursor-not-allowed"
-    >
-      <div>
-        <Icon name="Settings" class="text-font-1 w-6 h-6" />
-      </div>
-
-      <div>
-        <span class="text-font-1 text-xxxs font-medium">
-          Settings
-        </span>
-      </div>
-    </button>
+    <Settings
+      :show="data.showSettings"
+      @close="data.showSettings = false"
+    />
   </div>
 </template>
