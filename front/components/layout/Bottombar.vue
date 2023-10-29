@@ -1,77 +1,68 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+// import { reactive } from 'vue'
 
-const data = reactive({
-  showSettings: false
-})
+// const data = reactive({
+//   showSettings: false
+// })
 </script>
 
 <template>
   <div
     class="
       lg:hidden
-      h-[60px]
       py-3
-      px-6
+      z-[999999999]
+      fixed
+      bottom-0
+      left-0
+      right-0
       flex
+      px-[61px]
       justify-between
-      items-center
-      pt-8
+      bg-dark-blue
+      border-t-[0.5px] border-[#5F6267]
     "
   >
-    <div>
-      <Icon name="minilogo" class="w-[30px] h-[30px]" />
-    </div>
+    <button class="space-y-[4px]">
+      <div>
+        <Icon name="wallet" class="text-blue-400 w-6 h-6" />
+      </div>
 
-    <div>
-      <button
-        class="
-          flex
-          items-center
-          justify-center
-          rounded-[30px]
-          px-4
-          py-2.5
-          bg-gray-800
-          space-x-2
-        "
-      >
-        <span class="text-xxxs font-medium text-font-1">
-          KADENA
+      <div>
+        <span class="text-blue-400 text-xxxs font-medium">
+          Home
         </span>
+      </div>
+    </button>
 
-        <div class="mr-[-4px]">
-          <Icon
-            name="chevron"
-            class="w-5 h-5 mb-0.5 text-white"
-          />
-        </div>
-      </button>
-    </div>
+    <button
+      disabled
+      class="space-y-1 opacity-[0.5] cursor-not-allowed"
+    >
+      <div>
+        <Icon name="chart" class="text-font-1 w-6 h-6" />
+      </div>
 
-    <div>
-      <button
-        class="
-          rounded-full
-          bg-gray-800
-          w-9
-          h-9
-          flex
-          items-center
-          justify-center
-        "
-        @click.prevent="data.showSettings = true"
-      >
-        <Icon
-          name="iconSettings"
-          class="w-5 h-5 text-font-1"
-        />
-      </button>
-    </div>
+      <div>
+        <span class="text-font-1 text-xxxs font-medium">
+          History
+        </span>
+      </div>
+    </button>
 
-    <Settings
-      :show="data.showSettings"
-      @close="data.showSettings = false"
-    />
+    <button
+      disabled
+      class="space-y-1 opacity-[0.5] cursor-not-allowed"
+    >
+      <div>
+        <Icon name="Settings" class="text-font-1 w-6 h-6" />
+      </div>
+
+      <div>
+        <span class="text-font-1 text-xxxs font-medium">
+          Settings
+        </span>
+      </div>
+    </button>
   </div>
 </template>

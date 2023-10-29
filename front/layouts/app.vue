@@ -63,6 +63,8 @@ watch(node, (newNode) => {
 
       <LayoutBottombar />
 
+      <LayoutMobileTopbar />
+
       <div
         class="
           px-4
