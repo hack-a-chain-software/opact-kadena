@@ -14,7 +14,7 @@ withDefaults(
 </script>
 
 <template>
-  <div id="footer" class="pt-[165px] lg:pt-[56px]">
+  <div class="mt-auto pb-[32px] lg:pt-[56px]">
     <ButtonInline
       :label="label"
       :disabled="disabled"

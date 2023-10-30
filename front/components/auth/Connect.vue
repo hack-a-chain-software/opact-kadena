@@ -14,8 +14,10 @@ const emits = defineEmits(['changeStep'])
       flex flex-col
       lg:flex-row lg:items-start
       bg-dark-blue
+      max-w-[640px]
+      mx-auto
       pt-[56px]
-      pb-[80px]
+      pb-[32px]
       lg:pt-[0] lg:px-0 lg:max-w-full lg:overflow-x-clip
       h-full
       lg:grid
@@ -37,13 +39,12 @@ const emits = defineEmits(['changeStep'])
     </div>
 
     <div class="lg:hidden">
-      <figure class="">
+      <figure class="flex justify-center items-center">
         <img
           src="/auth-bg.png"
           alt="Hero illustration"
           quality="100"
-          class="w-full 2xl: max-w-[1057px]"
-          sizes=""
+          class="min-w-[608px] max-w-[608px]"
         />
       </figure>
     </div>
@@ -80,7 +81,6 @@ const emits = defineEmits(['changeStep'])
             xl:max-w-[1057px]
             pointer-events-none
           "
-          sizes=""
         />
       </figure>
     </div>
@@ -124,17 +124,18 @@ const emits = defineEmits(['changeStep'])
         <div class="flex flex-col space-y-[16px] pt-[32px]">
           <ButtonInline
             label="Create Wallet"
-            class="lg:hidden"
+            class="lg:hidden h-[44px]"
             @click.prevent="data.show = true"
           />
 
           <ButtonInline
             label="Create Wallet"
-            class="hidden lg:flex"
+            class="hidden lg:flex h-[44px]"
             @click.prevent="emits('changeStep', 'create')"
           />
 
           <ButtonOutline
+            class="h-[44px]"
             label="Recover Wallet"
             @click.prevent="emits('changeStep', 'recovery')"
           />

@@ -58,17 +58,12 @@ const redirect = (path: string, skip: boolean) => {
       px-[61px]
       justify-between
       bg-dark-blue
-      border-t-[0.5px] border-[#5F6267]
+      border-t-[0.5px] border-gray-600
     "
   >
     <button
-      v-for="{
-        label,
-        icon,
-        path,
-        disabled,
-      } in routes"
-      :key="'mobile:'+label"
+      v-for="{ label, icon, path, disabled } in routes"
+      :key="'mobile:' + label"
       :class="[
         route.name === path
           ? 'text-blue-400'

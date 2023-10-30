@@ -11,17 +11,17 @@
       lg:mt-[150px]
       lg:border-2
       lg:border-gray-600
+      mx-auto
       lg:rounded-[12px]
       min-h-screen
       lg:min-h-0
+      h-full
     "
   >
-    <div>
+    <div
+      class="h-full flex flex-col"
+    >
       <slot />
-    </div>
-
-    <div>
-      <slot name="footer" />
     </div>
   </div>
 </template>

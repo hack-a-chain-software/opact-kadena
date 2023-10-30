@@ -21,6 +21,7 @@ const back = () => {
     class="
       w-full
       py-4
+      h-[56px]
       flex
       justify-center
       relative
@@ -28,6 +29,35 @@ const back = () => {
       lg:hidden
     "
   >
+    <div
+      class="
+        absolute
+        top-0
+        left-0
+        w-full
+        flex
+        items-end
+        justify-center
+        h-[138px]
+        overflow-visible
+        z-[0]
+      "
+    >
+      <div
+        class="
+          min-w-[328px]
+          max-w-[328px]
+          max-h-[200px]
+          min-h-[200px]
+          bg-[#7549D1]
+          relative
+          bottom-[108px]
+          rounded-[100%]
+          blur-[100px]
+        "
+      />
+    </div>
+
     <button
       class="
         flex
@@ -37,17 +67,24 @@ const back = () => {
         absolute
         top-4
         left-0
+        z-[2]
       "
       @click.prevent="back()"
     >
       <Icon name="chevronLeft" class="h-6 w-6" />
     </button>
 
-    <div>
+    <div
+      class="relative z-[2]"
+    >
       <h1
         class="text-xs text-font-1 font-medium"
         v-text="title"
       />
+    </div>
+
+    <div class="absolute right-0 top-3 flex justify-center z-[2]">
+      <img src="/mini-logo.svg" class="w-[30px] h-[30px]" />
     </div>
   </div>
 
