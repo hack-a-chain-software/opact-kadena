@@ -18,9 +18,7 @@
       h-full
     "
   >
-    <div
-      class="h-full flex flex-col"
-    >
+    <div class="h-full flex flex-col">
       <slot />
     </div>
   </div>

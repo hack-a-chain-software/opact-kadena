@@ -46,8 +46,7 @@ const back = () => {
       <div
         class="
           min-w-[328px]
-          max-w-[328px]
-          max-h-[200px]
+          max-w-[328px] max-h-[200px]
           min-h-[200px]
           bg-[#7549D1]
           relative
@@ -74,16 +73,23 @@ const back = () => {
       <Icon name="chevronLeft" class="h-6 w-6" />
     </button>
 
-    <div
-      class="relative z-[2]"
-    >
+    <div class="relative z-[2]">
       <h1
         class="text-xs text-font-1 font-medium"
         v-text="title"
       />
     </div>
 
-    <div class="absolute right-0 top-3 flex justify-center z-[2]">
+    <div
+      class="
+        absolute
+        right-0
+        top-3
+        flex
+        justify-center
+        z-[2]
+      "
+    >
       <img src="/mini-logo.svg" class="w-[30px] h-[30px]" />
     </div>
   </div>

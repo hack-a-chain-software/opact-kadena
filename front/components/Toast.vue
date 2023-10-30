@@ -39,7 +39,14 @@ const types = {
 
 <template>
   <div
-    class="rounded-[8px] px-4 py-3 flex w-[300px] lg:w-[440px]"
+    class="
+      rounded-[8px]
+      px-4
+      py-3
+      flex
+      w-[300px]
+      lg:w-[440px]
+    "
     :class="types[props.type].background"
   >
     <div class="pr-2">
