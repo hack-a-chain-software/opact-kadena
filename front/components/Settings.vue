@@ -6,17 +6,13 @@ import {
   TransitionRoot,
   TransitionChild
 } from '@headlessui/vue'
-import { storeToRefs } from 'pinia'
-import { useAppState } from '~/hooks/state'
-import { useWalletStore } from '~/stores/wallet'
+// import { useAppState } from '~/hooks/state'
 
-const { isLoading } = useAppState()
-
-const wallet = useWalletStore()
+// const { isLoading } = useAppState()
 
 const { $toaster } = useNuxtApp()
 
-const { node } = storeToRefs(wallet)
+const { account, logout: logoutAccount } = useOpactWallet()
 
 const copyToClipboard = async (value: string) => {
   try {
@@ -43,8 +39,8 @@ withDefaults(
 const emit = defineEmits(['close'])
 
 const logout = () => {
-  isLoading.value = true
-  wallet.logout()
+  // isLoading.value = true
+  logoutAccount()
 }
 </script>
 
@@ -143,7 +139,7 @@ const logout = () => {
                     group
                   "
                   @click.prevent="
-                    copyToClipboard(node.address)
+                    copyToClipboard(account.address)
                   "
                 >
                   <div
@@ -155,7 +151,7 @@ const logout = () => {
                         break-words
                         group-active:text-blue-400
                       "
-                      v-text="node.address"
+                      v-text="account.address"
                     />
                   </div>
 

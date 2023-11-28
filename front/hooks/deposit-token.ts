@@ -1,8 +1,6 @@
-import { storeToRefs } from 'pinia'
 import { reactive, watch } from 'vue'
 import { tokens } from '~/utils/constants'
 import { useAppState } from '~/hooks/state'
-import { useWalletStore } from '~/stores/wallet'
 import { computeDepositParams } from '~/utils/sdk'
 
 export const useDepositToken = (
@@ -31,9 +29,7 @@ export const useDepositToken = (
 
   const router = useRouter()
 
-  const wallet = useWalletStore()
-
-  const { node } = storeToRefs(wallet)
+  const { account } = useOpactWallet()
 
   const sendDeposit = async () => {
     data.error = ''
@@ -42,7 +38,7 @@ export const useDepositToken = (
     try {
       const transactionArgs = await computeDepositParams({
         receiver: '',
-        wallet: node.value,
+        wallet: account.value,
         amount: Number(data.amount),
         selectedToken: data.token.namespace,
         sender: provider.value.account.account.publicKey,
@@ -50,7 +46,7 @@ export const useDepositToken = (
           type: 'deposit',
           id: data.token.id,
           amount: Number(data.amount),
-          receiver: node.value.pubkey,
+          receiver: account.value.pubkey,
           address: data.token.namespace.refName.name,
           sender: provider.value.account.account.publicKey
         }
@@ -61,12 +57,7 @@ export const useDepositToken = (
         (message: string) => (data.progress = message)
       )
 
-      loadAppState(node.value.pvtkey)
-      // updateUserData({
-      //   ...transactionArgs,
-      //   token: data.token,
-      //   tokenType: data.tokenType
-      // })
+      loadAppState(account.value.pvtkey)
       router.push('/home')
     } catch (e) {
       console.warn(e)
@@ -130,7 +121,7 @@ export const useDepositToken = (
 
   return {
     data,
-    node,
+    node: account,
     router,
     provider,
     checkFunds,

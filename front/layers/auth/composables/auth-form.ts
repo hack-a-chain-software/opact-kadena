@@ -25,7 +25,7 @@ interface UseAuthInterface {
   stepForm: FormType;
 }
 
-export const useAuth = () => {
+export const useAuthForm = () => {
   const data = reactive<UseAuthInterface>({
     mnemonic: '',
     stepForm: 'connect'

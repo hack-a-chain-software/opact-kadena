@@ -1,15 +1,11 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/stores/wallet'
 import { useAppState } from '~/hooks/state'
 
 const { receipts } = useAppState()
 
 const router = useRouter()
 
-const wallet = useWalletStore()
-
-const { node } = storeToRefs(wallet)
+const { account } = useOpactWallet()
 </script>
 
 <template>
@@ -56,7 +52,7 @@ const { node } = storeToRefs(wallet)
           <HistoryWidgetItem
             v-bind="receipt"
             :key="receipt.date"
-            :pubkey="node.pubkey"
+            :pubkey="account.pubkey"
             v-for="receipt in receipts?.slice(0, 5)"
           />
         </div>

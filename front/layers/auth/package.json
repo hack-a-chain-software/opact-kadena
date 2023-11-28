@@ -1,5 +1,5 @@
 {
-  "name": "front-landing-page",
+  "name": "@layer/auth",
   "private": true,
   "scripts": {
     "build": "nuxt build",

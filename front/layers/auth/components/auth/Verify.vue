@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-import { useWalletStore } from '~/stores/wallet'
 
 const emits = defineEmits(['changeStep'])
 
@@ -16,7 +15,7 @@ const props = withDefaults(
 const router = useRouter()
 const route = useRoute()
 
-const wallet = useWalletStore()
+const { connect } = useOpactWallet()
 
 const data = reactive({
   word: ''
@@ -28,7 +27,7 @@ const randomNumber = computed(() => {
   ) as Number
 })
 
-const create = async () => {
+const create = () => {
   const isValid =
     props.mnemonic.split(' ')[
       Number(randomNumber.value) - 1
@@ -38,7 +37,7 @@ const create = async () => {
     return
   }
 
-  await wallet.found(props.mnemonic)
+  connect(props.mnemonic)
 
   router.push((route.query as any).next || '/home')
 }
@@ -100,3 +99,4 @@ const isDisabled = computed(() => {
     />
   </FormLayout>
 </template>
+~/layers/auth/composables/opact-wallet

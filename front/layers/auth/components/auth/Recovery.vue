@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
-import { useWalletStore } from '~/stores/wallet'
 
 const emits = defineEmits(['changeStep'])
 
 const router = useRouter()
 const route = useRoute()
 
-const wallet = useWalletStore()
+const { connect } = useOpactWallet()
 
 const data = reactive({
   phrase: ''
@@ -22,7 +21,7 @@ const splited = computed(() => {
 })
 
 const recovery = async () => {
-  await wallet.found(data.phrase)
+  await connect(data.phrase)
 
   router.push((route.query as any).next || '/home')
 }

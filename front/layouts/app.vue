@@ -1,28 +1,29 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { onBeforeMount } from 'vue'
-import { loadArtifacts } from 'opact-sdk'
+import { loadArtifact } from 'opact-sdk'
 import { useAppState } from '~/hooks/state'
-import { useWalletStore } from '~/stores/wallet'
-
-const wallet = useWalletStore()
 
 const { isLoading, loadAppState } = useAppState()
 
-const { connected, node } = storeToRefs(wallet)
+const { account, connected } = useOpactWallet()
 
 onBeforeMount(() => {
-  loadArtifacts()
-  wallet.reconnect()
+  loadArtifact()
 })
 
-watch(node, (newNode) => {
-  if (!newNode) {
-    return
+watch(
+  account,
+  (newNode) => {
+    if (!newNode) {
+      return
+    }
+
+    loadAppState(newNode.pvtkey)
+  },
+  {
+    immediate: true
   }
-
-  loadAppState(newNode.pvtkey)
-})
+)
 </script>
 
 <template>
@@ -87,3 +88,4 @@ body {
   position: relative;
 }
 </style>
+~/layers/auth/composables/opact-wallet

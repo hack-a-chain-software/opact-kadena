@@ -1,4 +1,3 @@
-import { storeToRefs } from 'pinia'
 import { reactive, computed } from 'vue'
 import {
   formatBigNumberWithDecimals,
@@ -6,7 +5,6 @@ import {
 } from 'opact-sdk'
 import { tokens } from '~/utils/constants'
 import { useAppState } from '~/hooks/state'
-import { useWalletStore } from '~/stores/wallet'
 import { sendPactTransaction } from '~/utils/kadena'
 import {
   computeWihtdrawParams,
@@ -37,9 +35,7 @@ export const useSendToken = () => {
 
   const router = useRouter()
 
-  const wallet = useWalletStore()
-
-  const { node } = storeToRefs(wallet)
+  const { account } = useOpactWallet()
 
   const balance = computed(() => {
     if (!data.token) {
@@ -102,7 +98,7 @@ export const useSendToken = () => {
           receiver: data.addressTo
             .replace('OZK', '')
             .trim(),
-          wallet: node.value,
+          wallet: account.value,
           treeBalance:
             userData.value.tokens[
               data.token.namespace.refName.name
@@ -110,7 +106,7 @@ export const useSendToken = () => {
           receiptsParams: {
             id: 0,
             type: 'transfer',
-            sender: node.value.pubkey,
+            sender: account.value.pubkey,
             amount: Number(data.amount),
             address: data.token.namespace.refName.name,
             receiver: BigInt(
@@ -125,7 +121,7 @@ export const useSendToken = () => {
         params = await computeWihtdrawParams({
           amount: Number(data.amount),
           receiver: data.addressTo,
-          wallet: node.value,
+          wallet: account.value,
           treeBalance:
             userData.value.tokens[
               data.token.namespace.refName.name
@@ -134,7 +130,7 @@ export const useSendToken = () => {
             id: 0,
             type: 'withdraw',
             receiver: data.addressTo,
-            sender: node.value.pubkey,
+            sender: account.value.pubkey,
             amount: Number(data.amount),
             address: data.token.namespace.refName.name
           },
@@ -160,7 +156,7 @@ export const useSendToken = () => {
         )
       }
 
-      loadAppState(node.value.pvtkey)
+      loadAppState(account.value.pvtkey)
       // updateUserData(
       //   {
       //     ...params,
@@ -181,7 +177,7 @@ export const useSendToken = () => {
 
   return {
     data,
-    node,
+    node: account,
     router,
     balance,
     provider,

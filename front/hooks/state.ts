@@ -1,4 +1,3 @@
-import { groupUtxoByToken } from 'opact-sdk'
 import { useStateStorage } from './state-starage'
 
 const userState = () =>
@@ -52,18 +51,15 @@ export const useAppState = () => {
     })
   }
 
-  const computeUserData = (state: any, secret: any) =>
-    groupUtxoByToken(
-      state.decryptedData,
-      state.nullifiers,
-      secret
-    )
-
   const loadAppState = async (secret: any) => {
     isLoading.value = true
 
     const { currentId, storedUtxos, storedReceipts } =
       await get()
+
+    console.log('currentId', currentId)
+    console.log('storedUtxos', storedUtxos)
+    console.log('storedReceipts', storedReceipts)
 
     const {
       lastId,
@@ -191,7 +187,6 @@ export const useAppState = () => {
     // Functions
     computeState,
     loadAppState,
-    updateUserData,
-    computeUserData
+    updateUserData
   }
 }

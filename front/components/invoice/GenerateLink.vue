@@ -8,11 +8,9 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 
-import { useWalletStore } from '~/stores/wallet'
-
-const wallet = useWalletStore()
-
 const { $toaster } = useNuxtApp()
+
+const { account } = useOpactWallet()
 
 const props = withDefaults(
   defineProps<{
@@ -44,7 +42,7 @@ const copyToClipboard = async (text: string) => {
 }
 
 const params = computed(() => {
-  return `token=${props.token}&amount=${props.amount}&pubkey=${wallet.node.address}`
+  return `token=${props.token}&amount=${props.amount}&pubkey=${account.value.address}`
 })
 
 const emit = defineEmits(['close', 'connected'])
@@ -209,26 +207,6 @@ const close = () => {
                     <Icon name="copy" class="w-6 h-6" />
                   </div>
                 </button>
-
-                <!-- <div class="pt-6">
-                  <button
-                    class="
-                      w-full
-                      flex
-                      items-center
-                      justify-center
-                      h-[44px]
-                      py-3
-                      px-4
-                      rounded-[12px]
-                      relative
-                      disabled:cursor-not-allowed
-                      bg-blue-gradient
-                    "
-                  >
-                    <span class="text-font-1"> Share </span>
-                  </button>
-                </div> -->
               </div>
             </DialogPanel>
           </TransitionChild>

@@ -7,9 +7,7 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 
-import { useWalletStore } from '~/stores/wallet'
-
-const wallet = useWalletStore()
+const { account } = useOpactWallet()
 
 withDefaults(
   defineProps<{
@@ -29,7 +27,7 @@ const router = useRouter()
 const emit = defineEmits(['close', 'redirect'])
 
 const params = computed(() => {
-  return `pubkey=${wallet.node.address}`
+  return `pubkey=${account.value.address}`
 })
 
 const baseUrl =

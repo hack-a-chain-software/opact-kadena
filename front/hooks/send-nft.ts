@@ -1,7 +1,5 @@
 import { reactive } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useAppState } from '~/hooks/state'
-import { useWalletStore } from '~/stores/wallet'
 import { sendPactTransaction } from '~/utils/kadena'
 import {
   computeWihtdrawParamsForNFT,
@@ -31,9 +29,7 @@ export const useSendNFT = () => {
 
   const router = useRouter()
 
-  const wallet = useWalletStore()
-
-  const { node } = storeToRefs(wallet)
+  const { account } = useOpactWallet()
 
   const isInternalTransfer = computed(() => {
     if (data.addressTo.includes('OZK')) {
@@ -72,7 +68,7 @@ export const useSendNFT = () => {
           receiver: data.addressTo
             .replace('OZK', '')
             .trim(),
-          wallet: node.value,
+          wallet: account.value,
           treeBalance:
             userData.value.nfts[
               data.token.namespace.refName.name
@@ -80,7 +76,7 @@ export const useSendNFT = () => {
           receiptsParams: {
             id: data.token.id,
             type: 'transfer',
-            sender: node.value.pubkey,
+            sender: account.value.pubkey,
             amount: Number(data.amount),
             address: data.token.namespace.refName.name,
             receiver: BigInt(
@@ -95,7 +91,7 @@ export const useSendNFT = () => {
         params = await computeWihtdrawParamsForNFT({
           amount: Number(data.amount),
           receiver: data.addressTo,
-          wallet: node.value,
+          wallet: account.value,
           treeBalance:
             userData.value.nfts[
               data.token.namespace.refName.name
@@ -104,7 +100,7 @@ export const useSendNFT = () => {
             type: 'withdraw',
             id: data.token.id,
             receiver: data.addressTo,
-            sender: node.value.pubkey,
+            sender: account.value.pubkey,
             amount: Number(data.amount),
             address: data.token.namespace.refName.name
           },
@@ -127,15 +123,7 @@ export const useSendNFT = () => {
         )
       }
 
-      loadAppState(node.value.pvtkey)
-      // updateUserData(
-      //   {
-      //     ...params,
-      //     token: data.token,
-      //     tokenType: 'nfts'
-      //   },
-      //   -1
-      // )
+      loadAppState(account.value.pvtkey)
       router.push('/home')
     } catch (e) {
       console.warn(e)
@@ -148,7 +136,7 @@ export const useSendNFT = () => {
 
   return {
     data,
-    node,
+    node: account,
     router,
     provider,
     isDisabled,

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useAuth } from '~/hooks/auth'
 useHead({
   title: 'Auth'
 })
 
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  middleware: 'guest'
 })
 
-const { data, form } = useAuth()
+const { data, form } = useAuthForm()
 </script>
 
 <template>
