@@ -12,7 +12,7 @@ withDefaults(
 </script>
 
 <template>
-  <div class="pt-[18px] lg:pt-[32px]">
+  <div>
     <div class="flex justify-between pb-4">
       <span
         v-text="label"
@@ -25,13 +25,13 @@ withDefaults(
         p-4
         flex
         w-full
+        h-[72px]
         rounded-[8px]
         items-center
         bg-gray-800
-        space-x-2
+        space-x-4
         border border-transparent
       "
-      :class="provider && '!border-blue-400'"
     >
       <div
         class="
@@ -43,25 +43,21 @@ withDefaults(
           justify-center
           bg-dark-blue
           rounded-[8px]
+          shrink-0
         "
       >
-        <Icon
-          :name="provider?.metadata?.icon"
-          class="w-6 h-6"
+        <img
+          :src="provider?.metadata?.icon"
+          class="w-10 h-10"
         />
       </div>
 
-      <div class="flex-grow break-words overflow-hidden">
+      <div class="flex-grow break-words overflow-hidden overflow-ellipsis">
         <span
-          class="text-sm font-medium text-font-1"
+          class="text-sm font-medium text-font-1 line-clamp-1"
           v-text="
-            shortenAddress(
               provider?.account?.address ||
-                '' ||
-                provider?.account?.account?.account ||
-                '',
-              6
-            )
+                provider?.account?.account?.account
           "
         />
       </div>

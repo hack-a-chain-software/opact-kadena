@@ -5,16 +5,24 @@ import { moneyConfig } from '~/utils/constants'
 const props = withDefaults(
   defineProps<{
     token?: any;
+    label?: string;
+    placeholder?: string
+    readonly?:boolean;
+    hideBalance?: boolean;
     withLabel?: boolean;
     disabled?: boolean;
     balance?: number | string;
     modelValue: string | number;
   }>(),
   {
+    label: 'Enter or select amount',
+    placeholder: 'ex: 12.0',
     balance: 0,
     token: null,
+    readonly: false,
     disabled: false,
-    withLabel: true
+    withLabel: true,
+    hideBalance: false
   }
 )
 
@@ -29,25 +37,24 @@ const emits = defineEmits(['update:modelValue'])
           class="text-font-1 text-xs font-medium"
           :class="
             props.disabled &&
-            'opacity-60 cursor-not-allowed'
+              'opacity-60 cursor-not-allowed'
           "
         >
-          Enter or select amount
+          {{ label }}
         </h2>
       </div>
 
       <div class="flex justify-between items-center">
         <Money3Component
           :max="balance"
+          :placeholder="placeholder"
+          :readonly="readonly"
           :disabled="props.disabled"
-          :modelValue="props.modelValue"
-          @update:modelValue="
-            emits('update:modelValue', $event)
-          "
+          :model-value="props.modelValue"
           v-bind="moneyConfig"
           :class="
             Number(props.modelValue) <= 0 &&
-            'text-[#C6454B]/80'
+              'text-[#C6454B]/80'
           "
           class="
             h-[39px]
@@ -63,13 +70,16 @@ const emits = defineEmits(['update:modelValue'])
             focus:ring-0
             disabled:opacity-60 disabled:cursor-not-allowed
           "
+          @update:modelValue="
+            emits('update:modelValue', $event)
+          "
         />
       </div>
     </div>
 
     <button
+      v-if="!props.disabled && props.balance && !hideBalance"
       :key="props.balance"
-      v-if="!props.disabled && props.balance"
       @click.prevent="
         emits('update:modelValue', props.balance)
       "
@@ -89,9 +99,9 @@ const emits = defineEmits(['update:modelValue'])
       />
     </button>
 
-    <TokenAmounts
+    <!-- <TokenAmounts
       :disabled="props.disabled"
       @selected="emits('update:modelValue', $event)"
-    />
+    /> -->
   </div>
 </template>

@@ -26,7 +26,7 @@ export const useAppState = () => {
     storedReceipts: any
   ): Promise<any> => {
     return new Promise((resolve) => {
-      const worker = new Worker('/data.69a0031b.js', {
+      const worker = new Worker('/data.cbfe9e29.js', {
         type: 'module'
       })
       worker.postMessage({

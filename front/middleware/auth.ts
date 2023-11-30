@@ -3,8 +3,6 @@ export default defineNuxtRouteMiddleware((to) => {
 
   const { account } = useOpactWallet()
 
-  console.log('account.value', account.value)
-
   const { provider, logout } = useExtensions()
 
   if (provider.value) {

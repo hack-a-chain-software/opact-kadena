@@ -42,8 +42,6 @@ watch(
 
 <template>
   <div
-    v-show="!disabled"
-    v-motion-slide-visible-top
     class="mt-full lg:mt-[32px]"
   >
     <div
@@ -75,6 +73,7 @@ watch(
               w-4
               h-4
               container
+              text-white
               transition-all
               duration-500
             "

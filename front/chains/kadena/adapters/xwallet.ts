@@ -13,9 +13,9 @@ const RPC =
     : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 const metadata = {
-  name: 'eckoWALLET',
+  name: 'Ecko Wallet',
   key: 'provider:kda:adapter:xwallet',
-  icon: 'ecko',
+  icon: '/ecko.png',
   disabled: false,
   networkId: 'testnet04',
   network: RPC

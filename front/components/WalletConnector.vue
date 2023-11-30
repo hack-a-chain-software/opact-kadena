@@ -6,7 +6,6 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
-import { reactive } from 'vue'
 import { chains } from '~/chains'
 
 withDefaults(
@@ -17,10 +16,6 @@ withDefaults(
     show: false
   }
 )
-
-const data = reactive({
-  show: false
-})
 
 const emit = defineEmits(['close', 'connected'])
 
@@ -34,7 +29,7 @@ const close = () => {
     <Dialog
       as="div"
       class="relative z-10"
-      @close="data.show = false"
+      @close="close()"
     >
       <TransitionChild
         as="template"
@@ -76,9 +71,9 @@ const close = () => {
                 w-full
                 rounded-[12px]
                 lg:max-w-[500px]
-                space-y-4
-                bg-gray-800
-                lg:p-6 lg:border-[2px] lg:border-gray-600
+                space-y-6
+              bg-gray-800
+                lg:p-6 lg:pt-4 lg:border-[1px] lg:border-gray-600
               "
             >
               <div
@@ -102,9 +97,9 @@ const close = () => {
 
                 <DialogTitle
                   as="h3"
-                  class="text-font-1 text-xs"
+                  class="text-font-1 text-sm font-[500]"
                 >
-                  Deposit
+                  Select Wallet
                 </DialogTitle>
               </div>
 
@@ -119,26 +114,24 @@ const close = () => {
                   mx-[-24px]
                   px-[24px]
                   pb-4
-                  border-b-[2px] border-gray-600
+                  border-b-[1px] border-gray-600
                 "
               >
                 <DialogTitle
                   as="h3"
                   class="text-font-1 text-sm"
                 >
-                  Connect your Wallet
+                  Select Wallet
                 </DialogTitle>
 
                 <button
-                  @click.prevent="close()"
                   class="w-8 h-8"
+                  @click.prevent="close()"
                 >
                   <Icon
                     name="close"
                     class="
                       rotate-90
-                      w-4
-                      h-4
                       text-blue-400
                       lg:w-6 lg:h-6
                     "
@@ -146,31 +139,8 @@ const close = () => {
                 </button>
               </div>
 
-              <template v-if="!data.show">
-                <div class="relative">
-                  <span
-                    class="
-                      text-xxs
-                      font-regular
-                      lg:text-font-1 lg:text-sm
-                      text-font-2
-                    "
-                  >
-                    Deposits are made through your external
-                    wallet. Connect your wallet to deposit.
-                  </span>
-                </div>
-
-                <div>
-                  <ButtonInline
-                    label="Connect Wallet"
-                    @click.prevent="data.show = true"
-                  />
-                </div>
-              </template>
-
-              <div v-else class="w-full max-w-md">
-                <ul class="w-full space-y-[14px] gap-3">
+              <div class="w-full">
+                <ul class="w-full space-y-6 gap-3">
                   <TabItem
                     v-for="provider in chains[0].providers"
                     :key="provider.id"

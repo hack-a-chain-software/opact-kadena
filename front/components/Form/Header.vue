@@ -4,10 +4,11 @@ const emits = defineEmits(['changeStep'])
 withDefaults(
   defineProps<{
     title?: string;
-    subtitle: string;
+    subtitle?: string;
   }>(),
   {
-    title: ''
+    title: '',
+    subtitle: ''
   }
 )
 

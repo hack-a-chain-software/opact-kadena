@@ -44,14 +44,18 @@ export const moneyConfig = {
   precision: 1,
   masked: false,
   shouldRound: true,
-  allowBlank: false,
+  allowBlank: true,
   focusOnRight: false,
   disableNegative: true,
 
-  min: 0,
   minimumNumberOfCharacters: 0
 }
 
 export const nftAccounts = []
 
 export const tokenAccounts = []
+
+export const baseUrl =
+process.env.NODE_ENV === 'development'
+  ? 'localhost:3000'
+  : window.location.origin

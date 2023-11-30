@@ -70,5 +70,5 @@ export default defineNuxtPlugin(() => {
     provide: {
       toaster
     }
-  }
+  } as any
 })

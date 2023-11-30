@@ -1,21 +1,25 @@
 <script lang="ts" setup>
+import { reactive } from 'vue'
+
 withDefaults(
   defineProps<{
-    token: any;
-    show?: boolean;
+    token?: any;
   }>(),
   {
-    token: null,
-    show: false
+    token: null
   }
 )
 
-const emit = defineEmits(['selected', 'close', 'open'])
+const data = reactive({
+  show: false
+})
+
+const emit = defineEmits(['selected'])
 </script>
 
 <template>
   <div>
-    <div class="pt-8">
+    <div>
       <div class="flex justify-between pb-4">
         <span class="text-xs font-medium text-font-1">
           Select Token
@@ -27,17 +31,18 @@ const emit = defineEmits(['selected', 'close', 'open'])
           p-4
           flex
           w-full
+          min-h-[64px]
           rounded-[8px]
           justify-between
           items-center
           bg-gray-800
           hover:opacity-90
           disabled:opacity-60
+          box-border
           border border-transparent
           disabled:cursor-not-allowed
         "
-        :class="token && '!border-blue-400'"
-        @click.prevent="emit('open')"
+        @click.prevent="data.show = !data.show"
       >
         <div v-if="!token">
           <span class="text-font-2 text-xs font-medium">
@@ -57,15 +62,15 @@ const emit = defineEmits(['selected', 'close', 'open'])
         <div>
           <Icon
             name="chevron"
-            class="w-5 h-5 rotate-[-90deg]"
+            class="w-5 h-5 rotate-[-90deg] text-font-1"
           />
         </div>
       </button>
     </div>
 
     <ModalTokens
-      :show="show"
-      @close="emit('close', $event)"
+      :show="data.show"
+      @close="data.show = false"
       @selected="emit('selected', $event)"
     />
   </div>

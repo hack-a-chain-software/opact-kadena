@@ -24,8 +24,8 @@ const loginCallback = () => {
   <button
     :disabled="props.disabled"
     :class="[
-      'h-[52px] w-full text-white text-left rounded-[8px] bg-gray-700',
-      'flex justify-between items-center space-x-[4px] cursor-default px-4',
+      'h-[72px] w-full text-white text-left rounded-[8px] bg-gray-700',
+      'flex justify-between items-center space-x-3 cursor-default p-4',
       !account && 'hover:opacity-[0.8] !cursor-pointer ',
       account && 'border border-blue-300',
     ]"
@@ -33,19 +33,19 @@ const loginCallback = () => {
       extension.login(props.provider, loginCallback)
     "
   >
-    <div class="flex items-center gap-2">
-      <Icon :name="props.icon" class="w-9 h-9" />
+    <div class="flex items-center gap-3">
+      <img :src="props.icon" class="w-8 h-8" />
 
       <span
         v-text="props.name"
-        class="text-xs font-regular text-font-1"
+        class="text-sm font-[500] font-regular text-font-1"
       />
     </div>
 
     <button
       v-if="account"
       class="text-xxxs text-blue-300"
-      @click.prevent="extension.logout()"
+      @click.prevent.stop="extension.logout()"
     >
       <span> Connected </span>
     </button>

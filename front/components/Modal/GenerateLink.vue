@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import {
   TransitionRoot,
   TransitionChild,
@@ -8,53 +7,23 @@ import {
   DialogTitle
 } from '@headlessui/vue'
 
-const { $toaster } = useNuxtApp()
-
-const { account } = useOpactWallet()
-
-const props = withDefaults(
+withDefaults(
   defineProps<{
     show: boolean;
-    token: number | string;
-    amount: number | string;
+    link: string
   }>(),
   {
+    link: '',
     show: false
   }
 )
 
-const baseUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'localhost:3000'
-    : window.location.origin
-
-const copyToClipboard = async (text: string) => {
-  try {
-    await navigator.clipboard.writeText(text)
-
-    $toaster.info({
-      type: 'info',
-      title: 'Link Copied'
-    })
-  } catch (e) {
-    console.warn(e)
-  }
-}
-
-const params = computed(() => {
-  return `token=${props.token}&amount=${props.amount}&pubkey=${account.value.address}`
-})
-
-const emit = defineEmits(['close', 'connected'])
-
-const close = () => {
-  emit('close')
-}
+const emit = defineEmits(['close', 'done'])
 </script>
 
 <template>
   <TransitionRoot as="template" :show="show">
-    <Dialog as="div" class="relative z-10" @close="close()">
+    <Dialog as="div" class="relative z-10" @close="emit('close')">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -76,7 +45,6 @@ const close = () => {
             min-h-full
             items-end
             justify-center
-            p-4
             lg:justify-center lg:items-start lg:pt-[312px]
           "
         >
@@ -91,13 +59,12 @@ const close = () => {
           >
             <DialogPanel
               class="
-                p-4
                 w-full
                 rounded-[12px]
                 lg:max-w-[500px]
-                space-y-4
+                space-y-6
                 bg-gray-800
-                lg:p-6 lg:border-[2px] lg:border-gray-600
+                p-6 pt-4 lg:border-[1px] lg:border-gray-600
               "
             >
               <div
@@ -113,7 +80,7 @@ const close = () => {
                   as="h3"
                   class="text-font-1 text-xs"
                 >
-                  Receive
+                  Shareable link
                 </DialogTitle>
               </div>
 
@@ -128,23 +95,22 @@ const close = () => {
                   mx-[-24px]
                   px-[24px]
                   pb-4
-                  border-b-[2px] border-gray-600
+                  border-b-[1px] border-gray-600
                 "
               >
                 <DialogTitle
                   as="h3"
                   class="text-font-1 text-sm"
                 >
-                  Receive Payment
+                  Shareable link
                 </DialogTitle>
 
                 <button
                   @click.prevent="emit('close')"
-                  class="w-8 h-8"
                 >
                   <Icon
                     name="close"
-                    class="rotate-90 w-4 h-4 text-blue-400"
+                    class="rotate-90 w-6 h-6 text-blue-400"
                   />
                 </button>
               </div>
@@ -153,7 +119,9 @@ const close = () => {
                 <span
                   class="
                     lg:text-sm
-                    text-font-2
+                    text-font-1
+                    font-[500]
+                    leading-[25.2px]
                     lg:text-font-1
                     text-xxs
                   "
@@ -162,7 +130,7 @@ const close = () => {
                 </span>
               </div>
 
-              <div class="pt-2">
+              <div>
                 <button
                   class="
                     p-4
@@ -175,11 +143,7 @@ const close = () => {
                     w-full
                     group
                   "
-                  @click.prevent="
-                    copyToClipboard(
-                      `${baseUrl}/invoice?${params}`
-                    )
-                  "
+                  @click.prevent="copyToClipboard(link)"
                 >
                   <div
                     class="w-[calc(100%-40px)] text-left"
@@ -190,9 +154,7 @@ const close = () => {
                         break-words
                         group-active:text-blue-400
                       "
-                      v-text="
-                        `${baseUrl}/invoice?${params}`
-                      "
+                      v-text="link"
                     />
                   </div>
 
@@ -208,6 +170,11 @@ const close = () => {
                   </div>
                 </button>
               </div>
+
+              <ButtonInline
+                label="Done"
+                @click.prevent="emit('done')"
+              />
             </DialogPanel>
           </TransitionChild>
         </div>
