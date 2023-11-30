@@ -8,7 +8,11 @@ if (process.env.NODE_ENV !== 'development') {
 
 export default defineNuxtConfig({
   ssr,
-  extends: ['./layers/site', './layers/auth', './layers/receive'],
+  extends: [
+    './layers/site',
+    './layers/auth',
+    './layers/receive'
+  ],
   modules: [
     'nuxt-icon',
     '@pinia/nuxt',

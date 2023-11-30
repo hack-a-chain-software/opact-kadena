@@ -23,7 +23,7 @@ const emit = defineEmits(['selected'])
 
 withDefaults(
   defineProps<{
-    selected: any
+    selected: any;
   }>(),
   {
     selected: null
@@ -32,10 +32,22 @@ withDefaults(
 </script>
 
 <template>
-  <div class="flex flex-col items-start justify-start space-y-4">
+  <div
+    class="
+      flex flex-col
+      items-start
+      justify-start
+      space-y-4
+    "
+  >
     <div>
       <span
-        class="text-xs font-[400] leading-[22.4px] text-font-1"
+        class="
+          text-xs
+          font-[400]
+          leading-[22.4px]
+          text-font-1
+        "
       >
         Select your receiving method:
       </span>
@@ -55,15 +67,40 @@ withDefaults(
             :value="txType.value"
           >
             <div
-              :class="[checked ? ' !border-blue-400' : 'opacity-50']"
-              class="relative w-full flex cursor-pointer rounded-lg p-4 focus:outline-none bg-gray-800 border border-transparent"
+              :class="[
+                checked
+                  ? ' !border-blue-400'
+                  : 'opacity-50',
+              ]"
+              class="
+                relative
+                w-full
+                flex
+                cursor-pointer
+                rounded-lg
+                p-4
+                focus:outline-none
+                bg-gray-800
+                border border-transparent
+              "
             >
-              <div class="flex w-full items-center justify-between">
+              <div
+                class="
+                  flex
+                  w-full
+                  items-center
+                  justify-between
+                "
+              >
                 <div class="flex items-center">
                   <div class="flex flex-col space-y-2">
                     <RadioGroupLabel
                       as="p"
-                      class="text-font-1 text-sm font-[500] leading-[25.2px]"
+                      class="
+                        text-font-1 text-sm
+                        font-[500]
+                        leading-[25.2px]
+                      "
                     >
                       {{ txType.title }}
                     </RadioGroupLabel>

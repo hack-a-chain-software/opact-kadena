@@ -34,7 +34,9 @@ export const useReceiveForm = (
 
   const { account } = useOpactWallet()
 
-  const isPrivate = computed(() => data.receiveType === 'internal')
+  const isPrivate = computed(
+    () => data.receiveType === 'internal'
+  )
 
   const updateTokenValue = (newValue: any) => {
     data.token = newValue
@@ -67,13 +69,11 @@ export const useReceiveForm = (
   })
 
   const isDisabled = computed(() => {
-    const {
-      token,
-      amount,
-      receiveType
-    } = data
+    const { token, amount, receiveType } = data
 
-    return !amount || !receiveType || !token || amount === '0.0'
+    return (
+      !amount || !receiveType || !token || amount === '0.0'
+    )
   })
 
   const deposit = async () => {
@@ -81,7 +81,10 @@ export const useReceiveForm = (
 
     const wallet = account.value
 
-    const integerAmount = formatInteger(Number(data.amount), 12)
+    const integerAmount = formatInteger(
+      Number(data.amount),
+      12
+    )
 
     const batch = await getDepositSoluctionBatch({
       senderWallet: wallet,
@@ -89,19 +92,17 @@ export const useReceiveForm = (
       selectedToken: kadenaBaseTokens[0]
     })
 
-    const {
-      delta,
-      utxosIn,
-      utxosOut
-    } = batch
+    const { delta, utxosIn, utxosOut } = batch
 
-    const encryptedReceipts = getEncryptedReceiptsOfTransaction({
-      type: 'deposit',
-      amount: integerAmount,
-      selectedToken: data.token,
-      receiverAddress: wallet.address,
-      senderAddress: provider.value.account.account.publicKey
-    })
+    const encryptedReceipts =
+      getEncryptedReceiptsOfTransaction({
+        type: 'deposit',
+        amount: integerAmount,
+        selectedToken: data.token,
+        receiverAddress: wallet.address,
+        senderAddress:
+          provider.value.account.account.publicKey
+      })
 
     const encryptedUtxos = getEncryptedUtxosOfTransaction({
       batch,
@@ -123,7 +124,8 @@ export const useReceiveForm = (
 
     const service = new MerkleTreeService({
       chainId: 0,
-      dbUrl: 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/commitments',
+      dbUrl:
+        'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/commitments',
       instanceName: 'commitments-tree'
     })
 
@@ -137,7 +139,9 @@ export const useReceiveForm = (
     const {
       subtreeRoot,
       newIns: updatedUtxosInWithSubtreeValues
-    } = await service.computeSubTreeValues(updatedUtxosInWithTreeValues)
+    } = await service.computeSubTreeValues(
+      updatedUtxosInWithTreeValues
+    )
 
     const { inputs } = await computeInputs({
       delta,
@@ -152,14 +156,12 @@ export const useReceiveForm = (
       }
     })
 
-    const {
-      proof,
-      publicSignals
-    } = await groth16.fullProve(
-      inputs,
-      '/transaction.wasm',
-      '/transaction_0001.zkey'
-    )
+    const { proof, publicSignals } =
+      await groth16.fullProve(
+        inputs,
+        '/transaction.wasm',
+        '/transaction_0001.zkey'
+      )
 
     const publicArgs = getPublicArgs(proof, publicSignals)
 
@@ -174,7 +176,9 @@ export const useReceiveForm = (
 
     const txRes = await provider.value.transaction(
       txArgs,
-      (message: string) => { console.log('message', message) }
+      (message: string) => {
+        console.log('message', message)
+      }
     )
 
     data.loading = false

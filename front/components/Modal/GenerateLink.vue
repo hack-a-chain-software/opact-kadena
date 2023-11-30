@@ -10,7 +10,7 @@ import {
 withDefaults(
   defineProps<{
     show: boolean;
-    link: string
+    link: string;
   }>(),
   {
     link: '',
@@ -23,7 +23,11 @@ const emit = defineEmits(['close', 'done'])
 
 <template>
   <TransitionRoot as="template" :show="show">
-    <Dialog as="div" class="relative z-10" @close="emit('close')">
+    <Dialog
+      as="div"
+      class="relative z-10"
+      @close="emit('close')"
+    >
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -64,7 +68,9 @@ const emit = defineEmits(['close', 'done'])
                 lg:max-w-[500px]
                 space-y-6
                 bg-gray-800
-                p-6 pt-4 lg:border-[1px] lg:border-gray-600
+                p-6
+                pt-4
+                lg:border-[1px] lg:border-gray-600
               "
             >
               <div
@@ -105,9 +111,7 @@ const emit = defineEmits(['close', 'done'])
                   Shareable link
                 </DialogTitle>
 
-                <button
-                  @click.prevent="emit('close')"
-                >
+                <button @click.prevent="emit('close')">
                   <Icon
                     name="close"
                     class="rotate-90 w-6 h-6 text-blue-400"

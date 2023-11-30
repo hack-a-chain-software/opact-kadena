@@ -6,8 +6,8 @@ const props = withDefaults(
   defineProps<{
     token?: any;
     label?: string;
-    placeholder?: string
-    readonly?:boolean;
+    placeholder?: string;
+    readonly?: boolean;
     hideBalance?: boolean;
     withLabel?: boolean;
     disabled?: boolean;
@@ -37,7 +37,7 @@ const emits = defineEmits(['update:modelValue'])
           class="text-font-1 text-xs font-medium"
           :class="
             props.disabled &&
-              'opacity-60 cursor-not-allowed'
+            'opacity-60 cursor-not-allowed'
           "
         >
           {{ label }}
@@ -54,7 +54,7 @@ const emits = defineEmits(['update:modelValue'])
           v-bind="moneyConfig"
           :class="
             Number(props.modelValue) <= 0 &&
-              'text-[#C6454B]/80'
+            'text-[#C6454B]/80'
           "
           class="
             h-[39px]
@@ -78,7 +78,9 @@ const emits = defineEmits(['update:modelValue'])
     </div>
 
     <button
-      v-if="!props.disabled && props.balance && !hideBalance"
+      v-if="
+        !props.disabled && props.balance && !hideBalance
+      "
       :key="props.balance"
       @click.prevent="
         emits('update:modelValue', props.balance)

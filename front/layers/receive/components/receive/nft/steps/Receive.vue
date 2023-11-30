@@ -1,14 +1,12 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    data: any,
-    link: string,
-    isPrivate: boolean,
-    isDisabled: boolean,
+    data: any;
+    link: string;
+    isPrivate: boolean;
+    isDisabled: boolean;
   }>(),
-  {
-
-  }
+  {}
 )
 
 const emit = defineEmits([
@@ -25,18 +23,14 @@ const { account } = useOpactWallet()
 
 <template>
   <CardBody>
-    <CardHeader
-      title="Enter receiving data"
-    />
+    <CardHeader title="Enter receiving data" />
 
     <ReceiveType
       :selected="data.receiveType"
       @selected="emit('updateReceiveTypeValue', $event)"
     />
 
-    <template
-      v-if="isPrivate"
-    >
+    <template v-if="isPrivate">
       <InputCopy
         label="Your private address"
         :value="account.address"
@@ -44,14 +38,11 @@ const { account } = useOpactWallet()
 
       <ReceiveFromLink
         :link="data.link"
-
         @done="emit('reset')"
       />
     </template>
 
-    <template
-      v-else
-    >
+    <template v-else>
       <InputCopy
         label="Copy or share the custon payment link"
         :value="link"

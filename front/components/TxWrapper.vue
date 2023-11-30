@@ -41,9 +41,7 @@ watch(
 </script>
 
 <template>
-  <div
-    class="mt-full lg:mt-[32px]"
-  >
+  <div class="mt-full lg:mt-[32px]">
     <div
       class="
         transition-all

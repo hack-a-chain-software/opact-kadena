@@ -25,22 +25,17 @@ const {
   updateAmountValue,
   updateReceiveTypeValue
 } = useReceiveForm(1, null as any)
-
 </script>
 
 <template>
-  <div
-    class="ozk-form w-full flex justify-center"
-  >
+  <div class="ozk-form w-full flex justify-center">
     <Transition name="fade" mode="out-in">
       <component
         :is="steps[data.stepForm as FormType]"
-
         :link="link"
         :data="data"
         :isPrivate="isPrivate"
         :isDisabled="isDisabled"
-
         @reset="reset"
         @deposit="deposit"
         @updateTokenValue="updateTokenValue"

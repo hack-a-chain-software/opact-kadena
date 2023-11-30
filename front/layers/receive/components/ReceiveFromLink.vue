@@ -3,8 +3,8 @@ import { reactive } from 'vue'
 
 withDefaults(
   defineProps<{
-    link?: string,
-    isDisabled: boolean,
+    link?: string;
+    isDisabled: boolean;
   }>(),
   {
     link: ''
@@ -35,7 +35,6 @@ const done = () => {
   <ModalGenerateLink
     :link="link"
     :show="data.show"
-
     @done="done()"
     @close="data.show = false"
   />

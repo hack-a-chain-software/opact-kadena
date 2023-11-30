@@ -1,7 +1,7 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    token?: any
+    token?: any;
   }>(),
   {
     token: null

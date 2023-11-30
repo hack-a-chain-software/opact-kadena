@@ -26,11 +26,7 @@ const close = () => {
 
 <template>
   <TransitionRoot as="template" :show="show">
-    <Dialog
-      as="div"
-      class="relative z-10"
-      @close="close()"
-    >
+    <Dialog as="div" class="relative z-10" @close="close()">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -72,8 +68,11 @@ const close = () => {
                 rounded-[12px]
                 lg:max-w-[500px]
                 space-y-6
-              bg-gray-800
-                lg:p-6 lg:pt-4 lg:border-[1px] lg:border-gray-600
+                bg-gray-800
+                lg:p-6
+                lg:pt-4
+                lg:border-[1px]
+                lg:border-gray-600
               "
             >
               <div

@@ -52,12 +52,23 @@ withDefaults(
         />
       </div>
 
-      <div class="flex-grow break-words overflow-hidden overflow-ellipsis">
+      <div
+        class="
+          flex-grow
+          break-words
+          overflow-hidden overflow-ellipsis
+        "
+      >
         <span
-          class="text-sm font-medium text-font-1 line-clamp-1"
+          class="
+            text-sm
+            font-medium
+            text-font-1
+            line-clamp-1
+          "
           v-text="
-              provider?.account?.address ||
-                provider?.account?.account?.account
+            provider?.account?.address ||
+            provider?.account?.account?.account
           "
         />
       </div>

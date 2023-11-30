@@ -3,8 +3,8 @@ const { $toaster } = useNuxtApp() as any
 
 const props = withDefaults(
   defineProps<{
-    label?: string
-    value?: string
+    label?: string;
+    value?: string;
   }>(),
   {
     value: '',
@@ -27,9 +27,7 @@ const copyToClipboard = async () => {
 </script>
 
 <template>
-  <div
-    class="ozk-address flex flex-col space-y-4"
-  >
+  <div class="ozk-address flex flex-col space-y-4">
     <div>
       <h2
         class="
@@ -46,39 +44,43 @@ const copyToClipboard = async () => {
     <div>
       <button
         class="
-        p-4
-        rounded-[8px]
-        bg-gray-700
-        flex
-        items-center
-        justify-between
-        gap-4
-        w-full
-        group
-      "
+          p-4
+          rounded-[8px]
+          bg-gray-700
+          flex
+          items-center
+          justify-between
+          gap-4
+          w-full
+          group
+        "
         @click.prevent="copyToClipboard()"
       >
         <div
-          class="w-[calc(100%-40px)] text-left truncate text-white"
+          class="
+            w-[calc(100%-40px)]
+            text-left
+            truncate
+            text-white
+          "
         >
           <span
             class="
-            text-xs text-font-1
-            truncate
-            group-active:text-blue-400
-
-          "
+              text-xs text-font-1
+              truncate
+              group-active:text-blue-400
+            "
             v-text="props.value"
           />
         </div>
 
         <div
           class="
-          w-6
-          h-6
-          text-font-1
-          group-active:text-blue-400
-        "
+            w-6
+            h-6
+            text-font-1
+            group-active:text-blue-400
+          "
         >
           <Icon name="copy" class="w-6 h-6" />
         </div>

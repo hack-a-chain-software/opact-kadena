@@ -1,14 +1,12 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    data: any,
-    link: string,
-    isPrivate: boolean,
-    isDisabled: boolean,
+    data: any;
+    link: string;
+    isPrivate: boolean;
+    isDisabled: boolean;
   }>(),
-  {
-
-  }
+  {}
 )
 
 const emit = defineEmits([
@@ -35,25 +33,25 @@ const { provider } = useExtensions()
 
     <div
       class="
-          w-full
-          py-4
-          flex
-          justify-center
-          relative
-          items-center
-          lg:hidden
-        "
+        w-full
+        py-4
+        flex
+        justify-center
+        relative
+        items-center
+        lg:hidden
+      "
     >
       <button
         class="
-            flex
-            items-center
-            space-x-[4px]
-            h-6
-            absolute
-            top-4
-            left-0
-          "
+          flex
+          items-center
+          space-x-[4px]
+          h-6
+          absolute
+          top-4
+          left-0
+        "
         @click.prevent="router.push('/home')"
       >
         <Icon name="chevronLeft" class="h-6 w-6" />
@@ -72,9 +70,7 @@ const { provider } = useExtensions()
       :provider="provider"
     />
 
-    <SelectNft
-      :token="data.token"
-    />
+    <SelectNft :token="data.token" />
 
     <TxWrapper
       :token="data.token"
@@ -82,7 +78,7 @@ const { provider } = useExtensions()
       :receiver="account.address"
       :sender="
         provider?.account?.address ||
-          provider?.account?.account?.account
+        provider?.account?.account?.account
       "
     />
 
