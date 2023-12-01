@@ -150,7 +150,12 @@ const emit = defineEmits(['close', 'done'])
                   @click.prevent="copyToClipboard(link)"
                 >
                   <div
-                    class="w-[calc(100%-40px)] text-left overflow-hidden overflow-ellipsis text-white"
+                    class="
+                      w-[calc(100%-40px)]
+                      text-left
+                      overflow-hidden overflow-ellipsis
+                      text-white
+                    "
                   >
                     <span
                       class="

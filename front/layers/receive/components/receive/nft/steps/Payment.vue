@@ -84,7 +84,7 @@ const { provider } = useExtensions()
       :receiver="account.address"
       :sender="
         provider?.account?.address ||
-          provider?.account?.account?.account
+        provider?.account?.account?.account
       "
     />
 

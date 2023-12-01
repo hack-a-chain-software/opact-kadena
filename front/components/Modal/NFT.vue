@@ -294,7 +294,7 @@ watch(
                           h-[125px]
                           rounded-[6px]
                         "
-                      >
+                      />
                     </div>
 
                     <div

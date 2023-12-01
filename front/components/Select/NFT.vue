@@ -16,7 +16,7 @@ withDefaults(
 )
 
 const data = reactive({
-  show: false,
+  show: false
 })
 
 const emit = defineEmits(['selected', 'close', 'open'])
@@ -64,7 +64,7 @@ const emit = defineEmits(['selected', 'close', 'open'])
             class="h-[60px] w-[60px] rounded-[8px]"
           />
 
-          <span v-text="token?.name" class="text-xs " />
+          <span v-text="token?.name" class="text-xs" />
         </div>
 
         <div>

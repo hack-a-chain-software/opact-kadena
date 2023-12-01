@@ -63,9 +63,7 @@ export const useReceiveForm = (
       return `${baseUrl}/${route}/nft?address=${account.value.address}`
     }
 
-    const params = [
-      `?address=${account.value.address}`
-    ]
+    const params = [`?address=${account.value.address}`]
 
     if (data.token) {
       params.push(`token=${data.token.id}`)
