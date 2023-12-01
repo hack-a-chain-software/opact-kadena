@@ -12,13 +12,17 @@ import {
   computeInputs
 } from 'opact-sdk'
 import { groth16 } from 'snarkjs'
-import { baseUrl } from '~/utils/constants'
 
 export const useReceiveForm = (
   amount = 0,
   token = kadenaBaseTokens[0],
   type = 'token'
 ) => {
+  const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'localhost:3000'
+    : window?.location?.origin
+
   const data = reactive<any>({
     type,
     token,

@@ -55,7 +55,7 @@ export const nftAccounts = []
 
 export const tokenAccounts = []
 
-export const baseUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'localhost:3000'
-    : window.location.origin
+// export const baseUrl =
+//   process.env.NODE_ENV === 'development'
+//     ? 'localhost:3000'
+//     : window?.location?.origin
