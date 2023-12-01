@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import review from './steps/Review.vue'
-import receive from '~/steps/Receive.vue'
+import receive from './steps/Receive.vue'
 import { useReceiveForm } from '~/hooks/receive'
 
 export type FormType = 'receive' | 'review';
