@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { onBeforeMount } from 'vue'
 import { loadArtifact } from 'opact-sdk'
 import { useAppState } from '~/hooks/state'
-import { useWalletStore } from '~/store/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
