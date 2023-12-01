@@ -23,11 +23,11 @@ useHead({
       lg:justify-center
     "
   >
-    <WidgetTokens />
+    <HomeWidgetTokens />
 
-    <WidgetActions />
+    <HomeWidgetActions />
 
-    <WidgetHistory />
+    <HomeWidgetHistory />
   </div>
 </template>
 
