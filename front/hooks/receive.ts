@@ -13,7 +13,7 @@ import {
 } from 'opact-sdk'
 import { storeToRefs } from 'pinia'
 import { groth16 } from 'snarkjs'
-import { useWalletStore } from '~/store/wallet'
+import { useWalletStore } from '~/stores/wallet'
 
 export const useReceiveForm = (
   amount = 0,

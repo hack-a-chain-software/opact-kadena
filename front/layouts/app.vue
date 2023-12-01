@@ -88,3 +88,4 @@ body {
   position: relative;
 }
 </style>
+~/stores/wallet
