@@ -79,8 +79,9 @@ const titles = {
     "
   >
     <img
+      lazy
       src="/bg-app.png"
       class="w-full w-full max-h-[319px]"
-    />
+    >
   </div>
 </template>

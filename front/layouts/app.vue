@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { onBeforeMount } from 'vue'
+import { onMounted } from 'vue'
 import { loadArtifact } from 'opact-sdk'
 import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
@@ -11,8 +11,8 @@ const { isLoading, loadAppState } = useAppState()
 
 const { connected, account } = storeToRefs(wallet)
 
-onBeforeMount(() => {
-  loadArtifact()
+onMounted(async () => {
+  await loadArtifact()
   wallet.reconnect()
 })
 
@@ -87,4 +87,3 @@ body {
   position: relative;
 }
 </style>
-~/stores/wallet
