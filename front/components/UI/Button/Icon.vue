@@ -27,13 +27,14 @@ const handleClick = (event: any) => {
       flex
       items-center
       justify-center
-      lg:h-8 lg:w-8
+      h-8
+      w-8
       rounded-full
       hover:bg-gray-600
     "
   >
     <div>
-      <Icon :name="icon" class="h-6 w-6 lg:h-8 lg:w-8" />
+      <Icon :name="icon" class="h-6 w-6" />
     </div>
   </button>
 </template>

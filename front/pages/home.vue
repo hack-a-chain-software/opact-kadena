@@ -19,7 +19,7 @@ useHead({
       lg:gap-6
       lg:grid
       lg:grid-cols-[minmax(auto,_698px)_400px]
-      lg:grid-rows-[160px_1fr]
+      lg:grid-rows-[141px_1fr]
       lg:justify-center
     "
   >

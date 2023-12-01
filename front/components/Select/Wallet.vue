@@ -33,7 +33,7 @@ const connected = () => {
       @click.prevent="data.show = true"
     />
 
-    <WalletConnector
+    <ModalWallet
       :show="data.show"
       @close="data.show = false"
       @connected="connected"

@@ -1,10 +1,4 @@
 <script setup>
-import { reactive } from 'vue'
-
-const data = reactive({
-  show: false
-})
-
 const emits = defineEmits(['changeStep'])
 </script>
 
@@ -123,14 +117,8 @@ const emits = defineEmits(['changeStep'])
 
         <div class="flex flex-col space-y-[16px] pt-[32px]">
           <UIButtonInline
+            class="h-[44px]"
             label="Create Wallet"
-            class="lg:hidden h-[44px]"
-            @click.prevent="data.show = true"
-          />
-
-          <UIButtonInline
-            label="Create Wallet"
-            class="hidden lg:flex h-[44px]"
             @click.prevent="emits('changeStep', 'create')"
           />
 
@@ -142,11 +130,5 @@ const emits = defineEmits(['changeStep'])
         </div>
       </div>
     </div>
-
-    <AuthGetStartedModal
-      :show="data.show"
-      @close="data.show = false"
-      @create="emits('changeStep', 'create')"
-    />
   </div>
 </template>

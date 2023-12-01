@@ -5,18 +5,6 @@ const props = defineProps<{
   type: 'info' | 'error' | 'success' | 'warning';
 }>()
 
-// const {
-//   isHovered,
-//   isActive,
-//   timer,
-//   duration,
-//   click,
-//   close
-// } = useNinjaToasterState()
-
-// const { percent, endAt, closeIn } =
-//   useNinjaToasterProgress()
-
 const types = {
   info: {
     icon: 'Copy',
