@@ -13,7 +13,7 @@ const titles = {
   'send-token': 'Send Token',
 
   'receive-nft': 'Receive NFT',
-  'receive-token': 'Receive Token',
+  'receive-token': 'Receive Token'
 }
 </script>
 

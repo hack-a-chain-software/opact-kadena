@@ -4,7 +4,7 @@ import { reactive } from 'vue'
 const data = reactive({
   tab: 'tokens',
   show: false,
-  showTransfer: false,
+  showTransfer: false
 })
 </script>
 

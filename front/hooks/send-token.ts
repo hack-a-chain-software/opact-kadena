@@ -3,6 +3,7 @@ import {
   formatBigNumberWithDecimals,
   getDecimals
 } from 'opact-sdk'
+import { storeToRefs } from 'pinia'
 import { tokens } from '~/utils/constants'
 import { useAppState } from '~/hooks/state'
 import { sendPactTransaction } from '~/utils/kadena'
@@ -10,7 +11,6 @@ import {
   computeWihtdrawParams,
   computeTransferParams
 } from '~/utils/sdk'
-import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
 
 export const useSendToken = () => {

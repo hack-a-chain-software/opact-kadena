@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useAppState } from '~/hooks/state'
 import { storeToRefs } from 'pinia'
+import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
