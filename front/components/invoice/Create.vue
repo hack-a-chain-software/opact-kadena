@@ -58,7 +58,7 @@ const data = reactive({
         </div>
       </div>
 
-      <InputMoney
+      <UIInputMoney
         :token="data.token"
         v-model="data.amount"
       />
@@ -72,7 +72,7 @@ const data = reactive({
       />
     </div>
 
-    <ButtonInline
+    <UIButtonInline
       :disabled="Number(data.amount) <= 0"
       class="mt-full lg:mt-[40px]"
       label="Generate payment link"

@@ -15,7 +15,7 @@ withDefaults(
 
 <template>
   <div class="mt-auto pb-[32px] lg:pt-[56px]">
-    <ButtonInline
+    <UIButtonInline
       :label="label"
       :disabled="disabled"
       @click.prevent="emits('click', $event)"

@@ -24,8 +24,8 @@ const { account } = useOpactWallet()
 </script>
 
 <template>
-  <CardBody>
-    <CardHeader title="Enter receiving data" />
+  <UICardBody>
+    <UICardHeader title="Enter receiving data" />
 
     <ReceiveType
       :selected="data.receiveType"
@@ -33,7 +33,7 @@ const { account } = useOpactWallet()
     />
 
     <template v-if="isPrivate">
-      <InputCopy
+      <UIInputCopy
         label="Your private address"
         :value="account.address"
       />
@@ -45,7 +45,7 @@ const { account } = useOpactWallet()
     </template>
 
     <template v-else>
-      <InputCopy
+      <UIInputCopy
         label="Copy or share the custon payment link"
         :value="link"
       />
@@ -55,5 +55,5 @@ const { account } = useOpactWallet()
         @connected="emit('changeStep', 'payment')"
       />
     </template>
-  </CardBody>
+  </UICardBody>
 </template>

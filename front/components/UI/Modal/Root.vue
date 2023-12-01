@@ -6,23 +6,19 @@ import {
   DialogPanel,
   DialogTitle
 } from '@headlessui/vue'
-import { reactive } from 'vue'
-import { chains } from '~/chains'
 
 withDefaults(
   defineProps<{
-    show: boolean;
+    show?: boolean;
+    title?: string;
   }>(),
   {
+    title: '',
     show: false
   }
 )
 
-const data = reactive({
-  show: false
-})
-
-const emit = defineEmits(['close', 'connected'])
+const emit = defineEmits(['close'])
 
 const close = () => {
   emit('close')
@@ -31,11 +27,7 @@ const close = () => {
 
 <template>
   <TransitionRoot as="template" :show="show">
-    <Dialog
-      as="div"
-      class="relative z-10"
-      @close="data.show = false"
-    >
+    <Dialog as="div" class="relative z-10" @close="close()">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -57,8 +49,8 @@ const close = () => {
             min-h-full
             items-end
             justify-center
-            p-4
             lg:justify-center lg:items-start lg:pt-[312px]
+            p-4
           "
         >
           <TransitionChild
@@ -83,7 +75,6 @@ const close = () => {
             >
               <div
                 class="
-                  lg:hidden
                   flex
                   items-center
                   justify-center
@@ -91,7 +82,7 @@ const close = () => {
                 "
               >
                 <button
-                  class="absolute left-0"
+                  class="absolute left-0 lg:hidden"
                   @click.prevent="close()"
                 >
                   <Icon
@@ -102,36 +93,14 @@ const close = () => {
 
                 <DialogTitle
                   as="h3"
-                  class="text-font-1 text-xs"
+                  class="text-font-1 text-xs md:text-sm"
                 >
-                  Deposit
-                </DialogTitle>
-              </div>
-
-              <div
-                class="
-                  hidden
-                  lg:flex
-                  relative
-                  !mt-0
-                  justify-between
-                  items-center
-                  mx-[-24px]
-                  px-[24px]
-                  pb-4
-                  border-b-[2px] border-gray-600
-                "
-              >
-                <DialogTitle
-                  as="h3"
-                  class="text-font-1 text-sm"
-                >
-                  Connect your Wallet
+                  Select NFT
                 </DialogTitle>
 
                 <button
+                  class="w-8 h-8 hidden md:lock"
                   @click.prevent="close()"
-                  class="w-8 h-8"
                 >
                   <Icon
                     name="close"
@@ -140,40 +109,81 @@ const close = () => {
                 </button>
               </div>
 
-              <template v-if="!data.show">
-                <div class="relative">
-                  <span
+              <div>
+                <div
+                  v-if="data.tokens.length > 0"
+                  class="
+                    gap-3
+                    grid grid-cols-3
+                    divide divide-y-[1px] divide-gray-700
+                  "
+                >
+                  <button
+                    v-for="token in data.tokens"
+                    :key="token.name"
                     class="
-                      text-xxs
-                      font-regular
-                      lg:text-font-1 lg:text-sm
-                      text-font-2
+                      w-full
+                      flex flex-col
+                      p-2
+                      rounded-[8px]
+                      bg-gray-700
+                      items-center
+                      hover:opacity-80
+                    "
+                    @click.prevent="
+                      () => {
+                        close();
+                        select(token);
+                      }
                     "
                   >
-                    Deposits are made through your external
-                    wallet. Connect your wallet to deposit.
-                  </span>
+                    <div class="pb-2">
+                      <img
+                        :src="token.uri"
+                        class="
+                          w-[125px]
+                          h-[125px]
+                          rounded-[6px]
+                        "
+                      />
+                    </div>
+
+                    <div
+                      class="
+                        flex flex-col
+                        space-y-1
+                        text-left
+                      "
+                    >
+                      <span
+                        class="
+                          text-xxs text-font-1
+                          font-[500]
+                        "
+                        v-text="token.name"
+                      />
+                    </div>
+                  </button>
                 </div>
 
-                <div>
-                  <UIButtonInline
-                    label="Connect Wallet"
-                    @click.prevent="data.show = true"
+                <div
+                  v-else
+                  class="
+                    h-[180px]
+                    flex
+                    items-center
+                    justify-center
+                  "
+                >
+                  <Icon
+                    name="spinner"
+                    class="
+                      animate-spin
+                      text-white
+                      ml-[12px]
+                    "
                   />
                 </div>
-              </template>
-
-              <div v-else class="w-full max-w-md">
-                <ul class="w-full space-y-[14px] gap-3">
-                  <TabItem
-                    v-for="provider in chains[0].providers"
-                    :key="provider.id"
-                    :chain="provider.key"
-                    v-bind="provider"
-                    class="w-full"
-                    @connected="emit('connected')"
-                  />
-                </ul>
               </div>
             </DialogPanel>
           </TransitionChild>

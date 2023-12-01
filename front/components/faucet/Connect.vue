@@ -94,7 +94,7 @@ const emits = defineEmits(['changeStep', 'token'])
     </div>
 
     <div class="pt-6">
-      <ButtonInline
+      <UIButtonInline
         label="Connect Wallet"
         @click.prevent="emits('changeStep', 'provider')"
       />

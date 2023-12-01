@@ -60,7 +60,7 @@ const {
         </div>
       </div>
 
-      <InputMoney
+      <UIInputMoney
         :balance="balance"
         :token="data.token"
         v-model="data.amount"
@@ -83,7 +83,7 @@ const {
         @selected="data.token = $event"
       />
 
-      <InputAddress
+      <UIInputAddress
         :token="data.token"
         v-model="data.addressTo"
         @isValidAddress="data.isValidAddress = $event"
@@ -107,7 +107,7 @@ const {
 
     <SelectWallet v-if="showConnectWalletButton" />
 
-    <ButtonInline
+    <UIButtonInline
       v-else
       :disabled="isDisabled"
       :loading="data.loading"

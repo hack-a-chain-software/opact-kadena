@@ -122,19 +122,19 @@ const emits = defineEmits(['changeStep'])
         </div>
 
         <div class="flex flex-col space-y-[16px] pt-[32px]">
-          <ButtonInline
+          <UIButtonInline
             label="Create Wallet"
             class="lg:hidden h-[44px]"
             @click.prevent="data.show = true"
           />
 
-          <ButtonInline
+          <UIButtonInline
             label="Create Wallet"
             class="hidden lg:flex h-[44px]"
             @click.prevent="emits('changeStep', 'create')"
           />
 
-          <ButtonOutline
+          <UIButtonOutline
             class="h-[44px]"
             label="Recover Wallet"
             @click.prevent="emits('changeStep', 'recovery')"

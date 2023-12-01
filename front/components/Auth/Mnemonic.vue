@@ -33,8 +33,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <FormLayout>
-    <FormHeader
+  <UIFormLayout>
+    <UIFormHeader
       title="Create Wallet"
       subtitle="Setup Your Secure Passphrase"
       @changeStep="emits('changeStep', 'connect')"
@@ -118,9 +118,9 @@ onMounted(() => {
       </div>
     </div>
 
-    <FormFooter
+    <UIFormFooter
       label="Verify Passphrase"
       @click="emits('changeStep', 'verify')"
     />
-  </FormLayout>
+  </UIFormLayout>
 </template>

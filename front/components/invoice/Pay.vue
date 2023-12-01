@@ -279,7 +279,7 @@ watch(
       :label="data.error + '*'"
     />
 
-    <ButtonInline
+    <UIButtonInline
       :loading="data.depositing"
       @click="deposit()"
       :disabled="buttonIsDisabled"

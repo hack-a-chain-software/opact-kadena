@@ -72,7 +72,7 @@ const {
         :provider="provider"
       />
 
-      <InputAddress
+      <UIInputAddress
         :token="data.token"
         v-model="data.addressTo"
         @isValidAddress="data.isValidAddress = $event"
@@ -96,7 +96,7 @@ const {
 
     <SelectWallet v-if="showConnectWalletButton" />
 
-    <ButtonInline
+    <UIButtonInline
       v-else
       :disabled="isDisabled"
       :loading="data.loading"

@@ -3,8 +3,8 @@ const emits = defineEmits(['changeStep'])
 </script>
 
 <template>
-  <FormLayout>
-    <FormHeader
+  <UIFormLayout>
+    <UIFormHeader
       title="Create Wallet"
       subtitle="Choose a Security Method"
       @changeStep="emits('changeStep', 'connect')"
@@ -156,5 +156,5 @@ const emits = defineEmits(['changeStep'])
         </div>
       </div>
     </div>
-  </FormLayout>
+  </UIFormLayout>
 </template>

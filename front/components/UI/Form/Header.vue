@@ -96,7 +96,7 @@ const back = () => {
   </div>
 
   <div class="pt-8 lg:pt-0 flex lg:space-x-4 items-center">
-    <ButtonIcon
+    <UIButtonInline
       icon="chevronLeft"
       class="hidden lg:flex"
       @click.prevent="back()"

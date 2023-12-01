@@ -10,4 +10,8 @@ export default defineNuxtRouteMiddleware(() => {
       path: '/home'
     })
   }
+
+  return router.push({
+    path: '/auth'
+  })
 })

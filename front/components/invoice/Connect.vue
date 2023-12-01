@@ -37,7 +37,7 @@ class="text-font-1"
       </span>
     </div>
 
-    <ButtonInline
+    <UIButtonInline
       label="Connect Wallet"
       class="mt-full lg:mt-4"
       @click.prevent="emits('changeStep', 'provider')"

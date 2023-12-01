@@ -16,7 +16,7 @@ const emit = defineEmits(['back'])
 <template>
   <div class="flex items-center space-x-2">
     <div v-if="withBack">
-      <ButtonIcon
+      <UIButtonIcon
         icon="chevronLeft"
         @click.prevent="emit('back')"
       />

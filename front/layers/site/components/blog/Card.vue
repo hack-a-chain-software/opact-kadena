@@ -115,7 +115,7 @@ const redirect = (
       </div>
 
       <div>
-        <Button
+        <UIButtonInline
           :text="button"
           @click="redirect(to, '_self')"
           variant="secondary"

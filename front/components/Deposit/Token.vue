@@ -59,7 +59,7 @@ const {
         </div>
       </div>
 
-      <InputMoney
+      <UIInputMoney
         :token="data.token"
         :disabled="!provider"
         v-model="data.amount"
@@ -104,7 +104,7 @@ const {
       v-if="showConnectWalletButton"
     />
 
-    <ButtonInline
+    <UIButtonInline
       v-else
       :disabled="isDisabled"
       :loading="data.loading"

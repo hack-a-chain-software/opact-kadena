@@ -95,7 +95,7 @@ const {
 
     <SelectWallet v-if="showConnectWalletButton" />
 
-    <ButtonInline
+    <UIButtonInline
       v-else
       :loading="data.loading"
       @click="sendDeposit()"

@@ -24,15 +24,15 @@ const { account } = useOpactWallet()
 </script>
 
 <template>
-  <CardBody>
-    <CardHeader title="Enter receiving data" />
+  <UICardBody>
+    <UICardHeader title="Enter receiving data" />
 
     <ReceiveType
       :selected="data.receiveType"
       @selected="emit('updateReceiveTypeValue', $event)"
     />
 
-    <InputMoney
+    <UIInputMoney
       :disabled="false"
       :token="data.token"
       :modelValue="data.amount"
@@ -45,7 +45,7 @@ const { account } = useOpactWallet()
     />
 
     <template v-if="isPrivate && !isDisabled">
-      <InputCopy
+      <UIInputCopy
         label="Your private address"
         :value="account.address"
       />
@@ -60,7 +60,7 @@ const { account } = useOpactWallet()
     </template>
 
     <template v-else-if="!isDisabled">
-      <InputCopy
+      <UIInputCopy
         label="Copy or share the custon payment link"
         :value="link"
       />
@@ -70,5 +70,5 @@ const { account } = useOpactWallet()
         @connected="emit('changeStep', 'review')"
       />
     </template>
-  </CardBody>
+  </UICardBody>
 </template>

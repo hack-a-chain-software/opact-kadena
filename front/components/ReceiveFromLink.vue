@@ -26,7 +26,7 @@ const done = () => {
 
 <template>
   <div>
-    <ButtonInline
+    <UIButtonInline
       :disabled="isDisabled"
       label="Generate Receive Link"
       @click.prevent="data.show = true"

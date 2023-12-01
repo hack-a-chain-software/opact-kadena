@@ -91,7 +91,7 @@ const emit = defineEmits(['close', 'create'])
               </div>
 
               <div class="pt-6">
-                <ButtonInline
+                <UIButtonInline
                   label="Get started"
                   @click.prevent="emit('create')"
                 />

@@ -26,8 +26,8 @@ const { provider } = useExtensions()
 </script>
 
 <template>
-  <CardBody>
-    <CardHeader
+  <UICardBody>
+    <UICardHeader
       withBack
       title="Confirm deposit information"
       @back="emit('changeStep', 'receive')"
@@ -66,7 +66,7 @@ const { provider } = useExtensions()
       </div>
     </div>
 
-    <InputMoney
+    <UIInputMoney
       readonly
       label="Amount"
       :model-value="data.amount"
@@ -90,10 +90,10 @@ const { provider } = useExtensions()
       "
     />
 
-    <ButtonInline
+    <UIButtonInline
       :loading="data.loading"
       label="Deposit Now"
       @click.prevent="emit('deposit')"
     />
-  </CardBody>
+  </UICardBody>
 </template>

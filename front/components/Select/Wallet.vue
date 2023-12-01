@@ -27,7 +27,7 @@ const connected = () => {
 
 <template>
   <div>
-    <ButtonInline
+    <UIButtonInline
       :label="label"
       :disabled="isDisabled"
       @click.prevent="data.show = true"

@@ -39,8 +39,8 @@ const toPaste = async () => {
 </script>
 
 <template>
-  <FormLayout>
-    <FormHeader
+  <UIFormLayout>
+    <UIFormHeader
       title="Create Wallet"
       subtitle="Setup Your Secure Passphrase"
       @changeStep="emits('changeStep', 'connect')"
@@ -125,9 +125,9 @@ const toPaste = async () => {
       </div>
     </div>
 
-    <FormFooter
+    <UIFormFooter
       label="Recovery"
       @click.prevent="recovery()"
     />
-  </FormLayout>
+  </UIFormLayout>
 </template>

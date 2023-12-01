@@ -53,8 +53,8 @@ const isDisabled = computed(() => {
 </script>
 
 <template>
-  <FormLayout>
-    <FormHeader
+  <UIFormLayout>
+    <UIFormHeader
       title="Create Wallet"
       subtitle="Verify Phrase"
       @changeStep="emits('changeStep', 'mnemonic')"
@@ -93,10 +93,10 @@ const isDisabled = computed(() => {
       </div>
     </div>
 
-    <FormFooter
+    <UIFormFooter
       :disabled="!isDisabled"
       @click.prevent="create()"
       label="Verify & Create Wallet"
     />
-  </FormLayout>
+  </UIFormLayout>
 </template>
