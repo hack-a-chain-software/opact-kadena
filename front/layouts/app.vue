@@ -1,30 +1,33 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
-import { loadArtifact } from 'opact-sdk'
-import { useAppState } from '~/hooks/state'
-import { useOpactWallet } from '~/hooks/opact-wallet'
+// import { onBeforeMount } from 'vue'
+// import { loadArtifact } from 'opact-sdk'
+// import { useAppState } from '~/hooks/state'
+// import { useOpactWallet } from '~/hooks/opact-wallet'
 
-const { isLoading, loadAppState } = useAppState()
+// const { isLoading, loadAppState } = useAppState()
 
-const { account, connected } = useOpactWallet()
+const isLoading = true
+const connected = false
 
-onBeforeMount(() => {
-  loadArtifact()
-})
+// const { account, connected } = useOpactWallet()
 
-watch(
-  account,
-  (newNode) => {
-    if (!newNode) {
-      return
-    }
+// onBeforeMount(() => {
+//   loadArtifact()
+// })
 
-    loadAppState(newNode.pvtkey)
-  },
-  {
-    immediate: true
-  }
-)
+// watch(
+//   account,
+//   (newNode) => {
+//     if (!newNode) {
+//       return
+//     }
+
+//     loadAppState(newNode.pvtkey)
+//   },
+//   {
+//     immediate: true
+//   }
+// )
 </script>
 
 <template>
@@ -89,4 +92,3 @@ body {
   position: relative;
 }
 </style>
-~/layers/auth/composables/opact-wallet
