@@ -39,7 +39,6 @@ export const useReceiveForm = (
   const { provider } = useExtensions()
 
   const wallet = useWalletStore()
-
   const { account } = storeToRefs(wallet)
 
   const isPrivate = computed(

@@ -5,7 +5,8 @@ import {
   computeWihtdrawParamsForNFT,
   computeTransferParamsForNFT
 } from '~/utils/sdk'
-import { useOpactWallet } from '~/hooks/opact-wallet'
+import { storeToRefs } from 'pinia'
+import { useWalletStore } from '~/stores/wallet'
 
 export const useSendNFT = () => {
   const data = reactive({
@@ -30,7 +31,8 @@ export const useSendNFT = () => {
 
   const router = useRouter()
 
-  const { account } = useOpactWallet()
+  const wallet = useWalletStore()
+  const { account } = storeToRefs(wallet)
 
   const isInternalTransfer = computed(() => {
     if (data.addressTo.includes('OZK')) {

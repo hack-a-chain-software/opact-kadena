@@ -8,11 +8,12 @@ const titles = {
   send: 'Send Token',
   receive: 'Receive',
   history: 'History',
-  transfer: 'Send',
-  'deposit-token': 'Deposit Token',
-  'deposit-nft': 'Deposit NFT',
-  'transfer-nft': 'Send NFT',
-  'transfer-token': 'Send Token'
+
+  'send-nft': 'Send NFT',
+  'send-token': 'Send Token',
+
+  'receive-nft': 'Receive NFT',
+  'receive-token': 'Receive Token',
 }
 </script>
 

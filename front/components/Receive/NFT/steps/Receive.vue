@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { useOpactWallet } from '~/hooks/opact-wallet'
+import { storeToRefs } from 'pinia'
+import { useWalletStore } from '~/stores/wallet'
+
+const wallet = useWalletStore()
+const { account } = storeToRefs(wallet)
 
 withDefaults(
   defineProps<{
@@ -19,8 +23,6 @@ const emit = defineEmits([
   'updateAmountValue',
   'updateReceiveTypeValue'
 ])
-
-const { account } = useOpactWallet()
 </script>
 
 <template>

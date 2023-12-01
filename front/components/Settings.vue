@@ -6,11 +6,13 @@ import {
   TransitionRoot,
   TransitionChild
 } from '@headlessui/vue'
-import { useOpactWallet } from '~/hooks/opact-wallet'
+import { storeToRefs } from 'pinia'
+import { useWalletStore } from '~/stores/wallet'
+
+const wallet = useWalletStore()
+const { account } = storeToRefs(wallet)
 
 const { $toaster } = useNuxtApp()
-
-const { account, logout: logoutAccount } = useOpactWallet()
 
 const copyToClipboard = async (value: string) => {
   try {
@@ -38,7 +40,7 @@ const emit = defineEmits(['close'])
 
 const logout = () => {
   // isLoading.value = true
-  logoutAccount()
+  wallet.logout()
 }
 </script>
 
@@ -137,7 +139,7 @@ const logout = () => {
                     group
                   "
                   @click.prevent="
-                    copyToClipboard(account.address)
+                    copyToClipboard(account?.address)
                   "
                 >
                   <div
@@ -149,7 +151,7 @@ const logout = () => {
                         break-words
                         group-active:text-blue-400
                       "
-                      v-text="account.address"
+                      v-text="account?.address"
                     />
                   </div>
 

@@ -10,7 +10,8 @@ import {
   computeWihtdrawParams,
   computeTransferParams
 } from '~/utils/sdk'
-import { useOpactWallet } from '~/hooks/opact-wallet'
+import { storeToRefs } from 'pinia'
+import { useWalletStore } from '~/stores/wallet'
 
 export const useSendToken = () => {
   const data = reactive({
@@ -36,7 +37,8 @@ export const useSendToken = () => {
 
   const router = useRouter()
 
-  const { account } = useOpactWallet()
+  const wallet = useWalletStore()
+  const { account } = storeToRefs(wallet)
 
   const balance = computed(() => {
     if (!data.token) {
@@ -158,14 +160,6 @@ export const useSendToken = () => {
       }
 
       loadAppState(account.value.pvtkey)
-      // updateUserData(
-      //   {
-      //     ...params,
-      //     token: data.token,
-      //     tokenType: 'tokens'
-      //   },
-      //   -1
-      // )
       router.push('/home')
     } catch (e) {
       console.warn(e)

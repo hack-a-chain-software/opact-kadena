@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-import { useOpactWallet } from '~/hooks/opact-wallet'
 import { useAppState } from '~/hooks/state'
+import { storeToRefs } from 'pinia'
+import { useWalletStore } from '~/stores/wallet'
+
+const wallet = useWalletStore()
+const { account } = storeToRefs(wallet)
 
 const { receipts } = useAppState()
 
 const router = useRouter()
-
-const { account } = useOpactWallet()
 </script>
 
 <template>

@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { useOpactWallet } from '~/hooks/opact-wallet'
+import { storeToRefs } from 'pinia'
+import { useWalletStore } from '~/stores/wallet'
+
+const wallet = useWalletStore()
+const { account } = storeToRefs(wallet)
 
 withDefaults(
   defineProps<{
@@ -19,8 +23,6 @@ const emit = defineEmits([
   'updateAmountValue',
   'updateReceiveTypeValue'
 ])
-
-const { account } = useOpactWallet()
 </script>
 
 <template>
@@ -47,7 +49,7 @@ const { account } = useOpactWallet()
     <template v-if="isPrivate && !isDisabled">
       <UIInputCopy
         label="Your private address"
-        :value="account.address"
+        :value="account?.address"
       />
 
       <div>

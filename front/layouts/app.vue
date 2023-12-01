@@ -17,7 +17,6 @@ onBeforeMount(() => {
 })
 
 watch(account, (newAccount) => {
-  console.log('newAccount', newAccount)
   if (!newAccount) {
     return
   }

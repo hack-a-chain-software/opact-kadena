@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-import { useOpactWallet } from '~/hooks/opact-wallet'
+import { useWalletStore } from '~/stores/wallet'
+
+const wallet = useWalletStore()
 
 const emits = defineEmits(['changeStep'])
 
@@ -15,8 +17,6 @@ const props = withDefaults(
 
 const router = useRouter()
 const route = useRoute()
-
-const { connect } = useOpactWallet()
 
 const data = reactive({
   word: ''
@@ -38,7 +38,7 @@ const create = () => {
     return
   }
 
-  connect(props.mnemonic)
+  wallet.connect(props.mnemonic)
 
   router.push((route.query as any).next || '/home')
 }

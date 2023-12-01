@@ -5,7 +5,6 @@ const data = reactive({
   tab: 'tokens',
   show: false,
   showTransfer: false,
-  showReceiveModal: false
 })
 </script>
 
@@ -100,10 +99,5 @@ const data = reactive({
   <TransferModal
     :show="data.showTransfer"
     @close="data.showTransfer = false"
-  />
-
-  <InvoiceReceiveModal
-    :show="data.showReceiveModal"
-    @close="data.showReceiveModal = false"
   />
 </template>
