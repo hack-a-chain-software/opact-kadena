@@ -2,6 +2,7 @@ import { reactive, watch } from 'vue'
 import { tokens } from '~/utils/constants'
 import { useAppState } from '~/hooks/state'
 import { computeDepositParams } from '~/utils/sdk'
+import { useOpactWallet } from '~/hooks/opact-wallet'
 
 export const useDepositToken = (
   amount = 0,

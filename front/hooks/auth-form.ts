@@ -1,9 +1,9 @@
 import { reactive } from 'vue'
-import verify from '~/components/auth/Verify.vue'
-import create from '~/components/auth/Create.vue'
-import connect from '~/components/auth/Connect.vue'
-import mnemonic from '~/components/auth/Mnemonic.vue'
-import recovery from '~/components/auth/Recovery.vue'
+import verify from '~/components/Auth/Verify.vue'
+import create from '~/components/Auth/Create.vue'
+import connect from '~/components/Auth/Connect.vue'
+import mnemonic from '~/components/Auth/Mnemonic.vue'
+import recovery from '~/components/Auth/Recovery.vue'
 
 const form = {
   verify,

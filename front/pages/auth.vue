@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAuthForm } from '~/hooks/auth-form';
+
 useHead({
   title: 'Auth'
 })
@@ -19,8 +21,8 @@ const { data, form } = useAuthForm()
       <component
         :is="form[data.stepForm]"
         :mnemonic="data.mnemonic"
-        @mnemonic="($event) => (data.mnemonic = $event)"
-        @changeStep="($event) => (data.stepForm = $event)"
+        @mnemonic="($event: any) => (data.mnemonic = $event)"
+        @changeStep="($event: any) => (data.stepForm = $event)"
       />
     </Transition>
   </div>

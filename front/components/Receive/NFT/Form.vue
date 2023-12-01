@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import receive from '~/layers/receive/components/receive/nft/steps/Receive.vue'
-import payment from '~/layers/receive/components/receive/nft/steps/Payment.vue'
+import receive from './steps/Receive.vue'
+import payment from './steps/Payment.vue'
+import { useReceiveForm } from '~/hooks/receive';
 
 export type FormType = 'receive' | 'payment';
 

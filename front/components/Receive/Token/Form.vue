@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import receive from '~/layers/receive/components/receive/token/steps/Receive.vue'
-import review from '~/layers/receive/components/receive/token/steps/Review.vue'
+import review from './steps/Review.vue'
+import receive from '~/steps/Receive.vue'
+import { useReceiveForm } from '~/hooks/receive';
 
 export type FormType = 'receive' | 'review';
 
@@ -40,8 +41,8 @@ const {
         @deposit="deposit"
         @updateTokenValue="updateTokenValue"
         @updateAmountValue="updateAmountValue"
-        @changeStep="(event) => (data.stepForm = event as any)"
         @updateReceiveTypeValue="updateReceiveTypeValue"
+        @changeStep="(event: any) => (data.stepForm = event)"
       />
     </Transition>
   </div>

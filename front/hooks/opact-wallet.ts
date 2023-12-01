@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import { getWalletFromMnemonic } from 'opact-sdk'
 import { useStateStorage } from '~/hooks/state-starage'
+import { useAuthStorage } from './auth-storage'
 
 const useOpactWalletAccount = () =>
   useState<any>('opact:wallet:account', () => null)
@@ -12,6 +13,7 @@ export const useOpactWallet = () => {
 
   // Storage
   const { clear: clearStateStorage } = useStateStorage()
+
   const {
     cache,
     store,
@@ -46,7 +48,7 @@ export const useOpactWallet = () => {
 
   const logout = async () => {
     await clearStateStorage()
-    await clearWalletStorage(['phrase'])
+    await clearWalletStorage()
 
     account.value = null
 

@@ -9,9 +9,7 @@ if (process.env.NODE_ENV !== 'development') {
 export default defineNuxtConfig({
   ssr,
   extends: [
-    './layers/site',
-    './layers/auth',
-    './layers/receive'
+    './layers/site'
   ],
   modules: [
     'nuxt-icon',

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useOpactWallet } from '~/hooks/opact-wallet';
 import { useAppState } from '~/hooks/state'
 
 const { receipts } = useAppState()

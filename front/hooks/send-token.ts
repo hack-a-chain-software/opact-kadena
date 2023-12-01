@@ -10,6 +10,7 @@ import {
   computeWihtdrawParams,
   computeTransferParams
 } from '~/utils/sdk'
+import { useOpactWallet } from '~/hooks/opact-wallet';
 
 export const useSendToken = () => {
   const data = reactive({

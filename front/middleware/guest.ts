@@ -1,3 +1,5 @@
+import { useOpactWallet } from "~/hooks/opact-wallet"
+
 export default defineNuxtRouteMiddleware(() => {
   const router = useRouter()
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
+import { useOpactWallet } from '~/hooks/opact-wallet';
 
 const emits = defineEmits(['changeStep'])
 
@@ -99,4 +100,3 @@ const isDisabled = computed(() => {
     />
   </FormLayout>
 </template>
-~/layers/auth/composables/opact-wallet

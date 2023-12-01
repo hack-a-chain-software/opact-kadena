@@ -12,6 +12,7 @@ import {
   computeInputs
 } from 'opact-sdk'
 import { groth16 } from 'snarkjs'
+import { useOpactWallet } from './opact-wallet'
 
 export const useReceiveForm = (
   amount = 0,
