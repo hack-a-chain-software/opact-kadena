@@ -6,7 +6,7 @@ import {
   TransitionRoot,
   DialogTitle
 } from '@headlessui/vue'
-import { useOpactWallet } from '~/hooks/opact-wallet';
+import { useOpactWallet } from '~/hooks/opact-wallet'
 
 const { account } = useOpactWallet()
 

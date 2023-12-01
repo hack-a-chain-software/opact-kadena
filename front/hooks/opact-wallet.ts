@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { getWalletFromMnemonic } from 'opact-sdk'
-import { useStateStorage } from '~/hooks/state-starage'
 import { useAuthStorage } from './auth-storage'
+import { useStateStorage } from '~/hooks/state-starage'
 
 const useOpactWalletAccount = () =>
   useState<any>('opact:wallet:account', () => null)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import receive from './steps/Receive.vue'
 import payment from './steps/Payment.vue'
-import { useReceiveForm } from '~/hooks/receive';
+import { useReceiveForm } from '~/hooks/receive'
 
 export type FormType = 'receive' | 'payment';
 

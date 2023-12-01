@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
-import { useOpactWallet } from '~/hooks/opact-wallet';
+import { useOpactWallet } from '~/hooks/opact-wallet'
 
 const emits = defineEmits(['changeStep'])
 

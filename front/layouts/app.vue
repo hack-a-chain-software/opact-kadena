@@ -2,7 +2,7 @@
 import { onBeforeMount } from 'vue'
 import { loadArtifact } from 'opact-sdk'
 import { useAppState } from '~/hooks/state'
-import { useOpactWallet } from '~/hooks/opact-wallet';
+import { useOpactWallet } from '~/hooks/opact-wallet'
 
 const { isLoading, loadAppState } = useAppState()
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAuthForm } from '~/hooks/auth-form';
+import { useAuthForm } from '~/hooks/auth-form'
 
 useHead({
   title: 'Auth'

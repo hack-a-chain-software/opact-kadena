@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useOpactWallet } from '~/hooks/opact-wallet';
+import { useOpactWallet } from '~/hooks/opact-wallet'
 
 withDefaults(
   defineProps<{

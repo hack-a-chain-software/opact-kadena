@@ -5,7 +5,7 @@ import {
   computeWihtdrawParamsForNFT,
   computeTransferParamsForNFT
 } from '~/utils/sdk'
-import { useOpactWallet } from '~/hooks/opact-wallet';
+import { useOpactWallet } from '~/hooks/opact-wallet'
 
 export const useSendNFT = () => {
   const data = reactive({
