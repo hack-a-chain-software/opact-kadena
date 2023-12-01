@@ -35,9 +35,17 @@ export const useWalletStore = defineStore({
 
       this.persistAuth(mnemonic)
 
-      this.value = newAccount
+      this.account = newAccount
 
       return newAccount
+    },
+
+    reconnect () {
+      if (!this.cache) {
+        return
+      }
+
+      return this.connect(this.cache.phrase)
     },
 
     persistAuth (mnemonic: any) {

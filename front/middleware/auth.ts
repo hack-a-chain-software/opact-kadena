@@ -1,17 +1,15 @@
-import { useOpactWallet } from '~/hooks/opact-wallet'
+import { useWalletStore } from '~/store/wallet'
 
 export default defineNuxtRouteMiddleware((to) => {
+  const wallet = useWalletStore()
   const router = useRouter()
-
-  const { account } = useOpactWallet()
-
   const { provider, logout } = useExtensions()
 
   if (provider.value) {
     logout()
   }
 
-  if (account.value) {
+  if (wallet.cache && wallet.cache.phrase) {
     return
   }
 

@@ -11,8 +11,9 @@ import {
   MerkleTreeService,
   computeInputs
 } from 'opact-sdk'
+import { storeToRefs } from 'pinia'
 import { groth16 } from 'snarkjs'
-import { useOpactWallet } from './opact-wallet'
+import { useWalletStore } from '~/store/wallet'
 
 export const useReceiveForm = (
   amount = 0,
@@ -37,7 +38,9 @@ export const useReceiveForm = (
 
   const { provider } = useExtensions()
 
-  const { account } = useOpactWallet()
+  const wallet = useWalletStore()
+
+  const { account } = storeToRefs(wallet)
 
   const isPrivate = computed(
     () => data.receiveType === 'internal'

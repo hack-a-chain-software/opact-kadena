@@ -1,33 +1,29 @@
 <script setup lang="ts">
-// import { onBeforeMount } from 'vue'
-// import { loadArtifact } from 'opact-sdk'
-// import { useAppState } from '~/hooks/state'
-// import { useOpactWallet } from '~/hooks/opact-wallet'
+import { storeToRefs } from 'pinia'
+import { onBeforeMount } from 'vue'
+import { loadArtifact } from 'opact-sdk'
+import { useAppState } from '~/hooks/state'
+import { useWalletStore } from '~/store/wallet'
 
-// const { isLoading, loadAppState } = useAppState()
+const wallet = useWalletStore()
 
-const isLoading = true
-const connected = false
+const { isLoading, loadAppState } = useAppState()
 
-// const { account, connected } = useOpactWallet()
+const { connected, account } = storeToRefs(wallet)
 
-// onBeforeMount(() => {
-//   loadArtifact()
-// })
+onBeforeMount(() => {
+  loadArtifact()
+  wallet.reconnect()
+})
 
-// watch(
-//   account,
-//   (newNode) => {
-//     if (!newNode) {
-//       return
-//     }
+watch(account, (newAccount) => {
+  console.log('newAccount', newAccount)
+  if (!newAccount) {
+    return
+  }
 
-//     loadAppState(newNode.pvtkey)
-//   },
-//   {
-//     immediate: true
-//   }
-// )
+  loadAppState(newAccount.pvtkey)
+})
 </script>
 
 <template>
