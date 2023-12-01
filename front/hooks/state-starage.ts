@@ -1,4 +1,5 @@
 import localforage from 'localforage'
+import { parseUtxoString } from 'opact-sdk'
 
 export const useStateStorage = (
   utxosKey = 'opact-wallet:state:cache',
@@ -15,7 +16,7 @@ export const useStateStorage = (
     )) as any
 
     const storedUtxos = (utxos || []).map((item: any) =>
-      JSON.parse(item)
+      parseUtxoString(item)
     )
 
     const current = (await localforage.getItem(

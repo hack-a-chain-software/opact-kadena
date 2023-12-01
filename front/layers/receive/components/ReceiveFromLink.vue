@@ -4,10 +4,11 @@ import { reactive } from 'vue'
 withDefaults(
   defineProps<{
     link?: string;
-    isDisabled: boolean;
+    isDisabled?: boolean;
   }>(),
   {
-    link: ''
+    link: '',
+    isDisabled: false
   }
 )
 

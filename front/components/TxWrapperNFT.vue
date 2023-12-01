@@ -103,6 +103,7 @@ watch(
               h-4
               container
               transition-all
+            text-font-1
               duration-500
             "
             :class="state.show && 'container-active'"

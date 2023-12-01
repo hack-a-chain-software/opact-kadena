@@ -26,7 +26,7 @@ const { provider } = useExtensions()
 <template>
   <CardBody>
     <CardHeader
-      withBack
+      with-back
       title="Confirm deposit information"
       @back="emit('changeStep', 'receive')"
     />
@@ -70,15 +70,21 @@ const { provider } = useExtensions()
       :provider="provider"
     />
 
-    <SelectNft :token="data.token" />
+    <SelectNFT
+      :token="data.token"
+      :disabled="!provider"
+      @selected="emit('updateTokenValue', $event)"
+      :account-name="provider?.account?.account?.publicKey"
+    />
 
-    <TxWrapper
+    <TxWrapperNFT
       :token="data.token"
       :amount="data.amount"
+      :disabled="!data.token"
       :receiver="account.address"
       :sender="
         provider?.account?.address ||
-        provider?.account?.account?.account
+          provider?.account?.account?.account
       "
     />
 

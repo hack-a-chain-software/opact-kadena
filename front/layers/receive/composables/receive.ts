@@ -1,5 +1,4 @@
 import { reactive, computed } from 'vue'
-// import { baseUrl } from '~/utils/constants'
 import {
   kadenaBaseTokens,
   formatInteger,
@@ -7,20 +6,21 @@ import {
   getEncryptedReceiptsOfTransaction,
   getEncryptedUtxosOfTransaction,
   getKdaMessage,
-  MerkleTreeService,
-  getKdaTransactionParams,
   getKdaTransactionParams,
   getPublicArgs,
   MerkleTreeService,
   computeInputs
 } from 'opact-sdk'
 import { groth16 } from 'snarkjs'
+import { baseUrl } from '~/utils/constants'
 
 export const useReceiveForm = (
   amount = 0,
-  token = kadenaBaseTokens[0]
+  token = kadenaBaseTokens[0],
+  type = 'token'
 ) => {
-  const data = reactive<{ stepForm: string }>({
+  const data = reactive<any>({
+    type,
     token,
     amount,
 
@@ -57,15 +57,25 @@ export const useReceiveForm = (
   }
 
   const link = computed(() => {
-    if (!data.token) {
-      return ''
+    const route = isPrivate.value ? 'send' : 'invoice'
+
+    if (data.type === 'nft') {
+      return `${baseUrl}/${route}/nft?address=${account.value.address}`
     }
 
-    if (isPrivate.value) {
-      return 'privateaddres kekw'
+    const params = [
+      `?address=${account.value.address}`
+    ]
+
+    if (data.token) {
+      params.push(`token=${data.token.id}`)
     }
 
-    return `${baseUrl}/invoice?token=${data?.token?.id}&amount=${data?.amount}&pubkey=$dwqkodpwqkdopwqkdopwqkopdwqkdwqkp`
+    if (data.amount && data.amount !== '0.0') {
+      params.push(`amount=${data.amount}`)
+    }
+
+    return `${baseUrl}/${route}/token${params.join('$')}`
   })
 
   const isDisabled = computed(() => {
@@ -89,7 +99,7 @@ export const useReceiveForm = (
     const batch = await getDepositSoluctionBatch({
       senderWallet: wallet,
       totalRequired: Number(data.amount),
-      selectedToken: kadenaBaseTokens[0]
+      selectedToken: data.token
     })
 
     const { delta, utxosIn, utxosOut } = batch
@@ -188,7 +198,7 @@ export const useReceiveForm = (
 
   const reset = () => {
     data.amount = ''
-    data.receiveType = ''
+    data.receiveType = 'external'
     data.token = null
   }
 

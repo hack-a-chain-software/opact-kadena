@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { reactive, watch } from 'vue'
 import Pact from 'pact-lang-api'
+import { getPoseidonTokenHash } from 'opact-sdk'
 import {
   TransitionRoot,
   TransitionChild,
@@ -120,21 +121,25 @@ watch(
 
             const { datum } = data[0]
 
+            const namespace = {
+              id,
+              refName: {
+                name: 'poly-fungible-v2-reference',
+                namespace: 'free'
+              },
+              refSpec: {
+                name: 'poly-fungible-v2',
+                namespace: 'kip'
+              }
+            }
+
             return {
               id,
+              address: 'poly-fungible-v2-reference',
+              hash: getPoseidonTokenHash({ namespace }),
               name: datum.title,
               uri: datum.assetUrl,
-              namespace: {
-                id,
-                refName: {
-                  name: 'poly-fungible-v2-reference',
-                  namespace: 'free'
-                },
-                refSpec: {
-                  name: 'poly-fungible-v2',
-                  namespace: 'kip'
-                }
-              }
+              namespace
             }
           })
         )
@@ -255,12 +260,12 @@ watch(
 
               <div>
                 <div
+                  v-if="data.tokens.length > 0"
                   class="
                     gap-3
                     grid grid-cols-3
                     divide divide-y-[1px] divide-gray-700
                   "
-                  v-if="data.tokens.length > 0"
                 >
                   <button
                     v-for="token in data.tokens"
@@ -289,7 +294,7 @@ watch(
                           h-[125px]
                           rounded-[6px]
                         "
-                      />
+                      >
                     </div>
 
                     <div

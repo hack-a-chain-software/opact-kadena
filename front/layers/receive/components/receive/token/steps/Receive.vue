@@ -50,7 +50,7 @@ const { account } = useOpactWallet()
 
       <div>
         <ReceiveFromLink
-          :link="data.link"
+          :link="link"
           :isDisabled="isDisabled"
           @done="emit('reset')"
         />

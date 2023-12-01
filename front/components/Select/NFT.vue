@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { reactive } from 'vue'
+
 withDefaults(
   defineProps<{
     token: any;
@@ -12,6 +14,10 @@ withDefaults(
     disabled: false
   }
 )
+
+const data = reactive({
+  show: false,
+})
 
 const emit = defineEmits(['selected', 'close', 'open'])
 </script>
@@ -39,12 +45,12 @@ const emit = defineEmits(['selected', 'close', 'open'])
           items-center
           bg-gray-800
           hover:opacity-90
+          text-font-1
           disabled:opacity-60
           border border-transparent
           disabled:cursor-not-allowed
         "
-        :class="token && '!border-blue-400'"
-        @click.prevent="emit('open')"
+        @click.prevent="data.show = true"
       >
         <div v-if="!token">
           <span class="text-font-2 text-xs font-medium">
@@ -58,7 +64,7 @@ const emit = defineEmits(['selected', 'close', 'open'])
             class="h-[60px] w-[60px] rounded-[8px]"
           />
 
-          <span v-text="token?.name" class="text-xs" />
+          <span v-text="token?.name" class="text-xs " />
         </div>
 
         <div>
@@ -71,9 +77,9 @@ const emit = defineEmits(['selected', 'close', 'open'])
     </div>
 
     <ModalNFT
-      :show="show"
+      :show="data.show"
       :accountName="accountName"
-      @close="emit('close', $event)"
+      @close="data.show = false"
       @selected="emit('selected', $event)"
     />
   </div>
