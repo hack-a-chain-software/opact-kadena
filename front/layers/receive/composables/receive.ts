@@ -19,9 +19,9 @@ export const useReceiveForm = (
   type = 'token'
 ) => {
   const baseUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'localhost:3000'
-    : window?.location?.origin
+    process.env.NODE_ENV === 'development'
+      ? 'localhost:3000'
+      : window?.location?.origin
 
   const data = reactive<any>({
     type,
