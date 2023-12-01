@@ -108,6 +108,8 @@ export default defineNuxtConfig({
     '/history': { prerender: false },
     '/transfer': { prerender: false },
     '/deposit/nft': { prerender: false },
+    '/receive/nft': { prerender: false },
+    '/receive/token': { prerender: false },
     '/deposit/token': { prerender: false },
     '/invoice/create': { prerender: false }
   }
