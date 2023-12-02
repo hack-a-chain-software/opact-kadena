@@ -41,7 +41,6 @@ const create = () => {
     return
   }
 
-
   store({
     phrase: props.mnemonic
   })

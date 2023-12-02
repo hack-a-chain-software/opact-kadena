@@ -1,10 +1,11 @@
-import { useWalletStore } from '~/stores/wallet'
+import { useAuthStorage } from '~/hooks/auth-storage'
 
 export default defineNuxtRouteMiddleware((to) => {
   const router = useRouter()
-  const wallet = useWalletStore()
 
-  if (wallet.cache && wallet.cache.phrase) {
+  const { cache } = useAuthStorage()
+
+  if (!!cache) {
     return
   }
 
