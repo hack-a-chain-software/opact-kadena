@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
-import { useWalletStore } from '~/stores/wallet'
+import { useAuthStorage } from '~/hooks/auth-storage'
+
+const { store } = useAuthStorage()
 
 const emits = defineEmits(['changeStep'])
 
 const router = useRouter()
 const route = useRoute()
-
-const wallet = useWalletStore()
 
 const data = reactive({
   phrase: ''
@@ -21,16 +21,16 @@ const splited = computed(() => {
   return data.phrase.split(' ')
 })
 
-const recovery = async () => {
-  await wallet.connect(data.phrase)
+const recovery = () => {
+  store({
+    phrase: data.phrase
+  })
 
   router.push((route.query as any).next || '/home')
 }
 
 const toPaste = async () => {
   const text = await navigator.clipboard.readText()
-
-  console.log('text', text)
 
   if (text.split(' ').length !== 12) {
     return

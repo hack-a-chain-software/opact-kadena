@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-import { useWalletStore } from '~/stores/wallet'
+import { useAuthStorage } from '~/hooks/auth-storage'
 
-const wallet = useWalletStore()
+const { store } = useAuthStorage()
 
 const emits = defineEmits(['changeStep'])
 
@@ -41,19 +41,12 @@ const create = () => {
     return
   }
 
-  console.log('1')
 
-  wallet.connect(props.mnemonic)
-
-  console.log('2')
-
-  console.log('route.query', route.query)
-  console.log('route.query.next', route.query.next)
+  store({
+    phrase: props.mnemonic
+  })
 
   router.push((route.query as any).next || '/home')
-
-  console.log('3')
-  console.log('3')
 }
 
 const isDisabled = computed(() => {
