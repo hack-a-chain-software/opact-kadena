@@ -13,10 +13,14 @@ withDefaults(
 
 <template>
   <div>
-    <div class="flex justify-between pb-4">
+    <div class="flex justify-between pb-2 lg:pb-4">
       <span
         v-text="label"
-        class="text-xs font-medium text-font-1"
+        class="
+          text-font-1
+          font-medium
+          text-xxs lg:text-xs
+        "
       />
     </div>
 
@@ -35,9 +39,12 @@ withDefaults(
     >
       <div
         class="
-          w-[40px]
-          h-[40px]
-          max-h-[40px]
+          w-9
+          h-9
+          max-h-9
+          lg:w-10
+          lg:h-10
+          lg:max-h-[40px]
           flex
           items-center
           justify-center
@@ -61,10 +68,10 @@ withDefaults(
       >
         <span
           class="
-            text-sm
+            text-xxs lg:text-sm
             font-medium
             text-font-1
-            line-clamp-1
+            line-clamp-2
           "
           v-text="
             provider?.account?.address ||

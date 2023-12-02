@@ -25,9 +25,10 @@ const emit = defineEmits(['back'])
     <div>
       <h1
         class="
-          text-lg
+          text-md
+          lg:text-lg
           font-[500]
-          leading-[33.6px]
+          leading-[19.6px] lg:leading-[33.6px]
           text-font-1
         "
       >

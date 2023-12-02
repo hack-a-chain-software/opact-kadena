@@ -20,13 +20,13 @@ const routes = [
     path: 'history',
     label: 'History',
     icon: 'chart'
-  },
-  {
-    disabled: false,
-    path: 'settings',
-    label: 'Settings',
-    icon: 'iconSettings'
   }
+  // {
+  //   disabled: false,
+  //   path: 'settings',
+  //   label: 'Settings',
+  //   icon: 'iconSettings'
+  // }
 ]
 
 const redirect = (path: string, skip: boolean) => {
@@ -56,7 +56,7 @@ const redirect = (path: string, skip: boolean) => {
       right-0
       flex
       px-[61px]
-      justify-between
+      justify-around
       bg-dark-blue
       border-t-[0.5px] border-gray-600
     "

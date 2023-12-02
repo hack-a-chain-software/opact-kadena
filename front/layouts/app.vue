@@ -63,8 +63,6 @@ watch(account, (newAccount) => {
 
       <LayoutBottombar />
 
-      <LayoutMobileTopbar />
-
       <div
         class="
           px-4
@@ -74,6 +72,7 @@ watch(account, (newAccount) => {
           pl-4
           lg:pl-[135px]
           xl:pl-[276px]
+          pb-[78.45px] lg:pb-0
         "
       >
         <slot />

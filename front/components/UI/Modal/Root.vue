@@ -76,10 +76,11 @@ const close = () => {
                   flex
                   relative
                   items-center
-                  justify-between
+                  lg:justify-between
+                  justify-center
                   px-6
                   py-4
-                  lg:border-b-[1px] lg:border-gray-600
+                  border-b-[1px] border-gray-600
                 "
               >
                 <DialogTitle
@@ -91,7 +92,7 @@ const close = () => {
 
                 <UIButtonIcon
                   icon="close"
-                  class="text-blue-400"
+                  class="text-blue-400 absolute top-1/2 -translate-y-1/2 right-6"
                   @click.prevent="close()"
                 />
               </div>

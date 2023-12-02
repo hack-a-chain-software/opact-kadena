@@ -10,24 +10,28 @@ useHead({
 </script>
 
 <template>
-  <div
-    class="
-      lg:w-full
-      h-full
-      pt-4
-      lg:pt-0
-      lg:gap-6
-      lg:grid
-      lg:grid-cols-[minmax(auto,_698px)_400px]
-      lg:grid-rows-[141px_1fr]
-      lg:justify-center
-    "
-  >
-    <HomeWidgetTokens />
+  <div>
+    <LayoutMobileTopbar />
 
-    <HomeWidgetActions />
+    <div
+      class="
+        lg:w-full
+        h-full
+        pt-6
+        lg:pt-0
+        lg:gap-6
+        lg:grid
+        lg:grid-cols-[minmax(auto,_698px)_400px]
+        lg:grid-rows-[141px_1fr]
+        lg:justify-center
+      "
+    >
+      <HomeWidgetTokens />
 
-    <HomeWidgetHistory />
+      <HomeWidgetActions />
+
+      <HomeWidgetHistory />
+    </div>
   </div>
 </template>
 

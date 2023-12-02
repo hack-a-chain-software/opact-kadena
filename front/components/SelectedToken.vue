@@ -11,8 +11,8 @@ withDefaults(
 
 <template>
   <div>
-    <div class="flex justify-between pb-4">
-      <span class="text-xs font-medium text-font-1">
+    <div class="flex justify-between pb-2 lg:pb-4">
+      <span class="text-xxs lg:text-xs font-medium text-font-1">
         Token
       </span>
     </div>
@@ -22,7 +22,7 @@ withDefaults(
         p-4
         flex
         w-full
-        min-h-[64px]
+        min-h-[56px] lg:min-h-[64px]
         rounded-[8px]
         justify-between
         items-center
@@ -35,11 +35,11 @@ withDefaults(
       "
     >
       <div class="space-x-4 flex items-center">
-        <img :src="token.icon" class="w-10 h-10" />
+        <img :src="token.icon" class="w-6 h-6 lg:w-10 lg:h-10" />
 
         <span
           v-text="token.name"
-          class="text-sm text-font-1"
+          class="text-xs lg:text-sm text-font-1"
         />
       </div>
     </div>

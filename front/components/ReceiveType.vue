@@ -43,10 +43,10 @@ withDefaults(
     <div>
       <span
         class="
-          text-xs
-          font-[400]
-          leading-[22.4px]
           text-font-1
+          text-xxs lg:text-xs
+          font-[500] lg:font-[400]
+          leading-[19.6px] lg:leading-[22.4px]
         "
       >
         Select your receiving method:
@@ -58,7 +58,7 @@ withDefaults(
         :modelValue="selected"
         @update:modelValue="emit('selected', $event)"
       >
-        <div class="flex gap-4">
+        <div class="flex gap-4 flex-col lg:flex-row">
           <RadioGroupOption
             v-for="txType in txTypes"
             :key="txType.value"
@@ -97,9 +97,10 @@ withDefaults(
                     <RadioGroupLabel
                       as="p"
                       class="
-                        text-font-1 text-sm
-                        font-[500]
-                        leading-[25.2px]
+                        text-font-1
+                        text-xs lg:text-sm
+                        font-[400] lg:font-[500]
+                        leading-[22.4px] lg:leading-[25.2px]
                       "
                     >
                       {{ txType.title }}

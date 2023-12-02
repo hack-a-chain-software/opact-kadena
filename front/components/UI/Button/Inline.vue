@@ -36,7 +36,7 @@ const handleClick = (event: any) => {
       justify-center
       group
       px-4
-      py-[15px]
+      py-3 lg:py-[15px]
       rounded-[12px]
       relative
       bg-blue-gradient
@@ -49,8 +49,8 @@ const handleClick = (event: any) => {
       <span
         v-text="label"
         class="
-          text-font-1 text-sm
-          font-[500]
+          text-font-1 text-xs lg:text-sm
+          lg:font-[500]
           leading-[140%]
         "
       />

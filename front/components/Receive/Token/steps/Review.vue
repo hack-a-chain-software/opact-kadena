@@ -30,43 +30,8 @@ const { provider } = useExtensions()
 <template>
   <UICardBody>
     <UICardHeader
-      withBack
       title="Confirm deposit information"
-      @back="emit('changeStep', 'receive')"
     />
-
-    <div
-      class="
-        w-full
-        py-4
-        flex
-        justify-center
-        relative
-        items-center
-        lg:hidden
-      "
-    >
-      <button
-        class="
-          flex
-          items-center
-          space-x-[4px]
-          h-6
-          absolute
-          top-4
-          left-0
-        "
-        @click.prevent="router.push('/home')"
-      >
-        <Icon name="chevronLeft" class="h-6 w-6" />
-      </button>
-
-      <div>
-        <h1 class="text-xs text-font-1 font-medium">
-          Deposit
-        </h1>
-      </div>
-    </div>
 
     <UIInputMoney
       readonly

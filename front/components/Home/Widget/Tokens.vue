@@ -8,8 +8,6 @@ import { useAppState } from '~/hooks/state'
 
 const { userData } = useAppState()
 
-const router = useRouter()
-
 const data = reactive({
   tab: 'tokens',
   kdxInDolar: 0,
@@ -99,18 +97,15 @@ const balance = computed(() => {
 
         <div class="mt-auto lg:hidden">
           <button
-            disabled
             class="
               text-blue-300
               flex
               items-center
               justify-center
               space-x-2
-              opacity-[0.5]
-              cursor-not-allowed
             "
           >
-            <span class="font-xs font-regular">
+            <span class="font-xs font-[400] font-regular">
               History
             </span>
 
@@ -124,56 +119,11 @@ const balance = computed(() => {
         </div>
       </div>
 
-      <div
-        class="lg:hidden pt-[24px] gap-2 grid grid-cols-3"
-      >
-        <button
-          class="bg-gray-800 rounded-[8px] py-3 px-4"
-          @click.prevent="router.push('/send/token')"
-        >
-          <div class="pb-2">
-            <Icon name="send" class="w-6 h-6" />
-          </div>
+      <HomeActionButtonsList
+        class="lg:hidden pt-6"
+      />
 
-          <div>
-            <span class="text-xxs font-medium text-font-1">
-              Send
-            </span>
-          </div>
-        </button>
-
-        <button
-          class="bg-gray-800 rounded-[8px] py-3 px-4"
-          @click.prevent="data.showReceiveModal = true"
-        >
-          <div class="pb-2">
-            <Icon name="receive" class="w-6 h-6" />
-          </div>
-
-          <div>
-            <span class="text-xxs font-medium text-font-1">
-              Receive
-            </span>
-          </div>
-        </button>
-
-        <button
-          class="bg-gray-800 rounded-[8px] py-3 px-4"
-          @click.prevent="router.push('/deposit')"
-        >
-          <div class="pb-2">
-            <Icon name="add" class="w-6 h-6 text-font-1" />
-          </div>
-
-          <div>
-            <span class="text-xxs font-medium text-font-1">
-              Deposit
-            </span>
-          </div>
-        </button>
-      </div>
-
-      <div class="pt-[24px] lg:pt-8 flex space-x-[24px]">
+      <div class="pt-6 lg:pt-8 flex space-x-[24px]">
         <button
           :class="
             data.tab === 'tokens' &&

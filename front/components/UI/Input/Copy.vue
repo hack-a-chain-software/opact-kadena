@@ -27,14 +27,14 @@ const copyToClipboard = async () => {
 </script>
 
 <template>
-  <div class="ozk-address flex flex-col space-y-4">
+  <div class="ozk-address flex flex-col space-y-2 lg:space-y-4">
     <div>
       <h2
         class="
-          text-xs
-          font-[400]
           text-font-1
-          leading-[22.4px]
+          leading-[19.6px] lg:leading-[22.4px]
+          text-xxs lg:text-xs
+          font-[500] lg:font-[400]
         "
       >
         {{ props.label }}
@@ -66,8 +66,8 @@ const copyToClipboard = async () => {
         >
           <span
             class="
-              text-xs text-font-1
-              truncate
+              text-xxs lg:text-xs text-font-1
+              truncate font-[500] lg:font-[400]
               group-active:text-blue-400
             "
             v-text="props.value"

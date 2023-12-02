@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+const router = useRouter()
 
-const data = reactive({
-  showSettings: false
-})
+withDefaults(
+  defineProps<{
+    name: string,
+  }>(),
+  {
+    name: 'Receive'
+  }
+)
 </script>
 
 <template>
@@ -12,7 +17,8 @@ const data = reactive({
       lg:hidden
       h-[60px]
       flex
-      justify-between
+      justify-center
+      relative
       items-center
     "
   >
@@ -44,29 +50,20 @@ const data = reactive({
       />
     </div>
 
-    <div class="relative z-[1]">
-      <img src="/logo.png"/>
-    </div>
+    <UIButtonIcon
+      icon="chevronLeft"
+      @click.prevent="router.push('/home')"
+      class="absolute left-0 top-1/2 -translate-y-1/2"
+    />
 
-    <div class="relative z-[1]">
-      <button
-        class="
-          rounded-full
-          bg-gray-900
-          w-9
-          h-9
-          flex
-          items-center
-          border border-gray-600
-          justify-center
-        "
-        @click.prevent="data.showSettings = true"
+    <div
+      class="relative z-[1]"
+    >
+      <h1
+        class="text-font-1 text-xs"
       >
-        <Icon
-          name="iconSettings"
-          class="w-5 h-5 text-font-1"
-        />
-      </button>
+        {{ name }}
+      </h1>
     </div>
   </div>
 </template>

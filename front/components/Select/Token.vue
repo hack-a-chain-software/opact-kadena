@@ -20,8 +20,14 @@ const emit = defineEmits(['selected'])
 <template>
   <div>
     <div>
-      <div class="flex justify-between pb-4">
-        <span class="text-xs font-medium text-font-1">
+      <div class="flex justify-between pb-2 lg:pb-4">
+        <span
+          class="
+            text-font-1
+            text-xxs lg:text-xs
+            font-medium
+          "
+        >
           Select Token
         </span>
       </div>
@@ -31,7 +37,7 @@ const emit = defineEmits(['selected'])
           p-4
           flex
           w-full
-          min-h-[64px]
+          min-h-[56px] lg:min-h-[64px]
           rounded-[8px]
           justify-between
           items-center
@@ -50,12 +56,12 @@ const emit = defineEmits(['selected'])
           </span>
         </div>
 
-        <div v-else class="space-x-2 flex items-center">
-          <img :src="token.icon" class="w-10 h-10" />
+        <div v-else class="space-x-4 lg:space-x-2 flex items-center">
+          <img :src="token.icon" class="w-6 h-6 lg:w-10 lg:h-10" />
 
           <span
             v-text="token.name"
-            class="text-sm text-font-1"
+            class="text-xs lg:text-sm text-font-1"
           />
         </div>
 

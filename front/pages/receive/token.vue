@@ -11,7 +11,13 @@ useHead({
 
 <template>
   <div class="lg:flex lg:justify-center">
-    <ReceiveTokenForm />
+    <LayoutGenericTopbar
+      name="Receive Token"
+    />
+
+    <ReceiveTokenForm
+      class="mt-6 lg:md-0"
+    />
   </div>
 </template>
 

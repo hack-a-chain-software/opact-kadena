@@ -30,11 +30,15 @@ const emits = defineEmits(['update:modelValue'])
 </script>
 
 <template>
-  <div class="pt-[24px] lg:pt-0">
+  <div class="">
     <div class="flex flex-col">
-      <div v-if="withLabel" class="pb-4">
+      <div v-if="withLabel" class="pb-2 lg:pb-4">
         <h2
-          class="text-font-1 text-xs font-medium"
+          class="
+            text-font-1
+            text-xxs lg:text-xs
+            font-medium
+          "
           :class="
             props.disabled &&
             'opacity-60 cursor-not-allowed'
