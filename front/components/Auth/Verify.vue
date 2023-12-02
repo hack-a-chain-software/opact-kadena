@@ -53,6 +53,7 @@ const create = () => {
   router.push((route.query as any).next || '/home')
 
   console.log('3')
+  console.log('3')
 }
 
 const isDisabled = computed(() => {
