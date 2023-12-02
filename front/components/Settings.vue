@@ -26,7 +26,7 @@ const logout = () => {
 </script>
 
 <template>
-  <UiModalRoot
+  <UIModalRoot
     :show="show"
     @close="close()"
     title="Settings"
@@ -73,5 +73,5 @@ const logout = () => {
         </div>
       </button>
     </div>
-  </UiModalRoot>
+  </UIModalRoot>
 </template>

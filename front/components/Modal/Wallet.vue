@@ -18,7 +18,7 @@ const close = () => {
 </script>
 
 <template>
-  <UiModalRoot
+  <UIModalRoot
     :show="show"
     title="Select Wallet"
     @close="close()"
@@ -35,5 +35,5 @@ const close = () => {
         />
       </ul>
     </div>
-  </UiModalRoot>
+  </UIModalRoot>
 </template>

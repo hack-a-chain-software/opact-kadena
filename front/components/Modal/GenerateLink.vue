@@ -14,7 +14,7 @@ const emit = defineEmits(['close', 'done'])
 </script>
 
 <template>
-  <UiModalRoot
+  <UIModalRoot
     :show="show"
     title="Shareable link"
     @close="emit('close')"
@@ -28,5 +28,5 @@ const emit = defineEmits(['close', 'done'])
       label="Done"
       @click.prevent="emit('done')"
     />
-  </UiModalRoot>
+  </UIModalRoot>
 </template>

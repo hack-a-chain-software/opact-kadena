@@ -89,7 +89,7 @@ const close = () => {
                   {{ title }}
                 </DialogTitle>
 
-                <UiButtonIcon
+                <UIButtonIcon
                   icon="close"
                   class="text-blue-400"
                   @click.prevent="close()"

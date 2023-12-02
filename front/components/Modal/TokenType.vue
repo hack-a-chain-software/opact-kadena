@@ -28,7 +28,7 @@ const close = () => {
 </script>
 
 <template>
-  <UiModalRoot :show="show" :title="title" @close="close()">
+  <UIModalRoot :show="show" :title="title" @close="close()">
     <div class="flex flex-col gap-2">
       <h2
         class="
@@ -46,17 +46,17 @@ const close = () => {
     </div>
 
     <div class="flex flex-col gap-4">
-      <UiButtonTertiary
+      <UIButtonTertiary
         label="Token"
         class="bg-gray-700"
         @click.prevent="router.push(`/${baseRoute}/token`)"
       />
 
-      <UiButtonTertiary
+      <UIButtonTertiary
         label="NFT"
         class="bg-gray-700"
         @click.prevent="router.push(`/${baseRoute}/nft`)"
       />
     </div>
-  </UiModalRoot>
+  </UIModalRoot>
 </template>

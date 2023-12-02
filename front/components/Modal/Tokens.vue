@@ -40,7 +40,7 @@ const filtered = computed(() => {
 </script>
 
 <template>
-  <UiModalRoot
+  <UIModalRoot
     :show="show"
     @close="close()"
     title="Select token"
@@ -108,5 +108,5 @@ const filtered = computed(() => {
         </button>
       </div>
     </div>
-  </UiModalRoot>
+  </UIModalRoot>
 </template>

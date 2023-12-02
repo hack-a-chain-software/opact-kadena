@@ -145,7 +145,7 @@ watch(
 </script>
 
 <template>
-  <UiModalRoot
+  <UIModalRoot
     :show="show"
     @close="close()"
     title="Select NFT"
@@ -204,5 +204,5 @@ watch(
         />
       </div>
     </div>
-  </UiModalRoot>
+  </UIModalRoot>
 </template>

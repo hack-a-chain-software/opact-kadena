@@ -8,7 +8,7 @@ const data = reactive({
 
 <template>
   <div>
-    <UiButtonAction
+    <UIButtonAction
       icon="send"
       label="Send"
       @click.prevent="data.show = true"
