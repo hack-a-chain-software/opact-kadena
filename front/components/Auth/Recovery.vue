@@ -129,7 +129,7 @@ const toPaste = async () => {
 
     <UIFormFooter
       label="Recovery"
-      @click.prevent="recovery()"
+      @click="recovery()"
     />
   </UIFormLayout>
 </template>
