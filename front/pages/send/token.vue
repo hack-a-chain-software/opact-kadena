@@ -1,46 +1,22 @@
 <script setup lang="ts">
-import { useTransfer } from '~/hooks/transfer'
-
 definePageMeta({
   layout: 'app',
   middleware: 'auth'
 })
 
 useHead({
-  title: 'Send'
+  title: 'Send Token'
 })
-
-const { data, form } = useTransfer()
 </script>
 
 <template>
   <div class="lg:flex lg:justify-center">
-    <div
-      class="
-        text-white
-        lg:p-6
-        lg:bg-gray-900
-        lg:w-[546px]
-        lg:border-2
-        lg:border-gray-600
-        lg:rounded-[12px]
-      "
-    >
-      <Transition name="fade" mode="out-in">
-        <component :is="form[data.stepForm]" />
-      </Transition>
-    </div>
+    <LayoutGenericTopbar
+      name="Send Token"
+    />
+
+    <SendTokenForm
+      class="mt-6 lg:md-0"
+    />
   </div>
 </template>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

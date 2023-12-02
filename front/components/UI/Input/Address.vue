@@ -111,7 +111,7 @@ watch(
 </script>
 
 <template>
-  <div class="pt-4 lg:pt-8">
+  <div>
     <div class="flex justify-between pb-4 relative z-[1]">
       <span
         class="text-xs font-medium text-font-1"

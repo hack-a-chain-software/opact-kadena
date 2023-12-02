@@ -16,9 +16,7 @@ export const useSendNFT = () => {
     addressTo: '',
     progress: 'Generating ZK Proof...',
 
-    show: false,
     loading: false,
-    showCollapsible: false,
     isValidAddress: false,
 
     token: null
