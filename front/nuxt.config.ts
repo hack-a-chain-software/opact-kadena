@@ -100,13 +100,10 @@ export default defineNuxtConfig({
     '/home': { prerender: false },
     '/wallet': { prerender: true },
     '/tickets': { prerender: true },
-    '/receive': { prerender: false },
     '/history': { prerender: false },
-    '/transfer': { prerender: false },
-    '/deposit/nft': { prerender: false },
+    '/send/nft': { prerender: false },
+    '/send/token': { prerender: false },
     '/receive/nft': { prerender: false },
-    '/receive/token': { prerender: false },
-    '/deposit/token': { prerender: false },
-    '/invoice/create': { prerender: false }
+    '/receive/token': { prerender: false }
   }
 })
