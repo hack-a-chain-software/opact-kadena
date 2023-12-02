@@ -98,7 +98,7 @@ const isDisabled = computed(() => {
 
     <UIFormFooter
       :disabled="!isDisabled"
-      @click.prevent="create()"
+      @click="create()"
       label="Verify & Create Wallet"
     />
   </UIFormLayout>
