@@ -4,8 +4,8 @@ export default defineNuxtRouteMiddleware(() => {
   const wallet = useWalletStore()
   const router = useRouter()
 
-  console.log('wallet.connected', wallet.connect)
-  console.log('wallet.cache.phrase', wallet.cache.phrase)
+  console.log('wallet.connected', wallet?.connect)
+  console.log('wallet.cache.phrase', wallet?.cache?.phrase)
 
   if (
     wallet.connected ||
