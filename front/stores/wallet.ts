@@ -37,7 +37,9 @@ export const useWalletStore = defineStore({
 
       this.account = newAccount
 
-      return newAccount
+      return {
+        pvtkey: newAccount.pvtkey.toString()
+      }
     },
 
     reconnect () {
