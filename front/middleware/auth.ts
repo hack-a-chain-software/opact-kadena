@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
   const { cache } = useAuthStorage()
 
-  if (!!cache) {
+  if (cache) {
     return
   }
 

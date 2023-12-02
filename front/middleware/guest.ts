@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(() => {
   const router = useRouter()
   const { cache } = useAuthStorage()
 
-  if (!!cache) {
+  if (cache) {
     return router.push({
       path: '/home'
     })
