@@ -47,6 +47,9 @@ const create = () => {
 
   console.log('2')
 
+  console.log('route.query', route.query)
+  console.log('route.query.next', route.query.next)
+
   router.push((route.query as any).next || '/home')
 
   console.log('3')
