@@ -41,9 +41,15 @@ const create = () => {
     return
   }
 
+  console.log('1')
+
   wallet.connect(props.mnemonic)
 
+  console.log('2')
+
   router.push((route.query as any).next || '/home')
+
+  console.log('2')
 }
 
 const isDisabled = computed(() => {
