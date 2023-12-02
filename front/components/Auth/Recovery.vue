@@ -30,6 +30,8 @@ const recovery = async () => {
 const toPaste = async () => {
   const text = await navigator.clipboard.readText()
 
+  console.log('text', text)
+
   if (text.split(' ').length !== 12) {
     return
   }
