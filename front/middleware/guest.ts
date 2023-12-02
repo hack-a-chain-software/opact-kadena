@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(() => {
 
   console.log('cache')
 
-  if (cache) {
+  if (cache.value) {
     return router.push({
       path: '/home'
     })
