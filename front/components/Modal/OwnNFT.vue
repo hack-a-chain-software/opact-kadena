@@ -2,6 +2,7 @@
 import Pact from 'pact-lang-api'
 import { reactive, watch } from 'vue'
 import { useAppState } from '~/hooks/state'
+import { getPoseidonTokenHash } from 'opact-sdk'
 
 const { userData } = useAppState()
 
@@ -73,21 +74,25 @@ watch(
 
           const { datum } = data[0]
 
+          const namespace = {
+            id,
+            refName: {
+              name: 'poly-fungible-v2-reference',
+              namespace: 'free'
+            },
+            refSpec: {
+              name: 'poly-fungible-v2',
+              namespace: 'kip'
+            }
+          }
+
           return {
             id,
+            address: 'poly-fungible-v2-reference',
+            hash: getPoseidonTokenHash({ namespace }),
             name: datum.title,
             uri: datum.assetUrl,
-            namespace: {
-              id,
-              refName: {
-                name: 'poly-fungible-v2-reference',
-                namespace: 'free'
-              },
-              refSpec: {
-                name: 'poly-fungible-v2',
-                namespace: 'kip'
-              }
-            }
+            namespace,
           }
         })
       )

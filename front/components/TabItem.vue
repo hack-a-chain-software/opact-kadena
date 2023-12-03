@@ -47,7 +47,7 @@ const loginCallback = () => {
       class="text-xxxs text-blue-300"
       @click.prevent.stop="extension.logout()"
     >
-      <span> Connected </span>
+      <span> Switch </span>
     </button>
   </button>
 </template>

@@ -106,20 +106,20 @@ onBeforeMount(() => {
       :disabled="isDisabled"
     />
 
-  <Warning
-    type="error"
-    v-if="error"
-    :label="error + '*'"
-  />
+    <Warning
+      type="error"
+      v-if="error"
+      :label="error + '*'"
+    />
 
-  <SelectWallet v-if="showConnectWalletButton" />
+    <SelectWallet v-if="showConnectWalletButton" />
 
-  <UIButtonInline
-    v-else
-    :loading="isLoading"
-    :disabled="isDisabled"
-    @click.prevent="transferStore.sendTransferToken(account)"
-    :label="isLoading ? progress : 'Send Token'"
-  />
+    <UIButtonInline
+      v-else
+      :loading="isLoading"
+      :disabled="isDisabled"
+      @click.prevent="transferStore.sendTransferToken(account)"
+      :label="isLoading ? progress : 'Send Token'"
+    />
   </UICardBody>
 </template>

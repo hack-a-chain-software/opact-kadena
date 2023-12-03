@@ -69,8 +69,6 @@ export const useAppState = () => {
       storedReceipts
     )) || {}
 
-    console.log('treeBalances', treeBalances)
-
     const tokens: any = {}
 
     if (treeBalances.coin) {

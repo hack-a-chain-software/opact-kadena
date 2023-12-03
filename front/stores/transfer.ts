@@ -1,10 +1,20 @@
 import { defineStore } from 'pinia'
-import { kadenaBaseTokens, formatInteger, getTransferSolutionBatch, getEncryptedReceiptsOfTransaction, getEncryptedUtxosOfTransaction, getKdaTransactionParams, getKdaMessage, MerkleTreeService, computeInputs, getPublicArgs } from 'opact-sdk'
-import { groth16 } from 'snarkjs'
 import {
+  getDecimals,
+  computeInputs,
+  formatInteger,
+  getKdaMessage,
+  getPublicArgs,
+  kadenaBaseTokens,
+  MerkleTreeService,
+  getKdaTransactionParams,
+  getTransferSolutionBatch,
   formatBigNumberWithDecimals,
-  getDecimals
+  getEncryptedUtxosOfTransaction,
+  getTransferSolutionBatchForNFT,
+  getEncryptedReceiptsOfTransaction
 } from 'opact-sdk'
+import { groth16 } from 'snarkjs'
 import { useAppState } from '~/hooks/state'
 
 export const useTransferStore = defineStore({
@@ -52,18 +62,17 @@ export const useTransferStore = defineStore({
     },
 
     showConnectWalletButton ({ selectedToken }: any): any {
-      return selectedToken?.address !== 'coin' &&
-        !this.isInternalTransfer
+      return selectedToken?.address !== 'coin' && !this.isInternalTransfer
     },
 
     isDisabled ({
       type,
-      token,
       amount,
+      selectedToken,
       isValidAddress
     }: any): boolean {
-      if (type === 'nft') {
-        return !isValidAddress || !token
+      if (type === 'nfts') {
+        return !isValidAddress || !selectedToken
       }
 
       return !isValidAddress ||
@@ -94,21 +103,43 @@ export const useTransferStore = defineStore({
         12
       )
 
-      const treeBalance = userData.value.tokens[this.selectedToken.address]
+      let treeBalance = null
+
+      if (this.type === 'nfts') {
+        treeBalance = userData.value.nfts[this.selectedToken.address]
+      } else {
+        treeBalance = userData.value.tokens[this.selectedToken.address]
+      }
 
       const receiver = this.addressTo
 
       const amount = this.amount
 
-      const batch = await getTransferSolutionBatch({
-        treeBalance,
-        senderWallet: wallet,
-        totalRequired: amount,
-        receiverAddress: this.isInternalTransfer
-          ? receiver
-          : null,
-        selectedToken: this.selectedToken
-      })
+      let batch = null
+
+      if (this.type === 'nfts') {
+        batch = await getTransferSolutionBatchForNFT({
+          treeBalance,
+          totalRequired: amount,
+          senderWallet: wallet,
+          receiverAddress: this.isInternalTransfer
+            ? receiver
+            : null,
+          selectedToken: this.selectedToken
+        })
+
+        console.log('batch', batch)
+      } else {
+        batch = await getTransferSolutionBatch({
+          treeBalance,
+          senderWallet: wallet,
+          totalRequired: amount,
+          receiverAddress: this.isInternalTransfer
+            ? receiver
+            : null,
+          selectedToken: this.selectedToken
+        })
+      }
 
       const {
         delta,
@@ -171,7 +202,7 @@ export const useTransferStore = defineStore({
         wallet,
         message,
         utxosOut,
-        selectedToken: kadenaBaseTokens[0],
+        selectedToken: this.selectedToken,
         utxosIn: updatedUtxosInWithSubtreeValues,
         roots: {
           tree: treeRoot,
