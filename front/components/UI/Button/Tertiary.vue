@@ -22,7 +22,7 @@ const handleClick = (event: any) => {
     :disabled="disabled"
     class="
       ozk-button-action
-      py-3
+      py-4 lg:py-3
       px-4
       text-font-1
       bg-gray-700
@@ -38,7 +38,7 @@ const handleClick = (event: any) => {
   >
     <span
       v-text="label"
-      class="text-sm font-[500] leading-[140%]"
+      class="text-xs lg:text-sm font-[500] leading-[140%]"
     />
 
     <Icon name="chevron" class="rotate-[-90deg] w-4 h-4" />

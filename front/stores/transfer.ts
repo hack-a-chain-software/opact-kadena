@@ -87,10 +87,10 @@ export const useTransferStore = defineStore({
 
       this.loading = true
 
-      const { userData } = useAppState()
+      const { userData, loadAppState } = useAppState()
 
       const integerAmount = formatInteger(
-        Number(this.amount),
+        Number(this.amount) * -1,
         12
       )
 
@@ -117,13 +117,13 @@ export const useTransferStore = defineStore({
       } = batch
 
       const encryptedReceipts = getEncryptedReceiptsOfTransaction({
-        type: this.isInternalTransfer
-          ? 'transfer'
-          : 'withdraw',
+        amount: integerAmount,
         receiverAddress: receiver,
         senderAddress: wallet.address,
         selectedToken: this.selectedToken,
-        amount: (integerAmount as any) * -1
+        type: this.isInternalTransfer
+          ? 'transfer'
+          : 'withdraw'
       })
 
       const encryptedUtxos = getEncryptedUtxosOfTransaction({
@@ -136,14 +136,12 @@ export const useTransferStore = defineStore({
 
       const extData = getKdaTransactionParams({
         batch,
+        receiver,
         encryptedUtxos,
         encryptedReceipts,
-        amount: integerAmount,
         sender: wallet.address,
         selectedToken: this.selectedToken,
-        receiverAddress: this.isInternalTransfer
-          ? receiver
-          : null
+        amount: this.isInternalTransfer ? 0 : integerAmount
       })
 
       const message = getKdaMessage({
@@ -196,25 +194,27 @@ export const useTransferStore = defineStore({
         tokenSpec: this.selectedToken.namespace
       }
 
-      console.log('txArgs', txArgs)
+      if (this.isInternalTransfer || this.selectedToken.address === 'coin') {
+        await sendPactTransaction(
+          receiver,
+          txArgs,
+          (message: string) => (this.progress = message)
+        )
+      } else {
+        const { provider } = useExtensions()
 
-      console.log('inputs', inputs)
+        await provider.value.transaction(
+          txArgs,
+          (message: string) => (this.progress = message),
+          true,
+          receiver
+        )
+      }
+
+      const router = useRouter()
+
+      loadAppState(wallet.pvtkey)
+      router.push('/home')
     }
-
-    // async sendTransferNFT () {
-    //   this.error = ''
-
-    //   this.loading = true
-
-    //   let params = null
-
-    //   const { userData } = useAppState()
-
-    //   const integerAmount = formatInteger(
-    //     1,
-    //     12
-    //   )
-
-    // }
   }
 })

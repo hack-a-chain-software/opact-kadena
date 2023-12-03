@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { validatePubkey } from 'opact-sdk'
+import { validatePubkey, separateHex } from 'opact-sdk'
 import { reactive, watch } from 'vue'
 import { debounce } from '~/utils/debounce'
 
@@ -43,7 +43,11 @@ const verifyAddress = debounce(async (_, address: any) => {
     data.isOZKAccount = true
 
     try {
-      const isValidOpactAddress = validatePubkey(address)
+      const {
+        babyjubPubkey
+      } = separateHex(address)
+
+      const isValidOpactAddress = validatePubkey(BigInt(babyjubPubkey))
 
       if (isValidOpactAddress) {
         data.isValid = true

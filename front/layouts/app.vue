@@ -21,6 +21,8 @@ watch(account, (newAccount) => {
     return
   }
 
+  console.log('newAccount', newAccount)
+
   loadAppState(newAccount.pvtkey)
 })
 </script>

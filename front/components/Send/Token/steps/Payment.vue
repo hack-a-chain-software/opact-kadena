@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
 import { useTransferStore } from '~/stores/transfer'
@@ -26,6 +27,46 @@ const {
 } = storeToRefs(walletStore)
 
 const { provider } = useExtensions()
+
+const checkFunds = async () => {
+  if (!selectedToken.value) {
+    return
+  }
+
+  const prefix =
+    selectedToken.value.name === 'Kadena'
+      ? 'coin'
+      : 'test.opact-coin'
+
+  await nextTick()
+
+  if (!provider.value) {
+    return
+  }
+
+  // data.loading = true
+
+  const {
+    result: { status, data: coinData }
+  } = await provider.value.coinDetails(prefix)
+
+  console.log('result', coinData)
+  console.log('status', status)
+
+  // data.loading = false
+
+  // if (status === 'failure') {
+  //   data.balance = 0
+
+  //   return
+  // }
+
+  // data.balance = coinData.balance
+}
+
+onBeforeMount(() => {
+  checkFunds()
+})
 </script>
 
 <template>

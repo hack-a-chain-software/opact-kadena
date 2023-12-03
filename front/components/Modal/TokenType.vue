@@ -32,9 +32,10 @@ const close = () => {
     <div class="flex flex-col gap-2">
       <h2
         class="
-          text-font-1 text-md
+          text-font-1
+          text-sm lg:text-md
           font-[500]
-          leading-[30.8px]
+          leading-[25.2px] lg:leading-[30.8px]
         "
       >
         {{ subtile }}

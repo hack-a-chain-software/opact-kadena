@@ -34,9 +34,6 @@ const create = () => {
       Number(randomNumber.value) - 1
     ] === data.word
 
-  console.log('isValid', isValid)
-  console.log('props.mnemnonic', props.mnemonic)
-
   if (!isValid) {
     return
   }
