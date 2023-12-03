@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import Pact from 'pact-lang-api'
 import { reactive, watch } from 'vue'
-import { useAppState } from '~/hooks/state'
 import { getPoseidonTokenHash } from 'opact-sdk'
+import { useAppState } from '~/hooks/state'
 
 const { userData } = useAppState()
 
@@ -92,7 +92,7 @@ watch(
             hash: getPoseidonTokenHash({ namespace }),
             name: datum.title,
             uri: datum.assetUrl,
-            namespace,
+            namespace
           }
         })
       )
