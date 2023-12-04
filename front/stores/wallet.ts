@@ -18,11 +18,9 @@ export const useWalletStore = defineStore({
       account = getWalletFromMnemonic(cache.value.phrase)
     }
 
-    console.log('account', account)
-
     return {
       cache,
-      account,
+      account
     }
   },
 
