@@ -16,7 +16,7 @@ onMounted(() => {
 })
 
 watch(account, (newAccount) => {
-  if (!newAccount) {
+  if (!newAccount || !isLoading) {
     return
   }
 
