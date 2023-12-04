@@ -127,8 +127,6 @@ export const useTransferStore = defineStore({
             : null,
           selectedToken: this.selectedToken
         })
-
-        console.log('batch', batch)
       } else {
         batch = await getTransferSolutionBatch({
           treeBalance,

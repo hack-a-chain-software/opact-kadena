@@ -58,17 +58,11 @@ export const useWalletStore = defineStore({
         pvtkey: account.pvtkey.toString()
       }
 
-      console.log('heres', newCache)
-
       this.cache = {
         ...newCache
       }
 
-      console.log('heroes')
-
       store(newCache)
-
-      console.log('finllll')
     },
 
     async logout () {
