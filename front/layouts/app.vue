@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-// import { onBeforeMount } from 'vue'
 import { loadArtifact } from 'opact-sdk'
 import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
@@ -11,10 +10,7 @@ const { isLoading, loadAppState } = useAppState()
 
 const { connected, account } = storeToRefs(wallet)
 
-if (!connected) {
-  loadArtifact()
-  wallet.reconnect()
-}
+loadArtifact()
 
 watch(account, (newAccount) => {
   if (!newAccount) {

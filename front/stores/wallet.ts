@@ -10,9 +10,19 @@ export const useWalletStore = defineStore({
   state: (): any => {
     const { cache } = useAuthStorage()
 
+    let account = null
+
+    if (cache.value.phrase) {
+      console.log('load account by phrase')
+
+      account = getWalletFromMnemonic(cache.value.phrase)
+    }
+
+    console.log('account', account)
+
     return {
       cache,
-      account: null
+      account,
     }
   },
 
