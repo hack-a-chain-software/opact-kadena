@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
-import { useAuthStorage } from '~/hooks/auth-storage'
+import { useWalletStore } from '~/stores/wallet'
 
-const { store } = useAuthStorage()
+const wallet = useWalletStore()
 
 const emits = defineEmits(['changeStep'])
 
@@ -21,10 +21,8 @@ const splited = computed(() => {
   return data.phrase.split(' ')
 })
 
-const recovery = () => {
-  store({
-    phrase: data.phrase
-  })
+const recovery = async () => {
+  await wallet.connect(data.phrase)
 
   router.push((route.query as any).next || '/home')
 }

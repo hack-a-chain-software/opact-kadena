@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-import { useAuthStorage } from '~/hooks/auth-storage'
+import { useWalletStore } from '~/stores/wallet'
 
-const { store } = useAuthStorage()
+const wallet = useWalletStore()
 
 const emits = defineEmits(['changeStep'])
 
@@ -28,7 +28,7 @@ const randomNumber = computed(() => {
   ) as Number
 })
 
-const create = () => {
+const create = async () => {
   const isValid =
     props.mnemonic.split(' ')[
       Number(randomNumber.value) - 1
@@ -38,9 +38,7 @@ const create = () => {
     return
   }
 
-  store({
-    phrase: props.mnemonic
-  })
+  await wallet.connect(props.mnemonic)
 
   router.push((route.query as any).next || '/home')
 }

@@ -5,22 +5,14 @@ import { useAuthStorage } from '~/hooks/auth-storage'
 import { useStateStorage } from '~/hooks/state-starage'
 
 export const useWalletStore = defineStore({
-  id: 'opact-wallet',
+  id: 'wallet-store',
 
   state: (): any => {
     const { cache } = useAuthStorage()
 
-    let account = null
-
-    if (cache.value.phrase) {
-      console.log('load account by phrase')
-
-      account = getWalletFromMnemonic(cache.value.phrase)
-    }
-
     return {
       cache,
-      account
+      account: null
     }
   },
 
@@ -41,9 +33,9 @@ export const useWalletStore = defineStore({
 
       const newAccount = getWalletFromMnemonic(mnemonic)
 
-      this.persistAuth(mnemonic)
-
       this.account = newAccount
+
+      this.persistAuth(newAccount, mnemonic)
 
       return {
         pvtkey: newAccount.pvtkey.toString()
@@ -58,14 +50,25 @@ export const useWalletStore = defineStore({
       return this.connect(this.cache.phrase)
     },
 
-    persistAuth (mnemonic: any) {
+    persistAuth (account: any, mnemonic: any) {
       const { store } = useAuthStorage()
 
       const newCache = {
-        phrase: mnemonic
+        phrase: mnemonic,
+        pvtkey: account.pvtkey.toString()
       }
 
+      console.log('heres', newCache)
+
+      this.cache = {
+        ...newCache
+      }
+
+      console.log('heroes')
+
       store(newCache)
+
+      console.log('finllll')
     },
 
     async logout () {
