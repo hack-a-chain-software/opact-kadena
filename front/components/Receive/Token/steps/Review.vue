@@ -1,28 +1,23 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
+import { useReceiveStore } from '~/stores/receive'
+
+const receiveStore = useReceiveStore()
+
+const {
+  amount,
+  progress,
+  isLoading,
+  selectedToken
+} = storeToRefs(receiveStore)
 
 const wallet = useWalletStore()
 const { account } = storeToRefs(wallet)
 
-withDefaults(
-  defineProps<{
-    data: any;
-    link: string;
-    isPrivate: boolean;
-    isDisabled: boolean;
-  }>(),
-  {}
-)
-
-const emit = defineEmits([
-  'reset',
-  'deposit',
-  'changeStep',
-  'updateTokenValue',
-  'updateAmountValue',
-  'updateReceiveTypeValue'
-])
+// const emit = defineEmits([
+//   'changeStep'
+// ])
 
 const { provider } = useExtensions()
 </script>
@@ -36,7 +31,7 @@ const { provider } = useExtensions()
     <UIInputMoney
       readonly
       label="Amount"
-      :model-value="data.amount"
+      :model-value="amount"
     />
 
     <ProviderUser
@@ -45,11 +40,11 @@ const { provider } = useExtensions()
       :provider="provider"
     />
 
-    <SelectedToken :token="data.token" />
+    <SelectedToken :token="selectedToken" />
 
     <TxWrapper
-      :token="data.token"
-      :amount="data.amount"
+      :amount="amount"
+      :token="selectedToken"
       :receiver="account.address"
       :sender="
         provider?.account?.address ||
@@ -58,9 +53,9 @@ const { provider } = useExtensions()
     />
 
     <UIButtonInline
-      :loading="data.loading"
-      label="Deposit Now"
-      @click.prevent="emit('deposit')"
+      :loading="isLoading"
+      :label="isLoading ? progress : 'Receive Now'"
+      @click.prevent="receiveStore.sendDeposit(account)"
     />
   </UICardBody>
 </template>

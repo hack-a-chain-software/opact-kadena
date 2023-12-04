@@ -28,7 +28,9 @@ const copyToClipboard = async () => {
 
 <template>
   <div class="ozk-address flex flex-col space-y-2 lg:space-y-4">
-    <div>
+    <div
+      v-if="label"
+    >
       <h2
         class="
           text-font-1

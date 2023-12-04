@@ -32,7 +32,7 @@ export const useTransferStore = defineStore({
 
       amount: 0,
 
-      loading: false,
+      isLoading: false,
       isValidAddress: false,
 
       selectedToken: kadenaBaseTokens[0]
@@ -94,7 +94,7 @@ export const useTransferStore = defineStore({
     async sendTransferToken (wallet: any) {
       this.error = ''
 
-      this.loading = true
+      this.isLoading = true
 
       const { userData, loadAppState } = useAppState()
 
@@ -241,6 +241,8 @@ export const useTransferStore = defineStore({
           receiver
         )
       }
+
+      this.isLoading = false
 
       const router = useRouter()
 

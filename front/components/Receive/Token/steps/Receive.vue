@@ -1,28 +1,24 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { useReceiveStore } from '~/stores/receive'
 import { useWalletStore } from '~/stores/wallet'
 
+const receiveStore = useReceiveStore()
+
+const {
+  link,
+  amount,
+  isPrivate,
+  isDisabled,
+  receiveType,
+  selectedToken
+} = storeToRefs(receiveStore)
+
 const wallet = useWalletStore()
+
 const { account } = storeToRefs(wallet)
 
-withDefaults(
-  defineProps<{
-    data: any;
-    link: string;
-    isPrivate: boolean;
-    isDisabled: boolean;
-  }>(),
-  {}
-)
-
-const emit = defineEmits([
-  'reset',
-  'deposit',
-  'changeStep',
-  'updateTokenValue',
-  'updateAmountValue',
-  'updateReceiveTypeValue'
-])
+const emit = defineEmits(['changeStep'])
 </script>
 
 <template>
@@ -30,20 +26,19 @@ const emit = defineEmits([
     <UICardHeader title="Enter receiving data" />
 
     <ReceiveType
-      :selected="data.receiveType"
-      @selected="emit('updateReceiveTypeValue', $event)"
+      :selected="receiveType"
+      @selected="receiveType = $event"
     />
 
     <UIInputMoney
+      v-model="amount"
       :disabled="false"
-      :token="data.token"
-      :modelValue="data.amount"
-      @update:modelValue="emit('updateAmountValue', $event)"
+      :token="selectedToken"
     />
 
     <SelectToken
-      :token="data.token"
-      @selected="emit('updateTokenValue', $event)"
+      :token="selectedToken"
+      @selected="selectedToken = $event"
     />
 
     <template v-if="isPrivate && !isDisabled">

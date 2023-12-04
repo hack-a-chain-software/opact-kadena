@@ -1,27 +1,24 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
+import { useReceiveStore } from '~/stores/receive'
+
+const receiveStore = useReceiveStore()
+
+const {
+  link,
+  isPrivate,
+  receiveType
+} = storeToRefs(receiveStore)
+
+receiveStore.init(1, 'nft', null)
 
 const wallet = useWalletStore()
+
 const { account } = storeToRefs(wallet)
 
-withDefaults(
-  defineProps<{
-    data: any;
-    link: string;
-    isPrivate: boolean;
-    isDisabled: boolean;
-  }>(),
-  {}
-)
-
 const emit = defineEmits([
-  'reset',
-  'deposit',
-  'changeStep',
-  'updateTokenValue',
-  'updateAmountValue',
-  'updateReceiveTypeValue'
+  'changeStep'
 ])
 </script>
 
@@ -30,8 +27,8 @@ const emit = defineEmits([
     <UICardHeader title="Enter receiving data" />
 
     <ReceiveType
-      :selected="data.receiveType"
-      @selected="emit('updateReceiveTypeValue', $event)"
+      :selected="receiveType"
+      @selected="receiveType = $event"
     />
 
     <template v-if="isPrivate">
@@ -41,8 +38,8 @@ const emit = defineEmits([
       />
 
       <ReceiveFromLink
-        :link="data.link"
-        @done="emit('reset')"
+        :link="link"
+        @done="receiveStore.reset()"
       />
     </template>
 

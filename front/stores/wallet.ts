@@ -60,14 +60,14 @@ export const useWalletStore = defineStore({
       store(newCache)
     },
 
-    logout () {
+    async logout () {
       const { clear } = useAuthStorage()
       const { clear: clearState } = useStateStorage()
 
       const router = useRouter()
 
-      clear()
-      clearState()
+      await clear()
+      await clearState()
 
       this.cache = null
       this.account = null

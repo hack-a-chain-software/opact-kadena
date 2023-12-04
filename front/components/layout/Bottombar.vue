@@ -84,10 +84,5 @@ const redirect = (path: string, skip: boolean) => {
         />
       </div>
     </button>
-
-    <Settings
-      :show="data.showSettings"
-      @close="data.showSettings = false"
-    />
   </div>
 </template>

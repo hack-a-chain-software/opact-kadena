@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-
-const data = reactive({
-  showSettings: false
-})
 </script>
 
 <template>
@@ -49,24 +44,7 @@ const data = reactive({
     </div>
 
     <div class="relative z-[1]">
-      <button
-        class="
-          rounded-full
-          bg-gray-900
-          w-9
-          h-9
-          flex
-          items-center
-          border border-gray-600
-          justify-center
-        "
-        @click.prevent="data.showSettings = true"
-      >
-        <Icon
-          name="iconSettings"
-          class="w-5 h-5 text-font-1"
-        />
-      </button>
+      <HomeAccount/>
     </div>
   </div>
 </template>

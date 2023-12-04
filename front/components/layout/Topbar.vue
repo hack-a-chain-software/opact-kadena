@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const router = useRouter()
-
 const titles = {
   home: 'Dashboard',
   send: 'Send Token',
@@ -45,25 +43,11 @@ const titles = {
       />
     </div>
 
-    <button
-      class="
-        px-4
-        py-2
-        bg-[#0E1319]
-        border border-gray-600
-        rounded-[8px]
-        flex
-        justify-center
-        items-center
-        gap-1
-        hover:opacity-80
-      "
-      @click.prevent="router.push('/faucet')"
+    <div
+      class="flex items-center justify-center gap-4"
     >
-      <span class="text-font-1 text-xxs"> Faucet </span>
-
-      <Icon name="chevron" class="text-font-1 -rotate-90" />
-    </button>
+      <HomeAccount/>
+    </div>
   </div>
 
   <div

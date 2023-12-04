@@ -1,28 +1,25 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
+import { useReceiveStore } from '~/stores/receive'
+
+const receiveStore = useReceiveStore()
+
+const {
+  amount,
+  progress,
+  isLoading,
+  isDisabled,
+  selectedToken
+} = storeToRefs(receiveStore)
 
 const wallet = useWalletStore()
+
 const { account } = storeToRefs(wallet)
 
-withDefaults(
-  defineProps<{
-    data: any;
-    link: string;
-    isPrivate: boolean;
-    isDisabled: boolean;
-  }>(),
-  {}
-)
-
-const emit = defineEmits([
-  'reset',
-  'deposit',
-  'changeStep',
-  'updateTokenValue',
-  'updateAmountValue',
-  'updateReceiveTypeValue'
-])
+// const emit = defineEmits([
+//   'changeStep'
+// ])
 
 const { provider } = useExtensions()
 </script>
@@ -40,16 +37,16 @@ const { provider } = useExtensions()
     />
 
     <SelectNFT
-      :token="data.token"
       :disabled="!provider"
-      @selected="emit('updateTokenValue', $event)"
+      :token="selectedToken"
+      @selected="selectedToken = $event"
       :account-name="provider?.account?.account?.publicKey"
     />
 
     <TxWrapperNFT
-      :token="data.token"
-      :amount="data.amount"
-      :disabled="!data.token"
+      :amount="amount"
+      :token="selectedToken"
+      :disabled="!selectedToken"
       :receiver="account.address"
       :sender="
         provider?.account?.address ||
@@ -58,9 +55,10 @@ const { provider } = useExtensions()
     />
 
     <UIButtonInline
-      :loading="data.loading"
-      label="Deposit Now"
-      @click.prevent="emit('deposit')"
+      :loading="isLoading"
+      :disabled="isDisabled"
+      :label="isLoading ? progress : 'Receive Now'"
+      @click.prevent="receiveStore.sendDeposit(account)"
     />
   </UICardBody>
 </template>
