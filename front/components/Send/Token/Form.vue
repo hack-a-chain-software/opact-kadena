@@ -11,7 +11,7 @@ onBeforeMount(() => {
   const {
     token,
     amount,
-    address,
+    address
   } = route.query || {}
 
   if (address) {

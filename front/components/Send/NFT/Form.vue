@@ -8,7 +8,7 @@ const route = useRoute()
 
 onBeforeMount(() => {
   const {
-    address,
+    address
   } = route.query || {}
 
   if (address) {
