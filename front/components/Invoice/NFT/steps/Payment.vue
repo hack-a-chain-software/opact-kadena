@@ -7,6 +7,7 @@ const invoiceStore = useInvoiceStore()
 const {
   progress,
   isLoading,
+  addressTo,
   isDisabled,
   selectedToken
 } = storeToRefs(invoiceStore)
@@ -32,17 +33,19 @@ const { provider } = useExtensions()
       title="Confirm deposit information"
     />
 
-    <ProviderUser
-      v-if="provider"
-      label="Your Wallet"
-      :provider="provider"
-    />
-
     <SelectNFT
       :disabled="!provider"
       :token="selectedToken"
       @selected="selectedToken = $event"
       :account-name="provider?.account?.account?.publicKey"
+    />
+
+    <UIInputAddress
+      readonly
+      :token="selectedToken"
+      :modelValue="addressTo"
+      @update:modelValue="addressTo = $event"
+      @isValidAddress="isValidAddress = $event"
     />
 
     <!-- <TxWrapperNFT
