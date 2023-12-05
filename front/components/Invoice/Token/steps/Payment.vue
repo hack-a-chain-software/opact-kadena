@@ -26,40 +26,40 @@ const send = async () => {
 }
 
 const checkFunds = async (token: any) => {
-    await nextTick()
+  await nextTick()
 
-    if (!token || !provider.value) {
-      return
-    }
+  if (!token || !provider.value) {
+    return
+  }
 
-    const prefix =
+  const prefix =
       token.name === 'Kadena'
         ? 'coin'
         : 'test.opact-coin'
 
-    try {
-      const details = await getTokenDetails(
-        provider.value?.account?.account?.publicKey,
-        prefix
-      )
+  try {
+    const details = await getTokenDetails(
+      provider.value?.account?.account?.publicKey,
+      prefix
+    )
 
-      console.log('details.balance', details.balance)
+    console.log('details.balance', details.balance)
 
-      balance.value = details.balance
-    } catch (e) {
-      console.warn(e)
-    }
+    balance.value = details.balance
+  } catch (e) {
+    console.warn(e)
   }
+}
 
-  watch(
-    () => [selectedToken.value],
-    () => {
-      checkFunds(selectedToken.value)
-    },
-    {
-      immediate: true
-    }
-  )
+watch(
+  () => [selectedToken.value],
+  () => {
+    checkFunds(selectedToken.value)
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 
 <template>
