@@ -8,8 +8,10 @@ const props = withDefaults(
     token: any;
     label?: string;
     modelValue: string;
+    readonly?: boolean;
   }>(),
   {
+    readonly: false,
     label: 'Send to'
   }
 )
@@ -146,6 +148,7 @@ watch(
 
     <div v-else class="relative z-[1]">
       <input
+        :readonly="readonly"
         :value="props.modelValue"
         @input="handleInput"
         placeholder="Address..."

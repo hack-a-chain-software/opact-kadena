@@ -63,7 +63,7 @@ const currentMenu = useCurrentMenu()
             "
             :class="
               route.key === currentMenu?.key &&
-              '!ml-[8px] !w-[16px]'
+                '!ml-[8px] !w-[16px]'
             "
           />
         </div>

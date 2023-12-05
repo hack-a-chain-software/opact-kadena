@@ -2,9 +2,7 @@
 const route = useRoute()
 
 const titles = {
-  home: 'Dashboard',
-  send: 'Send Token',
-  receive: 'Receive',
+  home: 'Home',
   history: 'History',
 
   'send-nft': 'Send NFT',
