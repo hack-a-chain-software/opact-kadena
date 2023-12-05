@@ -81,7 +81,7 @@ export const useReceiveStore = defineStore({
         params.push(`amount=${amount}`)
       }
 
-      return `${baseUrl}/${route}/token${params.join('$')}`
+      return `${baseUrl}/${route}/token${params.join('&')}`
     }
   },
   actions: {
