@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Pact from 'pact-lang-api'
+import { formatBigNumberWithDecimals, getDecimals } from 'opact-sdk'
 import { computed, watch, reactive } from 'vue'
 import { shortenAddress } from '~/utils/string'
 
@@ -54,6 +55,15 @@ const isNegative = computed(() => {
   }
 
   return false
+})
+
+const formattedAmount = computed(() => {
+  const decimals = getDecimals(12)
+
+  return formatBigNumberWithDecimals(
+    props.amount,
+    decimals
+  )
 })
 
 const metadata = computed(() => {
@@ -161,8 +171,7 @@ watch(
               isNegative ? 'text-red-500' : 'text-green-500'
             "
           >
-            {{ isNegative ? '-' : '+' }}
-            {{ Number(amount).toFixed(1) }}
+            {{ formattedAmount }}
             {{ metadata?.symbol }}
           </span>
         </div>

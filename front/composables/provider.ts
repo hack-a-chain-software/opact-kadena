@@ -20,10 +20,6 @@ export const useExtensions = () => {
       await newProvider.connect(callback)
 
       provider.value = newProvider
-
-      // store({
-      //   providers: [{ chainKey, adapterKey }]
-      // })
     } catch (e) {
       console.log(e)
     }
@@ -37,10 +33,6 @@ export const useExtensions = () => {
     await provider.value.disconnect()
 
     provider.value = null
-
-    // const { clear } = useAuthStorage()
-
-    // clear(['providers'])
   }
 
   const isConnected = computed(() => !!provider.value)
