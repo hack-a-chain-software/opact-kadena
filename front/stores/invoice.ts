@@ -28,6 +28,8 @@ export const useInvoiceStore = defineStore({
 
       type: 'token',
 
+      balance: 0,
+
       addressTo: '',
 
       progress: 'Generating ZK Proof...',
