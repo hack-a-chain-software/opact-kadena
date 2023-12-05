@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 import pay from '~/components/faucet/Pay.vue'
-import success from '~/components/Success.vue'
+// import success from '~/components/Success.vue'
 import provider from '~/components/Provider.vue'
 import connect from '~/components/faucet/Connect.vue'
 import faucetNft from '~/components/faucet/Nft.vue'
@@ -8,7 +8,7 @@ import faucetNft from '~/components/faucet/Nft.vue'
 const form = {
   pay,
   connect,
-  success,
+  // success,
   provider,
   faucetNft
 }
@@ -17,7 +17,7 @@ export type FormType =
   | 'connect'
   | 'pay'
   | 'provider'
-  | 'success'
+  // | 'success'
   | 'await';
 
 export const useFaucet = () => {
