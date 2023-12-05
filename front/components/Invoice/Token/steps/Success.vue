@@ -1,45 +1,37 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const router = useRouter()
+</script>
 
 <template>
-  <div
-    class="
-      flex flex-col
-      max-w-[450px]
-      lg:max-w-full
-      text-white
-    "
-  >
+  <UICardBody>
     <div
-      class="
-        flex flex-col
-        space-y-2
-        items-center
-        justify-center
-        px-4
-        py-3
-        bg-gray-800
-        rounded-[12px]
-        lg:min-h-full
-        lg:pb-0
-        lg:max-w-full
-        lg:bg-transparent
-      "
+      class="mx-auto"
     >
-      <div>
-        <img src="/success.png" class="w-[100px]" />
-      </div>
-
-      <div class="pt-4">
-        <span class="text-md font-medium text-fon-1">
-          Payment Complete
-        </span>
-      </div>
-
-      <div class="pt-2 text-center">
-        <span class="text-xxs font-medium text-font-2">
-          Thank you for using Opact Invoices
-        </span>
-      </div>
+      <img src="/success.png" class="w-[100px]" />
     </div>
-  </div>
+
+    <div class="mx-auto flex flex-col gap-3">
+      <span class="
+        text-font-1
+        text-xl
+        font-[600]
+      ">
+        Payment Complete
+      </span>
+
+      <span
+        class="
+          text-font-2
+          text-xs
+        "
+      >
+        Thank you for using Opact Invoices
+      </span>
+    </div>
+
+    <UIButtonInline
+      @click.prevent="router.push('/home')"
+      label="Create or go to your Opact Wallet"
+    />
+  </UICardBody>
 </template>
