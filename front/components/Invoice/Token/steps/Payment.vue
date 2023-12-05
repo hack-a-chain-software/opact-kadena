@@ -94,8 +94,8 @@ watch(
       :sender="
         provider?.account?.address ||
         provider?.account?.account?.account
-      " -->
-    />
+      "
+    /> -->
 
     <UIButtonInline
       :loading="isLoading"

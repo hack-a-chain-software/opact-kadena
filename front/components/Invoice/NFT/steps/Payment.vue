@@ -1,76 +1,66 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useWalletStore } from '~/stores/wallet'
-import { useTransferStore } from '~/stores/transfer'
+import { useInvoiceStore } from '~/stores/invoice'
 
-const transferStore = useTransferStore()
-
-transferStore.init(1, 'nfts', null)
-
-const walletStore = useWalletStore()
+const invoiceStore = useInvoiceStore()
 
 const {
-  error,
-  amount,
   progress,
   isLoading,
-  addressTo,
   isDisabled,
-  selectedToken,
-  isValidAddress,
-  isInternalTransfer,
-  showConnectWalletButton
-} = storeToRefs(transferStore)
+  selectedToken
+} = storeToRefs(invoiceStore)
 
-const {
-  account
-} = storeToRefs(walletStore)
+invoiceStore.init(1, 'nft', null)
+
+const emit = defineEmits([
+  'changeStep'
+])
+
+const send = async () => {
+  await invoiceStore.sendDepositToken()
+
+  emit('changeStep', 'success')
+}
 
 const { provider } = useExtensions()
 </script>
 
 <template>
   <UICardBody>
-    <SelectOwnNFT
-      :token="selectedToken"
-      @selected="selectedToken = $event"
+    <UICardHeader
+      title="Confirm deposit information"
     />
 
     <ProviderUser
-      v-if="provider && !isInternalTransfer"
+      v-if="provider"
+      label="Your Wallet"
       :provider="provider"
     />
 
-    <UIInputAddress
+    <SelectNFT
+      :disabled="!provider"
       :token="selectedToken"
-      v-model="addressTo"
-      @isValidAddress="isValidAddress = $event"
+      @selected="selectedToken = $event"
+      :account-name="provider?.account?.account?.publicKey"
     />
 
-    <TxWrapperNFT
-      :token="selectedToken"
+    <!-- <TxWrapperNFT
       :amount="amount"
+      :token="selectedToken"
+      :disabled="!selectedToken"
       :receiver="addressTo"
-      :sender="account.address"
-      :disabled="isDisabled"
-    />
-
-    <Warning
-      type="error"
-      class="mt-4"
-      v-if="error"
-      :label="error + '*'"
-    />
-
-    <SelectWallet v-if="showConnectWalletButton && !provider" />
+      :sender="
+        provider?.account?.address ||
+        provider?.account?.account?.account
+      "
+    /> -->
 
     <UIButtonInline
-      v-else
       :loading="isLoading"
       :disabled="isDisabled"
-      class="mt-full lg:mt-[40px]"
-      :label="isLoading ? progress : 'Send Token'"
-      @click.prevent="transferStore.sendTransferToken(account)"
+      :label="isLoading ? progress : 'Deposit Now'"
+      @click.prevent="send()"
     />
   </UICardBody>
 </template>

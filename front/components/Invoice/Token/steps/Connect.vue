@@ -21,7 +21,7 @@ const emit = defineEmits(['changeStep'])
         The user
         <span
           class="text-font-1"
-        >"{{ shortenAddress(addressTo,) }}"</span>
+        >"{{ shortenAddress(addressTo) }}"</span>
         requested a payment. Connect your wallet to proceed.
       </span>
     </div>
