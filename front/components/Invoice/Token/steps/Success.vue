@@ -11,7 +11,8 @@ const router = useRouter()
     </div>
 
     <div class="mx-auto flex flex-col gap-3">
-      <span class="
+      <span
+      class="
         text-font-1
         text-xl
         font-[600]
