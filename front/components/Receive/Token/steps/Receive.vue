@@ -80,7 +80,7 @@ const emit = defineEmits(['changeStep'])
     <UICardBody
       v-if="!isPrivate && !isDisabled"
       gap="space-y-6"
-      bg="bg-gray-800"
+      bg="md:bg-gray-800"
     >
       <UIInputCopy
         label="Copy or share the custon payment link"
