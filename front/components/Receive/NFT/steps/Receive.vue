@@ -85,7 +85,7 @@ const emit = defineEmits([
           <span
             class="text-xs text-font-1"
           >
-            Or
+            OR
           </span>
         </div>
 
