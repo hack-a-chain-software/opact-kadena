@@ -1,0 +1,68 @@
+<script setup lang="ts">
+import { reactive } from 'vue'
+import { useAppState } from '~/hooks/state'
+import { tokens } from '~/utils/constants'
+
+const { isLoading } = useAppState()
+
+const router = useRouter()
+
+const { provider } = useExtensions()
+
+const data = reactive({
+  error: '',
+  show: false,
+  amount: 100,
+  token: tokens[0],
+  progress: 'Sending TX',
+  showGenerateLink: false,
+  loading: false
+})
+
+const pay = async () => {
+  try {
+    data.loading = true
+
+    await provider.value.faucet(data.token.namespace)
+
+    isLoading.value = true
+    router.push('/home')
+  } catch (e) {
+    console.warn(e)
+  } finally {
+    data.loading = false
+  }
+}
+</script>
+
+<template>
+  <UICardBody>
+    <UICardHeader
+      title="Opact Testnet Faucet"
+    />
+
+    <UIInputMoney
+      label="Amount"
+      readonly
+      :modelValue="100"
+    />
+
+    <SelectToken
+      :token="data.token"
+      @selected="data.token = $event"
+    />
+
+    <ProviderUser
+      v-if="provider"
+      label="Wallet Receiver"
+      :provider="provider"
+    />
+
+    <UIButtonInline
+      :loading="data.loading"
+      class="mt-full lg:mt-[40px]"
+      :label="data.loading ? data.progress : 'Get Tokens'"
+      @click="pay()"
+    />
+  </UICardBody>
+</template>

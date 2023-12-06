@@ -5,22 +5,26 @@ defineProps({
     required: true
   }
 })
-const emits = defineEmits(['changeStep', 'token'])
+
+const emit = defineEmits(['changeStep', 'token'])
+
+const handle = (step: any) => {
+  if (step === 'token') {
+    emit('changeStep', 'token')
+
+    return
+  }
+
+  emit('changeStep', 'nft')
+}
 </script>
 
 <template>
-  <div>
-    <div>
-      <span class="text-md text-font-1">
-        Opact Testnet Faucet
-      </span>
-    </div>
-
-    <div class="pt-[32px]">
-      <span class="text-xs text-font-1">
-        Fund Account
-      </span>
-    </div>
+  <UICardBody>
+    <UICardHeader
+      title="Opact Testnet Faucet"
+      description="You can redeem tokens to test Opact Wallet."
+    />
 
     <div class="pt-4">
       <div
@@ -40,7 +44,7 @@ const emits = defineEmits(['changeStep', 'token'])
             ? ' border-blue-400'
             : 'border-transparent'
         "
-        @click.prevent="emits('token', 'token')"
+        @click.prevent="emit('token', 'token')"
       >
         <div>
           <span class="text-font-1 text-xs"> Token </span>
@@ -75,7 +79,7 @@ const emits = defineEmits(['changeStep', 'token'])
             ? 'border-blue-400'
             : 'border-transparent'
         "
-        @click.prevent="emits('token', 'nft')"
+        @click.prevent="emit('token', 'nft')"
       >
         <div>
           <span class="text-font-1 text-xs"> NFT </span>
@@ -93,11 +97,9 @@ const emits = defineEmits(['changeStep', 'token'])
       </div>
     </div>
 
-    <div class="pt-6">
-      <UIButtonInline
-        label="Connect Wallet"
-        @click.prevent="emits('changeStep', 'provider')"
-      />
-    </div>
-  </div>
+    <SelectWallet
+      label="Connect Wallet"
+      @connected="handle(token)"
+    />
+  </UICardBody>
 </template>
