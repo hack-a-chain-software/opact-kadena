@@ -18,7 +18,7 @@ const data = reactive({
 const store = useReceiveStore()
 
 onBeforeMount(() => {
-  store.reset(1, 'nft', null)
+  store.reset(1, null)
 })
 </script>
 
