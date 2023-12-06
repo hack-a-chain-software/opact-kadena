@@ -23,7 +23,7 @@ const emit = defineEmits(['changeStep'])
 
 <template>
   <div
-    class="flex flex-col space-y-4"
+    class="flex flex-col space-y-4 w-full"
   >
     <UICardBody
       gap="space-y-6"

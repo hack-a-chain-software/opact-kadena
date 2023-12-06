@@ -24,7 +24,7 @@ const emit = defineEmits([
 
 <template>
   <div
-    class="flex flex-col space-y-4"
+    class="flex flex-col space-y-4 w-full"
   >
     <UICardBody
       gap="space-y-6"
@@ -68,7 +68,7 @@ const emit = defineEmits([
     <UICardBody
       v-if="!isPrivate"
       gap="space-y-6"
-      bg="bg-gray-800"
+      bg="md:bg-gray-800"
     >
       <UIInputCopy
         label="Copy or share the custon payment link"
