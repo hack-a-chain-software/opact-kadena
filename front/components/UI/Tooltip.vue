@@ -20,7 +20,7 @@ withDefaults(
     <button>
       <Icon
         name="information"
-        class="w-6 h-6 text-blue-400"
+        class="w-6 h-6 text-font-1 group-hover:text-blue-400"
       />
     </button>
 

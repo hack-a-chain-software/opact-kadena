@@ -52,7 +52,7 @@ export const useTransferStore = defineStore({
       const { userData } = useAppState()
 
       return formatBigNumberWithDecimals(
-        userData?.value?.tokens[selectedToken.address]?.balance || 0,
+        userData.value?.tokens[selectedToken.address]?.balance || 0,
         decimals
       )
     },
