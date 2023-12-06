@@ -87,7 +87,7 @@ watch(
       @isValidAddress="isValidAddress = $event"
     />
 
-    <!-- <TxWrapper
+    <TxWrapper
       :amount="amount"
       :token="selectedToken"
       :receiver="addressTo"
@@ -95,7 +95,7 @@ watch(
         provider?.account?.address ||
         provider?.account?.account?.account
       "
-    /> -->
+    />
 
     <UIButtonInline
       :loading="isLoading"

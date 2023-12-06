@@ -48,7 +48,7 @@ const { provider } = useExtensions()
       @isValidAddress="isValidAddress = $event"
     />
 
-    <!-- <TxWrapperNFT
+    <TxWrapperNFT
       :amount="amount"
       :token="selectedToken"
       :disabled="!selectedToken"
@@ -57,7 +57,7 @@ const { provider } = useExtensions()
         provider?.account?.address ||
         provider?.account?.account?.account
       "
-    /> -->
+    />
 
     <UIButtonInline
       :loading="isLoading"

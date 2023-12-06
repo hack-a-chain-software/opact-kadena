@@ -38,7 +38,7 @@ const { provider } = useExtensions()
 
     <SelectedToken :token="selectedToken" />
 
-    <!-- <TxWrapper
+    <TxWrapper
       :amount="amount"
       :token="selectedToken"
       :receiver="account.address"
@@ -46,7 +46,7 @@ const { provider } = useExtensions()
         provider?.account?.address ||
         provider?.account?.account?.account
       "
-    /> -->
+    />
 
     <UIButtonInline
       :loading="isLoading"

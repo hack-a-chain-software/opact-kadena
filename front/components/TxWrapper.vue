@@ -41,7 +41,7 @@ watch(
 </script>
 
 <template>
-  <div class="mt-full lg:mt-[32px]">
+  <div v-if="!disabled" class="mt-full lg:mt-[32px]">
     <div
       class="
         transition-all

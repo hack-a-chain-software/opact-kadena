@@ -38,7 +38,7 @@ const { provider } = useExtensions()
       :account-name="provider?.account?.account?.publicKey"
     />
 
-    <!-- <TxWrapperNFT
+    <TxWrapperNFT
       :amount="amount"
       :token="selectedToken"
       :disabled="!selectedToken"
@@ -47,7 +47,7 @@ const { provider } = useExtensions()
         provider?.account?.address ||
         provider?.account?.account?.account
       "
-    /> -->
+    />
 
     <UIButtonInline
       :loading="isLoading"
