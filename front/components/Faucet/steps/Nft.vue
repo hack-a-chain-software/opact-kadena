@@ -125,14 +125,12 @@ const pay = async () => {
 </script>
 
 <template>
-  <div>
-    <div>
-      <span class="text-md text-font-1">
-        Opact Testnet Faucet
-      </span>
-    </div>
+  <UICardBody>
+    <UICardHeader
+      title="Opact Testnet Faucet"
+    />
 
-    <div class="pt-[32px]">
+    <div>
       <div class="pb-4">
         <span class="text-xxs text-font-1 lg:text-xs">
           Random Alpha Slayers Club
@@ -150,7 +148,6 @@ const pay = async () => {
           bg-gray-800
           hover:opacity-90
           disabled:opacity-60
-          border border-blue-400
           disabled:cursor-not-allowed
         "
       >
@@ -158,10 +155,10 @@ const pay = async () => {
           <img
             :src="`https://d2k5a3kljnz265.cloudfront.net/nft/kadena-mining-club@kadena/1.webp`"
             class="h-[60px] w-[60px] rounded-[8px]"
-          />
+          >
 
           <span
-            class="text-xs"
+            class="text-xs text-font-1"
             v-text="`Alpha Slayers Club#?`"
           />
         </div>
@@ -176,11 +173,11 @@ const pay = async () => {
 
     <UIButtonInline
       :loading="data.loading"
-      @click="pay()"
       class="mt-full lg:mt-[40px]"
       :label="
         data.loading ? data.progress : 'Get Random NFT'
       "
+      @click="pay()"
     />
-  </div>
+  </UICardBody>
 </template>
