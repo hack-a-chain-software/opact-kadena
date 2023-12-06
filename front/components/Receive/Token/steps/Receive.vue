@@ -22,63 +22,72 @@ const emit = defineEmits(['changeStep'])
 </script>
 
 <template>
-  <UICardBody
-    gap="space-y-6"
+  <div
+    class="flex flex-col space-y-4"
   >
-    <UICardHeader
-      title="Enter receiving data"
-      description="You can deposit funds from a Regular Kadena Wallet or receive from another Opact Wallet."
-    />
-
-    <ReceiveType
-      :selected="receiveType"
-      @selected="receiveType = $event"
-    />
-
-    <template
-      v-if="isPrivate"
+    <UICardBody
+      gap="space-y-6"
     >
-      <UIInputCopy
-        bg="bg-gray-800"
-        :value="account?.address"
-        placeholder="Copy and share your public Opact Wallet address"
+      <UICardHeader
+        title="Enter receiving data"
+        description="You can deposit funds from a Regular Kadena Wallet or receive from another Opact Wallet."
       />
 
-      <div>
-        <span
-          class="text-[20px] text-font-1"
-        >
-          Or generate a payment link
-        </span>
-      </div>
-    </template>
-
-    <UIInputMoney
-      v-model="amount"
-      :disabled="false"
-      :token="selectedToken"
-      label="Amount to Receive"
-    />
-
-    <SelectToken
-      :token="selectedToken"
-      @selected="selectedToken = $event"
-    />
-
-    <template v-if="isPrivate">
-      <ReceiveFromLink
-        :link="link"
-        :isDisabled="isDisabled"
-        @done="receiveStore.reset()"
+      <ReceiveType
+        :selected="receiveType"
+        @selected="receiveType = $event"
       />
-    </template>
 
-    <template v-else>
+      <template
+        v-if="isPrivate"
+      >
+        <UIInputCopy
+          bg="bg-gray-800"
+          :value="account?.address"
+          placeholder="Copy and share your public Opact Wallet address"
+        />
+
+        <div>
+          <span
+            class="text-[20px] text-font-1"
+          >
+            Or generate a payment link
+          </span>
+        </div>
+      </template>
+
+      <UIInputMoney
+        v-model="amount"
+        :disabled="false"
+        :token="selectedToken"
+        label="Amount to Receive"
+      />
+
+      <SelectToken
+        :token="selectedToken"
+        @selected="selectedToken = $event"
+      />
+
+      <template v-if="isPrivate">
+        <ReceiveFromLink
+          :link="link"
+          :is-disabled="isDisabled"
+          @done="receiveStore.reset()"
+        />
+      </template>
+    </UICardBody>
+
+    <UICardBody
+      v-if="!isPrivate && !isDisabled"
+      gap="space-y-6"
+      bg="bg-gray-800"
+    >
       <UIInputCopy
         label="Copy or share the custon payment link"
         :value="link"
         bg="bg-[#21262D]"
-        tooltipText="You can share the payment link with other people so they will be able to deposit into your Opact Wallet."
+        border="border-blue-400"
+        tooltip-text="You can share the payment link with other people so they will be able to deposit into your Opact Wallet."
       />
 
       <div
@@ -94,10 +103,10 @@ const emit = defineEmits(['changeStep'])
 
         <SelectWallet
           label="Connect wallet to deposit"
-          :isDisabled="isDisabled"
+          :is-disabled="isDisabled"
           @connected="emit('changeStep', 'review')"
         />
       </div>
-    </template>
-  </UICardBody>
+    </UICardBody>
+  </div>
 </template>

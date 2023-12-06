@@ -8,13 +8,15 @@ const props = withDefaults(
     placeholder?: string;
     tooltipText?: string;
     bg?: string;
+    border?: string;
   }>(),
   {
     value: '',
     label: '',
     tooltipText: '',
     placeholder: '',
-    bg: 'bg-gray-700'
+    bg: 'bg-gray-700',
+    border: 'border-transparent'
   }
 )
 
@@ -66,9 +68,10 @@ const copyToClipboard = async () => {
           gap-4
           w-full
           group
+          border
         "
         @click.prevent="copyToClipboard()"
-        :class="props.bg"
+        :class="[props.bg, props.border]"
       >
         <div
           class="
