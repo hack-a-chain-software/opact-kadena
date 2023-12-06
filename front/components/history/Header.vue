@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { format } from 'date-fns'
 import { reactive, computed } from 'vue'
-import {
-  getDecimals,
-  formatBigNumberWithDecimals
-} from 'opact-sdk'
-import { useAppState } from '~/hooks/state'
+// import {
+//   getDecimals,
+//   formatBigNumberWithDecimals
+// } from 'opact-sdk'
+// import { useAppState } from '~/hooks/state'
 
-const { userData } = useAppState()
+// const { userData } = useAppState()
 
 const data = reactive({
   range: [],
@@ -84,27 +84,27 @@ onBeforeMount(async () => {
   data.kdxInDolar = json.market_data.current_price.usd
 })
 
-const balance = computed(() => {
-  const decimals = getDecimals(12)
+// const balance = computed(() => {
+//   const decimals = getDecimals(12)
 
-  return (
-    (formatBigNumberWithDecimals(
-      userData.value?.tokens.coin?.balance || 0,
-      decimals
-    ) as any) *
-      data.kadenaInDolar +
-    (formatBigNumberWithDecimals(
-      userData.value?.tokens['opact-coin']?.balance || 0,
-      decimals
-    ) as any) *
-      data.kdxInDolar
-  ).toFixed(2)
-})
+//   return (
+//     (formatBigNumberWithDecimals(
+//       userData.value?.tokens.coin?.balance || 0,
+//       decimals
+//     ) as any) *
+//       data.kadenaInDolar +
+//     (formatBigNumberWithDecimals(
+//       userData.value?.tokens['opact-coin']?.balance || 0,
+//       decimals
+//     ) as any) *
+//       data.kdxInDolar
+//   ).toFixed(2)
+// })
 </script>
 
 <template>
   <div class="w-full">
-    <div class="pb-[48px]">
+    <!-- <div class="pb-[48px]">
       <div class="pb-[2px]">
         <span class="text-font-2 text-xxs font-medium">
           Balance
@@ -122,7 +122,7 @@ const balance = computed(() => {
           <Icon name="visible" class="w-6 h-6" />
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="grid grid-cols-[1fr,auto] gap-[24px]">
       <div
@@ -141,7 +141,6 @@ const balance = computed(() => {
 
         <input
           v-model="data.search"
-          @input="handleSearch"
           placeholder="Search"
           class="
             text-xs text-font-2
@@ -149,11 +148,11 @@ const balance = computed(() => {
             bg-transparent
             outline-none
           "
-        />
+          @input="handleSearch"
+        >
       </div>
 
       <div
-        @click.prevent="handlepicker()"
         class="
           border border-gray-600
           rounded-[8px]
@@ -165,6 +164,7 @@ const balance = computed(() => {
           min-w-[267px]
           hover:opacity-80
         "
+        @click.prevent="handlepicker()"
       >
         <div>
           <Icon
@@ -210,7 +210,6 @@ const balance = computed(() => {
 
     <div class="pt-[32px] flex items-center space-x-[24px]">
       <button
-        @click.prevent="handleType('all')"
         :class="data.type === 'all' && 'bg-blue-400'"
         class="
           px-4
@@ -219,12 +218,12 @@ const balance = computed(() => {
           hover:bg-gray-800
           rounded-[8px]
         "
+        @click.prevent="handleType('all')"
       >
         All time
       </button>
 
       <button
-        @click.prevent="handleType('withdraw')"
         :class="data.type === 'withdraw' && 'bg-blue-400'"
         class="
           px-4
@@ -233,12 +232,12 @@ const balance = computed(() => {
           hover:bg-gray-800
           rounded-[8px]
         "
+        @click.prevent="handleType('withdraw')"
       >
         Withdraw
       </button>
 
       <button
-        @click.prevent="handleType('deposit')"
         :class="data.type === 'deposit' && 'bg-blue-400'"
         class="
           px-4
@@ -247,6 +246,7 @@ const balance = computed(() => {
           hover:bg-gray-800
           rounded-[8px]
         "
+        @click.prevent="handleType('deposit')"
       >
         Deposit
       </button>

@@ -44,13 +44,13 @@ const { provider } = useExtensions()
       :receiver="account.address"
       :sender="
         provider?.account?.address ||
-        provider?.account?.account?.account
+          provider?.account?.account?.account
       "
     />
 
     <UIButtonInline
       :loading="isLoading"
-      :label="isLoading ? progress : 'Receive Now'"
+      :label="isLoading ? progress : 'Deposit Now'"
       @click.prevent="receiveStore.sendDeposit(account)"
     />
   </UICardBody>
