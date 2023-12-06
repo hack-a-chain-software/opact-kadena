@@ -24,7 +24,7 @@ const emit = defineEmits([
 
 <template>
   <div
-    class="flex flex-col space-y-4 w-full"
+    class="flex flex-col space-y-4 w-full items-center justify-center"
   >
     <UICardBody
       gap="space-y-6"
