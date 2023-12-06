@@ -31,7 +31,7 @@ export const useReceiveStore = defineStore({
       amount: 0,
 
       isLoading: false,
-      receiveType: 'external',
+      receiveType: 'internal',
 
       selectedToken: kadenaBaseTokens[0]
     }
@@ -95,10 +95,10 @@ export const useReceiveStore = defineStore({
       this.selectedToken = selectedToken
     },
 
-    reset () {
-      this.amount = ''
-      this.token = null
-      this.receiveType = 'external'
+    reset (amount = '', selectedToken = kadenaBaseTokens[0]) {
+      this.amount = amount
+      this.receiveType = 'internal'
+      this.selectedToken = selectedToken
     },
 
     async sendDeposit (wallet: any) {
@@ -211,6 +211,8 @@ export const useReceiveStore = defineStore({
       loadAppState(wallet.pvtkey)
 
       router.push('/home')
+
+      this.reset()
     }
   }
 })

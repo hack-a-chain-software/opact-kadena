@@ -43,6 +43,14 @@ onBeforeMount(() => {
     invoiceStore.selectedToken = defaultToken
   }
 })
+
+watch(
+  () => route.path,
+  (newPath: string, olderPath: string) => {
+    console.log('newPath,', newPath)
+    console.log('olderPath,', olderPath)
+  }
+)
 </script>
 
 <template>

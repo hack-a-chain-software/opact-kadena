@@ -15,10 +15,6 @@ const {
 const wallet = useWalletStore()
 const { account } = storeToRefs(wallet)
 
-// const emit = defineEmits([
-//   'changeStep'
-// ])
-
 const { provider } = useExtensions()
 </script>
 
@@ -42,7 +38,7 @@ const { provider } = useExtensions()
 
     <SelectedToken :token="selectedToken" />
 
-    <TxWrapper
+    <!-- <TxWrapper
       :amount="amount"
       :token="selectedToken"
       :receiver="account.address"
@@ -50,7 +46,7 @@ const { provider } = useExtensions()
         provider?.account?.address ||
         provider?.account?.account?.account
       "
-    />
+    /> -->
 
     <UIButtonInline
       :loading="isLoading"

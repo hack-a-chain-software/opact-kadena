@@ -5,10 +5,16 @@ const props = withDefaults(
   defineProps<{
     label?: string;
     value?: string;
+    placeholder?: string;
+    tooltipText?: string;
+    bg?: string;
   }>(),
   {
     value: '',
-    label: ''
+    label: '',
+    tooltipText: '',
+    placeholder: '',
+    bg: 'bg-gray-700'
   }
 )
 
@@ -30,6 +36,7 @@ const copyToClipboard = async () => {
   <div class="ozk-address flex flex-col space-y-2 lg:space-y-4">
     <div
       v-if="label"
+      class="flex items-center gap-2"
     >
       <h2
         class="
@@ -41,6 +48,11 @@ const copyToClipboard = async () => {
       >
         {{ props.label }}
       </h2>
+
+      <UITooltip
+        v-if="props.tooltipText"
+        :text="props.tooltipText"
+      />
     </div>
 
     <div>
@@ -48,7 +60,6 @@ const copyToClipboard = async () => {
         class="
           p-4
           rounded-[8px]
-          bg-gray-700
           flex
           items-center
           justify-between
@@ -57,6 +68,7 @@ const copyToClipboard = async () => {
           group
         "
         @click.prevent="copyToClipboard()"
+        :class="props.bg"
       >
         <div
           class="
@@ -72,7 +84,7 @@ const copyToClipboard = async () => {
               truncate font-[500] lg:font-[400]
               group-active:text-blue-400
             "
-            v-text="props.value"
+            v-text="props.placeholder || props.value"
           />
         </div>
 

@@ -11,7 +11,6 @@ const walletStore = useWalletStore()
 
 const {
   error,
-  amount,
   progress,
   isLoading,
   addressTo,
@@ -47,13 +46,13 @@ const { provider } = useExtensions()
       @isValidAddress="isValidAddress = $event"
     />
 
-    <TxWrapperNFT
+    <!-- <TxWrapperNFT
       :token="selectedToken"
       :amount="amount"
       :receiver="addressTo"
       :sender="account.address"
       :disabled="isDisabled"
-    />
+    /> -->
 
     <Warning
       type="error"

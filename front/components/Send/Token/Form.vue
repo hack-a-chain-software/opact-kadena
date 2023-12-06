@@ -8,6 +8,8 @@ const transferStore = useTransferStore()
 const route = useRoute()
 
 onBeforeMount(() => {
+  transferStore.reset()
+
   const {
     token,
     amount,

@@ -91,6 +91,19 @@ export const useTransferStore = defineStore({
       this.selectedToken = selectedToken
     },
 
+    reset (
+      amount = 0,
+      type = 'token',
+      selectedToken = kadenaBaseTokens[0]
+    ) {
+      this.error = ''
+      this.type = type
+      this.addressTo = ''
+      this.amount = amount
+      this.isValidAddress = false
+      this.selectedToken = selectedToken
+    },
+
     async sendTransferToken (wallet: any) {
       this.error = ''
 

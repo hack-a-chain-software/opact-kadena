@@ -22,18 +22,42 @@ const emit = defineEmits(['changeStep'])
 </script>
 
 <template>
-  <UICardBody>
-    <UICardHeader title="Enter receiving data" />
+  <UICardBody
+    gap="space-y-6"
+  >
+    <UICardHeader
+      title="Enter receiving data"
+      description="You can deposit funds from a Regular Kadena Wallet or receive from another Opact Wallet."
+    />
 
     <ReceiveType
       :selected="receiveType"
       @selected="receiveType = $event"
     />
 
+    <template
+      v-if="isPrivate"
+    >
+      <UIInputCopy
+        bg="bg-gray-800"
+        :value="account?.address"
+        placeholder="Copy and share your public Opact Wallet address"
+      />
+
+      <div>
+        <span
+          class="text-[20px] text-font-1"
+        >
+          Or generate a payment link
+        </span>
+      </div>
+    </template>
+
     <UIInputMoney
       v-model="amount"
       :disabled="false"
       :token="selectedToken"
+      label="Amount to Receive"
     />
 
     <SelectToken
@@ -41,31 +65,39 @@ const emit = defineEmits(['changeStep'])
       @selected="selectedToken = $event"
     />
 
-    <template v-if="isPrivate && !isDisabled">
-      <UIInputCopy
-        label="Your private address"
-        :value="account?.address"
+    <template v-if="isPrivate">
+      <ReceiveFromLink
+        :link="link"
+        :isDisabled="isDisabled"
+        @done="receiveStore.reset()"
       />
-
-      <div>
-        <ReceiveFromLink
-          :link="link"
-          :isDisabled="isDisabled"
-          @done="emit('reset')"
-        />
-      </div>
     </template>
 
-    <template v-else-if="!isDisabled">
+    <template v-else>
       <UIInputCopy
         label="Copy or share the custon payment link"
         :value="link"
+        bg="bg-[#21262D]"
+        tooltipText="You can share the payment link with other people so they will be able to deposit into your Opact Wallet."
       />
 
-      <SelectWallet
-        :isDisabled="isDisabled"
-        @connected="emit('changeStep', 'review')"
-      />
+      <div
+        class="flex flex-col gap-2"
+      >
+        <div>
+          <span
+            class="text-xs text-font-1"
+          >
+            Or
+          </span>
+        </div>
+
+        <SelectWallet
+          label="Connect wallet to deposit"
+          :isDisabled="isDisabled"
+          @connected="emit('changeStep', 'review')"
+        />
+      </div>
     </template>
   </UICardBody>
 </template>

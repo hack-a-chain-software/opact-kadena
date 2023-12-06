@@ -112,17 +112,21 @@ watch(
     }
 
     verifyAddress(token, address)
+  }, {
+    immediate: true
   }
 )
 </script>
 
 <template>
   <div>
-    <div class="flex justify-between pb-4 relative z-[1]">
+    <div class="flex items-center gap-2 pb-4 relative z-[2]">
       <span
         class="text-xs font-medium text-font-1"
         v-text="props.label"
       />
+
+      <UITooltip/>
     </div>
 
     <div

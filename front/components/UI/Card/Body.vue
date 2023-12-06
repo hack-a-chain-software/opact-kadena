@@ -1,3 +1,14 @@
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    gap?: string
+  }>(),
+  {
+    gap: 'space-y-6 md:space-y-8'
+  }
+)
+</script>
+
 <template>
   <div
     class="
@@ -9,7 +20,8 @@
     "
   >
     <div
-      class="h-full flex flex-col space-y-6 md:space-y-8"
+      class="h-full flex flex-col"
+      :class="gap"
     >
       <slot />
     </div>

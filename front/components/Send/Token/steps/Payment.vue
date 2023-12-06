@@ -98,13 +98,13 @@ onBeforeMount(() => {
       @isValidAddress="isValidAddress = $event"
     />
 
-    <TxWrapper
+    <!-- <TxWrapper
       :token="selectedToken"
       :amount="amount"
       :receiver="addressTo"
       :sender="account.address"
       :disabled="isDisabled"
-    />
+    /> -->
 
     <Warning
       type="error"

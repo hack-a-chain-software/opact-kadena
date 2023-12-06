@@ -2,6 +2,7 @@
 import { reactive } from 'vue'
 import receive from './steps/Receive.vue'
 import payment from './steps/Payment.vue'
+import { useReceiveStore } from '~/stores/receive'
 
 export type FormType = 'receive' | 'payment';
 
@@ -12,6 +13,12 @@ const steps = {
 
 const data = reactive({
   step: 'receive'
+})
+
+const store = useReceiveStore()
+
+onBeforeMount(() => {
+  store.reset(1, 'nft', null)
 })
 </script>
 

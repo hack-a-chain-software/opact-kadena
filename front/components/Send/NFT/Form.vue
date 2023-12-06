@@ -7,6 +7,8 @@ const transferStore = useTransferStore()
 const route = useRoute()
 
 onBeforeMount(() => {
+  transferStore.reset(1, 'nft', null)
+
   const {
     address
   } = route.query || {}

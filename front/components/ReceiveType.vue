@@ -2,20 +2,20 @@
 import {
   RadioGroup,
   RadioGroupLabel,
-  RadioGroupDescription,
+  // RadioGroupDescription,
   RadioGroupOption
 } from '@headlessui/vue'
 
 const txTypes = [
   {
     value: 'internal',
-    title: 'Opact Wallet',
-    subtitle: 'Only create external link'
+    title: 'Opact Wallet'
+    // subtitle: 'Only create external link'
   },
   {
     value: 'external',
-    title: 'Regular Wallet',
-    subtitle: 'You can make deposit here'
+    title: 'Regular Wallet'
+    // subtitle: 'You can make deposit here'
   }
 ]
 
@@ -106,12 +106,13 @@ withDefaults(
                       {{ txType.title }}
                     </RadioGroupLabel>
 
-                    <RadioGroupDescription
+                    <!-- <RadioGroupDescription
+                      v-if="subti"
                       as="span"
                       class="inline text-font-2 text-xxs"
                     >
                       {{ txType.subtitle }}
-                    </RadioGroupDescription>
+                    </RadioGroupDescription> -->
                   </div>
                 </div>
 
