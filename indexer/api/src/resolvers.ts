@@ -2,33 +2,78 @@ import { baseRequest } from "./utils";
 
 export const resolvers = {
   Query: {
-    getEvents: async (_, args) => {
-      const offset = (args.page - 1) * args.size;
+    getCommitments: async (_, args) => {
+      const eventName = "new-commitment";
 
-      const query = "SELECT * FROM events LIMIT $1 OFFSET $2;";
-
-      const result = await baseRequest(query, [args.size, offset]);
-
-      return result.rows;
-    },
-
-    getEventsByModule: async (_, args) => {
       const offset = (args.page - 1) * args.size;
 
       const query =
-        "SELECT * FROM events WHERE module = $1 LIMIT $2 OFFSET $3;";
+        "SELECT * FROM events WHERE name = $1 AND module = $2 AND chainid = $3 LIMIT $4 OFFSET $5;";
 
-      const result = await baseRequest(query, [args.module, args.size, offset]);
+      const result = await baseRequest(query, [
+        eventName,
+        args.module,
+        args.chainId,
+        args.size,
+        offset,
+      ]);
 
       return result.rows;
     },
 
-    getTransactions: async (_, args) => {
+    getUtxos: async (_, args) => {
+      const eventName = "new-encrypted-output";
+
       const offset = (args.page - 1) * args.size;
 
-      const query = "SELECT * FROM transactions LIMIT $1 OFFSET $2;";
+      const query =
+        "SELECT * FROM events WHERE name = $1 AND module = $2 AND chainid = $3 LIMIT $4 OFFSET $5;";
 
-      const result = await baseRequest(query, [args.size, offset]);
+      const result = await baseRequest(query, [
+        eventName,
+        args.module,
+        args.chainId,
+        args.size,
+        offset,
+      ]);
+
+      return result.rows;
+    },
+
+    getReceipts: async (_, args) => {
+      const eventName = "new-transaction";
+
+      const offset = (args.page - 1) * args.size;
+
+      const query =
+        "SELECT * FROM events WHERE name = $1 AND module = $2 AND chainid = $3 LIMIT $4 OFFSET $5;";
+
+      const result = await baseRequest(query, [
+        eventName,
+        args.module,
+        args.chainId,
+        args.size,
+        offset,
+      ]);
+
+      return result.rows;
+    },
+
+    getNullifiers: async (_, args) => {
+      const eventName = "new-nullifier";
+
+      const offset = (args.page - 1) * args.size;
+
+      const query =
+        "SELECT * FROM events WHERE name = $1 AND module = $2 AND chainid = $3 LIMIT $4 OFFSET $5;";
+
+      const result = await baseRequest(query, [
+        eventName,
+        args.module,
+        args.chainId,
+        args.size,
+        offset,
+      ]);
 
       return result.rows;
     },

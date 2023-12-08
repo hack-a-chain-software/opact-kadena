@@ -14,37 +14,11 @@ export const typeDefs = `#graphql
     requestkey: String!
   }
 
-  type Transaction {
-    badresult: String
-    block: String!
-    chainid: Int!
-    code: String
-    continuation: String
-    creationtime: String!
-    data: String
-    gas: Int!
-    gaslimit: Int!
-    gasprice: Float!
-    goodresult: String
-    height: Int!
-    logs: String
-    metadata: String
-    nonce: String!
-    num_events: Int
-    pactid: String
-    proof: String
-    requestkey: String!
-    rollback: Boolean
-    sender: String!
-    step: Int
-    ttl: Int!
-    txid: Int
-  }
-
   type Query {
-    getEvents(page: Int!, size: Int!): [Event]
-    getEventsByModule(page: Int!, size: Int!, module: String!): [Event]
-    getTransactions(page: Int!, size: Int!): [Transaction]
+    getUtxos(page: Int!, size: Int!, module: String!, chainId: Int!): [Event]
+    getReceipts(page: Int!, size: Int!, module: String!, chainId: Int!): [Event]
+    getNullifiers(page: Int!, size: Int!, module: String!, chainId: Int!): [Event]
+    getCommitments(page: Int!, size: Int!, module: String!, chainId: Int!): [Event]
   }
 `;
 
