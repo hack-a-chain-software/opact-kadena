@@ -177,7 +177,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/indexer-service/dev/1686664058542-2023-06-13T13:47:38.542Z/graphql.zip"
+                "S3Key": "serverless/indexer-service/dev/1702061620172-2023-12-08T18:53:40.172Z/graphql.zip"
               },
               "Handler": "src/server.graphqlHandler",
               "Runtime": "nodejs18.x",
@@ -195,14 +195,14 @@
               "GraphqlLogGroup"
             ]
           },
-          "GraphqlLambdaVersion74MCfsupBmIT3WZ75E4TbDhGAdxGG9Ba4eJe7NH51U": {
+          "GraphqlLambdaVersionJUVS5LToYRsSnorZbn28Xg2zASXE3OBFapcRQTNsg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GraphqlLambdaFunction"
               },
-              "CodeSha256": "Lylix922d6NhKaQRZnl4ybPUJSCSO698c1CQQJZwRco="
+              "CodeSha256": "LvEKsKMd4+l79/gyfyZetxBol9wTW94oeHGLdwkFzPs="
             }
           },
           "HttpApi": {
@@ -350,7 +350,7 @@
           "GraphqlLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GraphqlLambdaVersion74MCfsupBmIT3WZ75E4TbDhGAdxGG9Ba4eJe7NH51U"
+              "Ref": "GraphqlLambdaVersionJUVS5LToYRsSnorZbn28Xg2zASXE3OBFapcRQTNsg"
             },
             "Export": {
               "Name": "sls-indexer-service-dev-GraphqlLambdaFunctionQualifiedArn"
@@ -500,13 +500,13 @@
         ],
         "name": "indexer-service-dev-graphql",
         "package": {
-          "artifact": "/Users/mateussantana/Projects/hackadena/indexer/api/.serverless/graphql.zip"
+          "artifact": "/Users/mateussantana/Projects/hackachain/wallet/indexer/api/.serverless/graphql.zip"
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "GraphqlLambdaVersion74MCfsupBmIT3WZ75E4TbDhGAdxGG9Ba4eJe7NH51U"
+        "versionLogicalId": "GraphqlLambdaVersionJUVS5LToYRsSnorZbn28Xg2zASXE3OBFapcRQTNsg"
       }
     },
     "configValidationMode": "warn",
@@ -528,7 +528,7 @@
           "src/server.js"
         ],
         "artifactsS3KeyDirname": "serverless/indexer-service/dev/code-artifacts",
-        "artifactDirectoryName": "serverless/indexer-service/dev/1686664058542-2023-06-13T13:47:38.542Z"
+        "artifactDirectoryName": "serverless/indexer-service/dev/1702061620172-2023-12-08T18:53:40.172Z"
       }
     },
     "layers": {},
@@ -536,7 +536,7 @@
   },
   "package": {
     "individually": true,
-    "artifactDirectoryName": "serverless/indexer-service/dev/1686664058542-2023-06-13T13:47:38.542Z",
+    "artifactDirectoryName": "serverless/indexer-service/dev/1702061620172-2023-12-08T18:53:40.172Z",
     "artifact": ""
   }
 }
