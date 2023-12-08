@@ -8,9 +8,6 @@ volumes:
   chainweb-db: {}
 
 services:
-
-  # ########################################################################## #
-  # Database Initialization
   chainweb-initialize-db:
     restart: "no"
     container_name: chainweb-initialize-db
@@ -23,11 +20,17 @@ services:
     command:
       - "-c"
       - |
-        apk add --no-cache curl rsync
-        mkdir -p "/chainweb/db/0" && \
-        curl -L -o db-chainweb-node-ubuntu.18.04-latest.tar.gz "https://kadena-node-db.s3.us-east-2.amazonaws.com/db-chainweb-node-ubuntu.18.04-latest.tar.gz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYX5GBYQTUK5ITNWH%2F20231022%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231022T235452Z&X-Amz-Expires=604800&X-Amz-Signature=142c1ba609905903d23855fe1ae15c7d8a5ed56ef4b36b7df589317b9ede390b&X-Amz-SignedHeaders=host%3Bx-amz-request-payer&x-amz-request-payer=requester" && \
-        tar -xzC "/chainweb/db/0" -f db-chainweb-node-ubuntu.18.04-latest.tar.gz && \
-        exit 0
+        mkdir -p "/db/0"
+        rsync -avz --delete "rsync://us1.testnet.chainweb.com/db/0/rocksDb" "/db/0/"
+        rsync -avz --delete "rsync://us1.testnet.chainweb.com/db/0/rocksDb" "/db/0/"
+        rsync -avz --delete "rsync://us1.testnet.chainweb.com/db/0/rocksDb" "/db/0/"
+        rsync -avz --delete "rsync://us1.testnet.chainweb.com/db/0/rocksDb" "/db/0/"
+        for i in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 ; do
+          rsync -avz --delete "rsync://us1.testnet.chainweb.com/db/0/sqlite/pact-v1-chain-$${i}.*" "/db/0/sqlite/"
+          rsync -avz --delete "rsync://us1.testnet.chainweb.com/db/0/sqlite/pact-v1-chain-$${i}.*" "/db/0/sqlite/"
+          rsync -avz --delete "rsync://us1.testnet.chainweb.com/db/0/sqlite/pact-v1-chain-$${i}.*" "/db/0/sqlite/"
+          rsync -avz --delete "rsync://us1.testnet.chainweb.com/db/0/sqlite/pact-v1-chain-$${i}.*" "/db/0/sqlite/"
+        done
 
   # ########################################################################## #
   # Database Validation
@@ -36,7 +39,7 @@ services:
     container_name: chainweb-validate-db-config
     image: alpine:latest
     environment:
-      KADENA_NETWORK: ${KADENA_NETWORK:-mainnet01}
+      KADENA_NETWORK: ${KADENA_NETWORK:-testnet04}
     volumes:
       - chainweb-config:/config:rw
     entrypoint: "/bin/sh"
@@ -105,7 +108,7 @@ services:
     container_name: chainweb-node
     image: ${IMAGE:-ghcr.io/kadena-io/chainweb-node/ubuntu:latest}
     environment:
-      KADENA_NETWORK: ${KADENA_NETWORK:-mainnet01}
+      KADENA_NETWORK: ${KADENA_NETWORK:-testnet04}
     restart: unless-stopped
     stop_grace_period: "20s"
     stop_signal: SIGINT
@@ -149,7 +152,7 @@ services:
       - -RTS
       - --header-stream
       - --database-directory=/chainweb/db
-      - --chainweb-version=${KADENA_NETWORK:-mainnet01}
+      - --chainweb-version=${KADENA_NETWORK:-testnet04}
       - --log-level=warn
       - --log-handle=stdout
       - --log-format=json

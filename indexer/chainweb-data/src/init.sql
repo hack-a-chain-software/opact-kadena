@@ -152,3 +152,12 @@ CREATE TABLE schema_migrations (
     checksum character varying(32) NOT NULL,
     executed_at timestamp without time zone DEFAULT now() NOT NULL
 );
+
+ALTER TABLE signers DROP CONSTRAINT signers_pkey;
+ALTER TABLE signers ADD CONSTRAINT signers_pkey PRIMARY KEY (requestkey, idx);
+
+CREATE INDEX transactions_pactid_index
+  ON transactions (pactid, (goodresult IS NOT NULL) DESC, height DESC)
+  WHERE pactid IS NOT NULL;
+
+CREATE INDEX blocks_height_chainid_idx ON blocks (height DESC, chainid);

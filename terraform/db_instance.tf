@@ -9,7 +9,7 @@ resource "aws_db_instance" "chainweb_database" {
   password          = var.db_password
   publicly_accessible = true
   skip_final_snapshot = true
-  allocated_storage    = 480
+  allocated_storage    = 80
   storage_type         = "gp2"
   multi_az             = false
 

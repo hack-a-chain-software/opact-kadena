@@ -29,5 +29,5 @@ variable "db_sync_server" {
 variable "kadena_network" {
   description = "Kadena network"
   type        = string
-  default     = "mainnet01"
+  default     = "testnet04"
 }
