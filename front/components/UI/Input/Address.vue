@@ -174,7 +174,7 @@ watch(
       />
     </div>
 
-    <Warning
+    <UIWarning
       class="mt-4"
       type="warning"
       v-show="data.isRegistered && !data.isOZKAccount"
@@ -183,7 +183,7 @@ watch(
       desc="Opact can register a Single-Key Account to proceed with your transfer."
     />
 
-    <Warning
+    <UIWarning
       class="mt-4"
       type="warning"
       v-show="data.isKAccount"
@@ -192,7 +192,7 @@ watch(
       desc="The address is not registered, but we will register this account for you."
     />
 
-    <Warning
+    <UIWarning
       class="mt-4"
       type="warning"
       v-motion-slide-visible-top

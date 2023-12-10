@@ -66,7 +66,7 @@ const { provider } = useExtensions()
       :disabled="isDisabled"
     />
 
-    <Warning
+    <UIWarning
       v-if="error"
       type="error"
       :label="error + '*'"

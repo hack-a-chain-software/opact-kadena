@@ -54,7 +54,7 @@ const { provider } = useExtensions()
       :disabled="isDisabled"
     />
 
-    <Warning
+    <UIWarning
       type="error"
       class="mt-4"
       v-if="error"
