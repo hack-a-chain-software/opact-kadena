@@ -35,13 +35,26 @@ export const useReceiveStore = defineStore({
       isLoading: false,
       receiveType: 'internal',
 
-      selectedToken: kadenaTokens[0]
+      selectedToken: kadenaTokens[0],
+
+      balance: null
     }
   },
 
   getters: {
     isPrivate ({ receiveType }: any): boolean {
       return receiveType === 'internal'
+    },
+
+    haveFunds ({
+      balance,
+      amount
+    }: any) {
+      if (balance === null) {
+        return false
+      }
+
+      return balance < amount
     },
 
     isDisabled ({

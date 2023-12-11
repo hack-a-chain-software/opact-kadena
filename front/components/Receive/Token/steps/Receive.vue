@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { getTokenDetails } from 'opact-sdk'
 import { useReceiveStore } from '~/stores/receive'
 import { useWalletStore } from '~/stores/wallet'
 
@@ -8,6 +9,8 @@ const receiveStore = useReceiveStore()
 const {
   link,
   amount,
+  balance,
+  haveFunds,
   isPrivate,
   isDisabled,
   receiveType,
@@ -19,6 +22,44 @@ const wallet = useWalletStore()
 const { account } = storeToRefs(wallet)
 
 const emit = defineEmits(['changeStep'])
+
+const { provider } = useExtensions()
+
+const checkFunds = async (token: any) => {
+  await nextTick()
+
+  if (!token || !provider.value) {
+    return
+  }
+
+  const prefix =
+      token.name === 'Kadena'
+        ? 'coin'
+        : 'test.opact-coin'
+
+  try {
+    const details = await getTokenDetails(
+      'k:' + provider.value?.account?.account?.publicKey,
+      prefix
+    )
+
+    return details.balance
+  } catch (e) {
+    console.warn(e)
+  }
+}
+
+const connected = async () => {
+  const funds = await checkFunds(selectedToken.value)
+
+  balance.value = funds
+
+  if (funds < amount.value) {
+    return
+  }
+
+  emit('changeStep', 'review')
+}
 </script>
 
 <template>
@@ -101,10 +142,18 @@ const emit = defineEmits(['changeStep'])
           </span>
         </div>
 
+        <UIWarning
+          type="warning"
+          v-show="haveFunds"
+          v-motion-slide-visible-top
+          label="Insufficient Balance"
+          desc="You do not have sufficient funds to make this deposit"
+        />
+
         <SelectWallet
           label="Connect wallet to deposit"
-          :is-disabled="isDisabled"
-          @connected="emit('changeStep', 'review')"
+          :is-disabled="isDisabled || haveFunds"
+          @connected="connected"
         />
       </div>
     </UICardBody>
