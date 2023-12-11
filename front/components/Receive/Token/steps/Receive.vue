@@ -102,6 +102,14 @@ const connected = async () => {
         :disabled="false"
         :token="selectedToken"
         label="Amount to Receive"
+        @update:model-value="balance = null"
+      />
+
+      <UIWarning
+        type="error"
+        v-show="haveFunds"
+        v-motion-slide-visible-top
+        desc="You do not have sufficient funds to make this deposit"
       />
 
       <SelectToken
@@ -141,14 +149,6 @@ const connected = async () => {
             OR
           </span>
         </div>
-
-        <UIWarning
-          type="warning"
-          v-show="haveFunds"
-          v-motion-slide-visible-top
-          label="Insufficient Balance"
-          desc="You do not have sufficient funds to make this deposit"
-        />
 
         <SelectWallet
           label="Connect wallet to deposit"
