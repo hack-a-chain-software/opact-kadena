@@ -3,13 +3,13 @@ import { reactive } from 'vue'
 import Pact from 'pact-lang-api'
 import { toHex } from 'ethereum-cryptography/utils'
 import { getRandomBytesSync } from 'ethereum-cryptography/random'
+import { storeToRefs } from 'pinia'
 import { tokens } from '~/utils/constants'
 import { useAppStore } from '~/stores/app'
-import { storeToRefs } from 'pinia'
 
 const app = useAppStore()
 
-const { isLoading } =  storeToRefs(app)
+const { isLoading } = storeToRefs(app)
 
 const router = useRouter()
 

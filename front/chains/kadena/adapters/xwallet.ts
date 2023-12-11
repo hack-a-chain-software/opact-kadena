@@ -1,12 +1,12 @@
 import { ref } from 'vue'
 import Pact from 'pact-lang-api'
+import { getConfig } from 'opact-sdk'
 import {
   getPactCodeForFaucet,
   computePactCode,
   getCapsForDeposit,
   getCapsForWithdraw
 } from '~/utils/kadena'
-import { getConfig } from 'opact-sdk'
 
 const RPC =
   process.env.NODE_ENV !== 'development'
