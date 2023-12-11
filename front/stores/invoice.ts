@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import {
-  kadenaBaseTokens,
+  kadenaTokens,
   formatInteger,
   getDepositSoluctionBatch,
   getEncryptedReceiptsOfTransaction,
@@ -39,7 +39,7 @@ export const useInvoiceStore = defineStore({
       isLoading: false,
       receiveType: 'external',
 
-      selectedToken: kadenaBaseTokens[0]
+      selectedToken: kadenaTokens[0]
     }
   },
 
@@ -94,7 +94,7 @@ export const useInvoiceStore = defineStore({
     init (
       amount = 0,
       type = 'token',
-      selectedToken = kadenaBaseTokens[0]
+      selectedToken = kadenaTokens[0]
     ) {
       this.type = type
       this.amount = amount

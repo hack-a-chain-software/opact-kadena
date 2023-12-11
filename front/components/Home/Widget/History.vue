@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
+
+import { useAppStore } from '~/stores/app'
+
+const app = useAppStore()
+
+const { receipts } = storeToRefs(app)
 
 const wallet = useWalletStore()
 const { account } = storeToRefs(wallet)
-
-const { receipts } = useAppState()
 
 const router = useRouter()
 </script>

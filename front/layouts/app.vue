@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { onBeforeMount, onMounted } from 'vue'
 import { loadArtifact } from 'opact-sdk'
-import { useAppState } from '~/hooks/state'
+import { onBeforeMount, onMounted } from 'vue'
+import { useAppStore } from '~/stores/app'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
-const { isLoading, loadAppState } = useAppState()
+const app = useAppStore()
+
+const { isLoading } = storeToRefs(app)
 
 const { connected, account } = storeToRefs(wallet)
 
@@ -24,7 +26,7 @@ watch(account, (newAccount) => {
     return
   }
 
-  loadAppState(newAccount.pvtkey)
+  app.initApp(newAccount)
 })
 </script>
 
@@ -89,3 +91,4 @@ body {
   position: relative;
 }
 </style>
+~/stores/app

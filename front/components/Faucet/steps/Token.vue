@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { useAppState } from '~/hooks/state'
 import { tokens } from '~/utils/constants'
+import { useAppStore } from '~/stores/app'
+import { storeToRefs } from 'pinia'
 
-const { isLoading } = useAppState()
+const app = useAppStore()
+
+const { isLoading } =  storeToRefs(app)
 
 const router = useRouter()
 

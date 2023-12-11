@@ -2,9 +2,12 @@
 import Pact from 'pact-lang-api'
 import { reactive, watch } from 'vue'
 import { getPoseidonTokenHash } from 'opact-sdk'
-import { useAppState } from '~/hooks/state'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '~/stores/app'
 
-const { userData } = useAppState()
+const app = useAppStore()
+
+const { treeBalances } = storeToRefs(app)
 
 const RPC =
   process.env.NODE_ENV !== 'development'
@@ -36,7 +39,7 @@ const select = (token: any) => {
 }
 
 watch(
-  userData,
+  treeBalances,
   async (newData) => {
     if (!newData.nfts['poly-fungible-v2-reference']) {
       return

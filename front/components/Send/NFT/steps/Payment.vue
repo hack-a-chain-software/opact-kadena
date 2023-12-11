@@ -48,7 +48,6 @@ const { provider } = useExtensions()
 
     <TxWrapperNFT
       :token="selectedToken"
-      :amount="amount"
       :receiver="addressTo"
       :sender="account.address"
       :disabled="isDisabled"

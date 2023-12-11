@@ -1,13 +1,6 @@
 <script lang="ts" setup>
 import { format } from 'date-fns'
 import { reactive, computed } from 'vue'
-// import {
-//   getDecimals,
-//   formatBigNumberWithDecimals
-// } from 'opact-sdk'
-// import { useAppState } from '~/hooks/state'
-
-// const { userData } = useAppState()
 
 const data = reactive({
   range: [],
@@ -104,26 +97,6 @@ onBeforeMount(async () => {
 
 <template>
   <div class="w-full">
-    <!-- <div class="pb-[48px]">
-      <div class="pb-[2px]">
-        <span class="text-font-2 text-xxs font-medium">
-          Balance
-        </span>
-      </div>
-
-      <div class="flex items-center space-x-4">
-        <div>
-          <span class="text-lg font-medium text-font-1">
-            {{ balance }} USD
-          </span>
-        </div>
-
-        <div>
-          <Icon name="visible" class="w-6 h-6" />
-        </div>
-      </div>
-    </div> -->
-
     <div class="grid grid-cols-[1fr,auto] gap-[24px]">
       <div
         class="

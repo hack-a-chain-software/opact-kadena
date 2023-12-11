@@ -4,9 +4,12 @@ import {
   getDecimals,
   formatBigNumberWithDecimals
 } from 'opact-sdk'
-import { useAppState } from '~/hooks/state'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '~/stores/app'
 
-const { userData } = useAppState()
+const app = useAppStore()
+
+const { treeBalances } = storeToRefs(app)
 
 const data = reactive({
   tab: 'tokens',
@@ -39,12 +42,12 @@ const balance = computed(() => {
 
   return (
     (formatBigNumberWithDecimals(
-      userData.value?.tokens.coin?.balance || 0,
+      treeBalances.value?.tokens.coin?.balance || 0,
       decimals
     ) as any) *
       data.kadenaInDolar +
     (formatBigNumberWithDecimals(
-      userData.value?.tokens['opact-coin']?.balance || 0,
+      treeBalances.value?.tokens['opact-coin']?.balance || 0,
       decimals
     ) as any) *
       data.kdxInDolar
@@ -156,14 +159,14 @@ const balance = computed(() => {
         class="pt-[16px] space-y-3"
       >
         <div
-          v-if="Object.keys(userData.tokens).length > 0"
+          v-if="Object.keys(treeBalances.tokens).length > 0"
           class="space-y-3"
         >
           <TokensItem
             :address="key"
             :token="tree.token"
             :balance="tree.balance"
-            v-for="(tree, key) of userData.tokens"
+            v-for="(tree, key) of treeBalances.tokens"
             :key="`${
               tree?.token?.id
             }-${tree.balance.toString()}`"
@@ -196,7 +199,7 @@ const balance = computed(() => {
 
       <div v-else class="pb-[90px] lg:pb-0">
         <div
-          v-if="Object.keys(userData.nfts).length > 0"
+          v-if="Object.keys(treeBalances.nfts).length > 0"
           class="
             grid grid-cols-2
             gap-3
@@ -208,7 +211,7 @@ const balance = computed(() => {
           <NftItem
             :id="utxo.id"
             :key="utxo.hash"
-            v-for="utxo of userData.nfts[
+            v-for="utxo of treeBalances.nfts[
               'poly-fungible-v2-reference'
             ].utxos"
           />

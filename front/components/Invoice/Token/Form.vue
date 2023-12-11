@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, onBeforeMount } from 'vue'
-import { kadenaBaseTokens } from 'opact-sdk'
+import { kadenaTokens } from 'opact-sdk'
 import connect from './steps/Connect.vue'
 import payment from './steps/Payment.vue'
 import success from './steps/Success.vue'
@@ -38,7 +38,7 @@ onBeforeMount(() => {
   }
 
   if (token) {
-    const defaultToken = kadenaBaseTokens.find(({ id }) => id.toString() === token)
+    const defaultToken = kadenaTokens.find(({ id }) => id.toString() === token)
 
     invoiceStore.selectedToken = defaultToken
   }

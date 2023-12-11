@@ -1,21 +1,21 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import {
   getDecimals,
   computeInputs,
   formatInteger,
   getKdaMessage,
   getPublicArgs,
-  kadenaBaseTokens,
+  kadenaTokens,
   MerkleTreeService,
   getKdaTransactionParams,
   getTransferSolutionBatch,
+  getReceiptsOfTransaction,
   formatBigNumberWithDecimals,
   getEncryptedUtxosOfTransaction,
-  getTransferSolutionBatchForNFT,
-  getEncryptedReceiptsOfTransaction
+  getTransferSolutionBatchForNFT
 } from 'opact-sdk'
 import { groth16 } from 'snarkjs'
-import { useAppState } from '~/hooks/state'
+import { useAppStore } from '~/stores/app'
 
 export const useTransferStore = defineStore({
   id: 'transfer-store',
@@ -35,7 +35,7 @@ export const useTransferStore = defineStore({
       isLoading: false,
       isValidAddress: false,
 
-      selectedToken: kadenaBaseTokens[0]
+      selectedToken: kadenaTokens[0]
     }
   },
 
@@ -49,10 +49,12 @@ export const useTransferStore = defineStore({
 
       const decimals = getDecimals(12)
 
-      const { userData } = useAppState()
+      const app = useAppStore()
+
+      const { treeBalances } = storeToRefs(app)
 
       return formatBigNumberWithDecimals(
-        userData.value?.tokens[selectedToken.address]?.balance || 0,
+        treeBalances.value?.tokens[selectedToken.address]?.balance || 0,
         decimals
       )
     },
@@ -84,7 +86,7 @@ export const useTransferStore = defineStore({
     init (
       amount = 0,
       type = 'token',
-      selectedToken = kadenaBaseTokens[0]
+      selectedToken = kadenaTokens[0]
     ) {
       this.type = type
       this.amount = amount
@@ -94,7 +96,7 @@ export const useTransferStore = defineStore({
     reset (
       amount = 0,
       type = 'token',
-      selectedToken = kadenaBaseTokens[0]
+      selectedToken = kadenaTokens[0]
     ) {
       this.error = ''
       this.type = type
@@ -109,7 +111,9 @@ export const useTransferStore = defineStore({
 
       this.isLoading = true
 
-      const { userData, loadAppState } = useAppState()
+      const app = useAppStore()
+
+      const { treeBalances } = storeToRefs(app)
 
       const integerAmount = formatInteger(
         Number(this.amount) * -1,
@@ -119,9 +123,9 @@ export const useTransferStore = defineStore({
       let treeBalance = null
 
       if (this.type === 'nfts') {
-        treeBalance = userData.value.nfts[this.selectedToken.address]
+        treeBalance = treeBalances.value.nfts[this.selectedToken.address]
       } else {
-        treeBalance = userData.value.tokens[this.selectedToken.address]
+        treeBalance = treeBalances.value.tokens[this.selectedToken.address]
       }
 
       const receiver = this.addressTo
@@ -130,8 +134,19 @@ export const useTransferStore = defineStore({
 
       let batch = null
 
+      const receipts = getReceiptsOfTransaction({
+        amount: integerAmount,
+        receiverAddress: receiver,
+        senderAddress: wallet.address,
+        selectedToken: this.selectedToken,
+        type: this.isInternalTransfer
+          ? 'transfer'
+          : 'withdraw'
+      })
+
       if (this.type === 'nfts') {
         batch = await getTransferSolutionBatchForNFT({
+          receipts,
           treeBalance,
           totalRequired: amount,
           senderWallet: wallet,
@@ -142,6 +157,7 @@ export const useTransferStore = defineStore({
         })
       } else {
         batch = await getTransferSolutionBatch({
+          receipts,
           treeBalance,
           senderWallet: wallet,
           totalRequired: amount,
@@ -158,16 +174,6 @@ export const useTransferStore = defineStore({
         utxosOut
       } = batch
 
-      const encryptedReceipts = getEncryptedReceiptsOfTransaction({
-        amount: integerAmount,
-        receiverAddress: receiver,
-        senderAddress: wallet.address,
-        selectedToken: this.selectedToken,
-        type: this.isInternalTransfer
-          ? 'transfer'
-          : 'withdraw'
-      })
-
       const encryptedUtxos = getEncryptedUtxosOfTransaction({
         batch,
         senderAddress: wallet.address,
@@ -180,7 +186,7 @@ export const useTransferStore = defineStore({
         batch,
         receiver,
         encryptedUtxos,
-        encryptedReceipts,
+        encryptedReceipts: [],
         sender: wallet.address,
         selectedToken: this.selectedToken,
         amount: this.isInternalTransfer ? 0 : integerAmount
@@ -257,7 +263,8 @@ export const useTransferStore = defineStore({
 
       const router = useRouter()
 
-      loadAppState(wallet.pvtkey)
+      app.initApp(wallet)
+
       router.push('/home')
     }
   }

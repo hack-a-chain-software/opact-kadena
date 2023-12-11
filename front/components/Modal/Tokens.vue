@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, reactive } from 'vue'
-import { tokens } from '~/utils/constants'
+import { kadenaTokens } from 'opact-sdk'
 
 withDefaults(
   defineProps<{
@@ -26,7 +26,7 @@ const select = (token: any) => {
 }
 
 const filtered = computed(() => {
-  return tokens.filter(({ name, symbol }: any) => {
+  return kadenaTokens.filter(({ name, symbol }: any) => {
     return (
       name
         .toLowerCase()
@@ -91,7 +91,7 @@ const filtered = computed(() => {
           "
         >
           <div>
-            <img :src="token.icon" class="w-9 h-9" />
+            <img :src="token.icon.replace('https://opact.io/', '/')" class="w-9 h-9" />
           </div>
 
           <div class="flex flex-col space-y-1 text-left">

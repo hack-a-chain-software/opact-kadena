@@ -4,9 +4,12 @@ import Pact from 'pact-lang-api'
 import { toHex } from 'ethereum-cryptography/utils'
 import { getRandomBytesSync } from 'ethereum-cryptography/random'
 import { tokens } from '~/utils/constants'
-import { useAppState } from '~/hooks/state'
+import { useAppStore } from '~/stores/app'
+import { storeToRefs } from 'pinia'
 
-const { isLoading } = useAppState()
+const app = useAppStore()
+
+const { isLoading } =  storeToRefs(app)
 
 const router = useRouter()
 

@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import {
-  kadenaBaseTokens,
+  kadenaTokens,
   formatInteger,
   getDepositSoluctionBatch,
-  getEncryptedReceiptsOfTransaction,
+  getReceiptsOfTransaction,
   getEncryptedUtxosOfTransaction,
   getKdaMessage,
   getKdaTransactionParams,
@@ -13,15 +13,13 @@ import {
 } from 'opact-sdk'
 import { groth16 } from 'snarkjs'
 import { storeToRefs } from 'pinia'
-import { useAppState } from '~/hooks/state'
 import { useWalletStore } from '~/stores/wallet'
+import { useAppStore } from '~/stores/app'
 
 export const useReceiveStore = defineStore({
   id: 'receive-store',
 
   state: (): any => {
-    // const { cache } = useAuthStorage()
-
     return {
       error: '',
 
@@ -33,7 +31,7 @@ export const useReceiveStore = defineStore({
       isLoading: false,
       receiveType: 'internal',
 
-      selectedToken: kadenaBaseTokens[0]
+      selectedToken: kadenaTokens[0]
     }
   },
 
@@ -88,14 +86,14 @@ export const useReceiveStore = defineStore({
     init (
       amount = 0,
       type = 'token',
-      selectedToken = kadenaBaseTokens[0]
+      selectedToken = kadenaTokens[0]
     ) {
       this.type = type
       this.amount = amount
       this.selectedToken = selectedToken
     },
 
-    reset (amount = '', selectedToken = kadenaBaseTokens[0]) {
+    reset (amount = '', selectedToken = kadenaTokens[0]) {
       this.amount = amount
       this.receiveType = 'internal'
       this.selectedToken = selectedToken
@@ -109,25 +107,25 @@ export const useReceiveStore = defineStore({
         12
       )
 
+      const { provider } = useExtensions()
+
+      const receipts = getReceiptsOfTransaction({
+        type: 'deposit',
+        amount: integerAmount,
+        selectedToken: this.selectedToken,
+        receiverAddress: wallet.address,
+        senderAddress:
+          provider.value.account.account.publicKey
+      })
+
       const batch = await getDepositSoluctionBatch({
+        receipts,
         senderWallet: wallet,
         totalRequired: Number(this.amount),
         selectedToken: this.selectedToken
       })
 
       const { delta, utxosIn, utxosOut } = batch
-
-      const { provider } = useExtensions()
-
-      const encryptedReceipts =
-        getEncryptedReceiptsOfTransaction({
-          type: 'deposit',
-          amount: integerAmount,
-          selectedToken: this.selectedToken,
-          receiverAddress: wallet.address,
-          senderAddress:
-            provider.value.account.account.publicKey
-        })
 
       const encryptedUtxos = getEncryptedUtxosOfTransaction({
         batch,
@@ -137,7 +135,7 @@ export const useReceiveStore = defineStore({
       const extData = getKdaTransactionParams({
         batch,
         encryptedUtxos,
-        encryptedReceipts,
+        encryptedReceipts: [],
         amount: integerAmount,
         selectedToken: this.selectedToken,
         sender: provider.value.account.account.publicKey
@@ -206,9 +204,9 @@ export const useReceiveStore = defineStore({
 
       const router = useRouter()
 
-      const { loadAppState } = useAppState()
+      const app = useAppStore()
 
-      loadAppState(wallet.pvtkey)
+      app.initApp(wallet)
 
       router.push('/home')
 

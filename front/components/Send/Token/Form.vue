@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
-import { kadenaBaseTokens } from 'opact-sdk'
+import { kadenaTokens } from 'opact-sdk'
 import { useTransferStore } from '~/stores/transfer'
 
 const transferStore = useTransferStore()
@@ -25,7 +25,7 @@ onBeforeMount(() => {
   }
 
   if (token) {
-    const defaultToken = kadenaBaseTokens.find(({ id }) => id.toString() === token)
+    const defaultToken = kadenaTokens.find(({ id }) => id.toString() === token)
 
     transferStore.selectedToken = defaultToken
   }

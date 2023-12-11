@@ -6,6 +6,7 @@ import {
   getCapsForDeposit,
   getCapsForWithdraw
 } from '~/utils/kadena'
+import { getConfig } from 'opact-sdk'
 
 const RPC =
   process.env.NODE_ENV !== 'development'
@@ -163,9 +164,11 @@ export const useProvider = () => {
   }
 
   const connect = async (loginCallback = () => {}) => {
+    const { networkId } = getConfig()
+
     const accountResult = await kadena.request({
-      method: 'kda_connect',
-      networkId: 'testnet04'
+      networkId,
+      method: 'kda_connect'
     })
 
     account.value = accountResult
