@@ -100,7 +100,7 @@ const emits = defineEmits(['changeStep'])
               lg:text-xl lg:font-[500]
             "
           >
-            Your private address
+            Your private account on the Kadena Blockchain
           </h2>
 
           <p
@@ -110,8 +110,7 @@ const emits = defineEmits(['changeStep'])
               lg:font-xs lg:font-[400] lg:leading-[140%]
             "
           >
-            Choose how you want to connect. Web3 like you
-            never imagined.
+            With Opact Wallet you can store your funds and perform transactions with privacy and security. Start now!
           </p>
         </div>
 
