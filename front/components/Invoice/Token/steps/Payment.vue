@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { getTokenDetails } from 'opact-sdk'
-import { useInvoiceStore } from '~/stores/invoice'
+import { useReceiveStore } from '~/stores/receive'
 
-const invoiceStore = useInvoiceStore()
+const invoiceStore = useReceiveStore()
 
 const {
   amount,
@@ -21,7 +21,7 @@ const emit = defineEmits([
 const { provider } = useExtensions()
 
 const send = async () => {
-  await invoiceStore.sendDepositToken()
+  await invoiceStore.sendInvoice()
 
   emit('changeStep', 'success')
 }

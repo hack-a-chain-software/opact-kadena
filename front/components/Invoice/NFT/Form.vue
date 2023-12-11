@@ -3,7 +3,7 @@ import { reactive, onBeforeMount } from 'vue'
 import connect from './steps/Connect.vue'
 import payment from './steps/Payment.vue'
 import success from './steps/Success.vue'
-import { useInvoiceStore } from '~/stores/invoice'
+import { useReceiveStore } from '~/stores/receive'
 
 export type FormType = 'connect' | 'payment' | 'success';
 
@@ -17,7 +17,7 @@ const data = reactive({
   step: 'connect'
 })
 
-const invoiceStore = useInvoiceStore()
+const invoiceStore = useReceiveStore()
 
 const route = useRoute()
 

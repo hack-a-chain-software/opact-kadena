@@ -9,7 +9,9 @@ import {
   getKdaTransactionParams,
   getPublicArgs,
   MerkleTreeService,
-  computeInputs
+  computeInputs,
+  getRandomWallet,
+  separateHex
 } from 'opact-sdk'
 import { groth16 } from 'snarkjs'
 import { storeToRefs } from 'pinia'
@@ -22,6 +24,8 @@ export const useReceiveStore = defineStore({
   state: (): any => {
     return {
       error: '',
+
+      addressTo: '',
 
       type: 'token',
       progress: 'Generating ZK Proof...',
@@ -97,6 +101,120 @@ export const useReceiveStore = defineStore({
       this.amount = amount
       this.receiveType = 'internal'
       this.selectedToken = selectedToken
+    },
+
+    async sendInvoice () {
+      const wallet = getRandomWallet()
+
+      const {
+        babyjubPubkey
+      } = separateHex(this.addressTo)
+
+      this.isLoading = true
+
+      const integerAmount = formatInteger(
+        Number(this.amount),
+        12
+      )
+
+      const batch = await getDepositSoluctionBatch({
+        senderWallet: wallet,
+        receiverPubkey: babyjubPubkey,
+        totalRequired: Number(this.amount),
+        selectedToken: this.selectedToken
+      })
+
+      const { delta, utxosIn, utxosOut } = batch
+
+      const { provider } = useExtensions()
+
+      const senderAddress = `k:${provider.value.account.account.publicKey}`
+
+      const receipts =
+        getReceiptsOfTransaction({
+          type: 'deposit',
+          senderAddress,
+          amount: integerAmount,
+          selectedToken: this.selectedToken,
+          receiverAddress: this.addressTo
+        })
+
+      const encryptedUtxos = getEncryptedUtxosOfTransaction({
+        batch,
+        receipts,
+        senderAddress: wallet.address,
+        receiverAddress: this.addressTo
+      })
+
+      const extData = getKdaTransactionParams({
+        batch,
+        encryptedUtxos,
+        encryptedReceipts: [],
+        amount: integerAmount,
+        selectedToken: this.selectedToken,
+        sender: senderAddress
+      })
+
+      const message = getKdaMessage({
+        extData
+      })
+
+      const service = new MerkleTreeService({
+        chainId: 0,
+        dbUrl:
+          'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/commitments',
+        instanceName: 'commitments-tree'
+      })
+
+      await service.getTree()
+
+      const {
+        treeRoot,
+        newIns: updatedUtxosInWithTreeValues
+      } = await service.computeTreeValues(utxosIn)
+
+      const {
+        subtreeRoot,
+        newIns: updatedUtxosInWithSubtreeValues
+      } = await service.computeSubTreeValues(
+        updatedUtxosInWithTreeValues
+      )
+
+      const { inputs } = await computeInputs({
+        delta,
+        wallet,
+        message,
+        utxosOut,
+        selectedToken: this.selectedToken,
+        utxosIn: updatedUtxosInWithSubtreeValues,
+        roots: {
+          tree: treeRoot,
+          subtree: subtreeRoot
+        }
+      })
+
+      const { proof, publicSignals } =
+        await groth16.fullProve(
+          inputs,
+          '/transaction.wasm',
+          '/transaction_0001.zkey'
+        )
+
+      const publicArgs = getPublicArgs(proof, publicSignals)
+
+      const txArgs = {
+        batch,
+        extData,
+        proof: publicArgs,
+        tokenSpec: this.selectedToken.namespace
+      }
+
+      await provider.value.transaction(
+        txArgs,
+        (message: string) => { this.progress = message }
+      )
+
+      this.isLoading = false
     },
 
     async sendDeposit (wallet: any) {

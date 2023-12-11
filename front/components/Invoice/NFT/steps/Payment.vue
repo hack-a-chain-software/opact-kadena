@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useInvoiceStore } from '~/stores/invoice'
+import { useReceiveStore } from '~/stores/receive'
 
-const invoiceStore = useInvoiceStore()
+const invoiceStore = useReceiveStore()
 
 const {
   progress,
@@ -19,7 +19,7 @@ const emit = defineEmits([
 ])
 
 const send = async () => {
-  await invoiceStore.sendDepositToken()
+  await invoiceStore.sendInvoice()
 
   emit('changeStep', 'success')
 }

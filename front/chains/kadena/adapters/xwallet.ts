@@ -71,7 +71,7 @@ export const useProvider = () => {
   const createToken = async (id = 0, manifest: any) => {
     const { networkId, chainId } = getConfig()
 
-    const accountName = account.value.account.publicKey
+    const accountName = 'k:' + account.value.account.publicKey
     const publickey = account.value.account.publicKey
 
     const cmd = await kadena.request({
