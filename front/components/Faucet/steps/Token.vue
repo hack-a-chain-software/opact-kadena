@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
-import { tokens } from '~/utils/constants'
+import { kadenaTokens as tokens } from 'opact-sdk'
 import { useAppStore } from '~/stores/app'
 
 const app = useAppStore()

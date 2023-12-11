@@ -4,7 +4,7 @@ import Pact from 'pact-lang-api'
 import { toHex } from 'ethereum-cryptography/utils'
 import { getRandomBytesSync } from 'ethereum-cryptography/random'
 import { storeToRefs } from 'pinia'
-import { tokens } from '~/utils/constants'
+import { kadenaTokens as tokens } from 'opact-sdk'
 import { useAppStore } from '~/stores/app'
 
 const app = useAppStore()

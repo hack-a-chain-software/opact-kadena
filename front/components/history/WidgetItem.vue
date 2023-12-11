@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import Pact from 'pact-lang-api'
-import { formatBigNumberWithDecimals, getDecimals } from 'opact-sdk'
+import { shortenAddress, formatBigNumberWithDecimals, getDecimals } from 'opact-sdk'
 import { computed, watch, reactive } from 'vue'
-import { shortenAddress } from '~/utils/string'
 
 const RPC =
   process.env.NODE_ENV !== 'development'

@@ -68,6 +68,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gaId: process.env.GTM_TAG,
+      opactSDKNetwork: process.env.OPACT_SDK_NETWORK,
       gtmEnabled: process.env.IS_PROD === 'true'
     }
   },

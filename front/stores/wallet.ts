@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { useStateStorage, getWalletFromMnemonic } from 'opact-sdk'
-import { shortenAddress } from '~/utils/string'
+import { shortenAddress, useStateStorage, getWalletFromMnemonic } from 'opact-sdk'
 import { useAuthStorage } from '~/hooks/auth-storage'
 
 export const useWalletStore = defineStore({

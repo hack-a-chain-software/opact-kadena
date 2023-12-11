@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed, watch } from 'vue'
-import { shortenAddress } from '~/utils/string'
+import { shortenAddress } from 'opact-sdk'
 
 const props = withDefaults(
   defineProps<{

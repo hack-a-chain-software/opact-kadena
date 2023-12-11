@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Money3Component } from 'v-money3'
-import { moneyConfig } from '~/utils/constants'
+import { moneyConfig } from 'opact-sdk'
 
 const props = withDefaults(
   defineProps<{

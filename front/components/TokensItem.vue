@@ -2,9 +2,9 @@
 import { computed, reactive, onBeforeMount } from 'vue'
 import {
   getDecimals,
+  kadenaTokens as tokens,
   formatBigNumberWithDecimals
 } from 'opact-sdk'
-import { tokens } from '~/utils/constants'
 
 const props = withDefaults(
   defineProps<{

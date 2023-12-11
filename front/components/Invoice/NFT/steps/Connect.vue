@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import { shortenAddress } from '~/utils/string'
+import { shortenAddress } from 'opact-sdk'
 import { useInvoiceStore } from '~/stores/invoice'
 
 const invoiceStore = useInvoiceStore()

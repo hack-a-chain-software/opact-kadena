@@ -7,6 +7,7 @@ import {
   getPublicArgs,
   kadenaTokens,
   MerkleTreeService,
+  sendOpactTransaction,
   getKdaTransactionParams,
   getTransferSolutionBatch,
   getReceiptsOfTransaction,
@@ -243,7 +244,7 @@ export const useTransferStore = defineStore({
       }
 
       if (this.isInternalTransfer || this.selectedToken.address === 'coin') {
-        await sendPactTransaction(
+        await sendOpactTransaction(
           receiver,
           txArgs,
           (message: string) => (this.progress = message)

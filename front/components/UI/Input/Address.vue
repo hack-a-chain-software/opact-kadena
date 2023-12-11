@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { validatePubkey, separateHex, getTokenDetails } from 'opact-sdk'
+import { debounce, validatePubkey, separateHex, getTokenDetails } from 'opact-sdk'
 import { reactive, watch } from 'vue'
-import { debounce } from '~/utils/debounce'
 
 const props = withDefaults(
   defineProps<{
