@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import Pact from 'pact-lang-api'
-import { getConfig } from 'opact-sdk'
+// import { getConfig } from 'opact-sdk'
 import {
   getPactCodeForFaucet,
   computePactCode,
@@ -164,10 +164,12 @@ export const useProvider = () => {
   }
 
   const connect = async (loginCallback = () => {}) => {
-    const { networkId } = getConfig()
+    // const { networkId } = getConfig()
+
+    console.log('kadena request connection', kadena)
 
     const accountResult = await kadena.request({
-      networkId,
+      networkId: 'testnet04',
       method: 'kda_connect'
     })
 

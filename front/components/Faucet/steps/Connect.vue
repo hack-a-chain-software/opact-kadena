@@ -9,7 +9,6 @@ defineProps({
 const emit = defineEmits(['changeStep', 'token'])
 
 const handle = (step: any) => {
-  console.log('fooo', step)
   if (step === 'token') {
     emit('changeStep', 'token')
 
