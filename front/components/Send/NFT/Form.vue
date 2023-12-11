@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
-import { useTransferStore } from '~/stores/transfer'
+import { useSendStore } from '~/stores/send'
 
-const transferStore = useTransferStore()
+const transferStore = useSendStore()
 
 const route = useRoute()
 
@@ -26,3 +26,4 @@ onBeforeMount(() => {
     </Transition>
   </div>
 </template>
+~/stores/send

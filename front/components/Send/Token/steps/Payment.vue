@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
-import { useTransferStore } from '~/stores/transfer'
+import { useSendStore } from '~/stores/send'
 
-const transferStore = useTransferStore()
+const transferStore = useSendStore()
 
 const walletStore = useWalletStore()
 
@@ -83,3 +83,4 @@ const { provider } = useExtensions()
     />
   </UICardBody>
 </template>
+~/stores/send

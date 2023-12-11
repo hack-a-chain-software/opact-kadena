@@ -18,8 +18,8 @@ import {
 import { groth16 } from 'snarkjs'
 import { useAppStore } from '~/stores/app'
 
-export const useTransferStore = defineStore({
-  id: 'transfer-store',
+export const useSendStore = defineStore({
+  id: 'send-store',
 
   state: (): any => {
     // const { cache } = useAuthStorage()
