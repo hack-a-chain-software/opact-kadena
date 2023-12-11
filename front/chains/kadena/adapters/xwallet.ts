@@ -341,7 +341,7 @@ export const useProvider = () => {
     mintToken,
     disconnect,
     createToken,
-    transaction,
+    transaction
   }
 }
 
