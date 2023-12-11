@@ -142,32 +142,6 @@ export const computePactCode = ({
     })`
 }
 
-export const getTokenDetails = async (
-  accountName: string,
-  prefix: string
-) => {
-  const createdAt =
-    Math.round(new Date().getTime() / 1000) - 10
-
-  const {
-    result: { status, data }
-  } = await Pact.fetch.local(
-    {
-      pactCode: `(${prefix}.details ${JSON.stringify(
-        accountName
-      )})`,
-      meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
-    },
-    kadenaRPC
-  )
-
-  if (status === 'failure') {
-    throw new Error('Failure', data)
-  }
-
-  return data
-}
-
 export const sendPactTransaction = async (
   receiver: any,
   { proof, extData, tokenSpec }: any,
@@ -227,7 +201,7 @@ export const sendPactTransaction = async (
         language: 'Pact',
         name: 'transact-deposit',
         'recipient-guard': {
-          keys: [receiver]
+          keys: [receiver.replace('k:', '')]
         },
         'token-instance': {
           refSpec: [

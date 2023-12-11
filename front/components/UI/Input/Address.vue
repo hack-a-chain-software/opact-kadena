@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { validatePubkey, separateHex } from 'opact-sdk'
+import { validatePubkey, separateHex, getTokenDetails } from 'opact-sdk'
 import { reactive, watch } from 'vue'
 import { debounce } from '~/utils/debounce'
 
@@ -73,10 +73,12 @@ const verifyAddress = debounce(async (_, address: any) => {
     data.isValid = true
 
     emits('isValidAddress', true)
+
+    return
   } catch (e) {
     console.warn(e)
 
-    if (address.startsWith('K:')) {
+    if (address.startsWith('k:')) {
       data.isKAccount = true
 
       emits('isValidAddress', true)

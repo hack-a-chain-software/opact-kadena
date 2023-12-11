@@ -132,14 +132,15 @@ export const useInvoiceStore = defineStore({
 
       const { provider } = useExtensions()
 
+      const senderAddress = `k:${provider.value.account.account.publicKey}`
+
       const encryptedReceipts =
         getEncryptedReceiptsOfTransaction({
           type: 'deposit',
+          senderAddress,
           amount: integerAmount,
           selectedToken: this.selectedToken,
-          receiverAddress: this.addressTo,
-          senderAddress:
-            provider.value.account.account.publicKey
+          receiverAddress: this.addressTo
         })
 
       const encryptedUtxos = getEncryptedUtxosOfTransaction({
@@ -154,7 +155,7 @@ export const useInvoiceStore = defineStore({
         encryptedReceipts,
         amount: integerAmount,
         selectedToken: this.selectedToken,
-        sender: provider.value.account.account.publicKey
+        sender: senderAddress
       })
 
       const message = getKdaMessage({

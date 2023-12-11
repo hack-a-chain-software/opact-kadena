@@ -109,13 +109,14 @@ export const useReceiveStore = defineStore({
 
       const { provider } = useExtensions()
 
+      const senderAddress = `k:${provider.value.account.account.publicKey}`
+
       const receipts = getReceiptsOfTransaction({
         type: 'deposit',
+        senderAddress,
         amount: integerAmount,
         selectedToken: this.selectedToken,
-        receiverAddress: wallet.address,
-        senderAddress:
-          provider.value.account.account.publicKey
+        receiverAddress: wallet.address
       })
 
       const batch = await getDepositSoluctionBatch({
@@ -138,7 +139,7 @@ export const useReceiveStore = defineStore({
         encryptedReceipts: [],
         amount: integerAmount,
         selectedToken: this.selectedToken,
-        sender: provider.value.account.account.publicKey
+        sender: senderAddress
       })
 
       const message = getKdaMessage({

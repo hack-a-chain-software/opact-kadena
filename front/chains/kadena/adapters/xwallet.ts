@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import Pact from 'pact-lang-api'
-// import { getConfig } from 'opact-sdk'
+import { getTokenDetails } from 'opact-sdk'
 import {
   getPactCodeForFaucet,
   computePactCode,
@@ -34,7 +34,7 @@ export const useProvider = () => {
   }
 
   const mintToken = async (id = 0) => {
-    const accountName = account.value.account.publicKey
+    const accountName = 'k:' + account.value.account.publicKey
     const publickey = account.value.account.publicKey
 
     const cmd = await kadena.request({
@@ -130,39 +130,6 @@ export const useProvider = () => {
     return result
   }
 
-  // TODO: delete this
-  const coinDetails = async (prefix = 'coin') => {
-    try {
-      const accountName = account.value.account.publicKey
-
-      const network = RPC
-
-      const createdAt =
-        Math.round(new Date().getTime() / 1000) - 10
-
-      const data = await Pact.fetch.local(
-        {
-          pactCode: `(${prefix}.details ${JSON.stringify(
-            accountName
-          )})`,
-          meta: Pact.lang.mkMeta(
-            '',
-            '0',
-            0,
-            0,
-            createdAt,
-            0
-          )
-        },
-        network
-      )
-
-      return data
-    } catch (e) {
-      console.warn(e)
-    }
-  }
-
   const connect = async (loginCallback = () => {}) => {
     // const { networkId } = getConfig()
 
@@ -178,9 +145,11 @@ export const useProvider = () => {
     loginCallback()
   }
 
-  const faucet = async (tokenSpec) => {
-    const accountName = account.value.account.publicKey
+  const faucet = async (tokenSpec: any) => {
+    const accountName = 'k:' + account.value.account.publicKey
     const publickey = account.value.account.publicKey
+
+    console.log('accountName', accountName)
 
     const preffix =
       tokenSpec.refName.name === 'coin'
@@ -192,7 +161,7 @@ export const useProvider = () => {
     try {
       const {
         result: { status }
-      } = await coinDetails(preffix)
+      } = await getTokenDetails(accountName, preffix)
 
       if (status === 'failure') {
         withFund = true
@@ -255,7 +224,7 @@ export const useProvider = () => {
     isWithdrawTransfer = false,
     receiver = ''
   ) => {
-    const accountName = account.value.account.publicKey
+    const accountName = 'k:' + account.value.account.publicKey
     const publickey = account.value.account.publicKey
 
     let preffix =
@@ -373,7 +342,6 @@ export const useProvider = () => {
     disconnect,
     createToken,
     transaction,
-    coinDetails
   }
 }
 

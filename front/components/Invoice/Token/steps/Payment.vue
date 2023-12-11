@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { getTokenDetails } from 'opact-sdk'
 import { useInvoiceStore } from '~/stores/invoice'
 
 const invoiceStore = useInvoiceStore()
@@ -39,7 +40,7 @@ const checkFunds = async (token: any) => {
 
   try {
     const details = await getTokenDetails(
-      provider.value?.account?.account?.publicKey,
+      'k:' + provider.value?.account?.account?.publicKey,
       prefix
     )
 
