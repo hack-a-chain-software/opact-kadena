@@ -1,6 +1,8 @@
 import eckoWallet from './adapters/xwallet'
+import walletConnect from './adapters/wallet-connect'
 
 export const providers = {
+  [walletConnect.id]: walletConnect,
   [eckoWallet.provider.id]: eckoWallet
 } as any
 

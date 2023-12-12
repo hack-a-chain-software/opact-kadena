@@ -184,25 +184,12 @@ export const useProvider = () => {
     const accountName = 'k:' + account.value.account.publicKey
     const publickey = account.value.account.publicKey
 
-    let preffix =
-      tokenSpec.refName.name === 'coin'
-        ? 'coin'
-        : `test.${tokenSpec.refName.name}`
-
-    if (
-      tokenSpec.refName.name ===
-      'poly-fungible-v2-reference'
-    ) {
-      preffix = 'free.poly-fungible-v2-reference'
-    }
-
     let caps
 
     if (isWithdrawTransfer) {
       caps = getCapsForWithdraw(
         accountName,
         extData.tokenAmount,
-        preffix,
         receiver,
         tokenSpec
       )
@@ -210,7 +197,6 @@ export const useProvider = () => {
       caps = getCapsForDeposit(
         accountName,
         extData.tokenAmount,
-        preffix,
         tokenSpec
       )
     }
