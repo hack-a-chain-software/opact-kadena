@@ -13,6 +13,6 @@ export const getWalletConnectClient = async () => {
 export const getWalletConnectModal = () => {
   return new WalletConnectModal({
     projectId: '3974e0e0f91a102389b8cb3fc1a590a5',
-    themeMode: 'light'
+    themeMode: 'dark'
   })
 }
