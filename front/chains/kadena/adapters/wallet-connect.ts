@@ -6,7 +6,7 @@ import { getWalletConnectClient, getWalletConnectModal } from '../util'
 
 const metadata = {
   id: 'provider:eko:wallet-connect',
-  name: 'Wallet Connector',
+  name: 'Wallet Connect',
   icon: 'walletConnect',
   disabled: false
 }
