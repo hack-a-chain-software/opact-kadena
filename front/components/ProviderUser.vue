@@ -54,7 +54,7 @@ withDefaults(
         "
       >
         <img
-          :src="provider?.metadata?.icon"
+          :src="provider?.icon"
           class="w-10 h-10"
         />
       </div>
