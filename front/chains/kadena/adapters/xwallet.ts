@@ -25,7 +25,6 @@ export const provider = defineStore({
 
   state: (): any => ({
     account: null,
-    initialized: false,
     callback: undefined
   }),
 
@@ -37,7 +36,7 @@ export const provider = defineStore({
 
   actions: {
     init () {
-      this.initialized = true
+      //
     },
 
     reset () {

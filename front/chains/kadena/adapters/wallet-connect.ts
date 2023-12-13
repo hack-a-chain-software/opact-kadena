@@ -27,7 +27,6 @@ export const provider = defineStore({
     walletConnectModal: any,
     client: Client | undefined,
     account: any,
-    initialized: boolean,
     accounts: string[] | undefined,
     pairings: PairingTypes.Struct[],
     session: SessionTypes.Struct | undefined,
@@ -38,7 +37,6 @@ export const provider = defineStore({
     client: undefined,
     session: undefined,
     accounts: undefined,
-    initialized: false,
     walletConnectModal: undefined,
 
     isInitializing: false
