@@ -131,12 +131,7 @@ export const provider = defineStore({
       return await sendSigned(cmd)
     },
 
-    async sendNFTFaucetTransaciton (id: any) {
-      // const datum = await createDatum()
-
-      // const manifest = await createManifest([datum])
-      const manifest: any = null
-
+    async sendNFTFaucetTransaciton (id: any, manifest: any) {
       const { networkId, chainId } = getConfig()
 
       const accountName = this.account.address

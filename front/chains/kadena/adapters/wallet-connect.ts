@@ -8,7 +8,7 @@ import {
   Pact,
   createWalletConnectQuicksign
 } from '@kadena/client'
-import { getWalletConnectClient, walletConnectModal } from '../util'
+import { getWalletConnectClient, getWalletConnectModal } from '../util'
 
 const metadata = {
   id: 'provider:kadena:wallet-connect',
@@ -137,7 +137,7 @@ export const provider = defineStore({
         throw new TypeError('WalletConnect is not initialized')
       }
 
-      // const walletConnectModal = getWalletConnectModal()
+      const walletConnectModal = getWalletConnectModal()
 
       try {
         const { uri, approval } = await this.client.connect({
@@ -259,7 +259,7 @@ export const provider = defineStore({
       return await sendSigned({ signedCmd })
     },
 
-    async sendNFTFaucetTransaciton (manifest: any, id: any) {
+    async sendNFTFaucetTransaciton (id: any, manifest: any) {
       if (!this.client) {
         throw new Error('No client')
       }
@@ -271,12 +271,6 @@ export const provider = defineStore({
       if (!this.account) {
         throw new Error('No selected account to send from')
       }
-
-      // const id = BigInt(`0x${toHex(getRandomBytesSync(32))}`)
-
-      // const datum = await createDatum()
-
-      // const manifest = await createManifest([datum])
 
       const { networkId, chainId } = getConfig()
 
