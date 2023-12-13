@@ -1,5 +1,4 @@
-// import { ref } from 'vue'
-// import Pact from 'pact-lang-api'
+import Pact from 'pact-lang-api'
 import {
   getCapsForDeposit,
   getCapsForWithdraw,
@@ -10,6 +9,9 @@ import {
   sendSigned
 } from 'opact-sdk'
 import { defineStore } from 'pinia'
+import { getRandomBytesSync } from 'ethereum-cryptography/random'
+import { toHex } from 'ethereum-cryptography/utils'
+import { createDatum, createManifest } from '../util'
 
 const metadata = {
   name: 'Ecko Wallet',
@@ -38,7 +40,9 @@ export const provider = defineStore({
       this.initialized = true
     },
 
-    async reset () {},
+    reset () {
+      this.account = null
+    },
 
     async disconnect () {
       const { networkId } = getConfig()
@@ -129,7 +133,77 @@ export const provider = defineStore({
       return await sendSigned(cmd)
     },
 
-    async sendNFTFaucetTransaciton () {},
+    async sendNFTFaucetTransaciton () {
+      const id = BigInt(`0x${toHex(getRandomBytesSync(32))}`)
+
+      const datum = await createDatum()
+
+      const manifest = await createManifest([datum])
+
+      const { networkId, chainId } = getConfig()
+
+      const accountName = this.account.address
+      const publickey = this.account.pubkey
+
+      const cmd = await kadena.request({
+        data: {
+          networkId,
+          signingCmd: {
+            pactCode: `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`,
+            ttl: 0,
+            chainId,
+            gasLimit: 0,
+            gasPrice: 0,
+            envData: {
+              manifest,
+              guard: {
+                keys: [publickey]
+              }
+            },
+            sender: accountName,
+            networkId,
+            signingPubKey: publickey
+          }
+        },
+        networkId,
+        method: 'kda_requestSign'
+      })
+
+      await sendSigned(cmd)
+
+      const mintTokenCmd = await kadena.request({
+        data: {
+          networkId,
+          signingCmd: {
+            pactCode: `(free.poly-fungible-v2-reference.mint "${id}" "${accountName}" (read-keyset 'guard) 1.0)`,
+            ttl: 0,
+            chainId,
+            gasLimit: 0,
+            gasPrice: 0,
+            envData: {
+              guard: {
+                keys: [publickey]
+              }
+            },
+            caps: [
+              Pact.lang.mkCap(
+                'Mint Token',
+                'Capability to mint token',
+                'free.poly-fungible-v2-reference.MINT',
+                [id + '', accountName + '', 1.0]
+              )
+            ],
+            networkId,
+            sender: accountName,
+            signingPubKey: publickey
+          }
+        },
+        networkId,
+        method: 'kda_requestSign'
+      })
+
+      await sendSigned(mintTokenCmd)
+    },
 
     async sendOpactTransaction (
       { proof, extData, tokenSpec }: any,
@@ -209,84 +283,6 @@ export const provider = defineStore({
     }
   }
 })
-
-// export const useProvider = () => {
-//   const mintToken = async (id = 0) => {
-//     const { networkId, chainId } = getConfig()
-
-//     const accountName = 'k:' + account.value.account.publicKey
-//     const publickey = account.value.account.publicKey
-
-//     const cmd = await kadena.request({
-//       data: {
-//         networkId,
-//         signingCmd: {
-//           pactCode: `(free.poly-fungible-v2-reference.mint "${id}" "${accountName}" (read-keyset 'guard) 1.0)`,
-//           ttl: 0,
-//           chainId,
-//           gasLimit: 0,
-//           gasPrice: 0,
-//           envData: {
-//             guard: {
-//               keys: [publickey]
-//             }
-//           },
-//           caps: [
-//             Pact.lang.mkCap(
-//               'Mint Token',
-//               'Capability to mint token',
-//               'free.poly-fungible-v2-reference.MINT',
-//               [id + '', accountName + '', 1.0]
-//             )
-//           ],
-//           networkId,
-//           sender: accountName,
-//           signingPubKey: publickey
-//         }
-//       },
-//       networkId,
-//       method: 'kda_requestSign'
-//     })
-
-//     return await sendSigned(cmd)
-//   }
-
-//   const createToken = async (id = 0, manifest: any) => {
-//     const { networkId, chainId } = getConfig()
-
-//     const accountName = 'k:' + account.value.account.publicKey
-//     const publickey = account.value.account.publicKey
-
-//     const cmd = await kadena.request({
-//       data: {
-//         networkId,
-//         signingCmd: {
-//           pactCode: `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`,
-//           ttl: 0,
-//           chainId,
-//           gasLimit: 0,
-//           gasPrice: 0,
-//           envData: {
-//             manifest,
-//             guard: {
-//               keys: [publickey]
-//             }
-//           },
-//           sender: accountName,
-//           networkId,
-//           signingPubKey: publickey
-//         }
-//       },
-//       networkId,
-//       method: 'kda_requestSign'
-//     })
-
-//     return await sendSigned(cmd)
-//   }
-
-//   const transaction = async (
-//   }
-// }
 
 export default {
   ...metadata,
