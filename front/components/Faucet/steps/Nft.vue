@@ -30,7 +30,7 @@ const uri = {
   scheme: 'image/jpeg;base64'
 }
 
-export const createDatum = async (): Promise<any> => {
+const createDatum = async (): Promise<any> => {
   const { nodeUrl } = getConfig()
 
   const createdAt =
@@ -74,7 +74,8 @@ export const createDatum = async (): Promise<any> => {
 
   return all
 }
-export const createManifest = async (
+
+const createManifest = async (
   data: any[]
 ): Promise<any> => {
   const { nodeUrl } = getConfig()
