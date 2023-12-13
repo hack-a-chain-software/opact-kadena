@@ -10,12 +10,12 @@ import {
   Pact,
   createWalletConnectQuicksign
 } from '@kadena/client'
-import { getWalletConnectClient, getWalletConnectModal } from '../util'
+import { getWalletConnectClient, walletConnectModal } from '../util'
 
 const metadata = {
   id: 'provider:kadena:wallet-connect',
   name: 'Wallet Connect',
-  icon: '/svg/wallet-connect',
+  icon: '/svg/wallet-connect.svg',
   disabled: false
 }
 
@@ -135,7 +135,7 @@ export const provider = defineStore({
         throw new TypeError('WalletConnect is not initialized')
       }
 
-      const walletConnectModal = getWalletConnectModal()
+      // const walletConnectModal = getWalletConnectModal()
 
       try {
         const { uri, approval } = await this.client.connect({
