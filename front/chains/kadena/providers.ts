@@ -2,7 +2,7 @@
 import walletConnect from './adapters/wallet-connect'
 
 export const providers = {
-  [walletConnect.id]: walletConnect,
+  [walletConnect.id]: walletConnect
   // [eckoWallet.id]: eckoWallet
 } as any
 

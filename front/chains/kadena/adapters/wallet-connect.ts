@@ -198,27 +198,27 @@ export const provider = defineStore({
     },
 
     // async checkPersistedState () {
-      // if (typeof this.client === 'undefined') {
-      //   throw new TypeError('WalletConnect is not initialized')
-      // }
+    // if (typeof this.client === 'undefined') {
+    //   throw new TypeError('WalletConnect is not initialized')
+    // }
 
-      // this.pairings = this.client.pairing.getAll({ active: true })
+    // this.pairings = this.client.pairing.getAll({ active: true })
 
-      // if (typeof this.session !== 'undefined') {
-      //   return
-      // }
+    // if (typeof this.session !== 'undefined') {
+    //   return
+    // }
 
-      // console.log('this.pairings', this.pairings)
+    // console.log('this.pairings', this.pairings)
 
-      // // populates (the last) existing session to state
-      // if (this.client.session.length) {
-      //   console.log('this.client.session.keys', this.client.session.keys)
-      //   const _session = this.client.session.get(this.client.session.keys.at(-1) as string)
+    // // populates (the last) existing session to state
+    // if (this.client.session.length) {
+    //   console.log('this.client.session.keys', this.client.session.keys)
+    //   const _session = this.client.session.get(this.client.session.keys.at(-1) as string)
 
-      //   await this.onSessionConnected(_session)
+    //   await this.onSessionConnected(_session)
 
-      //   return _session
-      // }
+    //   return _session
+    // }
     // },
 
     async sendTokenFaucetTransaction (selectedToken: any) {
