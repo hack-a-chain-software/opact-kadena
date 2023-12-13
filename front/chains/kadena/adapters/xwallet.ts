@@ -9,8 +9,6 @@ import {
   sendSigned
 } from 'opact-sdk'
 import { defineStore } from 'pinia'
-import { getRandomBytesSync } from 'ethereum-cryptography/random'
-import { toHex } from 'ethereum-cryptography/utils'
 import { createDatum, createManifest } from '../util'
 
 const metadata = {
@@ -133,9 +131,7 @@ export const provider = defineStore({
       return await sendSigned(cmd)
     },
 
-    async sendNFTFaucetTransaciton () {
-      const id = BigInt(`0x${toHex(getRandomBytesSync(32))}`)
-
+    async sendNFTFaucetTransaciton (id: any) {
       const datum = await createDatum()
 
       const manifest = await createManifest([datum])

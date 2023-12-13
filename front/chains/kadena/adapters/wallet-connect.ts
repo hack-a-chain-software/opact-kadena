@@ -2,8 +2,6 @@ import { defineStore } from 'pinia'
 import Client from '@walletconnect/sign-client'
 import { getSdkError } from '@walletconnect/utils'
 import { PactNumber } from '@kadena/pactjs'
-// import { toHex } from 'ethereum-cryptography/utils'
-// import { getRandomBytesSync } from 'ethereum-cryptography/random'
 import { PairingTypes, SessionTypes } from '@walletconnect/types'
 import { getConfig, getTokenDetails, getFaucetCode, sendSigned, getCapsForWithdraw, getCapsForDeposit } from 'opact-sdk'
 import {
@@ -127,7 +125,6 @@ export const provider = defineStore({
 
         this.client = _client
         await this.subscribeToEvents()
-        // await this.checkPersistedState()
       } catch (err) {
         console.warn(err)
       } finally {

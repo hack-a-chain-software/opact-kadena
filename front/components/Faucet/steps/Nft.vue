@@ -2,6 +2,8 @@
 import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 import { kadenaTokens as tokens } from 'opact-sdk'
+import { toHex } from 'ethereum-cryptography/utils'
+import { getRandomBytesSync } from 'ethereum-cryptography/random'
 import { useAppStore } from '~/stores/app'
 
 const app = useAppStore()
@@ -30,7 +32,9 @@ const pay = async () => {
   try {
     data.loading = true
 
-    await provider.value.sendNFTFaucetTransaciton()
+    const id = BigInt(`0x${toHex(getRandomBytesSync(32))}`)
+
+    await provider.value.sendNFTFaucetTransaciton(id)
 
     isLoading.value = true
     router.push('/home')
