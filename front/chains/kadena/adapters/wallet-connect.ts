@@ -8,7 +8,7 @@ import {
   Pact,
   createWalletConnectQuicksign
 } from '@kadena/client'
-import { getWalletConnectClient, walletConnectModal, createDatum, createManifest } from '../util'
+import { getWalletConnectClient, walletConnectModal } from '../util'
 
 const metadata = {
   id: 'provider:kadena:wallet-connect',
@@ -259,7 +259,7 @@ export const provider = defineStore({
       return await sendSigned({ signedCmd })
     },
 
-    async sendNFTFaucetTransaciton (id: any) {
+    async sendNFTFaucetTransaciton (manifest: any, id: any) {
       if (!this.client) {
         throw new Error('No client')
       }
@@ -274,9 +274,9 @@ export const provider = defineStore({
 
       // const id = BigInt(`0x${toHex(getRandomBytesSync(32))}`)
 
-      const datum = await createDatum()
+      // const datum = await createDatum()
 
-      const manifest = await createManifest([datum])
+      // const manifest = await createManifest([datum])
 
       const { networkId, chainId } = getConfig()
 
