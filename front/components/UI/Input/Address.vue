@@ -35,11 +35,6 @@ const handleInput = (event: any) => {
 const verifyAddress = debounce(async (_, address: any) => {
   data.isLoading = true
 
-  const prefix =
-    props.token.name === 'Kadena'
-      ? 'coin'
-      : 'test.opact-coin'
-
   if (address.startsWith('OZK')) {
     data.isOZKAccount = true
 
@@ -67,7 +62,7 @@ const verifyAddress = debounce(async (_, address: any) => {
   }
 
   try {
-    await getTokenDetails(address, prefix)
+    await getTokenDetails(address, props.token)
 
     data.isValid = true
 

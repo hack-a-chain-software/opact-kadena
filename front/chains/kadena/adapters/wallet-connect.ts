@@ -197,30 +197,6 @@ export const provider = defineStore({
       }
     },
 
-    // async checkPersistedState () {
-    // if (typeof this.client === 'undefined') {
-    //   throw new TypeError('WalletConnect is not initialized')
-    // }
-
-    // this.pairings = this.client.pairing.getAll({ active: true })
-
-    // if (typeof this.session !== 'undefined') {
-    //   return
-    // }
-
-    // console.log('this.pairings', this.pairings)
-
-    // // populates (the last) existing session to state
-    // if (this.client.session.length) {
-    //   console.log('this.client.session.keys', this.client.session.keys)
-    //   const _session = this.client.session.get(this.client.session.keys.at(-1) as string)
-
-    //   await this.onSessionConnected(_session)
-
-    //   return _session
-    // }
-    // },
-
     async sendTokenFaucetTransaction (selectedToken: any) {
       if (!this.client) {
         throw new Error('No client')
@@ -275,8 +251,6 @@ export const provider = defineStore({
         .setNetworkId(networkId)
 
       const transaction = pactCommand.createTransaction()
-
-      console.log('transaction', transaction)
 
       const signedCmd = await signWithWalletConnect(transaction)
 
