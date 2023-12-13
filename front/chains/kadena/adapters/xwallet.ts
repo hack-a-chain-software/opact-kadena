@@ -26,7 +26,7 @@ export const provider = defineStore({
   state: (): any => ({
     account: null,
     callback: undefined,
-    metadata,
+    metadata
   }),
 
   getters: {

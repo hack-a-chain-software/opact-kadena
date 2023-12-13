@@ -116,12 +116,11 @@ export const provider = defineStore({
     },
 
     async init () {
-      if (!!this.client) {
+      if (this.client) {
         return
       }
 
       this.isInitializing = true
-
 
       try {
         const _client = await getWalletConnectClient()
