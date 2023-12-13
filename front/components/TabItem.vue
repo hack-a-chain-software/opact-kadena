@@ -11,7 +11,7 @@ const props = defineProps<{
   disabled: boolean;
 }>()
 
-// const extension = useExtensions()
+const extension = useExtensions()
 
 // const store = props.provider()
 

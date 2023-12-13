@@ -99,10 +99,11 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { prerender: true },
-    '/auth': { prerender: false },
-    '/home': { prerender: false },
     '/wallet': { prerender: true },
     '/tickets': { prerender: true },
+
+    '/auth': { prerender: false },
+    '/home': { prerender: false },
     '/faucet': { prerender: false },
     '/history': { prerender: false },
     '/invoice': { prerender: false },

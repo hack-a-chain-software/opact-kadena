@@ -16,17 +16,9 @@ export const useExtensions = () => {
       return callback()
     }
 
-    console.log('_provider.isConnected', _provider.isConnected)
-
-    if (_provider.isConnected) {
-      await callback()
-
-      provider.value = _provider
-
-      return
-    }
-
     try {
+
+      await _provider.init()
       await _provider.connect(callback)
 
       provider.value = _provider
