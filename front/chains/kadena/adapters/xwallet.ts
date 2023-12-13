@@ -1,4 +1,4 @@
-import Pact from 'pact-lang-api'
+// import Pact from 'pact-lang-api'
 import {
   getCapsForDeposit,
   getCapsForWithdraw,
@@ -183,12 +183,12 @@ export const provider = defineStore({
               }
             },
             caps: [
-              Pact.lang.mkCap(
-                'Mint Token',
-                'Capability to mint token',
-                'free.poly-fungible-v2-reference.MINT',
-                [id + '', accountName + '', 1.0]
-              )
+              // Pact.lang.mkCap(
+              //   'Mint Token',
+              //   'Capability to mint token',
+              //   'free.poly-fungible-v2-reference.MINT',
+              //   [id + '', accountName + '', 1.0]
+              // )
             ],
             networkId,
             sender: accountName,
