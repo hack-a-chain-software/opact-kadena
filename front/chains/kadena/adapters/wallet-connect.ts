@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
-import Client from '@walletconnect/sign-client'
 import { getSdkError } from '@walletconnect/utils'
 import { PactNumber } from '@kadena/pactjs'
-import { PairingTypes, SessionTypes } from '@walletconnect/types'
+import { SessionTypes } from '@walletconnect/types'
 import { getConfig, getTokenDetails, getFaucetCode, sendSigned, getCapsForWithdraw, getCapsForDeposit } from 'opact-sdk'
 import {
   Pact,
@@ -20,17 +19,8 @@ const metadata = {
 export const provider = defineStore({
   id: 'provider:kadena:wallet-connect',
 
-  state: (): {
-    metadata: any,
-    isInitializing: boolean,
-    walletConnectModal: any,
-    client: Client | undefined,
-    account: any,
-    accounts: string[] | undefined,
-    pairings: PairingTypes.Struct[],
-    session: SessionTypes.Struct | undefined,
-  } => ({
-    metadata,
+  state: (): any => ({
+    icon: '/svg/wallet-connect.svg',
 
     pairings: [],
 
@@ -114,10 +104,6 @@ export const provider = defineStore({
     },
 
     async init () {
-      if (this.client) {
-        return
-      }
-
       this.isInitializing = true
 
       try {

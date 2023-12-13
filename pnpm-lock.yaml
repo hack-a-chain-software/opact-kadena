@@ -142,6 +142,9 @@ importers:
       '@kadena/pactjs':
         specifier: ^0.4.2
         version: 0.4.2
+      '@noble/hashes':
+        specifier: ^1.3.3
+        version: 1.3.3
       '@nuxt/babel-preset-app':
         specifier: ^2.17.1
         version: 2.17.1(vue@3.3.4)
@@ -237,7 +240,7 @@ importers:
         version: 2.0.0-beta.11(vue@3.3.4)
       opact-sdk:
         specifier: 1.1.13
-        version: 1.1.13(chai@4.2.0)
+        version: 1.1.13(chai@4.3.10)
       pact-lang-api:
         specifier: ^4.3.6
         version: 4.3.6
@@ -3333,7 +3336,7 @@ packages:
       '@gtm-support/core': 2.2.0
       vue: 3.3.4
     optionalDependencies:
-      vue-router: 4.2.1(vue@3.3.4)
+      vue-router: 4.2.5(vue@3.3.4)
     dev: false
 
   /@gwhitney/detect-indent@7.0.1:
@@ -3909,6 +3912,7 @@ packages:
   /@noble/hashes@1.3.1:
     resolution: {integrity: sha512-EbqwksQwz9xDRGfDST86whPBgM65E0OH/pCgqW0GBVzO22bNE+NuIbeTb714+IfSjU3aRk47EUvXIb5bTsenKA==}
     engines: {node: '>= 16'}
+    dev: false
 
   /@noble/hashes@1.3.2:
     resolution: {integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==}
@@ -4514,6 +4518,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     bundledDependencies:
       - napi-wasm
 
@@ -5137,7 +5142,7 @@ packages:
     resolution: {integrity: sha512-osvveYtyzdEVbt3OfwwXFr4P2iVBL5u1Q3q4ONBfDY/UpOuXmOlbgwc1xECEboY8wIays8Yt6onaWMUdUbfl0A==}
     dependencies:
       '@noble/curves': 1.1.0
-      '@noble/hashes': 1.3.1
+      '@noble/hashes': 1.3.3
       '@scure/base': 1.1.5
     dev: false
 
@@ -5145,13 +5150,13 @@ packages:
     resolution: {integrity: sha512-N1ZhksgwD3OBlwTv3R6KFEcPojl/W4ElJOeCZdi+vuI5QmTFwLq3OFf2zd2ROpKvxFdgZ6hUpb0dx9bVNEwYCA==}
     dependencies:
       '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.3.3
       '@scure/base': 1.1.5
 
   /@scure/bip39@1.2.1:
     resolution: {integrity: sha512-Z3/Fsz1yr904dduJD0NpiyRHhRYHdcnyh73FZWiV+/qhWi83wNJ3NWolYqCEN+ZWsUz2TWwajJggcRE9r1zUYg==}
     dependencies:
-      '@noble/hashes': 1.3.1
+      '@noble/hashes': 1.3.3
       '@scure/base': 1.1.5
 
   /@serverless/dashboard-plugin@6.4.0(supports-color@8.1.1):
@@ -5190,7 +5195,7 @@ packages:
     resolution: {integrity: sha512-YAV5V/y+XIOfd+HEVeXfPWZb8C6QLruFk9tBivoX2roQLWVq145s4uxf8D0QioCueuRzkukHUS4JIj+KVoS34A==}
     dependencies:
       '@types/lodash': 4.14.202
-      lodash: 4.17.15
+      lodash: 4.17.21
     dev: true
 
   /@serverless/platform-client@4.5.1(supports-color@8.1.1):
@@ -7830,6 +7835,7 @@ packages:
     resolution: {integrity: sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+    dev: true
 
   /acorn@8.11.2:
     resolution: {integrity: sha512-nc0Axzp/0FILLEVsm4fNwLCwMttvhEI263QtVPQcbpfZZ3ts0hLsZGOpE6czNlid7CJ9MlyH8reXkpsf3YUY4w==}
@@ -8052,7 +8058,7 @@ packages:
       glob: 8.1.0
       graceful-fs: 4.2.11
       lazystream: 1.0.1
-      lodash: 4.17.15
+      lodash: 4.17.21
       normalize-path: 3.0.0
       readable-stream: 3.6.2
     dev: true
@@ -8294,7 +8300,7 @@ packages:
   /async@2.6.4:
     resolution: {integrity: sha512-mzo5dfJYwAn29PeiJ0zvwTo04zj8HDJj0Mn8TD7sno7q12prdbnasKJHhkm2c1LgrhlJ0teaea8860oxi51mGA==}
     dependencies:
-      lodash: 4.17.15
+      lodash: 4.17.21
     dev: true
 
   /async@3.2.5:
@@ -9198,14 +9204,14 @@ packages:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
     dev: false
 
-  /chai-fetch-mock@3.0.0(chai@4.2.0)(fetch-mock@9.11.0):
+  /chai-fetch-mock@3.0.0(chai@4.3.10)(fetch-mock@9.11.0):
     resolution: {integrity: sha512-k/wZojMrNAlPEb7XvnxgIF0Xwgl+MbYOrLNp25VXaVZNkM4hITNaxGKrJFW0DXHew0fE1o/Gao/7j0690mzXQQ==}
     engines: {node: '>= 7'}
     peerDependencies:
       chai: 3.x || 4.x
       fetch-mock: 5.1.x || 6.x
     dependencies:
-      chai: 4.2.0
+      chai: 4.3.10
       fetch-mock: 9.11.0
     dev: false
 
@@ -9219,6 +9225,7 @@ packages:
       get-func-name: 2.0.2
       pathval: 1.1.1
       type-detect: 4.0.8
+    dev: true
 
   /chai@4.3.10:
     resolution: {integrity: sha512-0UXG04VuVbruMUYbJ6JctvH0YnC/4q3/AkT18q4NaITo91CUm0liMS9VqzT9vZhVQ/1eqPanMWjBM+Juhfb/9g==}
@@ -9231,7 +9238,6 @@ packages:
       loupe: 2.3.7
       pathval: 1.1.1
       type-detect: 4.0.8
-    dev: true
 
   /chainweb@2.0.4:
     resolution: {integrity: sha512-EsytBRCpP5Je3zMvTmx/CCZ+Qil/Kk/sfSFFS4UjpIYzfgC761S+ifSaBaGU97RCf5uVvWoIV6GPkp/CR92dAA==}
@@ -10344,13 +10350,13 @@ packages:
     engines: {node: '>=0.12'}
     dependencies:
       type-detect: 4.0.8
+    dev: true
 
   /deep-eql@4.1.3:
     resolution: {integrity: sha512-WaEtAOpRA1MQ0eohqZjpGD8zdI0Ovsm8mmFhaDN8dvDZzyoUMcYDnf5Y6iu7HTXxf8JDS23qWa4a+hKCDyOPzw==}
     engines: {node: '>=6'}
     dependencies:
       type-detect: 4.0.8
-    dev: true
 
   /deep-equal@1.0.1:
     resolution: {integrity: sha512-bHtC0iYvWhyaTzvV3CZgPeZQqCOBGyGsVV7v4eevpdkLHfiSrXUdBG+qAuSz4RI70sszvjQ1QSZ98An1yNwpSw==}
@@ -11999,7 +12005,7 @@ packages:
       js-yaml: 3.14.1
       json-stable-stringify-without-jsonify: 1.0.1
       levn: 0.3.0
-      lodash: 4.17.15
+      lodash: 4.17.21
       minimatch: 3.1.2
       mkdirp: 0.5.6
       natural-compare: 1.4.0
@@ -12617,7 +12623,7 @@ packages:
       enhanced-resolve: 5.15.0
       mlly: 1.4.2
       pathe: 1.1.1
-      ufo: 1.3.0
+      ufo: 1.3.2
     dev: true
 
   /extglob@2.0.4:
@@ -13562,7 +13568,7 @@ packages:
   /graphlib@2.1.8:
     resolution: {integrity: sha512-jcLLfkpoVGmH7/InMC/1hIvOPSUh38oJtGhvrOFGzioE1DZ+0YW16RgmOJhHiuWTvGiJQ9Z1Ik43JvkRPRvE+A==}
     dependencies:
-      lodash: 4.17.15
+      lodash: 4.17.21
     dev: true
 
   /graphql-tag@2.12.6(graphql@15.8.0):
@@ -14050,7 +14056,7 @@ packages:
       cli-width: 2.2.1
       external-editor: 3.1.0
       figures: 2.0.0
-      lodash: 4.17.15
+      lodash: 4.17.21
       mute-stream: 0.0.7
       run-async: 2.4.1
       rxjs: 6.6.7
@@ -15933,7 +15939,6 @@ packages:
     resolution: {integrity: sha512-zSMINGVYkdpYSOBmLi0D1Uo7JU9nVdQKrHxC8eYlV+9YKK9WePqAlL7lSlorG/U2Fw1w0hTBmaa/jrQ3UbPHtA==}
     dependencies:
       get-func-name: 2.0.2
-    dev: true
 
   /lowercase-keys@2.0.0:
     resolution: {integrity: sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==}
@@ -16389,7 +16394,7 @@ packages:
   /mlly@1.4.2:
     resolution: {integrity: sha512-i/Ykufi2t1EZ6NaPLdfnZk2AX8cs0d+mTzVKuPfqPKPatxLApaBoxJQ9x1/uckXtrS/U5oisPMDkNs0yQTaBRg==}
     dependencies:
-      acorn: 8.10.0
+      acorn: 8.11.2
       pathe: 1.1.1
       pkg-types: 1.0.3
       ufo: 1.3.0
@@ -16613,6 +16618,9 @@ packages:
   /napi-build-utils@1.0.2:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
     optional: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
 
   /native-promise-only@0.8.1:
     resolution: {integrity: sha512-zkVhZUA3y8mbz652WrL5x0fB0ehrBkulWT3TomAQ9iDtyXZvzKeEA6GPxAItBYeNYl5yngKRX612qHOhvMkDeg==}
@@ -17214,7 +17222,7 @@ packages:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
     dev: true
 
-  /opact-sdk@1.1.13(chai@4.2.0):
+  /opact-sdk@1.1.13(chai@4.3.10):
     resolution: {integrity: sha512-pCRfYhwWE5/BweHcvANyr8BznP62ms+iae3juvgdxgNjVZxS5hEnqzxgym5GBlXwO5lU6LmdyeHQPLifRK1xmg==}
     dependencies:
       '@metamask/eth-sig-util': 7.0.1
@@ -17224,7 +17232,7 @@ packages:
       big.js: 6.2.1
       bigint-conversion: 2.4.3
       blake-hash: 2.0.0
-      chai-fetch-mock: 3.0.0(chai@4.2.0)(fetch-mock@9.11.0)
+      chai-fetch-mock: 3.0.0(chai@4.3.10)(fetch-mock@9.11.0)
       circomlibjs: github.com/hsg88/circomlibjs/fee5b3c479caa3db1e34cbfdedad763d74277844
       crypto-browserify: 3.12.0
       ethereum-cryptography: 2.1.2
@@ -19937,7 +19945,7 @@ packages:
     hasBin: true
     dependencies:
       big-integer: 1.6.51
-      chai: 4.2.0
+      chai: 4.3.10
       escape-string-regexp: 1.0.5
       eslint: 5.16.0
       keccak: 2.1.0
@@ -20386,7 +20394,7 @@ packages:
   /strip-literal@1.3.0:
     resolution: {integrity: sha512-PugKzOsyXpArk0yWmUwqOZecSO0GH0bPoctLcqNDH9J04pVW3lflYE0ujElBGTloevcxF5MofAOZ7C5l2b+wLg==}
     dependencies:
-      acorn: 8.10.0
+      acorn: 8.11.2
 
   /strip-outer@1.0.1:
     resolution: {integrity: sha512-k55yxKHwaXnpYGsOzg4Vl8+tDrWylxDEpknGjhTiZB8dFRU5rTo9CAzeycivxV3s+zlTKwrs6WxMxR95n26kwg==}
@@ -20575,7 +20583,7 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       ajv: 6.12.6
-      lodash: 4.17.15
+      lodash: 4.17.21
       slice-ansi: 2.1.0
       string-width: 3.1.0
     dev: false
@@ -21014,7 +21022,7 @@ packages:
       jest: 26.6.3
       jest-util: 26.6.2
       json5: 2.2.3
-      lodash: 4.17.15
+      lodash: 4.17.21
       make-error: 1.3.6
       mkdirp: 1.0.4
       semver: 7.5.4
@@ -21315,7 +21323,7 @@ packages:
   /unctx@2.3.1:
     resolution: {integrity: sha512-PhKke8ZYauiqh3FEMVNm7ljvzQiph0Mt3GBRve03IJm7ukfaON2OBK795tLwhbyfzknuRRkW0+Ze+CQUmzOZ+A==}
     dependencies:
-      acorn: 8.10.0
+      acorn: 8.11.2
       estree-walker: 3.0.3
       magic-string: 0.30.5
       unplugin: 1.5.1
@@ -22219,7 +22227,6 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.5.1
       vue: 3.3.4
-    dev: true
 
   /vue-stripe-menu@2.1.1:
     resolution: {integrity: sha512-ZZu2Ama6ayL4MYiGWTsipq7uafNZBrGX/lYD+jYB4pIe0ZpOGyq9wS3ohP7R5AGtT2SXgu64wjDqOQCxqZIMUQ==}
@@ -22766,7 +22773,7 @@ packages:
     resolution: {integrity: sha512-gAojqb/m9Q8a5IV96E3fHJM70AzCkgt4uXYX2O7EmuyOnLrViCQlsEBmF9UQIu3/aeAIp2U17rtbpZWNntQqdg==}
     engines: {node: '>=10'}
     dependencies:
-      lodash: 4.17.15
+      lodash: 4.17.21
       tr46: 2.1.0
       webidl-conversions: 6.1.0
     dev: true
