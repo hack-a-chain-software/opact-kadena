@@ -9,7 +9,7 @@ import {
   sendSigned
 } from 'opact-sdk'
 import { defineStore } from 'pinia'
-import { createDatum, createManifest } from '../util'
+// import { createDatum, createManifest } from '../util'
 
 const metadata = {
   name: 'Ecko Wallet',
@@ -132,9 +132,10 @@ export const provider = defineStore({
     },
 
     async sendNFTFaucetTransaciton (id: any) {
-      const datum = await createDatum()
+      // const datum = await createDatum()
 
-      const manifest = await createManifest([datum])
+      // const manifest = await createManifest([datum])
+      const manifest: any = null
 
       const { networkId, chainId } = getConfig()
 
