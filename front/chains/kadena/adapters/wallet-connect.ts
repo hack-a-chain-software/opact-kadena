@@ -2,15 +2,15 @@ import { defineStore } from 'pinia'
 import Client from '@walletconnect/sign-client'
 import { getSdkError } from '@walletconnect/utils'
 import { PactNumber } from '@kadena/pactjs'
-import { toHex } from 'ethereum-cryptography/utils'
-import { getRandomBytesSync } from 'ethereum-cryptography/random'
+// import { toHex } from 'ethereum-cryptography/utils'
+// import { getRandomBytesSync } from 'ethereum-cryptography/random'
 import { PairingTypes, SessionTypes } from '@walletconnect/types'
 import { getConfig, getTokenDetails, getFaucetCode, sendSigned, getCapsForWithdraw, getCapsForDeposit } from 'opact-sdk'
 import {
   Pact,
   createWalletConnectQuicksign
 } from '@kadena/client'
-import { createDatum, createManifest, getWalletConnectClient, getWalletConnectModal } from '../util'
+import { getWalletConnectClient, getWalletConnectModal } from '../util'
 
 const metadata = {
   id: 'provider:kadena:wallet-connect',
@@ -283,81 +283,81 @@ export const provider = defineStore({
       return await sendSigned({ signedCmd })
     },
 
-    async sendNFTFaucetTransaciton () {
-      if (!this.client) {
-        throw new Error('No client')
-      }
+    // async sendNFTFaucetTransaciton () {
+    //   if (!this.client) {
+    //     throw new Error('No client')
+    //   }
 
-      if (!this.session) {
-        throw new Error('No session')
-      }
+    //   if (!this.session) {
+    //     throw new Error('No session')
+    //   }
 
-      if (!this.account) {
-        throw new Error('No selected account to send from')
-      }
+    //   if (!this.account) {
+    //     throw new Error('No selected account to send from')
+    //   }
 
-      const id = BigInt(`0x${toHex(getRandomBytesSync(32))}`)
+    //   const id = BigInt(`0x${toHex(getRandomBytesSync(32))}`)
 
-      const datum = await createDatum()
+    //   const datum = await createDatum()
 
-      const manifest = await createManifest([datum])
+    //   const manifest = await createManifest([datum])
 
-      const { networkId, chainId } = getConfig()
+    //   const { networkId, chainId } = getConfig()
 
-      const signWithWalletConnect = createWalletConnectQuicksign(
-        this.client as any,
-        this.session,
-        this.account.walletConnectChainId
-      )
+    //   const signWithWalletConnect = createWalletConnectQuicksign(
+    //     this.client as any,
+    //     this.session,
+    //     this.account.walletConnectChainId
+    //   )
 
-      const pactCode = `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`
+    //   const pactCode = `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`
 
-      const pactCommand = Pact.builder
-        .execution(pactCode)
-        .setMeta({
-          chainId,
-          senderAccount: this.account.address
-        })
-        .addData('manifest', manifest)
-        .addData('guard', {
-          keys: [this.account.pubkey]
-        })
-        .setNetworkId(networkId)
+    //   const pactCommand = Pact.builder
+    //     .execution(pactCode)
+    //     .setMeta({
+    //       chainId,
+    //       senderAccount: this.account.address
+    //     })
+    //     .addData('manifest', manifest)
+    //     .addData('guard', {
+    //       keys: [this.account.pubkey]
+    //     })
+    //     .setNetworkId(networkId)
 
-      const transaction = pactCommand.createTransaction()
+    //   const transaction = pactCommand.createTransaction()
 
-      const signedCmd = await signWithWalletConnect(transaction)
+    //   const signedCmd = await signWithWalletConnect(transaction)
 
-      await sendSigned({ signedCmd })
+    //   await sendSigned({ signedCmd })
 
-      const mintTokenCode = `(free.poly-fungible-v2-reference.mint "${id}" "${this.account.address}" (read-keyset 'guard) 1.0)`
+    //   const mintTokenCode = `(free.poly-fungible-v2-reference.mint "${id}" "${this.account.address}" (read-keyset 'guard) 1.0)`
 
-      const mintPactCommand = Pact.builder
-        .execution(mintTokenCode)
-        .setMeta({
-          chainId,
-          senderAccount: this.account.address
-        })
-        .addSigner(this.account.pubkey, (withCapability: any) => [
-          withCapability(
-            'free.poly-fungible-v2-reference.MINT',
-            id + '',
-            this.account.address,
-            1.0
-          )
-        ])
-        .addData('manifest', manifest)
-        .addData('guard', {
-          keys: [this.account.pubkey]
-        })
-        .setNetworkId(networkId)
+    //   const mintPactCommand = Pact.builder
+    //     .execution(mintTokenCode)
+    //     .setMeta({
+    //       chainId,
+    //       senderAccount: this.account.address
+    //     })
+    //     .addSigner(this.account.pubkey, (withCapability: any) => [
+    //       withCapability(
+    //         'free.poly-fungible-v2-reference.MINT',
+    //         id + '',
+    //         this.account.address,
+    //         1.0
+    //       )
+    //     ])
+    //     .addData('manifest', manifest)
+    //     .addData('guard', {
+    //       keys: [this.account.pubkey]
+    //     })
+    //     .setNetworkId(networkId)
 
-      const mintTransaction = mintPactCommand.createTransaction()
+    //   const mintTransaction = mintPactCommand.createTransaction()
 
-      const mintSignedCmd = await signWithWalletConnect(mintTransaction)
+    //   const mintSignedCmd = await signWithWalletConnect(mintTransaction)
 
-      return await sendSigned({ signedCmd: mintSignedCmd })
-    },
+    //   return await sendSigned({ signedCmd: mintSignedCmd })
+    // },
 
     async sendOpactTransaction (
       { proof, extData, tokenSpec }: any,

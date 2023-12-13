@@ -17,7 +17,6 @@ export const useExtensions = () => {
     }
 
     try {
-
       await _provider.init()
       await _provider.connect(callback)
 
