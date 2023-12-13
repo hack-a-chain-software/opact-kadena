@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useExtensions } from '~/.nuxt/imports'
+// import { onMounted } from 'vue'
+// import { storeToRefs } from 'pinia'
+// import { useExtensions } from '~/.nuxt/imports'
+
 const props = defineProps<{
   chain?: string;
   name: string;
@@ -10,19 +11,19 @@ const props = defineProps<{
   disabled: boolean;
 }>()
 
-const extension = useExtensions()
+// const extension = useExtensions()
 
-const store = props.provider()
+// const store = props.provider()
 
-const { initialized, account } = storeToRefs(store)
+const account = null
 
-onMounted(() => {
-  console.log('initialized', initialized)
+// const { initialized, account } = storeToRefs(store)
 
-  if (!initialized.value) {
-    store.init()
-  }
-})
+// onMounted(() => {
+  // if (!initialized.value) {
+  //   store.init()
+  // }
+// })
 
 const emit = defineEmits(['connected'])
 

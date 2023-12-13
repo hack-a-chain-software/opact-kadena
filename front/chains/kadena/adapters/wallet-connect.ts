@@ -184,8 +184,6 @@ export const provider = defineStore({
         throw new TypeError('Session is not connected')
       }
 
-      console.log('this.session.topic', this.session.topic)
-
       try {
         await this.client.disconnect({
           topic: this.session.topic,
