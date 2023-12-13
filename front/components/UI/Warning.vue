@@ -3,10 +3,11 @@ withDefaults(
   defineProps<{
     desc?: string;
     type: string;
-    label: string;
+    label?: string;
   }>(),
   {
     desc: '',
+    label: '',
     type: 'error'
   }
 )

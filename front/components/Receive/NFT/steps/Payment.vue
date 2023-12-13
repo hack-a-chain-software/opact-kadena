@@ -35,17 +35,14 @@ const { provider } = useExtensions()
       :disabled="!provider"
       :token="selectedToken"
       @selected="selectedToken = $event"
-      :account-name="provider?.account?.account?.publicKey"
+      :account-name="provider?.account?.address"
     />
 
     <TxWrapperNFT
       :token="selectedToken"
       :disabled="!selectedToken"
       :receiver="account.address"
-      :sender="
-        provider?.account?.address ||
-        provider?.account?.account?.account
-      "
+      :sender="provider?.account?.address"
     />
 
     <UIButtonInline

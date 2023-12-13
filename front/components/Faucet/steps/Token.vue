@@ -26,7 +26,7 @@ const pay = async () => {
   try {
     data.loading = true
 
-    await provider.value.faucet(data.token.namespace)
+    await provider.value.sendTokenFaucetTransaction(data.token)
 
     isLoading.value = true
     router.push('/home')

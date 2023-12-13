@@ -32,15 +32,10 @@ const checkFunds = async (token: any) => {
     return
   }
 
-  const prefix =
-      token.name === 'Kadena'
-        ? 'coin'
-        : 'test.opact-coin'
-
   try {
     const details = await getTokenDetails(
-      'k:' + provider.value?.account?.account?.publicKey,
-      prefix
+      provider.value.account?.address,
+      token
     )
 
     return details.balance

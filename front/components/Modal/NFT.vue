@@ -53,7 +53,7 @@ watch(
 
       const { result } = await Pact.fetch.local(
         {
-          pactCode: `(free.poly-fungible-v2-reference.ids-owned-by "k:${props.accountName}")`,
+          pactCode: `(free.poly-fungible-v2-reference.ids-owned-by "${props.accountName}")`,
           meta: Pact.lang.mkMeta(
             '',
             '0',
@@ -73,7 +73,7 @@ watch(
               result: { status, data: detailData }
             } = await Pact.fetch.local(
               {
-                pactCode: `(free.poly-fungible-v2-reference.details "${id}" "k:${props.accountName}")`,
+                pactCode: `(free.poly-fungible-v2-reference.details "${id}" "${props.accountName}")`,
                 meta: Pact.lang.mkMeta(
                   '',
                   '0',

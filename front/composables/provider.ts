@@ -7,21 +7,29 @@ export const useExtensions = () => {
   const provider = useProvider()
 
   const login = async (newProvider: any, callback: any) => {
-    console.log('newProvider.id', newProvider.id)
+    const _provider = newProvider()
+
     if (
       provider.value &&
-      provider.value.id === newProvider.id
+      provider.value.id === _provider.id
     ) {
       return callback()
     }
 
-    const _provider = newProvider()
+    console.log('_provider.isConnected', _provider.isConnected)
+
+    if (_provider.isConnected) {
+      await callback()
+
+      provider.value = _provider
+
+      return
+    }
 
     try {
-      await _provider.init()
       await _provider.connect(callback)
 
-      provider.value = newProvider
+      provider.value = _provider
     } catch (e) {
       console.log(e)
     }

@@ -37,7 +37,7 @@ const { provider } = useExtensions()
       :disabled="!provider"
       :token="selectedToken"
       @selected="selectedToken = $event"
-      :account-name="provider?.account?.account?.publicKey"
+      :account-name="provider?.account?.address"
     />
 
     <UIInputAddress
@@ -52,10 +52,7 @@ const { provider } = useExtensions()
       :token="selectedToken"
       :disabled="!selectedToken"
       :receiver="addressTo"
-      :sender="
-        provider?.account?.address ||
-        provider?.account?.account?.account
-      "
+      :sender="provider?.account?.address"
     />
 
     <UIButtonInline

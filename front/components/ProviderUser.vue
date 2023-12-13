@@ -73,10 +73,7 @@ withDefaults(
             text-font-1
             line-clamp-2
           "
-          v-text="
-            provider?.account?.address ||
-            provider?.account?.account?.account
-          "
+          v-text="provider?.account?.address"
         />
       </div>
     </div>

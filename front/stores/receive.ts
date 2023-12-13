@@ -141,7 +141,7 @@ export const useReceiveStore = defineStore({
 
       const { provider } = useExtensions()
 
-      const senderAddress = `k:${provider.value.account.account.publicKey}`
+      const senderAddress = provider.value.account.address
 
       const receipts =
         getReceiptsOfTransaction({
@@ -240,7 +240,7 @@ export const useReceiveStore = defineStore({
 
       const { provider } = useExtensions()
 
-      const senderAddress = `k:${provider.value.account.account.publicKey}`
+      const senderAddress = provider.value.account.address
 
       const receipts = getReceiptsOfTransaction({
         type: 'deposit',
@@ -327,7 +327,7 @@ export const useReceiveStore = defineStore({
         tokenSpec: this.selectedToken.namespace
       }
 
-      await provider.value.transaction(
+      await provider.value.sendOpactTransaction(
         txArgs,
         (message: string) => { this.progress = message }
       )

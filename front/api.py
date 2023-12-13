@@ -36,7 +36,7 @@ def get_nullifiers_params(data):
 def get_nullifiers():
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 500))
-    salt = int(request.args.get('salt', 268))
+    salt = int(request.args.get('salt', 949))
     offset = (page - 1) * per_page
 
     data_query = f"SELECT result FROM pactCommands WHERE result LIKE '%transact%' AND txid >= {salt} LIMIT {per_page} OFFSET {offset}"
@@ -78,7 +78,7 @@ def get_commitments_params(data):
 def get_commitments():
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 500))
-    salt = int(request.args.get('salt', 268))
+    salt = int(request.args.get('salt', 949))
     offset = (page - 1) * per_page
 
     data_query = f"SELECT result FROM pactCommands WHERE result LIKE '%transact%' AND txid >= {salt} LIMIT {per_page} OFFSET {offset}"
@@ -110,7 +110,7 @@ def get_encrypted_params(data):
 def get_encrypted():
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 500))
-    salt = int(request.args.get('salt', 268))
+    salt = int(request.args.get('salt', 949))
     offset = (page - 1) * per_page
 
     data_query = f"SELECT result FROM pactCommands WHERE result LIKE '%transact%' AND txid >= {salt} LIMIT {per_page} OFFSET {offset}"
@@ -145,7 +145,7 @@ def get_receipts_params(data):
 def get_receipts():
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 500))
-    salt = int(request.args.get('salt', 268))
+    salt = int(request.args.get('salt', 949))
     offset = (page - 1) * per_page
 
     data_query = f"SELECT result FROM pactCommands WHERE result LIKE '%transact%' AND txid >= {salt} LIMIT {per_page} OFFSET {offset}"
@@ -170,7 +170,7 @@ def get_receipts():
 def get_data():
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 500))
-    salt = int(request.args.get('salt', 268))
+    salt = int(request.args.get('salt', 949))
 
     offset = (page - 1) * per_page
 

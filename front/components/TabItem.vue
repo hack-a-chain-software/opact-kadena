@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useExtensions } from '~/.nuxt/imports'
 const props = defineProps<{
   chain?: string;
@@ -10,8 +12,17 @@ const props = defineProps<{
 
 const extension = useExtensions()
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const { account } = props.provider
+const store = props.provider()
+
+const { initialized, account } = storeToRefs(store)
+
+onMounted(() => {
+  console.log('initialized', initialized)
+
+  if (!initialized.value) {
+    store.init()
+  }
+})
 
 const emit = defineEmits(['connected'])
 
@@ -45,7 +56,7 @@ const loginCallback = () => {
     <button
       v-if="account"
       class="text-xxxs text-blue-300"
-      @click.prevent.stop="extension.logout()"
+      @click.prevent.stop="store.disconnect()"
     >
       <span> Switch </span>
     </button>
