@@ -23,6 +23,7 @@ export const provider = defineStore({
   id: 'provider:kadena:wallet-connect',
 
   state: (): {
+    metadata: any,
     isInitializing: boolean,
     walletConnectModal: any,
     client: Client | undefined,
@@ -31,6 +32,8 @@ export const provider = defineStore({
     pairings: PairingTypes.Struct[],
     session: SessionTypes.Struct | undefined,
   } => ({
+    metadata,
+
     pairings: [],
 
     account: null,
@@ -113,7 +116,12 @@ export const provider = defineStore({
     },
 
     async init () {
+      if (!!this.client) {
+        return
+      }
+
       this.isInitializing = true
+
 
       try {
         const _client = await getWalletConnectClient()
