@@ -20,9 +20,9 @@ const account = null
 // const { initialized, account } = storeToRefs(store)
 
 // onMounted(() => {
-  // if (!initialized.value) {
-  //   store.init()
-  // }
+// if (!initialized.value) {
+//   store.init()
+// }
 // })
 
 const emit = defineEmits(['connected'])
