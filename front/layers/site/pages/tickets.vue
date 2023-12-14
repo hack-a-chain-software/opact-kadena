@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'site'
+  layout: 'site',
+  middleware: 'site'
 })
 
 useHead({

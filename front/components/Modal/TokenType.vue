@@ -25,6 +25,8 @@ const emit = defineEmits(['close', 'redirect'])
 const close = () => {
   emit('close')
 }
+
+const config = useRuntimeConfig()
 </script>
 
 <template>
@@ -56,6 +58,7 @@ const close = () => {
       <UIButtonTertiary
         label="NFT"
         class="bg-gray-700"
+        :disabled="config.public.nftDisabled"
         @click.prevent="router.push(`/${baseRoute}/nft`)"
       />
     </div>

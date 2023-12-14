@@ -17,6 +17,8 @@ const handle = (step: any) => {
 
   emit('changeStep', 'nft')
 }
+
+const config = useRuntimeConfig()
 </script>
 
 <template>
@@ -61,10 +63,11 @@ const handle = (step: any) => {
         </div>
       </div>
 
-      <div
+      <button
         class="
           rounded-[8px]
           px-4
+          w-full
           py-3
           bg-gray-800
           h-[64px]
@@ -73,12 +76,17 @@ const handle = (step: any) => {
           justify-between
           items-center
           mt-4
+          group
+          relative
+          disabled:opacity-[0.5]
+          disabled:cursor-not-allowed
         "
         :class="
           token === 'nft'
             ? 'border-blue-400'
             : 'border-transparent'
         "
+        :disabled="config.public.nftDisabled"
         @click.prevent="emit('token', 'nft')"
       >
         <div>
@@ -94,7 +102,14 @@ const handle = (step: any) => {
 
           <Icon v-else name="ring" class="w-6 h-6" />
         </div>
-      </div>
+
+        <span
+          v-if="config.public.nftDisabled"
+          class="group-hover:visible invisible text-white absolute top-4.5 right-12 text-xs lg:text-sm font-[500] leading-[140%] opacity-[0.5]"
+        >
+          coming soon
+        </span>
+      </button>
     </div>
 
     <SelectWallet

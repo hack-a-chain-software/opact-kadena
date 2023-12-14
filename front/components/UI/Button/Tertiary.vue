@@ -31,8 +31,12 @@ const handleClick = (event: any) => {
       w-full
       hover:opacity-[0.8]
       flex
+      relative
+      group
       items-center
       justify-between
+      disabled:opacity-[0.7]
+      disabled:cursor-not-allowed
     "
     @click.prevent="handleClick"
   >
@@ -42,6 +46,13 @@ const handleClick = (event: any) => {
     />
 
     <Icon name="chevron" class="rotate-[-90deg] w-4 h-4" />
+
+    <span
+      v-if="disabled"
+      class="group-hover:visible invisible absolute top-2.5 right-12 text-xs lg:text-sm font-[500] leading-[140%] opacity-[0.5]"
+    >
+      coming soon
+    </span>
   </button>
 </template>
 
