@@ -91,4 +91,3 @@ body {
   position: relative;
 }
 </style>
-~/stores/app
