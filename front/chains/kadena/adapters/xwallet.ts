@@ -243,7 +243,7 @@ export const provider = defineStore({
               language: 'Pact',
               name: 'transact-deposit',
               'recipient-guard': {
-                keys: [receiver || publickey]
+                keys: [receiver.replace('k:', '') || publickey]
               },
               'token-instance': {
                 refSpec: [

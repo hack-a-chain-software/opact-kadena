@@ -72,7 +72,7 @@ const { provider } = useExtensions()
       :label="error + '*'"
     />
 
-    <SelectWallet v-if="showConnectWalletButton" />
+    <SelectWallet v-if="showConnectWalletButton && !provider" />
 
     <UIButtonInline
       v-else

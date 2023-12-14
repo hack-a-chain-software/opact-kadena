@@ -425,11 +425,7 @@ export const provider = defineStore({
 
       callbackProgress('Awaiting TX results...')
 
-      console.log('signedCmd', signedCmd)
-
       const res = await sendSigned({ signedCmd })
-
-      console.log('signedCmd', res)
 
       return res
     }
