@@ -104,6 +104,10 @@ export const provider = defineStore({
     },
 
     async init () {
+      if (this.client) {
+        return
+      }
+
       this.isInitializing = true
 
       try {
