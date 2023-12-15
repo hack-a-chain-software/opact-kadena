@@ -4,6 +4,7 @@ import { loadArtifact } from 'opact-sdk'
 import { onBeforeMount, onMounted } from 'vue'
 import { useAppStore } from '~/stores/app'
 import { useWalletStore } from '~/stores/wallet'
+import { gql, request } from "graphql-request"
 
 const wallet = useWalletStore()
 
@@ -18,6 +19,32 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
+  (async () => {
+    console.log('im here')
+
+    const url = 'https://nish60qcn3.execute-api.us-east-2.amazonaws.com/graphql'
+
+    const data = await request(
+      url,
+      gql`
+        query GetEvents($page: Int!, $size: Int!) {
+          getEvents(page: $page, size: $size) {
+            currentPage
+            events
+            hasNextPage
+            itemCount
+          }
+        }
+      `,
+      {
+        page: 1,
+        size: 200,
+      },
+    ) as any;
+
+    console.log('data', data)
+  })()
+
   loadArtifact()
 })
 

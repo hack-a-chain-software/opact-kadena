@@ -13,6 +13,12 @@ export default defineNuxtRouteMiddleware((to) => {
       })
     }
 
+    if (to.path.includes('faucet') && appConfig.public.faucetDisabled) {
+      return router.push({
+        path: '/home'
+      })
+    }
+
     return
   }
 

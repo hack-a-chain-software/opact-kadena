@@ -44,6 +44,7 @@
     "defu": "6.1.1",
     "eslint": "^8.38.0",
     "ethereum-cryptography": "^2.1.2",
+    "graphql-request": "^6.1.0",
     "localforage": "^1.10.0",
     "memfs": "^4.3.0",
     "motion": "^10.16.2",
