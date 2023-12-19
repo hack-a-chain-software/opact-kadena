@@ -25,7 +25,6 @@ export const typeDefs = `#graphql
 
   type Query {
     getUtxos(page: Int!, size: Int!, module: String!, chainId: Int!): PaginatedEvents
-    getReceipts(page: Int!, size: Int!, module: String!, chainId: Int!): PaginatedEvents
     getNullifiers(page: Int!, size: Int!, module: String!, chainId: Int!): PaginatedEvents
     getCommitments(page: Int!, size: Int!, module: String!, chainId: Int!): PaginatedEvents
   }
