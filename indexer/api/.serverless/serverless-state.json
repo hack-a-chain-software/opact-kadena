@@ -177,7 +177,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/indexer-service/dev/1702063671212-2023-12-08T19:27:51.212Z/graphql.zip"
+                "S3Key": "serverless/indexer-service/dev/1703007171211-2023-12-19T17:32:51.211Z/graphql.zip"
               },
               "Handler": "src/server.graphqlHandler",
               "Runtime": "nodejs18.x",
@@ -195,14 +195,14 @@
               "GraphqlLogGroup"
             ]
           },
-          "GraphqlLambdaVersion3htZHFl1RajA1SE1nsOddqmlTycz6PqQPQgiqmYPzc": {
+          "GraphqlLambdaVersionLtTfGsppSPQrkW2LA1sVFJ0wBUhhEbHl7dlzJwfZePU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GraphqlLambdaFunction"
               },
-              "CodeSha256": "E/GUNdLM0FZDX7+nyIFsl0zu4HhJF3Z6/6tj/1p6uvE="
+              "CodeSha256": "Cg4co+dyh76hZUaan8MjppAt7XM+Jxe7WDYrKTbMbjM="
             }
           },
           "HttpApi": {
@@ -350,7 +350,7 @@
           "GraphqlLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GraphqlLambdaVersion3htZHFl1RajA1SE1nsOddqmlTycz6PqQPQgiqmYPzc"
+              "Ref": "GraphqlLambdaVersionLtTfGsppSPQrkW2LA1sVFJ0wBUhhEbHl7dlzJwfZePU"
             },
             "Export": {
               "Name": "sls-indexer-service-dev-GraphqlLambdaFunctionQualifiedArn"
@@ -506,7 +506,7 @@
         "timeout": 6,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "GraphqlLambdaVersion3htZHFl1RajA1SE1nsOddqmlTycz6PqQPQgiqmYPzc"
+        "versionLogicalId": "GraphqlLambdaVersionLtTfGsppSPQrkW2LA1sVFJ0wBUhhEbHl7dlzJwfZePU"
       }
     },
     "configValidationMode": "warn",
@@ -528,7 +528,7 @@
           "src/server.js"
         ],
         "artifactsS3KeyDirname": "serverless/indexer-service/dev/code-artifacts",
-        "artifactDirectoryName": "serverless/indexer-service/dev/1702063671212-2023-12-08T19:27:51.212Z"
+        "artifactDirectoryName": "serverless/indexer-service/dev/1703007171211-2023-12-19T17:32:51.211Z"
       }
     },
     "layers": {},
@@ -536,7 +536,7 @@
   },
   "package": {
     "individually": true,
-    "artifactDirectoryName": "serverless/indexer-service/dev/1702063671212-2023-12-08T19:27:51.212Z",
+    "artifactDirectoryName": "serverless/indexer-service/dev/1703007171211-2023-12-19T17:32:51.211Z",
     "artifact": ""
   }
 }
