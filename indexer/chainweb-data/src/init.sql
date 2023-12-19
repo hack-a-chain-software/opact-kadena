@@ -193,7 +193,7 @@ EXECUTE PROCEDURE skip_write();
 CREATE OR REPLACE FUNCTION check_opact_event()
     RETURNS trigger AS $BODY$
 BEGIN
-IF new.module LIKE '%crankk01%' THEN
+IF new.module LIKE '%opact%' THEN
     INSERT INTO events VALUES (
         new.block,
         new.chainid,
@@ -224,7 +224,7 @@ EXECUTE PROCEDURE check_opact_event();
 CREATE OR REPLACE FUNCTION check_opact_transactions()
     RETURNS trigger AS $BODY$
 BEGIN
-IF new.code LIKE '%free.hello%' THEN
+IF new.code LIKE '%free.opact%' THEN
     INSERT INTO transactions VALUES (
         new.badresult,
         new.block,
