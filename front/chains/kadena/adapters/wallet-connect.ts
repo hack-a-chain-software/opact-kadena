@@ -362,7 +362,30 @@ export const provider = defineStore({
         )
       }
 
-      const pactCode = "(test.opact2.transact (read-msg 'proof) (read-msg 'extData))"
+      caps = caps.map((caped: any) => {
+        const {
+          cap
+        } = caped
+
+        const [
+          fo,
+          foo
+        ] = cap.args
+
+        return {
+          ...caped,
+          cap: {
+            ...cap,
+            args: [
+              fo,
+              foo,
+              12
+            ]
+          }
+        }
+      })
+
+      const pactCode = "(free.opact.transact (read-msg 'proof) (read-msg 'extData))"
 
       callbackProgress('Await sign...')
 
@@ -370,11 +393,19 @@ export const provider = defineStore({
         .execution(pactCode)
         .setMeta({
           chainId,
+          ttl: 2880,
+          gasLimit: 150000,
+          gasPrice: 0.00001,
           senderAccount: this.account.address
         })
-        .addSigner(this.account.pubkey, () => [
-          ...caps.map(({ cap }: any) => cap)
-        ])
+        .addSigner(this.account.pubkey, (withCap: any) => {
+          console.log('coingas', withCap('coin.GAS'))
+
+          return [
+            ...caps.map(({ cap }: any) => cap),
+            withCap('coin.GAS')
+          ]
+        })
         .addData('language', 'Pact')
         .addData('name', 'transact-deposit')
         .addData('recipient-guard', {
@@ -422,6 +453,8 @@ export const provider = defineStore({
       const transaction = pactCommand.createTransaction()
 
       const signedCmd = await signWithWalletConnect(transaction)
+
+      console.log('signedCmd', signedCmd)
 
       callbackProgress('Awaiting TX results...')
 

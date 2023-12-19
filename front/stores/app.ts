@@ -21,8 +21,10 @@ export const useAppStore = defineStore({
     }: any): Promise<any> {
       const config = getConfig()
 
+      const name = config.key === 'kadena:testnet' ? 'testnet' : 'localnet'
+
       return new Promise((resolve) => {
-        const worker = new Worker('/worker/worker.c3bbe749.js', {
+        const worker = new Worker(`/worker/${name}.js`, {
           type: 'module'
         })
 

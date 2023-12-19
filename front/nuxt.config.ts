@@ -80,7 +80,7 @@ export default defineNuxtConfig({
       // String
       opactSDKNetwork: 'kadena-testnet',
       relayUrl: 'wss://relay.walletconnect.com',
-      projectId: '3974e0e0f91a102389b8cb3fc1a590a5',
+      projectId: '3974e0e0f91a102389b8cb3fc1a590a5'
     }
   },
   app: {
