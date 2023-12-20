@@ -122,7 +122,7 @@ onBeforeMount(async () => {
             outline-none
           "
           @input="handleSearch"
-        >
+        />
       </div>
 
       <div

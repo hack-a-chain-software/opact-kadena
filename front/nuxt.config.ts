@@ -8,7 +8,6 @@ if (process.env.NODE_ENV !== 'development') {
 
 export default defineNuxtConfig({
   ssr,
-  extends: ['./apps/site'],
   modules: [
     'nuxt-icon',
     '@pinia/nuxt',
@@ -67,8 +66,20 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      // Booleans
+      nftDisabled: true,
+      faucetDisabled: true,
+      gtmEnabled: process.env.IS_PROD === 'true',
+      // opactSDKNetwork: process.env.OPACT_SDK_NETWORK,
+      // nftDisabled: process.env.NFT_DISABLED === 'true',
+
+      // Numbers
       gaId: process.env.GTM_TAG,
-      gtmEnabled: process.env.IS_PROD === 'true'
+
+      // String
+      opactSDKNetwork: 'kadena-testnet',
+      relayUrl: 'wss://relay.walletconnect.com',
+      projectId: '3974e0e0f91a102389b8cb3fc1a590a5'
     }
   },
   app: {
@@ -95,16 +106,14 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/': { prerender: true },
     '/auth': { prerender: false },
     '/home': { prerender: false },
-    '/wallet': { prerender: true },
-    '/tickets': { prerender: true },
-    '/receive': { prerender: false },
+    '/faucet': { prerender: false },
     '/history': { prerender: false },
-    '/transfer': { prerender: false },
-    '/deposit/nft': { prerender: false },
-    '/deposit/token': { prerender: false },
-    '/invoice/create': { prerender: false }
+    '/invoice': { prerender: false },
+    '/send/nft': { prerender: false },
+    '/send/token': { prerender: false },
+    '/receive/nft': { prerender: false },
+    '/receive/token': { prerender: false }
   }
 })

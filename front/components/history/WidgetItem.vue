@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import Pact from 'pact-lang-api'
-import { kadenaTokens as tokens, shortenAddress, formatBigNumberWithDecimals, getDecimals } from 'opact-sdk'
+import {
+  kadenaTokens as tokens,
+  shortenAddress,
+  formatBigNumberWithDecimals,
+  getDecimals
+} from 'opact-sdk'
 import { computed, watch, reactive } from 'vue'
 
 const RPC =
