@@ -1,42 +1,43 @@
 import { defineStore } from 'pinia'
-import { getHDWalletFromMnemonic } from 'opact-sdk'
-import { shortenAddress } from '~/utils/string'
+import { shortenAddress, useStateStorage, getWalletFromMnemonic } from 'opact-sdk'
 import { useAuthStorage } from '~/hooks/auth-storage'
 
 export const useWalletStore = defineStore({
-  id: 'opact-wallet',
+  id: 'wallet-store',
+
   state: (): any => {
     const { cache } = useAuthStorage()
 
     return {
       cache,
-      node: null
+      account: null
     }
   },
 
   getters: {
     connected: (state: any): boolean => {
-      const { node } = state
+      const { account } = state
 
-      if (!node) {
-        return false
-      }
-
-      return true
+      return !!account
     },
     truncatedAddress: (state: any): string =>
       shortenAddress(state.node.address)
   },
+
   actions: {
-    found (mnemonic: '') {
-      const node: any = getHDWalletFromMnemonic(mnemonic)
+    connect (mnemonic: string) {
+      if (!mnemonic) {
+        throw new Error('Needs mnemonic to connect')
+      }
 
-      this.node = node
+      const newAccount = getWalletFromMnemonic(mnemonic)
 
-      this.persistAuth(node)
+      this.account = newAccount
+
+      this.persistAuth(newAccount, mnemonic)
 
       return {
-        pvtkey: node.pvtkey.toString()
+        pvtkey: newAccount.pvtkey.toString()
       }
     },
 
@@ -45,34 +46,40 @@ export const useWalletStore = defineStore({
         return
       }
 
-      console.log(this.cache)
-
-      return this.found(this.cache.phrase)
+      return this.connect(this.cache.phrase)
     },
 
-    persistAuth (node: any) {
+    persistAuth (account: any, mnemonic: any) {
       const { store } = useAuthStorage()
 
-      this.node = node
-      this.cache = {
-        phrase: node.mnemonic,
-        pvtkey: node.pvtkey.toString()
+      const newCache = {
+        phrase: mnemonic,
+        pvtkey: account.pvtkey.toString()
       }
 
-      store({
-        phrase: node.mnemonic,
-        pvtkey: node.pvtkey.toString()
-      })
+      this.cache = {
+        ...newCache
+      }
+
+      store(newCache)
     },
 
-    logout () {
+    async logout () {
       const { clear } = useAuthStorage()
+
+      const {
+        clear: clearState
+      } = useStateStorage({
+        key: this.account.address
+      })
+
       const router = useRouter()
 
-      clear(['phrase', 'providers'])
+      await clear()
+      await clearState()
 
-      this.node = null
       this.cache = null
+      this.account = null
 
       router.push({
         path: '/auth'
