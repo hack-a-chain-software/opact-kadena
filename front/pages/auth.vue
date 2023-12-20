@@ -1,28 +1,17 @@
 <script setup lang="ts">
-import { useAuth } from '~/hooks/auth'
 useHead({
   title: 'Auth'
 })
 
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  middleware: 'guest'
 })
-
-const { data, form } = useAuth()
 </script>
 
 <template>
-  <div
-    class="h-full lg:flex lg:justify-center lg:items-start"
-  >
-    <Transition name="fade" mode="out-in">
-      <component
-        :is="form[data.stepForm]"
-        :mnemonic="data.mnemonic"
-        @mnemonic="($event) => (data.mnemonic = $event)"
-        @changeStep="($event) => (data.stepForm = $event)"
-      />
-    </Transition>
+  <div class="lg:flex lg:justify-center">
+    <AuthForm />
   </div>
 </template>
 

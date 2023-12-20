@@ -12,14 +12,8 @@ export const useAuthStorage = (
     }
   }
 
-  const clear = (keys: string[]) => {
-    const entries = Object.entries(cache.value)
-
-    const filtered = entries.filter(
-      ([key]) => !keys.includes(key)
-    )
-
-    cache.value = Object.fromEntries(filtered)
+  const clear = () => {
+    cache.value = null
   }
 
   return { store, clear, cache }
