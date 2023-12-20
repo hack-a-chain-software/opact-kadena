@@ -1,6 +1,8 @@
 import { Client } from "pg";
 
 export const typeDefs = `#graphql
+  scalar JSON
+
   type Event {
     block: String!
     chainid: Int!
@@ -14,37 +16,17 @@ export const typeDefs = `#graphql
     requestkey: String!
   }
 
-  type Transaction {
-    badresult: String
-    block: String!
-    chainid: Int!
-    code: String
-    continuation: String
-    creationtime: String!
-    data: String
-    gas: Int!
-    gaslimit: Int!
-    gasprice: Float!
-    goodresult: String
-    height: Int!
-    logs: String
-    metadata: String
-    nonce: String!
-    num_events: Int
-    pactid: String
-    proof: String
-    requestkey: String!
-    rollback: Boolean
-    sender: String!
-    step: Int
-    ttl: Int!
-    txid: Int
+  type PaginatedEvents {
+    events: [JSON]
+    itemCount: Int
+    currentPage: Int
+    hasNextPage: Boolean
   }
 
   type Query {
-    getEvents(page: Int!, size: Int!): [Event]
-    getEventsByModule(page: Int!, size: Int!, module: String!): [Event]
-    getTransactions(page: Int!, size: Int!): [Transaction]
+    getUtxos(page: Int!, size: Int!, module: String!, chainId: Int!): PaginatedEvents
+    getNullifiers(page: Int!, size: Int!, module: String!, chainId: Int!): PaginatedEvents
+    getCommitments(page: Int!, size: Int!, module: String!, chainId: Int!): PaginatedEvents
   }
 `;
 
