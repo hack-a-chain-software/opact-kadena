@@ -1,36 +1,87 @@
 import { baseRequest } from "./utils";
 
+const query = "SELECT * FROM events WHERE name = $1 AND module = $2 AND chainid = $3 LIMIT $4 OFFSET $5"
+
 export const resolvers = {
   Query: {
-    getEvents: async (_, args) => {
+    getCommitments: async (_, args) => {
       const offset = (args.page - 1) * args.size;
 
-      const query = "SELECT * FROM events LIMIT $1 OFFSET $2;";
+      const result = await baseRequest(query, [
+        'new-commitment',
+        args.module,
+        args.chainId,
+        args.size,
+        offset,
+      ]);
 
-      const result = await baseRequest(query, [args.size, offset]);
+      const events =
+        result?.rows.map(({ params }) => {
+          console.log('params', params)
+          const value = params[0]?.int;
 
-      return result.rows;
+          const order = params[1]?.int;
+
+          return {
+            order,
+            value,
+          };
+        }) || [];
+
+      const hasNextPage = events?.length === args.size;
+
+      return {
+        events,
+        hasNextPage,
+        currentPage: args.page,
+        itemCount: events.length,
+      };
     },
 
-    getEventsByModule: async (_, args) => {
+    getNullifiers: async (_, args) => {
       const offset = (args.page - 1) * args.size;
 
-      const query =
-        "SELECT * FROM events WHERE module = $1 LIMIT $2 OFFSET $3;";
+      const result = await baseRequest(query, [
+        'new-nullifier',
+        args.module,
+        args.chainId,
+        args.size,
+        offset,
+      ]);
 
-      const result = await baseRequest(query, [args.module, args.size, offset]);
+      const events = result?.rows.map(({ params }) => params[0]?.int) || [];
 
-      return result.rows;
+      const hasNextPage = events.length === args.size;
+
+      return {
+        events,
+        hasNextPage,
+        currentPage: args.page,
+        itemCount: events.length,
+      };
     },
 
-    getTransactions: async (_, args) => {
+    getUtxos: async (_, args) => {
       const offset = (args.page - 1) * args.size;
 
-      const query = "SELECT * FROM transactions LIMIT $1 OFFSET $2;";
+      const result = await baseRequest(query, [
+        'new-encrypted-output',
+        args.module,
+        args.chainId,
+        args.size,
+        offset,
+      ]);
 
-      const result = await baseRequest(query, [args.size, offset]);
+      const events = result?.rows.map(({ params }) => params[0]) || [];
 
-      return result.rows;
+      const hasNextPage = events.length === args.size;
+
+      return {
+        events,
+        hasNextPage,
+        currentPage: args.page,
+        itemCount: events.length,
+      };
     },
   },
 };
