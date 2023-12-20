@@ -1,378 +1,282 @@
-import { ref } from 'vue'
 import Pact from 'pact-lang-api'
 import {
-  getPactCodeForFaucet,
-  computePactCode,
   getCapsForDeposit,
-  getCapsForWithdraw
-} from '~/utils/kadena'
-
-const RPC =
-  process.env.NODE_ENV !== 'development'
-    ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
-    : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+  getCapsForWithdraw,
+  getConfig,
+  getTransactionCode,
+  getTokenDetails,
+  getFaucetCode,
+  sendSigned
+} from 'opact-sdk'
+import { defineStore } from 'pinia'
 
 const metadata = {
-  name: 'eckoWALLET',
-  key: 'provider:kda:adapter:xwallet',
-  icon: 'ecko',
-  disabled: false,
-  networkId: 'testnet04',
-  network: RPC
+  name: 'Ecko Wallet',
+  id: 'provider:kadena:x-wallet',
+  icon: '/ecko.png',
+  disabled: false
 }
 
-export const useProvider = () => {
-  const id = 'provider:ecko-wallet'
+export const provider = defineStore({
+  id: 'provider:kadena:x-wallet',
 
-  const callback = ref<any>()
+  state: (): any => ({
+    account: null,
+    callback: undefined,
+    icon: '/ecko.png'
+  }),
 
-  const account = ref<any>('')
-
-  const init = () => {
-    //
-  }
-
-  const mintToken = async (id = 0) => {
-    const accountName = account.value.account.publicKey
-    const publickey = account.value.account.publicKey
-
-    const cmd = await kadena.request({
-      data: {
-        networkId: metadata.networkId,
-        signingCmd: {
-          pactCode: `(free.poly-fungible-v2-reference.mint "${id}" "${accountName}" (read-keyset 'guard) 1.0)`,
-          ttl: 0,
-          chainId: 0,
-          gasLimit: 0,
-          gasPrice: 0,
-          envData: {
-            guard: {
-              keys: [publickey]
-            }
-          },
-          caps: [
-            Pact.lang.mkCap(
-              'Mint Token',
-              'Capability to mint token',
-              'free.poly-fungible-v2-reference.MINT',
-              [id + '', accountName + '', 1.0]
-            )
-          ],
-          sender: accountName,
-          networkId: metadata.networkId,
-          signingPubKey: publickey
-        }
-      },
-      networkId: metadata.networkId,
-      method: 'kda_requestSign'
-    })
-
-    const tx = await Pact.wallet.sendSigned(
-      cmd.signedCmd,
-      metadata.network
-    )
-
-    const { result } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      RPC
-    )
-
-    if (result.status === 'failure') {
-      throw new Error(result.error.message)
+  getters: {
+    isConnected ({ account }) {
+      return !!account
     }
+  },
 
-    return result
-  }
-
-  const createToken = async (id = 0, manifest: any) => {
-    const accountName = account.value.account.publicKey
-    const publickey = account.value.account.publicKey
-
-    const cmd = await kadena.request({
-      data: {
-        networkId: metadata.networkId,
-        signingCmd: {
-          pactCode: `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`,
-          ttl: 0,
-          chainId: 0,
-          gasLimit: 0,
-          gasPrice: 0,
-          envData: {
-            manifest,
-            guard: {
-              keys: [publickey]
-            }
-          },
-          sender: accountName,
-          networkId: metadata.networkId,
-          signingPubKey: publickey
-        }
-      },
-      networkId: metadata.networkId,
-      method: 'kda_requestSign'
-    })
-
-    const tx = await Pact.wallet.sendSigned(
-      cmd.signedCmd,
-      metadata.network
-    )
-
-    const { result } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      RPC
-    )
-
-    if (result.status === 'failure') {
-      throw new Error(result.error.message)
-    }
-
-    return result
-  }
-
-  // TODO: delete this
-  const coinDetails = async (prefix = 'coin') => {
-    try {
-      const accountName = account.value.account.publicKey
-
-      const network = RPC
-
-      const createdAt =
-        Math.round(new Date().getTime() / 1000) - 10
-
-      const data = await Pact.fetch.local(
-        {
-          pactCode: `(${prefix}.details ${JSON.stringify(
-            accountName
-          )})`,
-          meta: Pact.lang.mkMeta(
-            '',
-            '0',
-            0,
-            0,
-            createdAt,
-            0
-          )
-        },
-        network
-      )
-
-      return data
-    } catch (e) {
-      console.warn(e)
-    }
-  }
-
-  const connect = async (loginCallback = () => {}) => {
-    const accountResult = await kadena.request({
-      method: 'kda_connect',
-      networkId: 'testnet04'
-    })
-
-    account.value = accountResult
-    callback.value = loginCallback
-    loginCallback()
-  }
-
-  const faucet = async (tokenSpec) => {
-    const accountName = account.value.account.publicKey
-    const publickey = account.value.account.publicKey
-
-    const preffix =
-      tokenSpec.refName.name === 'coin'
-        ? 'coin'
-        : `test.${tokenSpec.refName.name}`
-
-    let withFund = false
-
-    try {
-      const {
-        result: { status }
-      } = await coinDetails(preffix)
-
-      if (status === 'failure') {
-        withFund = true
-      }
-    } catch (e) {
+  actions: {
+    init () {
       //
-    }
+    },
 
-    const pactCode = getPactCodeForFaucet(
-      accountName,
-      preffix,
-      withFund
-    )
+    reset () {
+      this.account = null
+    },
 
-    const cmd = await kadena.request({
-      data: {
-        networkId: metadata.networkId,
-        signingCmd: {
-          ttl: 0,
-          chainId: 0,
-          gasLimit: 0,
-          gasPrice: 0,
-          sender: accountName,
-          pactCode,
-          envData: {
-            name: 'opact',
-            language: 'Pact',
-            [accountName]: {
-              keys: [publickey]
-            }
-          },
-          networkId: metadata.networkId,
-          signingPubKey: publickey
-        }
-      },
-      networkId: metadata.networkId,
-      method: 'kda_requestSign'
-    })
+    async disconnect () {
+      const { networkId } = getConfig()
 
-    const tx = await Pact.wallet.sendSigned(
-      cmd.signedCmd,
-      metadata.network
-    )
+      await kadena.request({
+        networkId,
+        method: 'kda_disconnect'
+      })
 
-    const { result } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      RPC
-    )
+      this.account = null
+    },
 
-    if (result.status === 'failure') {
-      throw new Error(result.error.message)
-    }
+    async connect (callback = () => {}) {
+      const { networkId } = getConfig()
 
-    return result
-  }
+      const {
+        account
+      } = await kadena.request({
+        networkId,
+        method: 'kda_connect'
+      })
 
-  const transaction = async (
-    { proof, extData, tokenSpec }: any,
-    callbackProgress: any,
-    isWithdrawTransfer = false,
-    receiver = ''
-  ) => {
-    const accountName = account.value.account.publicKey
-    const publickey = account.value.account.publicKey
-
-    let preffix =
-      tokenSpec.refName.name === 'coin'
-        ? 'coin'
-        : `test.${tokenSpec.refName.name}`
-
-    if (
-      tokenSpec.refName.name ===
-      'poly-fungible-v2-reference'
-    ) {
-      preffix = 'free.poly-fungible-v2-reference'
-    }
-
-    let caps
-
-    if (isWithdrawTransfer) {
-      caps = getCapsForWithdraw(
-        accountName,
-        extData.tokenAmount,
-        preffix,
-        receiver,
-        tokenSpec
-      )
-    } else {
-      caps = getCapsForDeposit(
-        accountName,
-        extData.tokenAmount,
-        preffix,
-        tokenSpec
-      )
-    }
-
-    const pactCode = computePactCode({ proof, extData })
-
-    callbackProgress('Await sign...')
-
-    const cmd = await kadena.request({
-      method: 'kda_requestSign',
-      data: {
-        networkId: metadata.networkId,
-        signingCmd: {
-          ttl: 0,
-          chainId: 0,
-          gasLimit: 0,
-          gasPrice: 0,
-          sender: accountName,
-          pactCode,
-          envData: {
-            language: 'Pact',
-            name: 'transact-deposit',
-            'recipient-guard': {
-              keys: [receiver || publickey]
-            },
-            'token-instance': {
-              refSpec: [
-                {
-                  name: tokenSpec.refSpec.name,
-                  namespace:
-                    tokenSpec.refSpec.namespace ||
-                    undefined
-                }
-              ],
-              refName: {
-                name: tokenSpec.refName.name,
-                namespace:
-                  tokenSpec.refName.namespace || undefined
-              }
-            }
-          },
-          caps,
-          networkId: metadata.networkId,
-          signingPubKey: publickey
-        }
+      this.account = {
+        network: networkId,
+        address: account.account,
+        pubkey: account.publicKey,
+        walletConnectChainId: `kadena:${networkId}`
       }
-    })
 
-    callbackProgress('Awaiting TX results...')
+      console.log('this.account', this.account)
 
-    const tx = await Pact.wallet.sendSigned(
-      cmd.signedCmd,
-      metadata.network
-    )
+      this.callback = callback
 
-    const { result } = await Pact.fetch.listen(
-      { listen: tx.requestKeys[0] },
-      RPC
-    )
+      callback()
+    },
 
-    if (result.status === 'failure') {
-      throw new Error(result.error.message)
+    async sendTokenFaucetTransaction (token: any) {
+      const { networkId, chainId } = getConfig()
+
+      const publickey = this.account.pubkey
+      const accountName = this.account.address
+
+      let withFund = false
+
+      try {
+        const {
+          result: { status }
+        } = await getTokenDetails(accountName, token)
+
+        if (status === 'failure') {
+          withFund = true
+        }
+      } catch (e) {
+      //
+      }
+
+      const pactCode = getFaucetCode(
+        accountName,
+        token,
+        withFund
+      )
+
+      const cmd = await kadena.request({
+        data: {
+          networkId,
+          signingCmd: {
+            ttl: 0,
+            chainId,
+            gasLimit: 0,
+            gasPrice: 0,
+            sender: accountName,
+            pactCode,
+            envData: {
+              name: 'opact',
+              language: 'Pact',
+              [accountName]: {
+                keys: [publickey]
+              }
+            },
+            networkId,
+            signingPubKey: publickey
+          }
+        },
+        networkId,
+        method: 'kda_requestSign'
+      })
+
+      return await sendSigned(cmd)
+    },
+
+    async sendNFTFaucetTransaciton (id: any, manifest: any) {
+      const { networkId, chainId } = getConfig()
+
+      const accountName = this.account.address
+      const publickey = this.account.pubkey
+
+      const cmd = await kadena.request({
+        data: {
+          networkId,
+          signingCmd: {
+            pactCode: `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`,
+            ttl: 0,
+            chainId,
+            gasLimit: 0,
+            gasPrice: 0,
+            envData: {
+              manifest,
+              guard: {
+                keys: [publickey]
+              }
+            },
+            sender: accountName,
+            networkId,
+            signingPubKey: publickey
+          }
+        },
+        networkId,
+        method: 'kda_requestSign'
+      })
+
+      await sendSigned(cmd)
+
+      const mintTokenCmd = await kadena.request({
+        data: {
+          networkId,
+          signingCmd: {
+            pactCode: `(free.poly-fungible-v2-reference.mint "${id}" "${accountName}" (read-keyset 'guard) 1.0)`,
+            ttl: 0,
+            chainId,
+            gasLimit: 0,
+            gasPrice: 0,
+            envData: {
+              guard: {
+                keys: [publickey]
+              }
+            },
+            caps: [
+              Pact.lang.mkCap(
+                'Mint Token',
+                'Capability to mint token',
+                'free.poly-fungible-v2-reference.MINT',
+                [id + '', accountName + '', 1.0]
+              )
+            ],
+            networkId,
+            sender: accountName,
+            signingPubKey: publickey
+          }
+        },
+        networkId,
+        method: 'kda_requestSign'
+      })
+
+      await sendSigned(mintTokenCmd)
+    },
+
+    async sendOpactTransaction (
+      { proof, extData, tokenSpec }: any,
+      callbackProgress: any,
+      isWithdrawTransfer = false,
+      receiver = ''
+    ) {
+      const { networkId, chainId } = getConfig()
+
+      const publickey = this.account.pubkey
+      const accountName = this.account.address
+
+      let caps
+
+      if (isWithdrawTransfer) {
+        caps = getCapsForWithdraw(
+          accountName,
+          extData.tokenAmount,
+          receiver,
+          tokenSpec
+        )
+      } else {
+        caps = getCapsForDeposit(
+          accountName,
+          extData.tokenAmount,
+          tokenSpec
+        )
+      }
+
+      const pactCode = getTransactionCode({ proof, extData })
+
+      callbackProgress('Await sign...')
+
+      const cmd = await kadena.request({
+        method: 'kda_requestSign',
+        data: {
+          networkId,
+          signingCmd: {
+            creationTime: Math.round(new Date().getTime() / 1000) - 10,
+            chainId,
+            ttl: 2880,
+            gasLimit: 150000,
+            gasPrice: 0.00001,
+            sender: accountName,
+            pactCode,
+            envData: {
+              language: 'Pact',
+              name: 'transact-deposit',
+              'recipient-guard': {
+                keys: [receiver.replace('k:', '') || publickey]
+              },
+              'token-instance': {
+                refSpec: [
+                  {
+                    name: tokenSpec.refSpec.name,
+                    namespace:
+                          tokenSpec.refSpec.namespace ||
+                          undefined
+                  }
+                ],
+                refName: {
+                  name: tokenSpec.refName.name,
+                  namespace:
+                        tokenSpec.refName.namespace || undefined
+                }
+              }
+            },
+            caps,
+            networkId,
+            signingPubKey: publickey
+          }
+        }
+      })
+
+      callbackProgress('Awaiting TX results...')
+
+      return await sendSigned(cmd)
     }
-
-    return result
   }
-
-  const disconnect = async function () {
-    await kadena.request({
-      method: 'kda_disconnect',
-      networkId: 'testnet04'
-    })
-
-    account.value = ''
-  }
-
-  return {
-    id,
-    account,
-    metadata,
-
-    init,
-    faucet,
-    connect,
-    mintToken,
-    disconnect,
-    createToken,
-    transaction,
-    coinDetails
-  }
-}
+})
 
 export default {
   ...metadata,
-  provider: useProvider()
+  provider
 }
