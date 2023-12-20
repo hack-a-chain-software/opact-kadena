@@ -1,12 +1,23 @@
 import { defineStore } from 'pinia'
 import { getSdkError } from '@walletconnect/utils'
 import { SessionTypes } from '@walletconnect/types'
-import { getConfig, getTokenDetails, getPartialOpactCommand, getFaucetCode, sendSigned, getCapsForWithdraw, getCapsForDeposit } from 'opact-sdk'
+import {
+  getConfig,
+  getTokenDetails,
+  getPartialOpactCommand,
+  getFaucetCode,
+  sendSigned,
+  getCapsForWithdraw,
+  getCapsForDeposit
+} from 'opact-sdk'
 import {
   Pact,
   createWalletConnectQuicksign
 } from '@kadena/client'
-import { getWalletConnectClient, getWalletConnectModal } from '../util'
+import {
+  getWalletConnectClient,
+  getWalletConnectModal
+} from '../util'
 
 const metadata = {
   id: 'provider:kadena:wallet-connect',
@@ -47,7 +58,8 @@ export const provider = defineStore({
 
     onSessionConnected (_session: SessionTypes.Struct) {
       this.session = _session
-      this.accounts = _session?.namespaces?.kadena?.accounts
+      this.accounts =
+        _session?.namespaces?.kadena?.accounts
 
       if (this.accounts.length === 0) {
         return
@@ -55,12 +67,12 @@ export const provider = defineStore({
 
       const { networkId } = getConfig()
 
-      const [
-        chain,
-        network,
-        pubkey
-      ] = _session?.namespaces?.kadena?.accounts
-        .find((account: string) => account.includes(networkId))?.split(':') || ''
+      const [chain, network, pubkey] =
+        _session?.namespaces?.kadena?.accounts
+          .find((account: string) =>
+            account.includes(networkId)
+          )
+          ?.split(':') || ''
 
       this.account = {
         chain,
@@ -73,7 +85,9 @@ export const provider = defineStore({
 
     subscribeToEvents () {
       if (!this.client) {
-        throw new TypeError('WalletConnect is not initialized')
+        throw new TypeError(
+          'WalletConnect is not initialized'
+        )
       }
 
       this.client.on('session_ping', (args: any) => {
@@ -84,17 +98,26 @@ export const provider = defineStore({
         console.log('EVENT', 'session_event', args)
       })
 
-      this.client.on('session_update', ({ topic, params }: any) => {
-        console.log('EVENT', 'session_update', { topic, params })
+      this.client.on(
+        'session_update',
+        ({ topic, params }: any) => {
+          console.log('EVENT', 'session_update', {
+            topic,
+            params
+          })
 
-        const { namespaces } = params
+          const { namespaces } = params
 
-        const _session = this.client.session.get(topic)
+          const _session = this.client.session.get(topic)
 
-        const updatedSession = { ..._session, namespaces }
+          const updatedSession = {
+            ..._session,
+            namespaces
+          }
 
-        this.onSessionConnected(updatedSession)
-      })
+          this.onSessionConnected(updatedSession)
+        }
+      )
 
       this.client.on('session_delete', () => {
         console.log('EVENT', 'session_delete')
@@ -123,29 +146,33 @@ export const provider = defineStore({
 
     async connect (callback = () => {}) {
       if (typeof this.client === 'undefined') {
-        throw new TypeError('WalletConnect is not initialized')
+        throw new TypeError(
+          'WalletConnect is not initialized'
+        )
       }
 
       const walletConnectModal = getWalletConnectModal()
 
       try {
-        const { uri, approval } = await this.client.connect({
-          requiredNamespaces: {
-            kadena: {
-              methods: [
-                'kadena_getAccounts_v1',
-                'kadena_sign_v1',
-                'kadena_quicksign_v1'
-              ],
-              chains: [
-                'kadena:mainnet01',
-                'kadena:testnet04',
-                'kadena:development'
-              ],
-              events: []
+        const { uri, approval } = await this.client.connect(
+          {
+            requiredNamespaces: {
+              kadena: {
+                methods: [
+                  'kadena_getAccounts_v1',
+                  'kadena_sign_v1',
+                  'kadena_quicksign_v1'
+                ],
+                chains: [
+                  'kadena:mainnet01',
+                  'kadena:testnet04',
+                  'kadena:development'
+                ],
+                events: []
+              }
             }
           }
-        })
+        )
 
         if (uri) {
           walletConnectModal.openModal({ uri })
@@ -155,7 +182,9 @@ export const provider = defineStore({
 
         await this.onSessionConnected(session)
         // Update known pairings after session is connected.
-        this.pairings = this.client.pairing.getAll({ active: true })
+        this.pairings = this.client.pairing.getAll({
+          active: true
+        })
 
         walletConnectModal.closeModal()
 
@@ -169,7 +198,9 @@ export const provider = defineStore({
 
     async disconnect () {
       if (typeof this.client === 'undefined') {
-        throw new TypeError('WalletConnect is not initialized')
+        throw new TypeError(
+          'WalletConnect is not initialized'
+        )
       }
       if (typeof this.session === 'undefined') {
         throw new TypeError('Session is not connected')
@@ -181,7 +212,10 @@ export const provider = defineStore({
           reason: getSdkError('USER_DISCONNECTED')
         })
       } catch (error) {
-        console.error('SignClient.disconnect failed:', error)
+        console.error(
+          'SignClient.disconnect failed:',
+          error
+        )
       } finally {
         // Reset app state after disconnect.
         this.reset()
@@ -203,11 +237,12 @@ export const provider = defineStore({
 
       const { networkId, chainId } = getConfig() as any
 
-      const signWithWalletConnect = createWalletConnectQuicksign(
-        this.client as any,
-        this.session,
-        this.account.walletConnectChainId
-      )
+      const signWithWalletConnect =
+        createWalletConnectQuicksign(
+          this.client as any,
+          this.session,
+          this.account.walletConnectChainId
+        )
 
       const token = selectedToken
 
@@ -216,7 +251,10 @@ export const provider = defineStore({
       try {
         const {
           result: { status }
-        } = await getTokenDetails(this.account.address, token)
+        } = await getTokenDetails(
+          this.account.address,
+          token
+        )
 
         if (status === 'failure') {
           withFund = true
@@ -237,13 +275,19 @@ export const provider = defineStore({
           chainId,
           senderAccount: this.account.address
         })
-        .addKeyset(this.account.address, 'keys-all', this.account.pubkey)
+        .addKeyset(
+          this.account.address,
+          'keys-all',
+          this.account.pubkey
+        )
         .addSigner(this.account.pubkey)
         .setNetworkId(networkId)
 
       const transaction = pactCommand.createTransaction()
 
-      const signedCmd = await signWithWalletConnect(transaction)
+      const signedCmd = await signWithWalletConnect(
+        transaction
+      )
 
       return await sendSigned({ signedCmd })
     },
@@ -263,11 +307,12 @@ export const provider = defineStore({
 
       const { networkId, chainId } = getConfig() as any
 
-      const signWithWalletConnect = createWalletConnectQuicksign(
-        this.client as any,
-        this.session,
-        this.account.walletConnectChainId
-      )
+      const signWithWalletConnect =
+        createWalletConnectQuicksign(
+          this.client as any,
+          this.session,
+          this.account.walletConnectChainId
+        )
 
       const pactCode = `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`
 
@@ -285,7 +330,9 @@ export const provider = defineStore({
 
       const transaction = pactCommand.createTransaction()
 
-      const signedCmd = await signWithWalletConnect(transaction)
+      const signedCmd = await signWithWalletConnect(
+        transaction
+      )
 
       await sendSigned({ signedCmd })
 
@@ -297,23 +344,29 @@ export const provider = defineStore({
           chainId,
           senderAccount: this.account.address
         })
-        .addSigner(this.account.pubkey, (withCapability: any) => [
-          withCapability(
-            'free.poly-fungible-v2-reference.MINT',
-            id + '',
-            this.account.address,
-            1.0
-          )
-        ])
+        .addSigner(
+          this.account.pubkey,
+          (withCapability: any) => [
+            withCapability(
+              'free.poly-fungible-v2-reference.MINT',
+              id + '',
+              this.account.address,
+              1.0
+            )
+          ]
+        )
         .addData('manifest', manifest)
         .addData('guard', {
           keys: [this.account.pubkey]
         })
         .setNetworkId(networkId)
 
-      const mintTransaction = mintPactCommand.createTransaction()
+      const mintTransaction =
+        mintPactCommand.createTransaction()
 
-      const mintSignedCmd = await signWithWalletConnect(mintTransaction)
+      const mintSignedCmd = await signWithWalletConnect(
+        mintTransaction
+      )
 
       return await sendSigned({ signedCmd: mintSignedCmd })
     },
@@ -336,11 +389,12 @@ export const provider = defineStore({
         throw new Error('No selected account to send from')
       }
 
-      const signWithWalletConnect = createWalletConnectQuicksign(
-        this.client as any,
-        this.session,
-        this.account.walletConnectChainId
-      )
+      const signWithWalletConnect =
+        createWalletConnectQuicksign(
+          this.client as any,
+          this.session,
+          this.account.walletConnectChainId
+        )
 
       let caps: any
 
@@ -376,7 +430,9 @@ export const provider = defineStore({
 
       const transaction = pactCommand.createTransaction()
 
-      const signedCmd = await signWithWalletConnect(transaction)
+      const signedCmd = await signWithWalletConnect(
+        transaction
+      )
 
       console.log('signedCmd', signedCmd)
 
