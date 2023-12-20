@@ -1,27 +1,32 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { onBeforeMount } from 'vue'
-import { loadArtifacts } from 'opact-sdk'
-import { useAppState } from '~/hooks/state'
+import { loadArtifact } from 'opact-sdk'
+import { onBeforeMount, onMounted } from 'vue'
+import { useAppStore } from '~/stores/app'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
 
-const { isLoading, loadAppState } = useAppState()
+const app = useAppStore()
 
-const { connected, node } = storeToRefs(wallet)
+const { isLoading } = storeToRefs(app)
+
+const { connected, account } = storeToRefs(wallet)
 
 onBeforeMount(() => {
-  loadArtifacts()
   wallet.reconnect()
 })
 
-watch(node, (newNode) => {
-  if (!newNode) {
+onMounted(() => {
+  loadArtifact()
+})
+
+watch(account, (newAccount) => {
+  if (!newAccount) {
     return
   }
 
-  loadAppState(newNode.pvtkey)
+  app.initApp(newAccount)
 })
 </script>
 
@@ -72,6 +77,7 @@ watch(node, (newNode) => {
           pl-4
           lg:pl-[135px]
           xl:pl-[276px]
+          pb-[78.45px] lg:pb-0
         "
       >
         <slot />

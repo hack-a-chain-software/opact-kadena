@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import { computed, reactive } from 'vue'
-import { shortenAddress, getDecimals, formatBigNumberWithDecimals, kadenaTokens as tokens } from 'opact-sdk'
+import {
+  shortenAddress,
+  getDecimals,
+  formatBigNumberWithDecimals,
+  kadenaTokens as tokens
+} from 'opact-sdk'
 import Pact from 'pact-lang-api'
 import { format } from 'date-fns'
 

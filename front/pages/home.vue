@@ -10,87 +10,27 @@ useHead({
 </script>
 
 <template>
-  <div
-    class="
-      lg:w-full
-      h-full
-      pt-4
-      lg:pt-0
-      lg:gap-6
-      lg:grid
-      lg:grid-cols-[minmax(auto,_698px)_400px]
-      lg:grid-rows-[160px_1fr]
-      lg:justify-center
-    "
-  >
-    <WidgetTokens />
-
-    <WidgetActions />
-
-    <WidgetHistory />
+  <div>
+    <LayoutMobileTopbar />
 
     <div
       class="
-        lg:hidden
-        py-3
-        fixed
-        bottom-0
-        left-0
-        right-0
-        flex
-        px-[61px]
-        justify-between
-        bg-dark-blue
-        border-t-[0.5px] border-[#5F6267]
+        lg:w-full
+        h-full
+        pt-6
+        lg:pt-0
+        lg:gap-6
+        lg:grid
+        lg:grid-cols-[minmax(auto,_698px)_400px]
+        lg:grid-rows-[141px_1fr]
+        lg:justify-center
       "
     >
-      <button class="space-y-[4px]">
-        <div>
-          <Icon
-            name="wallet"
-            class="text-blue-400 w-6 h-6"
-          />
-        </div>
+      <HomeWidgetTokens />
 
-        <div>
-          <span class="text-blue-400 text-xxxs font-medium">
-            Home
-          </span>
-        </div>
-      </button>
+      <HomeWidgetActions />
 
-      <button
-        disabled
-        class="space-y-1 opacity-[0.5] cursor-not-allowed"
-      >
-        <div>
-          <Icon name="chart" class="text-font-1 w-6 h-6" />
-        </div>
-
-        <div>
-          <span class="text-font-1 text-xxxs font-medium">
-            History
-          </span>
-        </div>
-      </button>
-
-      <button
-        disabled
-        class="space-y-1 opacity-[0.5] cursor-not-allowed"
-      >
-        <div>
-          <Icon
-            name="Settings"
-            class="text-font-1 w-6 h-6"
-          />
-        </div>
-
-        <div>
-          <span class="text-font-1 text-xxxs font-medium">
-            Settings
-          </span>
-        </div>
-      </button>
+      <HomeWidgetHistory />
     </div>
   </div>
 </template>

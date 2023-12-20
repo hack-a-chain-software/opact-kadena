@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getConfig } from 'opact-sdk'
+
 useHead({
   titleTemplate: title => title || 'Home',
   meta: [
@@ -20,6 +22,10 @@ useHead({
     }
   ]
 })
+
+const runtimeConfig = useRuntimeConfig()
+
+getConfig(runtimeConfig.public.opactSDKNetwork)
 </script>
 
 <template>

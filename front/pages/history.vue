@@ -5,9 +5,12 @@ import {
   getDayOfYear,
   isWithinInterval
 } from 'date-fns'
-import { useAppState } from '~/hooks/state'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '~/stores/app'
 
-const { receipts: receiptState } = useAppState()
+const app = useAppStore()
+
+const { receipts: receiptState } = storeToRefs(app)
 
 definePageMeta({
   layout: 'app',
