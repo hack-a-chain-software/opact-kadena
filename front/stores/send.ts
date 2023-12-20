@@ -14,7 +14,7 @@ import {
   formatBigNumberWithDecimals,
   sendOZKTransaction,
   getEncryptedUtxosOfTransaction,
-  getTransferSolutionBatchForNFT,
+  getTransferSolutionBatchForNFT
 } from 'opact-sdk'
 import { groth16 } from 'snarkjs'
 import { useAppStore } from '~/stores/app'

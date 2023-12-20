@@ -362,13 +362,13 @@ export const provider = defineStore({
       callbackProgress('Await sign...')
 
       const pactCommand = getPartialOpactCommand({
-          proof,
-          extData,
-          tokenSpec,
-          senderAccount: this.account.address
-        })
+        proof,
+        extData,
+        tokenSpec,
+        senderAccount: this.account.address
+      })
         .addSigner(this.account.pubkey, () => [
-          ...caps.map(({ cap }: any) => cap),
+          ...caps.map(({ cap }: any) => cap)
         ])
         .addData('recipient-guard', {
           keys: [receiver || this.account.pubkey]
