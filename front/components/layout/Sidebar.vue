@@ -20,12 +20,6 @@ const routes = [
     path: 'history',
     label: 'History',
     icon: 'chart'
-  },
-  {
-    disabled: false,
-    path: 'settings',
-    label: 'Settings',
-    icon: 'iconSettings'
   }
 ]
 
@@ -104,10 +98,5 @@ const redirect = (path: string, skip: boolean) => {
         </ul>
       </div>
     </div>
-
-    <Settings
-      :show="data.showSettings"
-      @close="data.showSettings = false"
-    />
   </div>
 </template>

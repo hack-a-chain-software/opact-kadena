@@ -2,9 +2,9 @@
 import { computed, reactive, onBeforeMount } from 'vue'
 import {
   getDecimals,
+  kadenaTokens as tokens,
   formatBigNumberWithDecimals
 } from 'opact-sdk'
-import { tokens } from '~/utils/constants'
 
 const props = withDefaults(
   defineProps<{
@@ -86,7 +86,7 @@ const balance = computed(() => {
     "
   >
     <div class="pr-4">
-      <img :src="metadata.icon" />
+      <img :src="metadata.icon.replace('https://opact.io/', '')" />
     </div>
 
     <div class="space-y-1">
