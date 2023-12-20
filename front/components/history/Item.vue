@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { computed, reactive } from 'vue'
+import { shortenAddress, getDecimals, formatBigNumberWithDecimals, kadenaTokens as tokens } from 'opact-sdk'
 import Pact from 'pact-lang-api'
 import { format } from 'date-fns'
-import { tokens } from '~/utils/constants'
-import { shortenAddress } from '~/utils/string'
 
 const RPC =
   process.env.NODE_ENV !== 'development'
@@ -52,6 +51,15 @@ const isNegative = computed(() => {
   }
 
   return false
+})
+
+const formattedAmount = computed(() => {
+  const decimals = getDecimals(12)
+
+  return formatBigNumberWithDecimals(
+    props.amount,
+    decimals
+  )
 })
 
 const metadata = computed(() => {
@@ -170,8 +178,7 @@ watch(
           isNegative ? 'text-red-500' : 'text-green-500'
         "
       >
-        {{ isNegative ? '-' : '+' }}
-        {{ Number(amount).toFixed(1) }}
+        {{ formattedAmount }}
         {{ metadata?.symbol }}
       </span>
     </div>
