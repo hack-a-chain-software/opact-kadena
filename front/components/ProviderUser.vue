@@ -12,11 +12,15 @@ withDefaults(
 </script>
 
 <template>
-  <div class="pt-[18px] lg:pt-[32px]">
-    <div class="flex justify-between pb-4">
+  <div>
+    <div class="flex justify-between pb-2 lg:pb-4">
       <span
         v-text="label"
-        class="text-xs font-medium text-font-1"
+        class="
+          text-font-1
+          font-medium
+          text-xxs lg:text-xs
+        "
       />
     </div>
 
@@ -25,44 +29,51 @@ withDefaults(
         p-4
         flex
         w-full
+        h-[72px]
         rounded-[8px]
         items-center
         bg-gray-800
-        space-x-2
+        space-x-4
         border border-transparent
       "
-      :class="provider && '!border-blue-400'"
     >
       <div
         class="
-          w-[40px]
-          h-[40px]
-          max-h-[40px]
+          w-9
+          h-9
+          max-h-9
+          lg:w-10
+          lg:h-10
+          lg:max-h-[40px]
           flex
           items-center
           justify-center
           bg-dark-blue
           rounded-[8px]
+          shrink-0
         "
       >
-        <Icon
-          :name="provider?.metadata?.icon"
-          class="w-6 h-6"
+        <img
+          :src="provider?.icon"
+          class="w-10 h-10"
         />
       </div>
 
-      <div class="flex-grow break-words overflow-hidden">
+      <div
+        class="
+          flex-grow
+          break-words
+          overflow-hidden overflow-ellipsis
+        "
+      >
         <span
-          class="text-sm font-medium text-font-1"
-          v-text="
-            shortenAddress(
-              provider?.account?.address ||
-                '' ||
-                provider?.account?.account?.account ||
-                '',
-              20
-            )
+          class="
+            text-xxs lg:text-sm
+            font-medium
+            text-font-1
+            line-clamp-2
           "
+          v-text="provider?.account?.address"
         />
       </div>
     </div>

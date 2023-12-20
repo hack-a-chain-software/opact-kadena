@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Pact from 'pact-lang-api'
 import { reactive, watch } from 'vue'
-import { shortenAddress } from '~/utils/string'
+import { shortenAddress } from 'opact-sdk'
 
 const RPC =
   process.env.NODE_ENV !== 'development'
@@ -103,6 +103,7 @@ watch(
               h-4
               container
               transition-all
+              text-font-1
               duration-500
             "
             :class="state.show && 'container-active'"

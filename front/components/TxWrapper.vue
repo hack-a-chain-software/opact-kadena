@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed, watch } from 'vue'
-import { shortenAddress } from '~/utils/string'
+import { shortenAddress } from 'opact-sdk'
 
 const props = withDefaults(
   defineProps<{
@@ -41,11 +41,7 @@ watch(
 </script>
 
 <template>
-  <div
-    v-show="!disabled"
-    v-motion-slide-visible-top
-    class="mt-full lg:mt-[32px]"
-  >
+  <div v-if="!disabled" class="mt-full lg:mt-[32px]">
     <div
       class="
         transition-all
@@ -75,6 +71,7 @@ watch(
               w-4
               h-4
               container
+              text-white
               transition-all
               duration-500
             "

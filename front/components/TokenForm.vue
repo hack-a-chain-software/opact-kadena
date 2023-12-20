@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 
-const { step } = useForm()
+// const { step } = useForm()
 
 const data = reactive({
   token: {

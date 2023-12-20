@@ -1,42 +1,42 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { reactive } from 'vue'
 
 withDefaults(
   defineProps<{
-    label?: string;
+    link?: string;
     isDisabled?: boolean;
   }>(),
   {
-    isDisabled: false,
-    label: 'Connect Wallet'
+    link: '',
+    isDisabled: false
   }
 )
+
+const emit = defineEmits(['done'])
 
 const data = reactive({
   show: false
 })
 
-const emit = defineEmits(['connected'])
-
-const connected = () => {
+const done = () => {
   data.show = false
-
-  emit('connected')
+  emit('done')
 }
 </script>
 
 <template>
   <div>
     <UIButtonInline
-      :label="label"
       :disabled="isDisabled"
+      label="Generate Receive Link"
       @click.prevent="data.show = true"
     />
-
-    <ModalWallet
-      :show="data.show"
-      @close="data.show = false"
-      @connected="connected"
-    />
   </div>
+
+  <ModalGenerateLink
+    :link="link"
+    :show="data.show"
+    @done="done()"
+    @close="data.show = false"
+  />
 </template>
