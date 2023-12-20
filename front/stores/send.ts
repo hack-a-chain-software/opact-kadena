@@ -5,15 +5,16 @@ import {
   formatInteger,
   getKdaMessage,
   getPublicArgs,
+  getConfig,
   kadenaTokens,
   MerkleTreeService,
-  sendOZKTransaction,
   getKdaTransactionParams,
   getTransferSolutionBatch,
   getReceiptsOfTransaction,
   formatBigNumberWithDecimals,
+  sendOZKTransaction,
   getEncryptedUtxosOfTransaction,
-  getTransferSolutionBatchForNFT
+  getTransferSolutionBatchForNFT,
 } from 'opact-sdk'
 import { groth16 } from 'snarkjs'
 import { useAppStore } from '~/stores/app'
@@ -197,9 +198,11 @@ export const useSendStore = defineStore({
         extData
       })
 
+      const config = getConfig()
+
       const service = new MerkleTreeService({
         chainId: 0,
-        dbUrl: 'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/commitments',
+        dbUrl: config.indexerUrl,
         instanceName: 'commitments-tree'
       })
 

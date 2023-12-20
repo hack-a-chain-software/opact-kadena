@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
 import { getSdkError } from '@walletconnect/utils'
-import { PactNumber } from '@kadena/pactjs'
 import { SessionTypes } from '@walletconnect/types'
-import { getConfig, getTokenDetails, getFaucetCode, sendSigned, getCapsForWithdraw, getCapsForDeposit } from 'opact-sdk'
+import { getConfig, getTokenDetails, getPartialOpactCommand, getFaucetCode, sendSigned, getCapsForWithdraw, getCapsForDeposit } from 'opact-sdk'
 import {
   Pact,
   createWalletConnectQuicksign
@@ -202,7 +201,7 @@ export const provider = defineStore({
         throw new Error('No selected account to send from')
       }
 
-      const { networkId, chainId } = getConfig()
+      const { networkId, chainId } = getConfig() as any
 
       const signWithWalletConnect = createWalletConnectQuicksign(
         this.client as any,
@@ -262,7 +261,7 @@ export const provider = defineStore({
         throw new Error('No selected account to send from')
       }
 
-      const { networkId, chainId } = getConfig()
+      const { networkId, chainId } = getConfig() as any
 
       const signWithWalletConnect = createWalletConnectQuicksign(
         this.client as any,
@@ -337,8 +336,6 @@ export const provider = defineStore({
         throw new Error('No selected account to send from')
       }
 
-      const { networkId, chainId } = getConfig()
-
       const signWithWalletConnect = createWalletConnectQuicksign(
         this.client as any,
         this.session,
@@ -362,93 +359,20 @@ export const provider = defineStore({
         )
       }
 
-      caps = caps.map((caped: any) => {
-        const {
-          cap
-        } = caped
-
-        const [
-          fo,
-          foo
-        ] = cap.args
-
-        return {
-          ...caped,
-          cap: {
-            ...cap,
-            args: [
-              fo,
-              foo,
-              12
-            ]
-          }
-        }
-      })
-
-      const pactCode = "(free.opact.transact (read-msg 'proof) (read-msg 'extData))"
-
       callbackProgress('Await sign...')
 
-      const pactCommand = Pact.builder
-        .execution(pactCode)
-        .setMeta({
-          chainId,
-          ttl: 2880,
-          gasLimit: 150000,
-          gasPrice: 0.00001,
+      const pactCommand = getPartialOpactCommand({
+          proof,
+          extData,
+          tokenSpec,
           senderAccount: this.account.address
         })
-        .addSigner(this.account.pubkey, (withCap: any) => {
-          console.log('coingas', withCap('coin.GAS'))
-
-          return [
-            ...caps.map(({ cap }: any) => cap),
-            withCap('coin.GAS')
-          ]
-        })
-        .addData('language', 'Pact')
-        .addData('name', 'transact-deposit')
+        .addSigner(this.account.pubkey, () => [
+          ...caps.map(({ cap }: any) => cap),
+        ])
         .addData('recipient-guard', {
           keys: [receiver || this.account.pubkey]
         })
-        .addData('extData', {
-          ...extData,
-          tokenId: extData.tokenId + '',
-          encryptedReceipts: [''],
-          tokenAmount: new PactNumber(extData.tokenAmount).toPactInteger(),
-          outputCommitments: extData.outputCommitments.map((item: any) => new PactNumber(item).toPactInteger())
-        })
-        .addData('proof', {
-          public_values: proof.public_values.map((item: any) => new PactNumber(item).toPactInteger()),
-          a: {
-            x: new PactNumber(proof.a.x).toPactInteger(),
-            y: new PactNumber(proof.a.y).toPactInteger()
-          },
-          b: {
-            x: proof.b.x.map((item: any) => new PactNumber(item).toPactInteger()),
-            y: proof.b.y.map((item: any) => new PactNumber(item).toPactInteger())
-          },
-          c: {
-            x: new PactNumber(proof.c.x).toPactInteger(),
-            y: new PactNumber(proof.c.y).toPactInteger()
-          }
-        })
-        .addData('token-instance', {
-          refSpec: [
-            {
-              name: tokenSpec.refSpec.name,
-              namespace:
-                tokenSpec.refSpec.namespace ||
-                undefined
-            }
-          ],
-          refName: {
-            name: tokenSpec.refName.name,
-            namespace:
-              tokenSpec.refName.namespace || undefined
-          }
-        })
-        .setNetworkId(networkId)
 
       const transaction = pactCommand.createTransaction()
 

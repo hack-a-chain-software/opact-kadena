@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import {
+  getConfig,
   kadenaTokens,
   formatInteger,
   getDepositSoluctionBatch,
@@ -162,10 +163,11 @@ export const useInvoiceStore = defineStore({
         extData
       })
 
+      const config = getConfig()
+
       const service = new MerkleTreeService({
-        chainId: 0,
-        dbUrl:
-          'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/commitments',
+        chainId: '0',
+        dbUrl: config.indexerUrl,
         instanceName: 'commitments-tree'
       })
 

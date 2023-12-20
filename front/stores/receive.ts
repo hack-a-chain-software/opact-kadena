@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import {
   kadenaTokens,
   formatInteger,
+  getConfig,
   getDepositSoluctionBatch,
   getReceiptsOfTransaction,
   getEncryptedUtxosOfTransaction,
@@ -172,10 +173,11 @@ export const useReceiveStore = defineStore({
         extData
       })
 
+      const config = getConfig()
+
       const service = new MerkleTreeService({
         chainId: 0,
-        dbUrl:
-          'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/commitments',
+        dbUrl: config.indexerUrl,
         instanceName: 'commitments-tree'
       })
 
@@ -277,10 +279,11 @@ export const useReceiveStore = defineStore({
         extData
       })
 
+      const config = getConfig()
+
       const service = new MerkleTreeService({
         chainId: 0,
-        dbUrl:
-          'https://bpsd19dro1.execute-api.us-east-2.amazonaws.com/commitments',
+        dbUrl: config.indexerUrl,
         instanceName: 'commitments-tree'
       })
 
