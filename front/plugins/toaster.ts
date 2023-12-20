@@ -1,5 +1,5 @@
 // plugins/toaster.ts
-import MyToast from '~/components/Toast.vue'
+import MyToast from '~/components/UI/Toast.vue'
 
 interface ToasterOptions {
   message: string;
@@ -70,5 +70,5 @@ export default defineNuxtPlugin(() => {
     provide: {
       toaster
     }
-  }
+  } as any
 })

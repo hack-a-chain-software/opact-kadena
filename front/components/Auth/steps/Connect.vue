@@ -110,7 +110,9 @@ const emits = defineEmits(['changeStep'])
               lg:font-xs lg:font-[400] lg:leading-[140%]
             "
           >
-            With Opact Wallet you can store your funds and perform transactions with privacy and security. Start now!
+            With Opact Wallet you can store your funds and
+            perform transactions with privacy and security.
+            Start now!
           </p>
         </div>
 
