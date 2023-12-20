@@ -55,9 +55,7 @@ export const provider = defineStore({
     async connect (callback = () => {}) {
       const { networkId } = getConfig()
 
-      const {
-        account
-      } = await kadena.request({
+      const { account } = await kadena.request({
         networkId,
         method: 'kda_connect'
       })
@@ -93,7 +91,7 @@ export const provider = defineStore({
           withFund = true
         }
       } catch (e) {
-      //
+        //
       }
 
       const pactCode = getFaucetCode(
@@ -224,7 +222,10 @@ export const provider = defineStore({
         )
       }
 
-      const pactCode = getTransactionCode({ proof, extData })
+      const pactCode = getTransactionCode({
+        proof,
+        extData
+      })
 
       callbackProgress('Await sign...')
 
@@ -233,7 +234,8 @@ export const provider = defineStore({
         data: {
           networkId,
           signingCmd: {
-            creationTime: Math.round(new Date().getTime() / 1000) - 10,
+            creationTime:
+              Math.round(new Date().getTime() / 1000) - 10,
             chainId,
             ttl: 2880,
             gasLimit: 150000,
@@ -244,21 +246,24 @@ export const provider = defineStore({
               language: 'Pact',
               name: 'transact-deposit',
               'recipient-guard': {
-                keys: [receiver.replace('k:', '') || publickey]
+                keys: [
+                  receiver.replace('k:', '') || publickey
+                ]
               },
               'token-instance': {
                 refSpec: [
                   {
                     name: tokenSpec.refSpec.name,
                     namespace:
-                          tokenSpec.refSpec.namespace ||
-                          undefined
+                      tokenSpec.refSpec.namespace ||
+                      undefined
                   }
                 ],
                 refName: {
                   name: tokenSpec.refName.name,
                   namespace:
-                        tokenSpec.refName.namespace || undefined
+                    tokenSpec.refName.namespace ||
+                    undefined
                 }
               }
             },
