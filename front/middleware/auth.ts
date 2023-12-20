@@ -7,13 +7,19 @@ export default defineNuxtRouteMiddleware((to) => {
   const appConfig = useRuntimeConfig()
 
   if (wallet.cache && wallet.cache.phrase) {
-    if (to.path.includes('nft') && appConfig.public.nftDisabled) {
+    if (
+      to.path.includes('nft') &&
+      appConfig.public.nftDisabled
+    ) {
       return router.push({
         path: '/home'
       })
     }
 
-    if (to.path.includes('faucet') && appConfig.public.faucetDisabled) {
+    if (
+      to.path.includes('faucet') &&
+      appConfig.public.faucetDisabled
+    ) {
       return router.push({
         path: '/home'
       })

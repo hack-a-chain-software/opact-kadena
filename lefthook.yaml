@@ -18,7 +18,7 @@ pre-commit:
     front-format:
       root: front/
       glob: "*.{vue,ts}"
-      run: npx prettier {staged_files} --write --loglevel=error --no-error-on-unmatched-pattern
+      # run: npx prettier {staged_files} --write --loglevel=error --no-error-on-unmatched-pattern
 
     packages-audit:
       skip:

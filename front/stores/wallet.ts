@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
-import { shortenAddress, useStateStorage, getWalletFromMnemonic } from 'opact-sdk'
+import {
+  shortenAddress,
+  useStateStorage,
+  getWalletFromMnemonic
+} from 'opact-sdk'
 import { useAuthStorage } from '~/hooks/auth-storage'
 
 export const useWalletStore = defineStore({
@@ -67,9 +71,7 @@ export const useWalletStore = defineStore({
     async logout () {
       const { clear } = useAuthStorage()
 
-      const {
-        clear: clearState
-      } = useStateStorage({
+      const { clear: clearState } = useStateStorage({
         key: this.account.address
       })
 
