@@ -1,0 +1,29 @@
+<script setup lang="ts">
+import { onBeforeMount } from 'vue'
+import { useSendStore } from '~/stores/send'
+
+const transferStore = useSendStore()
+
+const route = useRoute()
+
+onBeforeMount(() => {
+  transferStore.reset(1, 'nft', null)
+
+  const {
+    address
+  } = route.query || {}
+
+  if (address) {
+    transferStore.addressTo = address
+  }
+})
+</script>
+
+<template>
+  <div class="ozk-form w-full flex justify-center">
+    <Transition name="fade" mode="out-in">
+      <SendNFTStepsPayment/>
+    </Transition>
+  </div>
+</template>
+~/stores/send
