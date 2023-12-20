@@ -233,10 +233,11 @@ export const provider = defineStore({
         data: {
           networkId,
           signingCmd: {
-            ttl: 0,
+            creationTime: Math.round(new Date().getTime() / 1000) - 10,
             chainId,
-            gasLimit: 0,
-            gasPrice: 0,
+            ttl: 2880,
+            gasLimit: 150000,
+            gasPrice: 0.00001,
             sender: accountName,
             pactCode,
             envData: {
