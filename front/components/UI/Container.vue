@@ -46,13 +46,13 @@ const sizes = {
       sm:text-lg sm:font-[900] sm:leading-[27px]
     `,
     title: `
-      text-2xl-poppins
+      font-poppins
       sm:text-[32px] sm:leading-[40px]
       md:text-[40px] md:font-semibold md:leading-[60px]
       lg:text-[32px] lg:leading-[48px]
     `,
     text: `
-      sm:text-xl sm:font-medium sm:leading-[30px]
+      sm:text-[20px] sm:font-medium sm:leading-[30px]
     `
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <Section
+  <UISection
     class="
       pt-[40px]
       md:pt-[60px]
@@ -9,8 +9,8 @@
       lg:space-y-[0]
     "
   >
-    <LandingDocumentation />
+    <PagesWalletDocumentation />
 
-    <LandingCommunity />
-  </Section>
+    <PagesWalletCommunity />
+  </UISection>
 </template>
