@@ -1,0 +1,165 @@
+<template>
+  <Section
+    id="privacy"
+    class="
+      pt-[40px]
+      md:pt-[30px]
+      lg:pt-[115px]
+      xl:pt-[33.52px]
+      2xl:pt-[38px]
+      relative
+      overflow-hidden
+      lg:flex lg:flex-row-reverse lg:justify-between
+    "
+  >
+    <figure
+      class="
+        md:mb-[39px]
+        lg:mb-[18px] lg:mr-[-80px]
+        xl:mr-0
+        pointer-events-none
+        select-none
+      "
+    >
+      <nuxt-img
+        quality="100"
+        loading="lazy"
+        src="/privacy.webp"
+        alt="Illustrative image"
+        sizes="xs:328px sm:510px md:622px lg:435px 2xl:602px"
+        class="
+          h-[244px]
+          sm:h-auto
+          mx-auto
+          lg:translate-y-[55px]
+          xl:translate-y-[20px]
+          lg:translate-x-[-80px]
+          xl:translate-x-[-30px]
+          2xl:translate-x-[-30px]
+          max-w-[328px]
+          sm:max-w-[510px]
+          md:max-w-[622px]
+          lg:max-w-[435px]
+          xl:max-w-[520px]
+          2xl:max-w-[602px]
+          pointer-events-none
+          select-none
+        "
+      />
+    </figure>
+
+    <div class="flex-1">
+      <div
+        class="
+          md:space-x-6 md:mb-[25px]
+          lg:mb-7
+          xl:mb-[25px]
+          flex flex-col
+          md:flex-row md:items-center
+        "
+      >
+        <h3
+          class="
+            w-max
+            uppercase
+            pb-[12px]
+            md:pb-0
+            sm:leading-[33px]
+            lg:leading-[33px]
+            text-sm
+            sm:text-[22px]
+            lg:text-[22px]
+            font-medium
+            sm:font-[900]
+            lg:font-[700]
+            text-transparent
+            bg-opact-gradient bg-clip-text
+          "
+        >
+          Privacy
+        </h3>
+
+        <div
+          class="
+            flex
+            mb-4
+            md:mb-0
+            space-x-[13px]
+            md:space-x-[8px]
+          "
+        >
+          <Badge> P2P Private transactions </Badge>
+
+          <Badge> DeFi Private transactions </Badge>
+        </div>
+      </div>
+
+      <h2
+        class="
+          font-title
+          text-white
+          font-semibold
+          xl:min-w-[569px]
+          2xl:min-w-[600px]
+          sm:tracking-normal
+          tracking-[-0.05rem]
+          max-w-[330px]
+          sm:max-w-full
+          lg:max-w-[441px] lg:leading-[57.6px]
+          xl:leading-[60px]
+          2xl:leading-[64.8px]
+          mb-3
+          sm:mb-[20px]
+          lg:mb-[22px]
+          xl:mb-[23px]
+          2xl:mb-[23px]
+          text-2xl-poppins text-3xl
+          sm:text-4xl-poppins-md
+          lg:text-[48px]
+          xl:text-[50px]
+          2xl:text-[54px]
+        "
+      >
+        Protect your
+        <br class="hidden lg:inline xl:hidden" />
+        privacy on-chain with Opact
+        <span class="hidden md:inline">Wallet</span>
+      </h2>
+
+      <p
+        class="
+          text-[#BDBDBD]
+          sm:font-medium
+          lg:tracking-[0.005rem] lg:max-w-[441px]
+          xl:max-w-auto xl:min-w-[570px]
+          2xl:min-w-[570px]
+          sm:leading-[30px]
+          lg:leading-[30px]
+          xl:leading-[30px]
+          text-lg-xs
+          sm:text-xl
+          lg:text-xl
+          xl:text-xl
+          mb-8
+          sm:mb-[42px]
+          lg:mb-12
+          xl:mb-[47px]
+          2xl:mb-[50px]
+        "
+      >
+        Blockchains are transparent and everything you do
+        on-chain is available for anyone to see. Privacy
+        tools are mandatory for the blockchain to achieve
+        mainstream adoption as a financial system.
+      </p>
+
+      <UIButton
+        disabled
+        :with-icon="true"
+        text="Learn more"
+        variant="secondary"
+        class="lg:h-8 xl:h-[39px]"
+      />
+    </div>
+  </Section>
+</template>
