@@ -3,7 +3,7 @@ const config = useAppConfig()
 </script>
 
 <template>
-  <Container id="community" class="flex-1">
+  <UIContainer id="community" class="flex-1">
     <template #tag>
       <span class="block mb-2.5 sm:mb-[18px] lg:mb-[18px]">
         Community
@@ -43,7 +43,7 @@ const config = useAppConfig()
 
     <template #cta>
       <div class="flex gap-6 lg:flex-wrap xl:flex-nowrap">
-        <IconButton
+        <UIIconButton
           v-for="(
             { icon, title, to }, i
           ) in config.networks"
@@ -70,5 +70,5 @@ const config = useAppConfig()
         />
       </div>
     </template>
-  </Container>
+  </UIContainer>
 </template>

@@ -1,9 +1,9 @@
 <template>
-  <Section
+  <UISection
     id="security"
     class="pt-[40px] md:pt-[60px] lg:pt-20"
   >
-    <Container cta="Learn more" size="xl" disabled>
+    <UIContainer cta="Learn more" size="xl" disabled>
       <template #before>
         <div
           class="
@@ -112,6 +112,6 @@
           privacy.
         </span>
       </template>
-    </Container>
-  </Section>
+    </UIContainer>
+  </UISection>
 </template>

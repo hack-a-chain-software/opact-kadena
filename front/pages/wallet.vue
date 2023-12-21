@@ -9,13 +9,13 @@ useHead({
 </script>
 
 <template>
-  <PagesLandingHero />
+  <div>
+    <PagesWalletHero />
 
-  <PagesLandingPrivacy />
+    <PagesWalletPrivacy />
 
-  <PagesLandingSecurity />
+    <PagesWalletSecurity />
 
-  <PagesLandingCommuniDocs />
-
-  <!-- <PagesLandingContact /> -->
+    <PagesWalletCommuniDocs />
+  </div>
 </template>

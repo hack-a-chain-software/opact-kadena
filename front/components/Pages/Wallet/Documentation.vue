@@ -1,5 +1,5 @@
 <template>
-  <Container
+  <UIContainer
     to="https://docs.tickets.opact.io/"
     id="documentation"
     cta="Opact Documentation"
@@ -37,5 +37,5 @@
         Explore the inner workings of Opact.
       </span>
     </template>
-  </Container>
+  </UIContainer>
 </template>

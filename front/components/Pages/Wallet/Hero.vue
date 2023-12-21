@@ -16,7 +16,7 @@ const config = useAppConfig()
       2xl:h-[880px]
     "
   >
-    <Section
+    <UISection
       class="
         flex flex-col
         lg:relative lg:overflow-visible
@@ -58,10 +58,12 @@ const config = useAppConfig()
           mx-auto
           lg:mx-0
           xl:mx-0
+          font-poppins
           opacity-0
           text-white text-center
           lg:text-left
           font-title
+          font-[700]
           xl:font-[700]
           lg:font-semibold
           pb-[8px]
@@ -74,7 +76,7 @@ const config = useAppConfig()
           md:tracking-[0.05rem]
           lg:tracking-[0.09rem]
           xl:tracking-[0.06rem]
-          text-3xl-poppins-xs
+          text-[32px]
           sm:text-[48px]
           md:font-[700]
           lg:text-[50px]
@@ -94,9 +96,9 @@ const config = useAppConfig()
           z-[2]
           mx-auto
           lg:mx-0
-          sm:text-xl
+          sm:text-[20px]
           opacity-0
-          lg:text-xl
+          lg:text-[20px]
           sm:leading-[30px]
           lg:leading-[30px]
           text-sm-hero text-white text-center
@@ -251,9 +253,9 @@ const config = useAppConfig()
           />
         </figure>
       </div>
-    </Section>
+    </UISection>
 
-    <Section class="z-[1] space-y-4 relative">
+    <UISection class="z-[1] space-y-4 relative">
       <div
         v-motion
         :initial="{
@@ -303,7 +305,7 @@ const config = useAppConfig()
             xl:space-x-4
           "
         >
-          <LandingBlockchain
+          <PagesWalletBlockchain
             v-for="{ icon, name } in config.chains"
             :key="`landing-blockchain-label-${name}`"
             :icon="icon"
@@ -311,6 +313,6 @@ const config = useAppConfig()
           />
         </div>
       </div>
-    </Section>
+    </UISection>
   </div>
 </template>

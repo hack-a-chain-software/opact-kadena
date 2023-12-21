@@ -64,7 +64,7 @@ const variants: Variants = {
     parent:
       'bg-card-gradient p-[2px] inline-flex items-center justify-center h-[44px] md:h-[50px]',
     children: `bg-inverted-card-gradient w-full h-full flex items-center justify-center
-        sm:text-lg
+        sm:text-[18px]
         sm:font-medium
         sm:leading-[27px]
       `
@@ -80,7 +80,7 @@ const variants: Variants = {
     children: `bg-dark-blue w-full h-full flex items-center justify-center
         lg:px-[22px]
 
-        sm:text-lg
+        sm:text-[18px]
         sm:font-medium
         sm:leading-[27px]
       `
@@ -190,7 +190,7 @@ const tag = computed(() =>
         px-[22px]
         rounded-[100px]
         sm:px-[24px]
-        sm:text-lg
+        sm:text-[18px]
         sm:font-medium
         sm:leading-[27px]
         xl:w-max
