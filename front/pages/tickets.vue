@@ -19,7 +19,5 @@ useHead({
     <PagesTicketsFeatures />
 
     <PagesTicketsCommuniDocs />
-
-    <!-- <PagesTicketsContact /> -->
   </div>
 </template>

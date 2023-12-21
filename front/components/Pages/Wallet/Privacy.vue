@@ -1,5 +1,5 @@
 <template>
-  <Section
+  <UISection
     id="privacy"
     class="
       pt-[40px]
@@ -88,9 +88,9 @@
             md:space-x-[8px]
           "
         >
-          <Badge> P2P Private transactions </Badge>
+          <UIBadge> P2P Private transactions </UIBadge>
 
-          <Badge> DeFi Private transactions </Badge>
+          <UIBadge> DeFi Private transactions </UIBadge>
         </div>
       </div>
 
@@ -136,10 +136,10 @@
           sm:leading-[30px]
           lg:leading-[30px]
           xl:leading-[30px]
-          text-lg-xs
-          sm:text-xl
-          lg:text-xl
-          xl:text-xl
+          text-[18px]
+          sm:text-[20px]
+          lg:text-[20px]
+          xl:text-[20px]
           mb-8
           sm:mb-[42px]
           lg:mb-12
@@ -161,5 +161,5 @@
         class="lg:h-8 xl:h-[39px]"
       />
     </div>
-  </Section>
+  </UISection>
 </template>
