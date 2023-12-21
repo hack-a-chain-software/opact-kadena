@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import BlogMenu from './widgets/BlogMenu.vue'
-import Subroutes from './widgets/Subroutes.vue'
+import BlogMenu from './Widgets/BlogMenu.vue'
+import Subroutes from './Widgets/Subroutes.vue'
 import { Subroute, WidgetRoute } from '~/config'
 const config = useAppConfig()
 const current = useCurrentMenu()
