@@ -31,7 +31,7 @@ class="
     </div>
 
     <UIButtonInline
-      @click.prevent="router.push('/home')"
+      @click.prevent="router.push('/')"
       label="Create or go to your Opact Wallet"
     />
   </UICardBody>

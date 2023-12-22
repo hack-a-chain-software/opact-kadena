@@ -24,7 +24,7 @@ const splited = computed(() => {
 const recovery = async () => {
   await wallet.connect(data.phrase)
 
-  router.push((route.query as any).next || '/home')
+  router.push((route.query as any).next || '/')
 }
 
 const toPaste = async () => {

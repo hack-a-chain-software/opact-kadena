@@ -1,23 +1,48 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'site'
+  layout: 'app',
+  middleware: 'auth'
 })
 
 useHead({
-  title: 'Opact'
+  title: 'Home'
 })
 </script>
 
 <template>
   <div>
-    <PagesHomeHero />
+    <LayoutMobileTopbar />
 
-    <PagesHomeTickets />
+    <div
+      class="
+        lg:w-full
+        h-full
+        pt-6
+        lg:pt-0
+        lg:gap-6
+        lg:grid
+        lg:grid-cols-[minmax(auto,_698px)_400px]
+        lg:grid-rows-[141px_1fr]
+        lg:justify-center
+      "
+    >
+      <HomeWidgetTokens />
 
-    <PagesHomeWalletOpact />
+      <HomeWidgetActions />
 
-    <PagesHomeZK />
-
-    <!-- <PagesHomeContact /> -->
+      <HomeWidgetHistory />
+    </div>
   </div>
 </template>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

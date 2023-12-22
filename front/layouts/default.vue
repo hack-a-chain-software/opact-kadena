@@ -31,7 +31,7 @@ const router = useRouter()
         lg:flex
       "
     >
-      <button @click.prevent="router.push('/home')">
+      <button @click.prevent="router.push('/')">
         <Icon
           name="logo"
           class="text-white w-[163px] h-[32px]"

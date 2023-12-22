@@ -29,7 +29,7 @@ const pay = async () => {
     await provider.value.sendTokenFaucetTransaction(data.token)
 
     isLoading.value = true
-    router.push('/home')
+    router.push('/')
   } catch (e) {
     console.warn(e)
   } finally {

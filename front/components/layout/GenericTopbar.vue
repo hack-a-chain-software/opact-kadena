@@ -52,7 +52,7 @@ withDefaults(
 
     <UIButtonIcon
       icon="chevronLeft"
-      @click.prevent="router.push('/home')"
+      @click.prevent="router.push('/')"
       class="absolute left-0 top-1/2 -translate-y-1/2"
     />
 

@@ -343,7 +343,7 @@ export const useReceiveStore = defineStore({
 
       app.initApp(wallet)
 
-      router.push('/home')
+      router.push('/')
 
       this.reset()
     }
