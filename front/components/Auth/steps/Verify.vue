@@ -40,7 +40,7 @@ const create = async () => {
 
   await wallet.connect(props.mnemonic)
 
-  router.push((route.query as any).next || '/home')
+  router.push((route.query as any).next || '/')
 }
 
 const isDisabled = computed(() => {

@@ -117,7 +117,7 @@ const pay = async () => {
     await provider.value.sendNFTFaucetTransaciton(id, manifest)
 
     isLoading.value = true
-    router.push('/home')
+    router.push('/')
   } catch (e) {
     console.warn(e)
   } finally {

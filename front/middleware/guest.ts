@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware(() => {
     (wallet.cache && wallet.cache.phrase)
   ) {
     return router.push({
-      path: '/home'
+      path: '/'
     })
   }
 })

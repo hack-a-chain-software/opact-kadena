@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware((to) => {
       appConfig.public.nftDisabled
     ) {
       return router.push({
-        path: '/home'
+        path: '/'
       })
     }
 
@@ -21,7 +21,7 @@ export default defineNuxtRouteMiddleware((to) => {
       appConfig.public.faucetDisabled
     ) {
       return router.push({
-        path: '/home'
+        path: '/'
       })
     }
 

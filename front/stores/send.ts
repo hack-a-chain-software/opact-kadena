@@ -269,7 +269,7 @@ export const useSendStore = defineStore({
 
       app.initApp(wallet)
 
-      router.push('/home')
+      router.push('/')
     }
   }
 })
