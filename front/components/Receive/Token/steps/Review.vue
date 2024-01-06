@@ -36,7 +36,7 @@ const { provider } = useExtensions()
       :provider="provider"
     />
 
-    <SelectedToken :token="selectedToken" />
+    <UISelectedToken :token="selectedToken" />
 
     <TxWrapper
       :amount="amount"

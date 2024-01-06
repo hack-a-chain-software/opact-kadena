@@ -131,15 +131,6 @@ export const useReceiveStore = defineStore({
         12
       )
 
-      const batch = await getDepositSoluctionBatch({
-        senderWallet: wallet,
-        receiverPubkey: babyjubPubkey,
-        totalRequired: Number(this.amount),
-        selectedToken: this.selectedToken
-      })
-
-      const { delta, utxosIn, utxosOut } = batch
-
       const { provider } = useExtensions()
 
       const senderAddress = provider.value.account.address
@@ -153,9 +144,18 @@ export const useReceiveStore = defineStore({
           receiverAddress: this.addressTo
         })
 
+      const batch = await getDepositSoluctionBatch({
+        receipts,
+        senderWallet: wallet,
+        receiverPubkey: babyjubPubkey,
+        totalRequired: Number(this.amount),
+        selectedToken: this.selectedToken
+      })
+
+      const { delta, utxosIn, utxosOut } = batch
+
       const encryptedUtxos = getEncryptedUtxosOfTransaction({
         batch,
-        receipts,
         senderAddress: wallet.address,
         receiverAddress: this.addressTo
       })

@@ -14,7 +14,7 @@ const data = reactive({
       @click.prevent="data.show = true"
     />
 
-    <ModalTokenType
+    <UIModalTokenType
       title="Receive"
       :show="data.show"
       @close="data.show = false"

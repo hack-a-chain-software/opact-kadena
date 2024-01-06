@@ -28,15 +28,11 @@ Here's a brief overview of the structure:
 
 ```bash
 .
-├── apps              # Nuxt Layer
-│   └── app           # App Page
-│   └── landing       # Landing Page
 ├── components        # Global Components
-├── content           # Nuxt Content
+├── pages           # Nuxt Content
 ├── layouts           # Layouts
 ├── plugins           # Plugins
 ├── stores            # Stores
-├── ui                # UI Component Library
 ├── app.config.ts     # Application Config
 ```
 

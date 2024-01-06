@@ -26,7 +26,7 @@ const emit = defineEmits(['changeStep'])
       </span>
     </div>
 
-    <SelectWallet
+    <UISelectWallet
       @connected="emit('changeStep', 'payment')"
     />
   </UICardBody>

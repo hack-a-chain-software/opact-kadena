@@ -33,7 +33,7 @@ const done = () => {
     />
   </div>
 
-  <ModalGenerateLink
+  <UIModalGenerateLink
     :link="link"
     :show="data.show"
     @done="done()"

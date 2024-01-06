@@ -46,7 +46,7 @@ const { provider } = useExtensions()
       :provider="provider"
     />
 
-    <SelectToken
+    <UISelectToken
       :token="selectedToken"
       @selected="selectedToken = $event"
     />
@@ -72,7 +72,7 @@ const { provider } = useExtensions()
       :label="error + '*'"
     />
 
-    <SelectWallet v-if="showConnectWalletButton && !provider" />
+    <UISelectWallet v-if="showConnectWalletButton && !provider" />
 
     <UIButtonInline
       v-else
