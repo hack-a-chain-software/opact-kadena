@@ -70,7 +70,7 @@ watch(
       v-model="amount"
     />
 
-    <SelectToken
+    <UISelectToken
       :token="selectedToken"
       @selected="selectedToken = $event"
     />

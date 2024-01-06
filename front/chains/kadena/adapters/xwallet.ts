@@ -13,7 +13,7 @@ import { defineStore } from 'pinia'
 const metadata = {
   name: 'Ecko Wallet',
   id: 'provider:kadena:x-wallet',
-  icon: '/ecko.png',
+  icon: '/images/wallets/ecko.png',
   disabled: false
 }
 
@@ -23,7 +23,7 @@ export const provider = defineStore({
   state: (): any => ({
     account: null,
     callback: undefined,
-    icon: '/ecko.png'
+    icon: '/images/wallets/ecko.png'
   }),
 
   getters: {

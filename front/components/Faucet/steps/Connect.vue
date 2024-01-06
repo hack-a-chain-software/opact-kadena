@@ -112,7 +112,7 @@ const config = useRuntimeConfig()
       </button>
     </div>
 
-    <SelectWallet
+    <UISelectWallet
       label="Connect Wallet"
       @connected="handle(token)"
     />

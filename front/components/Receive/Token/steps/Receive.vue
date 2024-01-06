@@ -107,7 +107,7 @@ const connected = async () => {
         desc="You do not have sufficient funds to make this deposit"
       />
 
-      <SelectToken
+      <UISelectToken
         :token="selectedToken"
         @selected="selectedToken = $event"
       />
@@ -145,7 +145,7 @@ const connected = async () => {
           </span>
         </div>
 
-        <SelectWallet
+        <UISelectWallet
           label="Connect wallet to deposit"
           :is-disabled="isDisabled || haveFunds"
           @connected="connected"

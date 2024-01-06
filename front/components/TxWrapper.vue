@@ -80,7 +80,7 @@ watch(
         </div>
       </button>
 
-      <CollapsibleCollapseTransition>
+      <UICollapsibleCollapseTransition>
         <div v-show="data.show && !disabled">
           <div
             class="
@@ -229,7 +229,7 @@ watch(
             </div>
           </div>
         </div>
-      </CollapsibleCollapseTransition>
+      </UICollapsibleCollapseTransition>
     </div>
   </div>
 </template>

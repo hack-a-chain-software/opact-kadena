@@ -50,7 +50,7 @@ const pay = async () => {
       :modelValue="100"
     />
 
-    <SelectToken
+    <UISelectToken
       :token="data.token"
       @selected="data.token = $event"
     />

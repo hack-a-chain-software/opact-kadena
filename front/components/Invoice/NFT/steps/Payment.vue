@@ -33,7 +33,7 @@ const { provider } = useExtensions()
       title="Confirm deposit information"
     />
 
-    <SelectNFT
+    <UISelectNFT
       :disabled="!provider"
       :token="selectedToken"
       @selected="selectedToken = $event"

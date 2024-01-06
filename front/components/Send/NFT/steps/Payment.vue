@@ -30,7 +30,7 @@ const { provider } = useExtensions()
 
 <template>
   <UICardBody>
-    <SelectOwnNFT
+    <UISelectOwnNFT
       :token="selectedToken"
       @selected="selectedToken = $event"
     />
@@ -60,7 +60,7 @@ const { provider } = useExtensions()
       :label="error + '*'"
     />
 
-    <SelectWallet v-if="showConnectWalletButton && !provider" />
+    <UISelectWallet v-if="showConnectWalletButton && !provider" />
 
     <UIButtonInline
       v-else

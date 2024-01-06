@@ -89,7 +89,7 @@ const emit = defineEmits([
           </span>
         </div>
 
-        <SelectWallet
+        <UISelectWallet
           label="Connect wallet to deposit"
           @connected="emit('changeStep', 'payment')"
         />

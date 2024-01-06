@@ -9,10 +9,8 @@ if (process.env.NODE_ENV !== 'development') {
 export default defineNuxtConfig({
   ssr,
   modules: [
-    'nuxt-icon',
     '@pinia/nuxt',
     '@cssninja/nuxt-toaster',
-    '@nuxt/image',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@nuxtjs/tailwindcss',
@@ -30,9 +28,6 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {}
     }
-  },
-  image: {
-    provider: 'ipx'
   },
   vite: {
     optimizeDeps: {
@@ -106,8 +101,8 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/auth': { prerender: false },
     '/': { prerender: false },
+    '/auth': { prerender: false },
     '/faucet': { prerender: false },
     '/history': { prerender: false },
     '/invoice': { prerender: false },

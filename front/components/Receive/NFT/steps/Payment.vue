@@ -31,7 +31,7 @@ const { provider } = useExtensions()
       :provider="provider"
     />
 
-    <SelectNFT
+    <UISelectNFT
       :disabled="!provider"
       :token="selectedToken"
       @selected="selectedToken = $event"
