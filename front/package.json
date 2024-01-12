@@ -90,6 +90,7 @@
     "eslint": "^8.38.0",
     "nuxi": "^3.5.1",
     "nuxt": "^3.7.1",
+    "nuxt-icon": "^0.4.1",
     "swiper": "^9.3.2",
     "tailwind-scrollbar": "^3.0.4",
     "tailwindcss": "^3.3.2",
