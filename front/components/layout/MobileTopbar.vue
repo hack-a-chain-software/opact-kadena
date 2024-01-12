@@ -40,7 +40,7 @@
     </div>
 
     <div class="relative z-[1]">
-      <img src="/logo.png"/>
+      <img src="/images/logo.png"/>
     </div>
 
     <div class="relative z-[1]">

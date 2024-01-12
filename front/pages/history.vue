@@ -159,7 +159,7 @@ const receipts = computed(() => {
       <div>
         <img
           class="min-w-[284px]"
-          src="/empty-receipts.png"
+          src="/images/empty/receipts.png"
         />
       </div>
 

@@ -40,7 +40,7 @@ const data = reactive({
         lg:block
       "
     >
-      <img src="/bg-app.png" class="w-full h-[520px]" />
+      <img src="/images/nav-bg.png" class="w-full h-[520px]" />
     </div>
 
     <div

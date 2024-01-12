@@ -7,7 +7,7 @@ const router = useRouter()
     <div
       class="mx-auto"
     >
-      <img src="/success.png" class="w-[100px]" />
+      <img src="/images/feedback/success.png" class="w-[100px]" />
     </div>
 
     <div class="mx-auto flex flex-col gap-3">

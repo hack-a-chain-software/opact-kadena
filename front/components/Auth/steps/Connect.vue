@@ -35,7 +35,7 @@ const emits = defineEmits(['changeStep'])
     <div class="lg:hidden">
       <figure class="flex justify-center items-center">
         <img
-          src="/auth-bg.png"
+          src="/images/auth/hero.webp"
           alt="Hero illustration"
           quality="100"
           class="min-w-[608px] max-w-[608px]"
@@ -66,7 +66,7 @@ const emits = defineEmits(['changeStep'])
         "
       >
         <img
-          src="/auth-bg.png"
+          src="/images/auth/hero.webp"
           alt="Hero illustration"
           quality="100"
           class="

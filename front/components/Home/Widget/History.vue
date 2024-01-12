@@ -77,7 +77,7 @@ const router = useRouter()
           <div>
             <img
               class="w-[120px]"
-              src="/empty-receipts.png"
+              src="/images/empty/receipts.png"
             />
           </div>
 

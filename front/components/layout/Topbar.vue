@@ -62,7 +62,7 @@ const titles = {
   >
     <img
       lazy
-      src="/bg-app.png"
+      src="/images/nav-bg.png"
       class="w-full w-full max-h-[319px]"
     />
   </div>

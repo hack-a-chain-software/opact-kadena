@@ -186,7 +186,7 @@ const balance = computed(() => {
         >
           <div>
             <img
-              src="/empty-tokens.png"
+              src="/images/empty/tokens.png"
               class="w-[218px]"
             />
           </div>
@@ -230,7 +230,7 @@ const balance = computed(() => {
         >
           <div>
             <img
-              src="/empty-tokens.png"
+              src="/images/empty/tokens.png"
               class="w-[218px]"
             />
           </div>
