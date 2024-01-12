@@ -169,7 +169,7 @@ watch(
       "
     >
       <div>
-        <img src="/empty-tokens.png" class="w-[218px]" />
+        <img src="/images/empty/tokens.png" class="w-[218px]" />
       </div>
 
       <span class="text-font-2 text-[18px] font-[600]">

@@ -50,7 +50,7 @@ const router = useRouter()
         select-none
       "
     >
-      <img src="/bg-app.png" class="w-full w-full" />
+      <img src="/images/nav-bg.png" class="w-full w-full" />
     </div>
 
     <div
