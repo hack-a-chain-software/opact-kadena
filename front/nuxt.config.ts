@@ -9,13 +9,14 @@ if (process.env.NODE_ENV !== 'development') {
 export default defineNuxtConfig({
   ssr,
   modules: [
+    'nuxt-icon',
     '@pinia/nuxt',
-    '@cssninja/nuxt-toaster',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@nuxtjs/tailwindcss',
     '@vueuse/motion/nuxt',
-    '@nuxtjs/google-fonts'
+    '@nuxtjs/google-fonts',
+    '@cssninja/nuxt-toaster'
   ],
   build: {
     transpile: ['@vuepic/vue-datepicker']
