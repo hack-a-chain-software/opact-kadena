@@ -11,7 +11,7 @@ const data = reactive({
 const routes = [
   {
     disabled: false,
-    path: 'home',
+    path: '',
     label: 'Home',
     icon: 'wallet'
   },
