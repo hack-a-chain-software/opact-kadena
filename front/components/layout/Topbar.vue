@@ -44,6 +44,15 @@ const titles = {
     <div
       class="flex items-center justify-center gap-4"
     >
+      <a
+        role="button"
+        target="_blank"
+        href="https://app.pipefy.com/public/form/ZG6fEnZq"
+        class="text-xxs text-white hover:text-blue-400"
+      >
+        Found a bug? Report it here!
+      </a>
+
       <HomeAccount/>
     </div>
   </div>
