@@ -22,7 +22,7 @@ import {
 const metadata = {
   id: 'provider:kadena:wallet-connect',
   name: 'Wallet Connect',
-  icon: '/svg/wallet-connect.svg',
+  icon: '/images/wallets/wallet-connect.png',
   disabled: false
 }
 
@@ -30,7 +30,7 @@ export const provider = defineStore({
   id: 'provider:kadena:wallet-connect',
 
   state: (): any => ({
-    icon: '/svg/wallet-connect.svg',
+    icon: '/images/wallets/wallet-connect.png',
 
     pairings: [],
 

@@ -35,7 +35,7 @@ withDefaults(
       "
     >
       <div class="space-x-4 flex items-center">
-        <img :src="token.icon.replace('https://opact.io/', '/')" class="w-6 h-6 lg:w-10 lg:h-10" />
+        <img :src="token.icon" class="w-6 h-6 lg:w-10 lg:h-10" />
 
         <span
           v-text="token.name"

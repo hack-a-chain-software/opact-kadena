@@ -57,7 +57,7 @@ const emit = defineEmits(['selected'])
         </div>
 
         <div v-else class="space-x-4 lg:space-x-2 flex items-center">
-          <img :src="token.icon.replace('https://opact.io/', '/')" class="w-6 h-6 lg:w-10 lg:h-10" />
+          <img :src="token.icon" class="w-6 h-6 lg:w-10 lg:h-10" />
 
           <span
             v-text="token.name"
