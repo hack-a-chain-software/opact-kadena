@@ -48,9 +48,14 @@ const titles = {
         role="button"
         target="_blank"
         href="https://app.pipefy.com/public/form/ZG6fEnZq"
-        class="text-xxs text-white hover:text-blue-400"
+        class="text-xxs text-font-1 hover:text-blue-400 flex items-center justify-center gap-1"
       >
         Found a bug? Report it here!
+
+        <Icon
+          name="arrow"
+          class="w-4 h-4"
+        />
       </a>
 
       <HomeAccount/>

@@ -64,7 +64,33 @@ const redirectToKadena = () => {
           </span>
         </div>
 
-        <div>
+        <div
+          class="flex flex-col space-y-4"
+        >
+          <a
+            role="button"
+            target="_blank"
+            href="https://docs.wallet.opact.io/tutorial"
+            class="
+              w-full
+              rounded-lg
+              flex justify-between items-center
+              bg-transparent
+              text-font-2
+              border border-gray-600
+              hover:opacity-[0.8]
+              px-4
+              py-3
+            "
+          >
+            Documentation
+
+            <Icon
+              name="chevron"
+              class="w-5 h-5 text-font-2 -rotate-90"
+            />
+          </a>
+
           <button
             class="
               w-full
