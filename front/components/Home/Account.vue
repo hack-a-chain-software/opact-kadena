@@ -83,7 +83,7 @@ const redirectToKadena = () => {
               py-3
             "
           >
-            Documentation
+            Tutorial/Docs
 
             <Icon
               name="chevron"
