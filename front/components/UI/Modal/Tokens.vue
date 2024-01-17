@@ -91,7 +91,7 @@ const filtered = computed(() => {
           "
         >
           <div>
-            <img :src="token.icon.replace('https://opact.io/', '/')" class="w-9 h-9" />
+            <img :src="token.icon" class="w-9 h-9" />
           </div>
 
           <div class="flex flex-col space-y-1 text-left">
