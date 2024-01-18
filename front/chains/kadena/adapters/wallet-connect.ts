@@ -3,15 +3,12 @@ import { getSdkError } from '@walletconnect/utils'
 import { SessionTypes } from '@walletconnect/types'
 import {
   getConfig,
-  getTokenDetails,
   getPartialOpactCommand,
-  getFaucetCode,
   sendSigned,
   getCapsForWithdraw,
   getCapsForDeposit
 } from 'opact-sdk'
 import {
-  Pact,
   createWalletConnectQuicksign
 } from '@kadena/client'
 import {
@@ -222,156 +219,7 @@ export const provider = defineStore({
       }
     },
 
-    async sendTokenFaucetTransaction (selectedToken: any) {
-      if (!this.client) {
-        throw new Error('No client')
-      }
-
-      if (!this.session) {
-        throw new Error('No session')
-      }
-
-      if (!this.account) {
-        throw new Error('No selected account to send from')
-      }
-
-      const { networkId, chainId } = getConfig() as any
-
-      const signWithWalletConnect =
-        createWalletConnectQuicksign(
-          this.client as any,
-          this.session,
-          this.account.walletConnectChainId
-        )
-
-      const token = selectedToken
-
-      let withFund = false
-
-      try {
-        const {
-          result: { status }
-        } = await getTokenDetails(
-          this.account.address,
-          token
-        )
-
-        if (status === 'failure') {
-          withFund = true
-        }
-      } catch (e) {
-        //
-      }
-
-      const pactCode = getFaucetCode(
-        this.account.address,
-        selectedToken,
-        withFund
-      )
-
-      const pactCommand = Pact.builder
-        .execution(pactCode)
-        .setMeta({
-          chainId,
-          senderAccount: this.account.address
-        })
-        .addKeyset(
-          this.account.address,
-          'keys-all',
-          this.account.pubkey
-        )
-        .addSigner(this.account.pubkey)
-        .setNetworkId(networkId)
-
-      const transaction = pactCommand.createTransaction()
-
-      const signedCmd = await signWithWalletConnect(
-        transaction
-      )
-
-      return await sendSigned({ signedCmd })
-    },
-
-    async sendNFTFaucetTransaciton (id: any, manifest: any) {
-      if (!this.client) {
-        throw new Error('No client')
-      }
-
-      if (!this.session) {
-        throw new Error('No session')
-      }
-
-      if (!this.account) {
-        throw new Error('No selected account to send from')
-      }
-
-      const { networkId, chainId } = getConfig() as any
-
-      const signWithWalletConnect =
-        createWalletConnectQuicksign(
-          this.client as any,
-          this.session,
-          this.account.walletConnectChainId
-        )
-
-      const pactCode = `(free.poly-fungible-v2-reference.create-token "${id}" 0 (read-msg 'manifest) free.token-policy-v1-reference)`
-
-      const pactCommand = Pact.builder
-        .execution(pactCode)
-        .setMeta({
-          chainId,
-          senderAccount: this.account.address
-        })
-        .addData('manifest', manifest)
-        .addData('guard', {
-          keys: [this.account.pubkey]
-        })
-        .setNetworkId(networkId)
-
-      const transaction = pactCommand.createTransaction()
-
-      const signedCmd = await signWithWalletConnect(
-        transaction
-      )
-
-      await sendSigned({ signedCmd })
-
-      const mintTokenCode = `(free.poly-fungible-v2-reference.mint "${id}" "${this.account.address}" (read-keyset 'guard) 1.0)`
-
-      const mintPactCommand = Pact.builder
-        .execution(mintTokenCode)
-        .setMeta({
-          chainId,
-          senderAccount: this.account.address
-        })
-        .addSigner(
-          this.account.pubkey,
-          (withCapability: any) => [
-            withCapability(
-              'free.poly-fungible-v2-reference.MINT',
-              id + '',
-              this.account.address,
-              1.0
-            )
-          ]
-        )
-        .addData('manifest', manifest)
-        .addData('guard', {
-          keys: [this.account.pubkey]
-        })
-        .setNetworkId(networkId)
-
-      const mintTransaction =
-        mintPactCommand.createTransaction()
-
-      const mintSignedCmd = await signWithWalletConnect(
-        mintTransaction
-      )
-
-      return await sendSigned({ signedCmd: mintSignedCmd })
-    },
-
-    async sendOpactTransaction (
+    async send (
       { proof, extData, tokenSpec }: any,
       callbackProgress: any,
       isWithdrawTransfer = false,
@@ -436,7 +284,7 @@ export const provider = defineStore({
 
       console.log('signedCmd', signedCmd)
 
-      callbackProgress('Awaiting TX results...')
+      callbackProgress('Awaiting the transaction outcome.')
 
       const res = await sendSigned({ signedCmd })
 

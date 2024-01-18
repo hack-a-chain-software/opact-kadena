@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import Pact from 'pact-lang-api'
 import { reactive, watch } from 'vue'
 import { shortenAddress } from 'opact-sdk'
-
-const RPC =
-  process.env.NODE_ENV !== 'development'
-    ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
-    : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 const props = withDefaults(
   defineProps<{
@@ -36,38 +30,6 @@ watch(
       state.show = false
     }
   }
-)
-
-watch(
-  () => props.token,
-  async (newProps) => {
-    if (
-      newProps?.id.toString() === '0' ||
-      !props?.token?.id
-    ) {
-      return
-    }
-
-    const createdAt =
-      Math.round(new Date().getTime() / 1000) - 10
-
-    const {
-      result: {
-        data: { data }
-      }
-    } = await Pact.fetch.local(
-      {
-        pactCode: `(free.poly-fungible-v2-reference.get-manifest "${props?.token?.id}")`,
-        meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
-      },
-      RPC
-    )
-
-    const [{ datum }] = data
-
-    state.datum = datum
-  },
-  { immediate: true }
 )
 </script>
 

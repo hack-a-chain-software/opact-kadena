@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import Pact from 'pact-lang-api'
 import { reactive, watch } from 'vue'
 import { getPoseidonTokenHash } from 'opact-sdk'
 import { storeToRefs } from 'pinia'
@@ -8,11 +7,6 @@ import { useAppStore } from '~/stores/app'
 const app = useAppStore()
 
 const { treeBalances } = storeToRefs(app)
-
-const RPC =
-  process.env.NODE_ENV !== 'development'
-    ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
-    : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
 
 withDefaults(
   defineProps<{
@@ -49,32 +43,8 @@ watch(
       newData.nfts['poly-fungible-v2-reference'].utxos
 
     try {
-      const network = RPC
-
-      const createdAt =
-        Math.round(new Date().getTime() / 1000) - 10
-
       data.tokens = await Promise.all(
-        items.map(async ({ id }: any) => {
-          const {
-            result: {
-              data: { data }
-            }
-          } = await Pact.fetch.local(
-            {
-              pactCode: `(free.poly-fungible-v2-reference.get-manifest "${id}")`,
-              meta: Pact.lang.mkMeta(
-                '',
-                '0',
-                0,
-                0,
-                createdAt,
-                0
-              )
-            },
-            network
-          )
-
+        items.map(({ id }: any) => {
           const { datum } = data[0]
 
           const namespace = {

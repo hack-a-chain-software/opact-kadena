@@ -1,17 +1,11 @@
 <script lang="ts" setup>
-import Pact from 'pact-lang-api'
 import {
   kadenaTokens as tokens,
   shortenAddress,
   formatBigNumberWithDecimals,
   getDecimals
 } from 'opact-sdk'
-import { computed, watch, reactive } from 'vue'
-
-const RPC =
-  process.env.NODE_ENV !== 'development'
-    ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
-    : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
+import { computed, reactive } from 'vue'
 
 const icons = {
   withdraw: 'receiptSend',
@@ -80,39 +74,6 @@ const metadata = computed(() => {
 
   return tokens[1]
 })
-
-watch(
-  () => props.address,
-  async (newProps) => {
-    if (
-      newProps !== 'poly-fungible-v2-reference' ||
-      !newProps ||
-      props.id.toString() === '0'
-    ) {
-      return
-    }
-
-    const createdAt =
-      Math.round(new Date().getTime() / 1000) - 10
-
-    const {
-      result: {
-        data: { data }
-      }
-    } = await Pact.fetch.local(
-      {
-        pactCode: `(free.poly-fungible-v2-reference.get-manifest "${props.id}")`,
-        meta: Pact.lang.mkMeta('', '0', 0, 0, createdAt, 0)
-      },
-      RPC
-    )
-
-    const [{ datum }] = data
-
-    state.datum = datum
-  },
-  { immediate: true }
-)
 </script>
 
 <template>
