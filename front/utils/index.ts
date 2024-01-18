@@ -1,2 +1,2 @@
-export * from './pact';
-export * from './ecko';
+export * from './pact'
+export * from './ecko'
