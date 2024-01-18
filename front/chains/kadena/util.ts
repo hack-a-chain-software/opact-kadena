@@ -6,15 +6,15 @@ export const getWalletConnectClient = async () => {
 
   return await Client.init({
     relayUrl: config.public.WC_RELAYER as string,
-    projectId:  config.public.WC_PROJECT_ID as string
+    projectId: config.public.WC_PROJECT_ID as string
   })
 }
 
 export const getWalletConnectModal = () => {
   const config = useRuntimeConfig()
-  
+
   return new WalletConnectModal({
     themeMode: 'dark',
-    projectId:  config.public.WC_PROJECT_ID as string,
+    projectId: config.public.WC_PROJECT_ID as string
   })
 }

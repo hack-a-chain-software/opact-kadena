@@ -67,14 +67,14 @@ export default defineNuxtConfig({
 
       // String
       SDK_NETWORK: process.env.SDK_NETWORK,
-      
+
       WC_RELAYER: process.env.WC_RELAYER,
       WC_PROJECT_ID: process.env.WC_PROJECT_ID,
 
       // Booleans
       GTM_ENABLED: process.env.IS_PROD === 'true',
       NFT_DISABLED: process.env.NFT_DISABLED === 'true',
-      FAUCET_DISABLED: process.env.FAUCET_DISABLED === 'true',
+      FAUCET_DISABLED: process.env.FAUCET_DISABLED === 'true'
     }
   },
   app: {
