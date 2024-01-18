@@ -5,8 +5,8 @@ import {
   getPartialOpactCommand,
   sendSigned
 } from 'opact-sdk'
-import { pactCommandToSigningRequest, isInstalled, isConnected, isCorrectNetwork } from '~/utils';
 import { defineStore } from 'pinia'
+import { pactCommandToSigningRequest, isInstalled, isConnected, isCorrectNetwork } from '~/utils'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -25,7 +25,7 @@ const metadata = {
   disabled: false,
   name: 'Ecko Wallet',
   id: 'provider:kadena:x-wallet',
-  icon: '/images/wallets/ecko.png',
+  icon: '/images/wallets/ecko.png'
 }
 
 export const provider = defineStore({
@@ -57,10 +57,10 @@ export const provider = defineStore({
         throw new Error('Not Installed')
       }
 
-      if (! await isConnected()) {
+      if (!await isConnected()) {
         throw new Error('Incorrect network')
       }
-      
+
       const { networkId } = getConfig()
 
       await window.kadena?.request({
@@ -76,7 +76,7 @@ export const provider = defineStore({
         throw new Error('Not Installed')
       }
 
-      if (! await isCorrectNetwork()) {
+      if (!await isCorrectNetwork()) {
         throw new Error('Incorrect network')
       }
 
@@ -109,7 +109,7 @@ export const provider = defineStore({
         throw new Error('Not Installed')
       }
 
-      if (! await isConnected()) {
+      if (!await isConnected()) {
         throw new Error('Not Connected')
       }
 
@@ -157,12 +157,12 @@ export const provider = defineStore({
         method: 'kda_requestSign',
         data: {
           networkId: parsedTransaction.networkId,
-          signingCmd: signingRequest,
-        },
-      }) as any;
+          signingCmd: signingRequest
+        }
+      }) as any
 
       if (response?.signedCmd === undefined) {
-        throw new Error('Error signing transaction');
+        throw new Error('Error signing transaction')
       }
 
       callbackProgress('Awaiting the transaction outcome.')

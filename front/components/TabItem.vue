@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const data = reactive({
   enabled: true,
-  correctNetwork: true,
+  correctNetwork: true
 })
 
 const extension = useExtensions()
@@ -29,11 +29,11 @@ const loginCallback = () => {
 
 watch(
   () => [props.isInstalled, props.isCorrectNetwork],
-  async ([ checkIsInstalled, checkNetwork ]) => {
+  async ([checkIsInstalled, checkNetwork]) => {
     if (!checkNetwork || !checkIsInstalled) {
       return
     }
-    
+
     data.enabled = checkIsInstalled()
     data.correctNetwork = await checkNetwork()
   },
