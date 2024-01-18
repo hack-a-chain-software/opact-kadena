@@ -1,4 +1,4 @@
-import eckoWallet from './adapters/xwallet'
+import eckoWallet from './adapters/eckowallet'
 import walletConnect from './adapters/wallet-connect'
 
 export const providers = {
