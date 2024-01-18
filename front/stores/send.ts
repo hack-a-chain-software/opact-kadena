@@ -255,7 +255,7 @@ export const useSendStore = defineStore({
       } else {
         const { provider } = useExtensions()
 
-        await provider.value.sendOpactTransaction(
+        await provider.value.send(
           txArgs,
           (message: string) => (this.progress = message),
           true,

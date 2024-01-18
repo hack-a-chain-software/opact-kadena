@@ -1,66 +1,8 @@
 <script lang="ts" setup>
-import Pact from 'pact-lang-api'
-import { onBeforeMount, reactive } from 'vue'
-
-const RPC =
-  process.env.NODE_ENV !== 'development'
-    ? 'https://kb96ugwxhi.execute-api.us-east-2.amazonaws.com'
-    : 'http://ec2-34-235-122-42.compute-1.amazonaws.com:9001'
-
-const props = withDefaults(
-  defineProps<{
-    id?: string;
-  }>(),
-  {
-    id: ''
-  }
-)
+import { reactive } from 'vue'
 
 const data = reactive({
   token: null
-})
-
-onBeforeMount(() => {
-  if (!props.id) {
-    return
-  }
-
-  (async () => {
-    try {
-      const network = RPC
-
-      const createdAt =
-        Math.round(new Date().getTime() / 1000) - 10
-
-      const {
-        result: {
-          data: { data: res }
-        }
-      } = await Pact.fetch.local(
-        {
-          pactCode: `(free.poly-fungible-v2-reference.get-manifest "${props.id}")`,
-          meta: Pact.lang.mkMeta(
-            '',
-            '0',
-            0,
-            0,
-            createdAt,
-            0
-          )
-        },
-        network
-      )
-
-      const { datum } = res[0]
-
-      data.token = {
-        name: datum.title,
-        uri: datum.assetUrl
-      }
-    } catch (e) {
-      console.warn(e)
-    }
-  })()
 })
 </script>
 
@@ -90,7 +32,7 @@ onBeforeMount(() => {
     >
       <img
         v-if="data.token"
-        :src="data.token.uri"
+        :src="data.token?.uri"
         class="rounded-[8px] mx-auto"
       />
     </div>

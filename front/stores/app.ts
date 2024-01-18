@@ -77,21 +77,11 @@ export const useAppStore = defineStore({
       })
 
       // TODO: REFACT THIS
+      const nfts: any = {}
       const tokens: any = {}
 
       if (treeBalances.coin) {
         tokens.coin = treeBalances.coin
-      }
-
-      if (treeBalances['opact-coin']) {
-        tokens['opact-coin'] = treeBalances['opact-coin']
-      }
-
-      const nfts: any = {}
-
-      if (treeBalances['poly-fungible-v2-reference']) {
-        nfts['poly-fungible-v2-reference'] =
-          treeBalances['poly-fungible-v2-reference']
       }
 
       this.receipts = receipts

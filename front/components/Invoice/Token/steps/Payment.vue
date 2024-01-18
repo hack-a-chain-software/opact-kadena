@@ -39,8 +39,6 @@ const checkFunds = async (token: any) => {
       token
     )
 
-    console.log('details.balance', details.balance)
-
     balance.value = details.balance
   } catch (e) {
     console.warn(e)

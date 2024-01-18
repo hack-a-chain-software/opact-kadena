@@ -224,7 +224,7 @@ export const useReceiveStore = defineStore({
         tokenSpec: this.selectedToken.namespace
       }
 
-      await provider.value.sendOpactTransaction(
+      await provider.value.send(
         txArgs,
         (message: string) => { this.progress = message }
       )
@@ -330,7 +330,7 @@ export const useReceiveStore = defineStore({
         tokenSpec: this.selectedToken.namespace
       }
 
-      await provider.value.sendOpactTransaction(
+      await provider.value.send(
         txArgs,
         (message: string) => { this.progress = message }
       )
