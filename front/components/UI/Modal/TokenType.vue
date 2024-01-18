@@ -58,7 +58,7 @@ const config = useRuntimeConfig()
       <UIButtonTertiary
         label="NFT"
         class="bg-gray-700"
-        :disabled="config.public.nftDisabled"
+        :disabled="config.public.NFT_DISABLED"
         @click.prevent="router.push(`/${baseRoute}/nft`)"
       />
     </div>

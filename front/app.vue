@@ -25,7 +25,7 @@ useHead({
 
 const runtimeConfig = useRuntimeConfig()
 
-getConfig(runtimeConfig.public.opactSDKNetwork)
+getConfig(runtimeConfig.public.SDK_NETWORK)
 </script>
 
 <template>

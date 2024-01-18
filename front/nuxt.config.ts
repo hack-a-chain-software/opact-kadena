@@ -62,20 +62,19 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      // Booleans
-      nftDisabled: true,
-      faucetDisabled: true,
-      gtmEnabled: process.env.IS_PROD === 'true',
-      // opactSDKNetwork: process.env.OPACT_SDK_NETWORK,
-      // nftDisabled: process.env.NFT_DISABLED === 'true',
-
       // Numbers
-      gaId: process.env.GTM_TAG,
+      GA_ID: process.env.GTM_TAG,
 
       // String
-      opactSDKNetwork: 'kadena-testnet',
-      relayUrl: 'wss://relay.walletconnect.com',
-      projectId: '3974e0e0f91a102389b8cb3fc1a590a5'
+      SDK_NETWORK: process.env.SDK_NETWORK,
+      
+      WC_RELAYER: process.env.WC_RELAYER,
+      WC_PROJECT_ID: process.env.WC_PROJECT_ID,
+
+      // Booleans
+      GTM_ENABLED: process.env.IS_PROD === 'true',
+      NFT_DISABLED: process.env.NFT_DISABLED === 'true',
+      FAUCET_DISABLED: process.env.FAUCET_DISABLED === 'true',
     }
   },
   app: {

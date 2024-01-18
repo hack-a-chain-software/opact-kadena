@@ -86,7 +86,7 @@ const config = useRuntimeConfig()
             ? 'border-blue-400'
             : 'border-transparent'
         "
-        :disabled="config.public.nftDisabled"
+        :disabled="config.public.NFT_DISABLED"
         @click.prevent="emit('token', 'nft')"
       >
         <div>
@@ -104,7 +104,7 @@ const config = useRuntimeConfig()
         </div>
 
         <span
-          v-if="config.public.nftDisabled"
+          v-if="config.public.NFT_DISABLED"
           class="group-hover:visible invisible text-white absolute top-4.5 right-12 text-xs lg:text-sm font-[500] leading-[140%] opacity-[0.5]"
         >
           coming soon

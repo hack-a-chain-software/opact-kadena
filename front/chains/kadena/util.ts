@@ -1,18 +1,20 @@
 import Client from '@walletconnect/sign-client'
 import { WalletConnectModal } from '@walletconnect/modal'
 
-export const projectId = '3974e0e0f91a102389b8cb3fc1a590a5'
-
 export const getWalletConnectClient = async () => {
+  const config = useRuntimeConfig()
+
   return await Client.init({
-    relayUrl: 'wss://relay.walletconnect.com',
-    projectId: '3974e0e0f91a102389b8cb3fc1a590a5'
+    relayUrl: config.public.WC_RELAYER as string,
+    projectId:  config.public.WC_PROJECT_ID as string
   })
 }
 
 export const getWalletConnectModal = () => {
+  const config = useRuntimeConfig()
+  
   return new WalletConnectModal({
-    projectId: '3974e0e0f91a102389b8cb3fc1a590a5',
-    themeMode: 'dark'
+    themeMode: 'dark',
+    projectId:  config.public.WC_PROJECT_ID as string,
   })
 }

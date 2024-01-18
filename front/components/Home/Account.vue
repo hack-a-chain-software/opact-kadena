@@ -36,7 +36,7 @@ const redirectToKadena = () => {
           </span>
 
           <button
-            @click.prevent="config.public.faucetDisabled ? redirectToKadena() : router.push('/faucet')"
+            @click.prevent="config.public.FAUCET_DISABLED ? redirectToKadena() : router.push('/faucet')"
             class="text-blue-300 text-xxs font-[500] flex items-center"
           >
             Get faucet tokens

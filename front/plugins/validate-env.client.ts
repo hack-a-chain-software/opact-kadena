@@ -1,7 +1,7 @@
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig()
 
-  const publicVars = ['gaId', 'gtmEnabled']
+  const publicVars = ['GA_ID', 'GTM_ENABLED']
 
   publicVars.forEach((varName) => {
     if (config.public[varName] !== undefined) {
