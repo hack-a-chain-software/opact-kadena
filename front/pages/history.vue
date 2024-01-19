@@ -131,6 +131,10 @@ const receipts = computed(() => {
       flex-col
     "
   >
+    <LayoutGenericTopbar
+      name="History"
+    />
+
     <HistoryHeader
       @update-type="updateType($event)"
       @update-filter="updateFilter($event)"

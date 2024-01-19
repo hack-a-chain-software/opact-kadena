@@ -13,16 +13,20 @@ withDefaults(
 
 <template>
   <div class="w-full pt-[60px]">
-    <div class="pb-3 pl-[40px]">
+    <div class="pb-3 md:pl-[40px]">
       <span v-text="date" class="text-xxs text-font-2" />
     </div>
 
     <div
       class="
-        p-6
+        px-4
+        py-3
+        md:px-6
+        md:py-6
         bg-gray-900
         rounded-[12px]
         flex flex-col
+        gap-6 md:gap-0
         border border-gray-600
       "
     >

@@ -24,6 +24,7 @@
         overflow-visible
         z-[0]
         select-none
+        pointer-events-none
       "
     >
       <div
