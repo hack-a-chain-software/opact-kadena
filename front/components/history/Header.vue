@@ -58,52 +58,17 @@ const handleType = (value: any) => {
 const handleSearch = (event: any) => {
   emit('updateSearch', event.target.value)
 }
-
-onBeforeMount(async () => {
-  let res = await fetch(
-    'https://api.coingecko.com/api/v3/coins/kadena?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
-  )
-
-  let json = await res.json()
-
-  data.kadenaInDolar = json.market_data.current_price.usd
-
-  res = await fetch(
-    'https://api.coingecko.com/api/v3/coins/kaddex?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
-  )
-
-  json = await res.json()
-
-  data.kdxInDolar = json.market_data.current_price.usd
-})
-
-// const balance = computed(() => {
-//   const decimals = getDecimals(12)
-
-//   return (
-//     (formatBigNumberWithDecimals(
-//       userData.value?.tokens.coin?.balance || 0,
-//       decimals
-//     ) as any) *
-//       data.kadenaInDolar +
-//     (formatBigNumberWithDecimals(
-//       userData.value?.tokens['opact-coin']?.balance || 0,
-//       decimals
-//     ) as any) *
-//       data.kdxInDolar
-//   ).toFixed(2)
-// })
 </script>
 
 <template>
   <div class="w-full">
-    <div class="grid grid-cols-[1fr,auto] gap-[24px]">
+    <div class="hidden md:grid grid-cols-[1fr,auto] gap-[24px]">
       <div
         class="
-          border border-gray-600
+          border border-gray-500
           rounded-[8px]
           flex
-          items-cneter
+          items-center
           p-4
           space-x-2
         "
@@ -117,9 +82,14 @@ onBeforeMount(async () => {
           placeholder="Search"
           class="
             text-xs text-font-2
+            p-0
             w-full
+            select-none
+            focus:outline-none
             bg-transparent
-            outline-none
+            border-transparent
+            !outline-none
+            border-transparent focus:border-transparent focus:ring-0
           "
           @input="handleSearch"
         />
@@ -127,7 +97,7 @@ onBeforeMount(async () => {
 
       <div
         class="
-          border border-gray-600
+          border border-gray-500
           rounded-[8px]
           p-4
           flex
@@ -160,34 +130,17 @@ onBeforeMount(async () => {
           />
         </div>
       </div>
-
-      <!-- <div
-        class="border border-gray-600 rounded-[8px] p-4  flex items-center space-x-2 cursor-pointer"
-      >
-        <div>
-          <Icon
-            name="filter"
-            class="w-6 h-6 text-blue-400"
-          />
-        </div>
-
-        <div>
-          <span
-            class="text-font-1 text-xxs"
-          >
-            Filter
-          </span>
-        </div>
-      </div> -->
     </div>
 
-    <div class="pt-[32px] flex items-center space-x-[24px]">
+    <div class="pt-[32px] flex items-center space-x-4 md:space-x-[24px]">
       <button
         :class="data.type === 'all' && 'bg-blue-400'"
         class="
-          px-4
+          px-2
+          md:px-4
           py-2
-          text-xxs text-font-2
+          font-lato
+          text-xs md:text-xxs text-font-1
           hover:bg-gray-800
           rounded-[8px]
         "
@@ -199,9 +152,11 @@ onBeforeMount(async () => {
       <button
         :class="data.type === 'withdraw' && 'bg-blue-400'"
         class="
-          px-4
+          px-2
+          md:px-4
           py-2
-          text-xxs text-font-2
+          font-lato
+          text-xs md:text-xxs text-font-1
           hover:bg-gray-800
           rounded-[8px]
         "
@@ -213,9 +168,11 @@ onBeforeMount(async () => {
       <button
         :class="data.type === 'deposit' && 'bg-blue-400'"
         class="
-          px-4
+          px-2
+          md:px-4
           py-2
-          text-xxs text-font-2
+          font-lato
+          text-xs md:text-xxs text-font-1
           hover:bg-gray-800
           rounded-[8px]
         "
@@ -225,7 +182,7 @@ onBeforeMount(async () => {
       </button>
     </div>
 
-    <DatePicker
+    <UIDatePicker
       :show="data.showPicker"
       @close="data.showPicker = false"
       @selected="selectedPicker"

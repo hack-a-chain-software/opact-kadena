@@ -19,6 +19,7 @@ const data = reactive({
   showReceiveModal: false
 })
 
+// TODO: get key by env (generate new) and refact and move this to SDK
 onBeforeMount(async () => {
   let res = await fetch(
     'https://api.coingecko.com/api/v3/coins/kadena?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
@@ -166,6 +167,8 @@ const balance = computed(() => {
             :address="key"
             :token="tree.token"
             :balance="tree.balance"
+            :kdxInDolar="data.kdxInDolar"
+            :kadenaInDolar="data.kadenaInDolar"
             v-for="(tree, key) of treeBalances.tokens"
             :key="`${
               tree?.token?.id

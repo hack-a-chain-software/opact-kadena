@@ -12,14 +12,16 @@ const routes = [
   {
     disabled: false,
     path: '',
+    key: 'index',
     label: 'Home',
     icon: 'wallet'
   },
   {
     disabled: false,
+    icon: 'chart',
+    key: 'history',
     path: 'history',
-    label: 'History',
-    icon: 'chart'
+    label: 'History'
   }
 ]
 
@@ -68,11 +70,12 @@ const redirect = (path: string, skip: boolean) => {
               label,
               icon,
               path,
+              key,
               disabled,
             } in routes"
             :key="label"
             :class="[
-              route.name === path
+              route.name === key
                 ? 'text-blue-400'
                 : 'text-font-2 hover:bg-gray-800 cursor-pointer',
               disabled && '!cursor-not-allowed opacity-50',

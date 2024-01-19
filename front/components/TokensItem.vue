@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, reactive, onBeforeMount } from 'vue'
+import { computed } from 'vue'
 import {
   getDecimals,
   kadenaTokens as tokens,
@@ -11,16 +11,14 @@ const props = withDefaults(
     address: any;
     balance: any;
     token: any;
+    kdxInDolar: number;
+    kadenaInDolar: number;
   }>(),
   {
-    //
+    kdxInDolar: 0,
+    kadenaInDolar: 0
   }
 )
-
-const data = reactive({
-  kdxInDolar: 0,
-  kadenaInDolar: 0
-})
 
 const formattedAmount = computed(() => {
   const decimals = getDecimals(12)
@@ -40,24 +38,6 @@ const metadata = computed(() => {
   )
 })
 
-onBeforeMount(async () => {
-  let res = await fetch(
-    'https://api.coingecko.com/api/v3/coins/kadena?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
-  )
-
-  let json = await res.json()
-
-  data.kadenaInDolar = json.market_data.current_price.usd
-
-  res = await fetch(
-    'https://api.coingecko.com/api/v3/coins/kaddex?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
-  )
-
-  json = await res.json()
-
-  data.kdxInDolar = json.market_data.current_price.usd
-})
-
 const balance = computed(() => {
   const decimals = getDecimals(12)
 
@@ -67,8 +47,8 @@ const balance = computed(() => {
       decimals
     ) as any) *
     (props.address === 'coin'
-      ? data.kadenaInDolar
-      : data.kdxInDolar)
+      ? props.kadenaInDolar
+      : props.kdxInDolar)
   ).toFixed(2)
 })
 </script>

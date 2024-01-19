@@ -76,13 +76,13 @@ const metadata = computed(() => {
 <template>
   <div
     class="
-      px-4
-      py-3
-      hover:bg-gray-800
+      md:px-4
+      md:py-3
+      md:hover:bg-gray-800
       rounded-[8px]
       items-center
       justify-between
-      grid grid-cols-[2fr,1fr,1fr,1.3fr]
+      grid grid-cols-[2fr,auto] md:grid-cols-[2fr,1fr,1fr,1.3fr]
       gap-6
     "
   >
@@ -102,17 +102,38 @@ const metadata = computed(() => {
         <Icon :name="icon" class="text-white w-6 h-6" />
       </div>
 
-      <div>
+      <div
+        class="flex flex-col"
+      >
         <span
           v-text="type"
-          class="capitalize text-font-1 text-sm"
+          class="capitalize text-font-1 text-xs md:text-sm"
         />
+
+        <div
+          class="
+            md:hidden
+            flex
+            items-center
+            justify-end
+            space-x-2
+            text-end
+          "
+        >
+          <Icon name="kadena" key="another-kadena" class="text-white w-[10px] h-[10px]" />
+
+          <span
+            class="text-xxs text-font-2"
+            v-text="shortenAddress(type === 'withdraw' ? receiver as string : sender as string)"
+          />
+        </div>
       </div>
     </div>
 
     <div
       class="
-        flex
+        hidden
+        md:flex
         items-center
         justify-end
         space-x-2
@@ -127,7 +148,7 @@ const metadata = computed(() => {
       />
     </div>
 
-    <div class="text-end">
+    <div class="hidden md:block text-end">
       <span
         v-text="formattedDate"
         class="font-xs text-font-1"
