@@ -15,6 +15,8 @@ export const getWalletConnectModal = () => {
 
   return new WalletConnectModal({
     themeMode: 'dark',
+    enableAuthMode: true,
+    enableExplorer: false,
     projectId: config.public.WC_PROJECT_ID as string
   })
 }
