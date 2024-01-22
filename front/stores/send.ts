@@ -16,15 +16,12 @@ import {
   getEncryptedUtxosOfTransaction,
   getTransferSolutionBatchForNFT
 } from 'opact-sdk'
-import { groth16 } from 'snarkjs'
 import { useAppStore } from '~/stores/app'
 
 export const useSendStore = defineStore({
   id: 'send-store',
 
   state: (): any => {
-    // const { cache } = useAuthStorage()
-
     return {
       error: '',
       addressTo: '',
@@ -231,7 +228,13 @@ export const useSendStore = defineStore({
         }
       })
 
-      const { proof, publicSignals } = await groth16.fullProve(
+      const snarkjs = await import('snarkjs')
+
+      if (!snarkjs.groth16) {
+        throw new Error('groth not installed')
+      }
+
+      const { proof, publicSignals } = await snarkjs.groth16.fullProve(
         inputs,
         '/transaction.wasm',
         '/transaction_0001.zkey'

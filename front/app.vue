@@ -25,8 +25,6 @@ useHead({
 
 const runtimeConfig = useRuntimeConfig()
 
-console.log('runtimeConfig', runtimeConfig.public)
-
 getConfig(runtimeConfig.public.SDK_NETWORK)
 </script>
 
