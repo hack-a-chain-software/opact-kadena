@@ -105,9 +105,10 @@ export default defineNuxtConfig({
     '/auth': { prerender: false },
     '/faucet': { prerender: false },
     '/history': { prerender: false },
-    '/invoice': { prerender: false },
     '/send/nft': { prerender: false },
     '/send/token': { prerender: false },
+    '/invoice/nft': { prerender: false },
+    '/invoice/token': { prerender: false },
     '/receive/nft': { prerender: false },
     '/receive/token': { prerender: false }
   }
