@@ -66,7 +66,7 @@ const balance = computed(() => {
     "
   >
     <div class="pr-4">
-      <img :src="metadata.icon.replace('https://opact.io/', '')" />
+      <img class="w-10 h-10" :src="metadata.icon.replace('https://opact.io/', '')" />
     </div>
 
     <div class="space-y-1">
