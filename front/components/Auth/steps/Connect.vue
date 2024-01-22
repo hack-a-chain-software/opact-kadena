@@ -5,6 +5,7 @@ const emits = defineEmits(['changeStep'])
 <template>
   <div
     class="
+      w-full
       flex flex-col
       lg:flex-row lg:items-start
       bg-dark-blue

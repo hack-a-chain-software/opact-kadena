@@ -11,22 +11,18 @@ const data = reactive({
 const routes = [
   {
     disabled: false,
-    path: 'home',
+    path: '',
+    key: 'index',
     label: 'Home',
     icon: 'wallet'
   },
   {
     disabled: false,
     path: 'history',
+    key: 'history',
     label: 'History',
     icon: 'chart'
   }
-  // {
-  //   disabled: false,
-  //   path: 'settings',
-  //   label: 'Settings',
-  //   icon: 'iconSettings'
-  // }
 ]
 
 const redirect = (path: string, skip: boolean) => {
@@ -62,10 +58,10 @@ const redirect = (path: string, skip: boolean) => {
     "
   >
     <button
-      v-for="{ label, icon, path, disabled } in routes"
+      v-for="{ label, icon, path, key, disabled } in routes"
       :key="'mobile:' + label"
       :class="[
-        route.name === path
+        route.name === key
           ? 'text-blue-400'
           : 'text-font-2 hover:bg-gray-800 cursor-pointer',
         disabled && '!cursor-not-allowed opacity-50',
