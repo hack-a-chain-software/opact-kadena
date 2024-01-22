@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Menu, MenuItem, MenuButton, MenuItems } from '@headlessui/vue'
+
 const route = useRoute()
 
 const titles = {
@@ -44,19 +46,69 @@ const titles = {
     <div
       class="flex items-center justify-center gap-4"
     >
-      <a
-        role="button"
-        target="_blank"
-        href="https://app.pipefy.com/public/form/ZG6fEnZq"
-        class="text-xxs text-font-1 hover:text-blue-400 flex items-center justify-center gap-1"
-      >
-        Facing any issue? Report it here!
+      <Menu as="div" class="relative inline-block text-left">
+        <div>
+          <MenuButton>
+            <span
+              class="text-xxs text-font-1 hover:text-blue-400 flex items-center justify-center gap-1"
+            >
+              Provide us feedback or talk to support!
 
-        <Icon
-          name="arrow"
-          class="w-4 h-4"
-        />
-      </a>
+              <Icon
+                name="arrow"
+                class="w-4 h-4"
+              />
+            </span>
+          </MenuButton>
+        </div>
+
+        <transition
+          enter-active-class="transition duration-100 ease-out"
+          enter-from-class="transform scale-95 opacity-0"
+          enter-to-class="transform scale-100 opacity-100"
+          leave-active-class="transition duration-75 ease-in"
+          leave-from-class="transform scale-100 opacity-100"
+          leave-to-class="transform scale-95 opacity-0"
+        >
+          <MenuItems
+            class="
+              p-4
+              right-0
+              absolute
+              mt-[20px]
+              rounded-lg
+              bg-gray-900
+              space-y-2
+              flex flex-col
+              border border-gray-600
+            "
+          >
+            <MenuItem v-slot="{ active }">
+              <a
+                target="_blank"
+                class="text-font-1"
+                :class='{ "!text-blue-400": active }'
+                href="https://app.pipefy.com/public/form/ZG6fEnZq"
+              >
+                Support
+              </a>
+            </MenuItem>
+
+            <MenuItem
+              v-slot="{ active }"
+            >
+              <a
+                target="_blank"
+                class="text-font-1"
+                :class='{ "!text-blue-400": active }'
+                href="https://app.pipefy.com/public/form/5SYC1W0c"
+              >
+                Feedback
+              </a>
+            </MenuItem>
+          </MenuItems>
+        </transition>
+      </Menu>
 
       <HomeAccount/>
     </div>
