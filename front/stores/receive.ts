@@ -14,7 +14,6 @@ import {
   getRandomWallet,
   separateHex
 } from 'opact-sdk'
-import { groth16 } from 'snarkjs'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
 import { useAppStore } from '~/stores/app'
@@ -117,6 +116,7 @@ export const useReceiveStore = defineStore({
       this.selectedToken = selectedToken
     },
 
+    // TODO: remove this
     async sendInvoice () {
       const wallet = getRandomWallet()
 
@@ -208,8 +208,14 @@ export const useReceiveStore = defineStore({
         }
       })
 
+      const snarkjs = await import('snarkjs')
+
+      if (!snarkjs.groth16) {
+        throw new Error('groth not installed')
+      }
+
       const { proof, publicSignals } =
-        await groth16.fullProve(
+        await snarkjs.groth16.fullProve(
           inputs,
           '/transaction.wasm',
           '/transaction_0001.zkey'
@@ -314,8 +320,14 @@ export const useReceiveStore = defineStore({
         }
       })
 
+      const snarkjs = await import('snarkjs')
+
+      if (!snarkjs.groth16) {
+        throw new Error('groth not installed')
+      }
+
       const { proof, publicSignals } =
-        await groth16.fullProve(
+        await snarkjs.groth16.fullProve(
           inputs,
           '/transaction.wasm',
           '/transaction_0001.zkey'
