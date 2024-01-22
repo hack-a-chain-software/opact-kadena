@@ -7,7 +7,7 @@ const data = reactive({
 </script>
 
 <template>
-  <div class="min-h-[100vh] h-screen overflow-hidden">
+  <div class="min-h-[100vh] min-h-screen overflow-hidden">
     <div
       class="
         min-h-[72px]
