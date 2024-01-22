@@ -8,9 +8,9 @@ jobs:
       VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
       GTM_TAG: ${{ vars.GTM_TAG }}
-      SDK_NETWORK: ${{ vars.SDK_NETWORK }}
-      WC_RELAYER: ${{ vars.WC_RELAYER }}
-      WC_PROJECT_ID: ${{ vars.WC_PROJECT_ID }}
+      SDK_NETWORK: ${{ env.SDK_NETWORK }}
+      WC_RELAYER: ${{ env.WC_RELAYER }}
+      WC_PROJECT_ID: ${{ env.WC_PROJECT_ID }}
       FAUCET_DISABLED: true
       NFT_DISABLED: true
       IS_PROD: false
