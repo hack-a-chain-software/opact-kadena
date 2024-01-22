@@ -80,17 +80,23 @@ const titles = {
               bg-gray-900
               space-y-2
               flex flex-col
+              w-[125px]
               border border-gray-600
             "
           >
             <MenuItem v-slot="{ active }">
               <a
                 target="_blank"
-                class="text-font-1"
+                class="text-font-1 flex items-center justify-between"
                 :class='{ "!text-blue-400": active }'
                 href="https://app.pipefy.com/public/form/ZG6fEnZq"
               >
                 Support
+
+                <Icon
+                  name="chevron"
+                  class="w-3 h-3 -rotate-90"
+                />
               </a>
             </MenuItem>
 
@@ -99,11 +105,16 @@ const titles = {
             >
               <a
                 target="_blank"
-                class="text-font-1"
+                class="text-font-1 flex items-center justify-between"
                 :class='{ "!text-blue-400": active }'
                 href="https://app.pipefy.com/public/form/5SYC1W0c"
               >
                 Feedback
+
+                <Icon
+                  name="chevron"
+                  class="w-3 h-3 -rotate-90"
+                />
               </a>
             </MenuItem>
           </MenuItems>
