@@ -237,7 +237,7 @@ export const provider = defineStore({
         throw new Error('No selected account to send from')
       }
 
-      callbackProgress('Waiting for sign.')
+      callbackProgress('Await sign')
 
       const signWithWalletConnect =
         createWalletConnectQuicksign(
