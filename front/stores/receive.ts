@@ -209,6 +209,8 @@ export const useReceiveStore = defineStore({
         }
       })
 
+      console.log('inputs', inputs)
+
       const snarkjs = await import('snarkjs')
 
       if (!snarkjs.groth16) {
