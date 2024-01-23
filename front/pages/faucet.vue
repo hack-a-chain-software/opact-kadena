@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'auth'
+  // middleware: 'auth'
 })
 
 useHead({
@@ -11,7 +11,7 @@ useHead({
 <template>
   <div class="lg:flex lg:justify-center">
     <LayoutGenericTopbar
-      name="NFT Invoice"
+      name="Token Faucet"
     />
 
     <FaucetForm
