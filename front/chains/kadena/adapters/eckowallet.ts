@@ -1,12 +1,10 @@
 import {
-  getCapsForDeposit,
-  getCapsForWithdraw,
   getConfig,
-  getPartialOpactCommand,
-  sendSigned
+  sendSigned,
+  pactCommandToSigningRequest,
+  isInstalled, isConnected, isCorrectNetwork, sendFaucetTransaction
 } from 'opact-sdk'
 import { defineStore } from 'pinia'
-import { pactCommandToSigningRequest, isInstalled, isConnected, isCorrectNetwork } from '~/utils'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -99,11 +97,13 @@ export const provider = defineStore({
       callback()
     },
 
+    async sendFaucet () {
+      return await sendFaucetTransaction(this.account.address)
+    },
+
     async send (
-      { proof, extData, tokenSpec }: any,
-      callbackProgress: any,
-      isWithdrawTransfer = false,
-      receiver = ''
+      transaction: any,
+      callbackProgress: any
     ) {
       if (!isInstalled()) {
         throw new Error('Not Installed')
@@ -112,40 +112,6 @@ export const provider = defineStore({
       if (!await isConnected()) {
         throw new Error('Not Connected')
       }
-
-      const accountName = this.account.address
-
-      let caps: any
-
-      if (isWithdrawTransfer) {
-        caps = getCapsForWithdraw(
-          accountName,
-          extData.tokenAmount,
-          receiver,
-          tokenSpec
-        )
-      } else {
-        caps = getCapsForDeposit(
-          accountName,
-          extData.tokenAmount,
-          tokenSpec
-        )
-      }
-
-      const pactCommand = getPartialOpactCommand({
-        proof,
-        extData,
-        tokenSpec,
-        senderAccount: this.account.address
-      })
-        .addSigner(this.account.pubkey, () => [
-          ...caps.map(({ cap }: any) => cap)
-        ])
-        .addData('recipient-guard', {
-          keys: [receiver || this.account.pubkey]
-        })
-
-      const transaction = pactCommand.createTransaction()
 
       const parsedTransaction = JSON.parse(transaction.cmd)
 
@@ -167,7 +133,7 @@ export const provider = defineStore({
 
       callbackProgress('Awaiting the transaction outcome.')
 
-      return await sendSigned({ signedCmd: response.signedCmd })
+      return await sendSigned(response.signedCmd)
     }
   }
 })

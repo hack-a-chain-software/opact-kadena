@@ -12,7 +12,8 @@ import {
   MerkleTreeService,
   computeInputs,
   getRandomWallet,
-  separateHex
+  separateHex,
+  getOpactTransaction
 } from 'opact-sdk'
 import { storeToRefs } from 'pinia'
 import { useWalletStore } from '~/stores/wallet'
@@ -223,15 +224,16 @@ export const useReceiveStore = defineStore({
 
       const publicArgs = getPublicArgs(proof, publicSignals)
 
-      const txArgs = {
-        batch,
+      const transaction = await getOpactTransaction({
         extData,
         proof: publicArgs,
+        senderAccount: senderAddress,
+        signer: provider.value.account.pubkey,
         tokenSpec: this.selectedToken.namespace
-      }
+      })
 
       await provider.value.send(
-        txArgs,
+        transaction,
         (message: string) => { this.progress = message }
       )
 
@@ -335,15 +337,16 @@ export const useReceiveStore = defineStore({
 
       const publicArgs = getPublicArgs(proof, publicSignals)
 
-      const txArgs = {
-        batch,
+      const transaction = await getOpactTransaction({
         extData,
         proof: publicArgs,
+        senderAccount: senderAddress,
+        signer: provider.value.account.pubkey,
         tokenSpec: this.selectedToken.namespace
-      }
+      })
 
       await provider.value.send(
-        txArgs,
+        transaction,
         (message: string) => { this.progress = message }
       )
 

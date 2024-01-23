@@ -17,16 +17,28 @@ const data = reactive({
   show: false,
   amount: 100,
   token: tokens[0],
-  progress: 'Sending TX',
+  progress: 'Awaiting the transaction outcome',
   showGenerateLink: false,
   loading: false
 })
 
 const pay = async () => {
   try {
+    data.error = ''
     data.loading = true
 
-    await provider.value.sendTokenFaucetTransaction(data.token)
+    try {
+      await provider.value.sendFaucet()
+    } catch (e: any) {
+      console.warn(e)
+
+      data.error = e.message
+
+      data.loading = false
+      data.progress = 'Awaiting the transaction outcome'
+
+      return
+    }
 
     isLoading.value = true
     router.push('/')
@@ -59,6 +71,12 @@ const pay = async () => {
       v-if="provider"
       label="Wallet Receiver"
       :provider="provider"
+    />
+
+    <UIWarning
+      type="warning"
+      v-if="data.error"
+      :label="data.error"
     />
 
     <UIButtonInline

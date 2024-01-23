@@ -22,8 +22,7 @@ jobs:
       WC_PROJECT_ID: ${{ vars.WC_PROJECT_ID }}
       IS_PROD: true
       NFT_DISABLED: true
-      FAUCET_DISABLED: true
-      
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3

@@ -8,11 +8,12 @@ import {
   getConfig,
   kadenaTokens,
   MerkleTreeService,
+  getOpactTransaction,
   getKdaTransactionParams,
   getTransferSolutionBatch,
   getReceiptsOfTransaction,
   formatBigNumberWithDecimals,
-  sendOZKTransaction,
+  sendInternalTransaction,
   getEncryptedUtxosOfTransaction,
   getTransferSolutionBatchForNFT
 } from 'opact-sdk'
@@ -242,27 +243,32 @@ export const useSendStore = defineStore({
 
       const publicArgs = getPublicArgs(proof, publicSignals)
 
-      const txArgs = {
-        batch,
-        extData,
-        proof: publicArgs,
-        tokenSpec: this.selectedToken.namespace
-      }
+      const callbackProgress = (message: string) => (this.progress = message)
 
       if (this.isInternalTransfer || this.selectedToken.address === 'coin') {
-        await sendOZKTransaction(
+        await sendInternalTransaction({
+          extData,
           receiver,
-          txArgs,
-          (message: string) => (this.progress = message)
-        )
+          callbackProgress,
+          proof: publicArgs,
+          tokenSpec: this.selectedToken.namespace
+        })
       } else {
         const { provider } = useExtensions()
 
+        const transaction = await getOpactTransaction({
+          extData,
+          receiver,
+          proof: publicArgs,
+          isWithdrawTransfer: true,
+          signer: provider.value.account.pubkey,
+          tokenSpec: this.selectedToken.namespace,
+          senderAccount: provider.value.account.address
+        })
+
         await provider.value.send(
-          txArgs,
-          (message: string) => (this.progress = message),
-          true,
-          receiver
+          transaction,
+          callbackProgress
         )
       }
 
