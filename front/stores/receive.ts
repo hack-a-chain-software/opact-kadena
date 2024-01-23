@@ -326,8 +326,6 @@ export const useReceiveStore = defineStore({
         }
       })
 
-      console.log('inputs', inputs)
-
       const snarkjs = await import('snarkjs')
 
       if (!snarkjs.groth16) {
@@ -342,6 +340,8 @@ export const useReceiveStore = defineStore({
           '/transaction.wasm',
           '/transaction_0001.zkey'
         )
+
+      console.log('prove', proof, publicSignals)
 
       const publicArgs = getPublicArgs(proof, publicSignals)
 
