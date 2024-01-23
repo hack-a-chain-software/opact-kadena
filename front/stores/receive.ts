@@ -326,11 +326,15 @@ export const useReceiveStore = defineStore({
         }
       })
 
+      console.log('inputs', inputs)
+
       const snarkjs = await import('snarkjs')
 
       if (!snarkjs.groth16) {
         throw new Error('groth not installed')
       }
+
+      console.log('inputs', inputs)
 
       const { proof, publicSignals } =
         await snarkjs.groth16.fullProve(
