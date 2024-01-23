@@ -332,16 +332,12 @@ export const useReceiveStore = defineStore({
         throw new Error('groth not installed')
       }
 
-      console.log('inputs', inputs)
-
       const { proof, publicSignals } =
         await snarkjs.groth16.fullProve(
           inputs,
           '/transaction.wasm',
           '/transaction_0001.zkey'
         )
-
-      console.log('prove', proof, publicSignals)
 
       const publicArgs = getPublicArgs(proof, publicSignals)
 
@@ -352,6 +348,8 @@ export const useReceiveStore = defineStore({
         signer: provider.value.account.pubkey,
         tokenSpec: this.selectedToken.namespace
       })
+
+      console.log('transaction', transaction)
 
       await provider.value.send(
         transaction,

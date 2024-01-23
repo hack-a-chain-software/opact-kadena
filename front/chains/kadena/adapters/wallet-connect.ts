@@ -244,6 +244,8 @@ export const provider = defineStore({
           this.account.walletConnectChainId
         )
 
+      console.log('try sign')
+
       const signedCmd = await signWithWalletConnect(
         transaction
       )
