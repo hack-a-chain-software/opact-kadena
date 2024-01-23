@@ -215,6 +215,8 @@ export const useReceiveStore = defineStore({
         throw new Error('groth not installed')
       }
 
+      console.log('inputs', inputs)
+
       const { proof, publicSignals } =
         await snarkjs.groth16.fullProve(
           inputs,
