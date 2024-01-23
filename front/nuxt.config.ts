@@ -1,6 +1,6 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
-let ssr = false
+let ssr = true
 
 if (process.env.NODE_ENV !== 'development') {
   ssr = true
@@ -101,15 +101,15 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/': { prerender: false },
-    '/auth': { prerender: false },
-    '/faucet': { prerender: false },
-    '/history': { prerender: false },
-    '/send/nft': { prerender: false },
-    '/send/token': { prerender: false },
-    '/invoice/nft': { prerender: false },
-    '/invoice/token': { prerender: false },
-    '/receive/nft': { prerender: false },
-    '/receive/token': { prerender: false }
+    '/': { prerender: true },
+    '/auth': { prerender: true },
+    '/faucet': { prerender: true },
+    '/history': { prerender: true },
+    '/send/nft': { prerender: true },
+    '/send/token': { prerender: true },
+    '/invoice/nft': { prerender: true },
+    '/invoice/token': { prerender: true },
+    '/receive/nft': { prerender: true },
+    '/receive/token': { prerender: true }
   }
 })
