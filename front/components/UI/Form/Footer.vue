@@ -14,7 +14,7 @@ withDefaults(
 </script>
 
 <template>
-  <div class="mt-auto pb-[32px] lg:pt-[56px]">
+  <div class="mt-auto pb-[32px] pt-8 lg:pt-[56px]">
     <UIButtonInline
       :label="label"
       :disabled="disabled"

@@ -32,7 +32,7 @@ const pay = async () => {
     } catch (e: any) {
       console.warn(e)
 
-      data.error = e.message
+      data.error = 'Your transaction failed. Faucet tokens can only be requested every 30 minutes.'
 
       data.loading = false
       data.progress = 'Awaiting the transaction outcome'
