@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { loadArtifact } from 'opact-sdk'
-import { onBeforeMount, onMounted } from 'vue'
+// import { loadArtifact } from 'opact-sdk'
+import { onBeforeMount } from 'vue'
 import { useAppStore } from '~/stores/app'
 import { useWalletStore } from '~/stores/wallet'
 
@@ -17,9 +17,9 @@ onBeforeMount(() => {
   wallet.reconnect()
 })
 
-onMounted(() => {
-  loadArtifact()
-})
+// onMounted(() => {
+//   loadArtifact()
+// })
 
 watch(account, (newAccount) => {
   if (!newAccount) {
