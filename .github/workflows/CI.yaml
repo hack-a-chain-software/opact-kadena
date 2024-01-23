@@ -11,7 +11,6 @@ jobs:
       SDK_NETWORK: ${{ vars.SDK_NETWORK }}
       WC_RELAYER: ${{ vars.WC_RELAYER }}
       WC_PROJECT_ID: ${{ vars.WC_PROJECT_ID }}
-      FAUCET_DISABLED: true
       NFT_DISABLED: true
       IS_PROD: false
     steps:

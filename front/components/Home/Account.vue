@@ -7,12 +7,6 @@ const wallet = useWalletStore()
 const { account } = storeToRefs(wallet)
 
 const router = useRouter()
-
-const config = useRuntimeConfig()
-
-const redirectToKadena = () => {
-  window.open('https://tools.kadena.io/faucet/new', '__blank')
-}
 </script>
 
 <template>
@@ -36,7 +30,7 @@ const redirectToKadena = () => {
           </span>
 
           <button
-            @click.prevent="config.public.FAUCET_DISABLED ? redirectToKadena() : router.push('/faucet')"
+            @click.prevent="router.push('/faucet')"
             class="text-blue-300 text-xxs font-[500] flex items-center"
           >
             Get faucet tokens

@@ -3,10 +3,8 @@ import { getSdkError } from '@walletconnect/utils'
 import { SessionTypes } from '@walletconnect/types'
 import {
   getConfig,
-  getPartialOpactCommand,
   sendSigned,
-  getCapsForWithdraw,
-  getCapsForDeposit
+  sendFaucetTransaction
 } from 'opact-sdk'
 import {
   createWalletConnectQuicksign
@@ -141,7 +139,7 @@ export const provider = defineStore({
       }
     },
 
-    async connect (callback = () => {}) {
+    async connect (callback = () => { }) {
       if (typeof this.client === 'undefined') {
         throw new TypeError(
           'WalletConnect is not initialized'
@@ -219,11 +217,13 @@ export const provider = defineStore({
       }
     },
 
+    async sendFaucet () {
+      return await sendFaucetTransaction(this.account.address)
+    },
+
     async send (
-      { proof, extData, tokenSpec }: any,
-      callbackProgress: any,
-      isWithdrawTransfer = false,
-      receiver = ''
+      transaction: any,
+      callbackProgress: any
     ) {
       if (!this.client) {
         throw new Error('No client')
@@ -244,49 +244,13 @@ export const provider = defineStore({
           this.account.walletConnectChainId
         )
 
-      let caps: any
-
-      if (isWithdrawTransfer) {
-        caps = getCapsForWithdraw(
-          this.account.address,
-          extData.tokenAmount,
-          receiver,
-          tokenSpec
-        )
-      } else {
-        caps = getCapsForDeposit(
-          this.account.address,
-          extData.tokenAmount,
-          tokenSpec
-        )
-      }
-
-      callbackProgress('Await sign...')
-
-      const pactCommand = getPartialOpactCommand({
-        proof,
-        extData,
-        tokenSpec,
-        senderAccount: this.account.address
-      })
-        .addSigner(this.account.pubkey, () => [
-          ...caps.map(({ cap }: any) => cap)
-        ])
-        .addData('recipient-guard', {
-          keys: [receiver || this.account.pubkey]
-        })
-
-      const transaction = pactCommand.createTransaction()
-
       const signedCmd = await signWithWalletConnect(
         transaction
       )
 
-      console.log('signedCmd', signedCmd)
-
       callbackProgress('Awaiting the transaction outcome.')
 
-      const res = await sendSigned({ signedCmd })
+      const res = await sendSigned(signedCmd)
 
       return res
     }
