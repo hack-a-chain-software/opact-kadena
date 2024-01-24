@@ -20,6 +20,7 @@ const data = reactive({
         w-full
         border-b border-b-gray-600
         lg:flex
+        flex items-center justify-center
       "
     >
       <button @click.prevent="data.key++">

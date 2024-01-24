@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 // import { loadArtifact } from 'opact-sdk'
-import { onMounted } from 'vue'
+import { onBeforeMount } from 'vue'
 import { useAppStore } from '~/stores/app'
 import { useWalletStore } from '~/stores/wallet'
 
@@ -13,7 +13,7 @@ const { isLoading } = storeToRefs(app)
 
 const { connected, account } = storeToRefs(wallet)
 
-onMounted(() => {
+onBeforeMount(() => {
   wallet.reconnect()
 })
 
@@ -53,11 +53,13 @@ watch(account, (newAccount) => {
         h-screen
         w-screen
         z-[99999]
+        bg-white
+        flex items-center justify-center
       "
     >
       <Icon
         name="minilogo"
-        class="animate-spin text-white w-8 h-8 min-h-screen"
+        class="animate-spin text-white w-8 h-8 min-h-screen flex items-center justify-center"
       />
     </div>
 

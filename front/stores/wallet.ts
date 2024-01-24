@@ -10,19 +10,17 @@ export const useWalletStore = defineStore({
   id: 'wallet-store',
 
   state: (): any => {
-    const { cache } = useAuthStorage()
-
     return {
-      cache,
+      cache: null,
       account: null
     }
   },
 
   getters: {
     connected: (state: any): boolean => {
-      const { account } = state
+      const { cache } = state
 
-      return !!account
+      return !!cache
     },
     truncatedAddress: (state: any): string =>
       shortenAddress(state.node.address)
@@ -46,11 +44,15 @@ export const useWalletStore = defineStore({
     },
 
     reconnect () {
-      if (!this.cache) {
+      const { cache } = useAuthStorage()
+
+      if (!cache.value) {
         return
       }
 
-      return this.connect(this.cache.phrase)
+      this.cache = cache.value
+
+      return this.connect(cache.value.phrase)
     },
 
     persistAuth (account: any, mnemonic: any) {
@@ -61,9 +63,7 @@ export const useWalletStore = defineStore({
         pvtkey: account.pvtkey.toString()
       }
 
-      this.cache = {
-        ...newCache
-      }
+      this.cache = newCache
 
       store(newCache)
     },

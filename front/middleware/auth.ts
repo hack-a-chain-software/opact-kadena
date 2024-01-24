@@ -1,12 +1,13 @@
-import { useWalletStore } from '~/stores/wallet'
+import { useAuthStorage } from '~/hooks/auth-storage'
 
 export default defineNuxtRouteMiddleware((to) => {
   const router = useRouter()
-  const wallet = useWalletStore()
-
+  const { cache } = useAuthStorage()
   const appConfig = useRuntimeConfig()
 
-  if (wallet.cache && wallet.cache.phrase) {
+  console.log('cache', cache)
+
+  if (!!cache.value) {
     if (
       to.path.includes('nft') &&
       appConfig.public.NFT_DISABLED
@@ -28,10 +29,12 @@ export default defineNuxtRouteMiddleware((to) => {
     return
   }
 
-  return router.push({
-    path: '/auth',
-    query: {
-      next: to.path
-    }
-  })
+  if (!cache.value) {
+    return router.push({
+      path: '/auth',
+      query: {
+        next: to.path
+      }
+    })
+  }
 })
