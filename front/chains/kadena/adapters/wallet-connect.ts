@@ -21,6 +21,14 @@ const metadata = {
   disabled: false
 }
 
+function isMobileSafari() {
+  return navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/)
+}
+
+function LaunchApp(){
+  window.open("KoallaWallet://TheElementThatIWantToSend","_self");
+};
+
 export const provider = defineStore({
   id: 'provider:kadena:wallet-connect',
 
@@ -268,14 +276,18 @@ export const provider = defineStore({
         throw new Error('No selected account to send from')
       }
 
-      callbackProgress('Await sign')
-
       const signWithWalletConnect =
         createWalletConnectQuicksign(
           this.client as any,
           this.session,
           this.account.walletConnectChainId
         )
+
+      callbackProgress('Await sign')
+
+      if (isMobileSafari()) {
+        LaunchApp()
+      }
 
       const signedCmd = await signWithWalletConnect(
         transaction
