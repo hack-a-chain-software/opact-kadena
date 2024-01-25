@@ -21,13 +21,13 @@ const metadata = {
   disabled: false
 }
 
-function isMobileSafari() {
+function isMobileSafari () {
   return navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/)
 }
 
-function LaunchApp(){
-  window.open("KoallaWallet://TheElementThatIWantToSend","_self");
-};
+function LaunchApp () {
+  window.open('koalawallet://koalawallet.io/', '_self')
+}
 
 export const provider = defineStore({
   id: 'provider:kadena:wallet-connect',
