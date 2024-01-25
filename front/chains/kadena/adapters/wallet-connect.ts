@@ -26,7 +26,7 @@ function isMobileSafari () {
 }
 
 function LaunchApp () {
-  window.open('koalawallet://koalawallet.io/', '_self')
+  window.open('pinterest://www.pinterest.com/pseudoamber/', '_self')
 }
 
 export const provider = defineStore({
@@ -214,6 +214,8 @@ export const provider = defineStore({
         }
 
         const session = await approval()
+
+        console.log('session', session)
 
         await this.onSessionConnected(session)
 
