@@ -41,7 +41,7 @@
     </div>
 
     <div class="relative z-[1]">
-      <img src="/images/logo.png"/>
+      <Icon name="logo" class="icon-logo w-[142px] h-[28px]" />
     </div>
 
     <div class="relative z-[1]">

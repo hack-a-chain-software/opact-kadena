@@ -117,7 +117,7 @@ export const provider = defineStore({
 
       const signingRequest = pactCommandToSigningRequest(parsedTransaction)
 
-      callbackProgress('Await sign...')
+      callbackProgress('Awaiting sign. Please go back to your wallet app to sign the transaction.')
 
       const response = await window.kadena?.request({
         method: 'kda_requestSign',
