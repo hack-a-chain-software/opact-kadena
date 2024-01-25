@@ -123,25 +123,25 @@ export const provider = defineStore({
     // TODO: needs to investigate persisted state of koala wallet after close the app
     async checkPersistedState (_client: any) {
       if (typeof _client === 'undefined') {
-        throw new Error('WalletConnect is not initialized');
+        throw new TypeError('WalletConnect is not initialized')
       }
 
       this.pairings = _client.pairing.getAll({
         active: true
       })
 
-      if (typeof this.session !== 'undefined') return;
+      if (typeof this.session !== 'undefined') { return }
 
       if (_client.session.length) {
         const _session = _client.session.get(
-          _client.session.keys.at(-1),
-        );
+          _client.session.keys.at(-1)
+        )
 
         await _client.core.pairing.ping({ topic: _session.pairingTopic })
 
-        await this.onSessionConnected(_session);
+        await this.onSessionConnected(_session)
 
-        return _session;
+        return _session
       }
     },
 
@@ -158,7 +158,6 @@ export const provider = defineStore({
         this.client = _client
         await this.subscribeToEvents()
         // await this.checkPersistedState(_client);
-
       } catch (err) {
         console.warn(err)
       } finally {
