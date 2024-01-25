@@ -21,21 +21,25 @@ const data = reactive({
 
 // TODO: get key by env (generate new) and refact and move this to SDK
 onBeforeMount(async () => {
-  let res = await fetch(
-    'https://api.coingecko.com/api/v3/coins/kadena?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
-  )
+  try {
+    let res = await fetch(
+      'https://api.coingecko.com/api/v3/coins/kadena?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
+    )
 
-  let json = await res.json()
+    let json = await res.json()
 
-  data.kadenaInDolar = json.market_data.current_price.usd
+    data.kadenaInDolar = json.market_data.current_price.usd
 
-  res = await fetch(
-    'https://api.coingecko.com/api/v3/coins/kaddex?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
-  )
+    res = await fetch(
+      'https://api.coingecko.com/api/v3/coins/kaddex?x_cg_api_key=CG-HMVPj5jXZxnbPZetLezC3hZw'
+    )
 
-  json = await res.json()
+    json = await res.json()
 
-  data.kdxInDolar = json.market_data.current_price.usd
+    data.kdxInDolar = json.market_data.current_price.usd
+  } catch (e) {
+    console.warn(e)
+  }
 })
 
 const balance = computed(() => {

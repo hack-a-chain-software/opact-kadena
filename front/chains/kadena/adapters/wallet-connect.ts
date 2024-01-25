@@ -120,8 +120,33 @@ export const provider = defineStore({
       })
     },
 
+    // TODO: needs to investigate persisted state of koala wallet after close the app
+    async checkPersistedState (_client: any) {
+      if (typeof _client === 'undefined') {
+        throw new Error('WalletConnect is not initialized');
+      }
+
+      this.pairings = _client.pairing.getAll({
+        active: true
+      })
+
+      if (typeof this.session !== 'undefined') return;
+
+      if (_client.session.length) {
+        const _session = _client.session.get(
+          _client.session.keys.at(-1),
+        );
+
+        await _client.core.pairing.ping({ topic: _session.pairingTopic })
+
+        await this.onSessionConnected(_session);
+
+        return _session;
+      }
+    },
+
     async init () {
-      if (this.client) {
+      if (this.client || this.isInitializing) {
         return
       }
 
@@ -132,6 +157,8 @@ export const provider = defineStore({
 
         this.client = _client
         await this.subscribeToEvents()
+        // await this.checkPersistedState(_client);
+
       } catch (err) {
         console.warn(err)
       } finally {
@@ -144,6 +171,12 @@ export const provider = defineStore({
         throw new TypeError(
           'WalletConnect is not initialized'
         )
+      }
+
+      if (this.session) {
+        callback()
+
+        return
       }
 
       const walletConnectModal = getWalletConnectModal()
@@ -176,7 +209,7 @@ export const provider = defineStore({
         const session = await approval()
 
         await this.onSessionConnected(session)
-        // Update known pairings after session is connected.
+
         this.pairings = this.client.pairing.getAll({
           active: true
         })
@@ -212,7 +245,6 @@ export const provider = defineStore({
           error
         )
       } finally {
-        // Reset app state after disconnect.
         this.reset()
       }
     },
