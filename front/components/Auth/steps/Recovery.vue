@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
+import { validateMnemonic } from 'opact-sdk'
 import { useWalletStore } from '~/stores/wallet'
 
 const wallet = useWalletStore()
@@ -10,19 +11,18 @@ const router = useRouter()
 const route = useRoute()
 
 const data = reactive({
-  phrase: ''
+  phrase: '',
+  words: []
 })
 
-const splited = computed(() => {
-  if (!data.phrase) {
-    return []
-  }
-
-  return data.phrase.split(' ')
+const isValid = computed(() => {
+  return validateMnemonic(data.words.join(' '))
 })
 
 const recovery = async () => {
-  await wallet.connect(data.phrase)
+  const phrase = data.words.join(' ')
+
+  await wallet.connect(phrase)
 
   router.push((route.query as any).next || '/')
 }
@@ -30,11 +30,14 @@ const recovery = async () => {
 const toPaste = async () => {
   const text = await navigator.clipboard.readText()
 
-  if (text.split(' ').length !== 12) {
+  const pastedWords = text.split(' ').filter((word: string) => !!word)
+
+  if (pastedWords.length !== 12 || !validateMnemonic(text)) {
     return
   }
 
   data.phrase = text
+  data.words = pastedWords as any
 }
 </script>
 
@@ -76,10 +79,11 @@ const toPaste = async () => {
         <div
           v-for="(_, i) in 12"
           :key="'recovery-word-' + i"
-          class="p-3 rounded-[8px] bg-gray-700 space-x-2"
+          class="p-3 rounded-[8px] bg-gray-700 space-x-2 flex items-center justify-center"
         >
           <span
             class="
+              block
               select-none
               text-xxs
               font-medium
@@ -89,18 +93,24 @@ const toPaste = async () => {
             v-text="i + 1"
           />
 
-          <span
+          <input
             class="
               select-none
               text-xxs
               font-medium
               text-font-1
               lg:text-xxs
+              w-full
               font-[500]
+              bg-transparent
+              border-none
+              outline-none
+              p-0
               leading-[19.6px]
+              border-transparent focus:border-transparent focus:ring-0
             "
-            v-text="splited[i] || '-'"
-          />
+            v-model="data.words[i]"
+          >
         </div>
       </div>
 
@@ -127,6 +137,7 @@ const toPaste = async () => {
 
     <UIFormFooter
       label="Recovery"
+      :disabled="!isValid"
       @click.prevent="recovery()"
     />
   </UIFormLayout>
