@@ -1,0 +1,278 @@
+(namespace (read-msg 'ns))
+
+(module groth16-10x2 GOVERNANCE
+    @doc
+    "This module implements Groth16 zk-SNARKs (Zero-Knowledge Succinct Non-Interactive Argument of Knowledge) verification. \
+    \ It dynamically names the module based on the number of public inputs. \
+    \ The module includes definitions for G1 and G2 points on an elliptic curve, a verifier structure, \
+    \ and a proof structure. It also provides functions to verify zk-SNARKs proofs."
+
+    (defcap GOVERNANCE ()
+        @doc 
+        "Governance capability to enforce specific administrative privileges. \
+        \ It ensures that only authorized keysets can perform critical operations within the module."
+     
+        (enforce-keyset "free.opact-admin")
+    )
+
+    (defschema G1Point
+        @doc
+        "Structure representing a G1 point in an elliptic curve, consisting of x and y coordinates as integers. \
+        \ G1 points are used in various cryptographic operations within the zk-SNARKs protocol."
+   
+        x: integer
+        y: integer
+    )
+    
+    (defschema G2Point
+        @doc
+        "Structure representing a G2 point in an elliptic curve. G2 points are similar to G1 points but require arrays \
+        \ of integers for coordinates to accommodate the complexity and size of the data involved in zk-SNARKs."
+       
+        x: [integer]
+        y: [integer]
+    )
+
+    (defschema Verifier
+        @doc 
+        "Structure representing the verifier in zk-SNARKs. \
+        \ It includes the number of public inputs, points alfa1, beta2, gamma2, \
+        \ delta2 in G1 or G2, an array of G1 points for input consistency (ic), and the snark scalar field."
+      
+        n_public: integer
+        alfa1: object{G1Point}
+        beta2: object{G2Point}
+        gamma2: object{G2Point}
+        delta2: object{G2Point}
+        ic: [object{G1Point}]
+        snark_scalar_field: integer
+    )
+
+    (defschema Proof
+        @doc 
+        "Structure representing a proof in zk-SNARKs. \
+        \ It includes an array of public values and points a, b, and c in G1 or G2."
+        public_values: [integer]
+        a: object{G1Point}
+        b: object{G2Point}
+        c: object{G1Point}
+    )
+
+    (defun verify (proof:object{Proof})
+        @doc 
+        "Structure representing a proof in zk-SNARKs. It comprises the public values and points a, b, and c in G1 or G2 forms. \
+        \ This structure is used to encapsulate the proof data that needs to be verified using the Groth16 verification algorithm."
+      
+        (
+            let* 
+            (
+                (input (at 'public_values proof))
+                (enforce (+ (length input) 1) "verifier-bas-input")
+                
+                (verifier_init 
+                    { 
+                        "n_public": 17,
+                        "alfa1": { "x": 19585229621408861241979089483891340022980560671819105963109956904101022953913, "y": 17683889819663003197107728572179825117093108995628430167242695730269218995449 },
+                        "beta2": { "x": [5918189778294398373867215857077657485085144687386129296042139262418695375465 11815681884459819136775466292413961857142768070519748123365539964381646088673], "y": [16256495067915955788372634108963148989989955099312959915110410844897734263002 17272844284718878797026118469560524097391792914946780395473367380843919101959] },
+                        "gamma2": { "x": [10857046999023057135944570762232829481370756359578518086990519993285655852781 11559732032986387107991004021392285783925812861821192530917403151452391805634], "y": [8495653923123431417604973247489272438418190587263600148770280649306958101930 4082367875863433681332203403145435568316851327593401208105741076214120093531] },
+                        "delta2": { "x": [2743992914459100285796607940309762128450829133186397991240030162563844995401 5518365423809978670052376754832800879897141688562231746125556207519650336018], "y": [6297464580847426144271909267188666525585715936972107209988948896710277297004 9181837271115394388960986778038421829097107875297072647835172208499537364425] },
+                        "ic": [
+                                { "x": 3112068476058156280722019036086622723395237917958166967588305973680231671041, "y": 13773521545516017759915756856808590603809916313890034255909471510507332957344 },
+                                { "x": 15102315561075378344738217911489088814353654891502088452597318562251978865537, "y": 9553799761961098177943579221472309297020455798115887857106427877081457751447 },
+                                { "x": 19274511882804566765329988987816155931470423226580562197031785396528861411514, "y": 589136719894621780505340629500869416702142646382464687772927479013512732677 },
+                                { "x": 17426968711452127159821607962885858911818960441741725790754395944257596244816, "y": 479952006007304827652702190533819505232236641798938155014276952939027753173 },
+                                { "x": 15185719325150466139070080836476242601916023789875066172155427758017322185749, "y": 4654727223308744169987768161785865940673003889954881190432884695396769757503 },
+                                { "x": 11108277642693785863074427791862679306450367718414993455920970536766464735179, "y": 1760496172099004602710184453950438969197671717960429661535341813442115659028 },
+                                { "x": 16640799928528784307845429367461528212663726570723014250197123618818148921405, "y": 12560521212391994889128260021922082223691871731851888499406004745475192276477 },
+                                { "x": 1488285584661647802261965844288245310577129878086354769619590188225448372657, "y": 11553347832271196365752618566515772978073043581082834842312654399660156291647 },
+                                { "x": 4873597253457733168089046093244362727499277655740872531953702695340047970525, "y": 15437051666428878259458946471468653860263303160281103848539134433273303514193 },
+                                { "x": 9956565967672541765693700925859609670242754376426483051654900658772493169927, "y": 6289536033749157461492430357820643745024642680450732759698664756493577182727 },
+                                { "x": 4416352838867423077192335113837877619250667554801375918313594248337691024947, "y": 17089713185250986235835190104678625759807033474994991707116862824913009861829 },
+                                { "x": 10912074949393387365551821829332362404333276045764368010612318181312716506958, "y": 21471771068560833309577461329945200137243079569960416443255918377023391207320 },
+                                { "x": 19377258608598323041867922908155988480122831249740866638828247727251029428083, "y": 17527228582923629887372614298362372415882033355743631330718335416205892217146 },
+                                { "x": 1083091602776585189644350041101575741636756728446869556532450979277894463413, "y": 3183564087118228146719986567546520494591529402432388048818509430908051580386 },
+                                { "x": 10494968420483304937849526213464133193058223821286094591309909805867227086080, "y": 598651133110817298680460592612894458772401912478977817165511955827493732742 },
+                                { "x": 3860021089969547808944500952076140825357174214637255000570982388266607412607, "y": 16821735396809931871726484872595070079346861083421580472628643280933385302699 },
+                                { "x": 3278582284054541900688063951830137982879043747440152006695714630298689866735, "y": 10831506732012384976788404824549853367752003116516966774797741809309670944325 },
+                                { "x": 7223562635299666254163333490692827018421853409422067621358970364453835766266, "y": 20994201550302493926256799647602747847411379076225248810407297090047462629551 }
+                        ],
+                        "snark_scalar_field": 21888242871839275222246405745257275088548364400416034343698204186575808495617
+                    }
+                )
+
+                (vk_x { "x": 0, "y": 0 })
+                (ic_0 (at 0 (at 'ic verifier_init)))
+                (vk_x_0 (point-add 'g1 vk_x ic_0))
+                (snark_scalar_field (at 'snark_scalar_field verifier_init))
+
+                
+                    (input_1 (at 0 input))
+                    (enforce (< input_1 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_1 (at 1 (at 'ic verifier_init)))
+                    (vk_y_1 (scalar-mult 'g1 ic_1 input_1))
+                    (vk_x_1 (point-add 'g1 vk_x_0 vk_y_1))
+                
+                    (input_2 (at 1 input))
+                    (enforce (< input_2 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_2 (at 2 (at 'ic verifier_init)))
+                    (vk_y_2 (scalar-mult 'g1 ic_2 input_2))
+                    (vk_x_2 (point-add 'g1 vk_x_1 vk_y_2))
+                
+                    (input_3 (at 2 input))
+                    (enforce (< input_3 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_3 (at 3 (at 'ic verifier_init)))
+                    (vk_y_3 (scalar-mult 'g1 ic_3 input_3))
+                    (vk_x_3 (point-add 'g1 vk_x_2 vk_y_3))
+                
+                    (input_4 (at 3 input))
+                    (enforce (< input_4 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_4 (at 4 (at 'ic verifier_init)))
+                    (vk_y_4 (scalar-mult 'g1 ic_4 input_4))
+                    (vk_x_4 (point-add 'g1 vk_x_3 vk_y_4))
+                
+                    (input_5 (at 4 input))
+                    (enforce (< input_5 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_5 (at 5 (at 'ic verifier_init)))
+                    (vk_y_5 (scalar-mult 'g1 ic_5 input_5))
+                    (vk_x_5 (point-add 'g1 vk_x_4 vk_y_5))
+                
+                    (input_6 (at 5 input))
+                    (enforce (< input_6 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_6 (at 6 (at 'ic verifier_init)))
+                    (vk_y_6 (scalar-mult 'g1 ic_6 input_6))
+                    (vk_x_6 (point-add 'g1 vk_x_5 vk_y_6))
+                
+                    (input_7 (at 6 input))
+                    (enforce (< input_7 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_7 (at 7 (at 'ic verifier_init)))
+                    (vk_y_7 (scalar-mult 'g1 ic_7 input_7))
+                    (vk_x_7 (point-add 'g1 vk_x_6 vk_y_7))
+                
+                    (input_8 (at 7 input))
+                    (enforce (< input_8 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_8 (at 8 (at 'ic verifier_init)))
+                    (vk_y_8 (scalar-mult 'g1 ic_8 input_8))
+                    (vk_x_8 (point-add 'g1 vk_x_7 vk_y_8))
+                
+                    (input_9 (at 8 input))
+                    (enforce (< input_9 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_9 (at 9 (at 'ic verifier_init)))
+                    (vk_y_9 (scalar-mult 'g1 ic_9 input_9))
+                    (vk_x_9 (point-add 'g1 vk_x_8 vk_y_9))
+                
+                    (input_10 (at 9 input))
+                    (enforce (< input_10 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_10 (at 10 (at 'ic verifier_init)))
+                    (vk_y_10 (scalar-mult 'g1 ic_10 input_10))
+                    (vk_x_10 (point-add 'g1 vk_x_9 vk_y_10))
+                
+                    (input_11 (at 10 input))
+                    (enforce (< input_11 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_11 (at 11 (at 'ic verifier_init)))
+                    (vk_y_11 (scalar-mult 'g1 ic_11 input_11))
+                    (vk_x_11 (point-add 'g1 vk_x_10 vk_y_11))
+                
+                    (input_12 (at 11 input))
+                    (enforce (< input_12 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_12 (at 12 (at 'ic verifier_init)))
+                    (vk_y_12 (scalar-mult 'g1 ic_12 input_12))
+                    (vk_x_12 (point-add 'g1 vk_x_11 vk_y_12))
+                
+                    (input_13 (at 12 input))
+                    (enforce (< input_13 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_13 (at 13 (at 'ic verifier_init)))
+                    (vk_y_13 (scalar-mult 'g1 ic_13 input_13))
+                    (vk_x_13 (point-add 'g1 vk_x_12 vk_y_13))
+                
+                    (input_14 (at 13 input))
+                    (enforce (< input_14 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_14 (at 14 (at 'ic verifier_init)))
+                    (vk_y_14 (scalar-mult 'g1 ic_14 input_14))
+                    (vk_x_14 (point-add 'g1 vk_x_13 vk_y_14))
+                
+                    (input_15 (at 14 input))
+                    (enforce (< input_15 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_15 (at 15 (at 'ic verifier_init)))
+                    (vk_y_15 (scalar-mult 'g1 ic_15 input_15))
+                    (vk_x_15 (point-add 'g1 vk_x_14 vk_y_15))
+                
+                    (input_16 (at 15 input))
+                    (enforce (< input_16 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_16 (at 16 (at 'ic verifier_init)))
+                    (vk_y_16 (scalar-mult 'g1 ic_16 input_16))
+                    (vk_x_16 (point-add 'g1 vk_x_15 vk_y_16))
+                
+                    (input_17 (at 16 input))
+                    (enforce (< input_17 snark_scalar_field) "verifier-gte-snark-scalar-field")
+
+                    (ic_17 (at 17 (at 'ic verifier_init)))
+                    (vk_y_17 (scalar-mult 'g1 ic_17 input_17))
+                    (vk_x_17 (point-add 'g1 vk_x_16 vk_y_17))
+                
+                (a1 (negate (at 'a proof)))
+                (a2 (at 'b proof))
+                (b1 (at 'alfa1 verifier_init))
+                (b2 (at 'beta2 verifier_init))
+                (c1 vk_x_17)
+                (c2 (at 'gamma2 verifier_init))
+                (d1 (at 'c proof))
+                (d2 (at 'delta2 verifier_init))
+            )
+            (check-pairing a1 a2 b1 b2 c1 c2 d1 d2)
+        )   
+    )
+
+    (defun negate(p:object{G1Point})
+        @doc
+        "Function to negate a G1 point, a common operation in elliptic curve cryptography. \
+        \ It takes a G1 point and returns its negation. This function is used within the verification process."
+
+        (
+            let*
+            (
+                (q 21888242871839275222246405745257275088696311157297823662689037894645226208583)
+                (x (at 'x p))
+                (y (at 'y p))
+            )
+            (if (= p {"x": 0, "y": 0})
+                {"x": 0, "y": 0}
+                {"x": x, "y": (- q (mod y q))}
+            )
+        )
+    )
+
+    (defun check-pairing(a1:object{G1Point} a2:object{G2Point} b1:object{G1Point} b2:object{G2Point} c1:object{G1Point} c2:object{G2Point} d1:object{G1Point} d2:object{G2Point})
+        @doc 
+        "Function to perform a pairing check, a core component of zk-SNARKs verification. \
+        \ It involves checking the mathematical relationships between pairs of G1 and G2 points, \
+        \ which is used to ensure the validity of a zk-SNARKs proof."
+     
+        (
+            let*
+            (
+                (p1 [a1 b1 c1 d1])
+                (p2 [a2 b2 c2 d2])
+                (paired (pairing-check p1 p2))
+            )
+            {
+                "paired": paired
+            }
+        )
+    )
+)

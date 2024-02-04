@@ -34,7 +34,6 @@ out
 out_tests
 .pact-history
 .draft
-lib*.repl
 *.env
 **/.env
 **/node_modules

@@ -1,0 +1,1108 @@
+(namespace (read-msg 'ns))
+
+(module merkle GOVERNANCE
+    @doc
+    "This module includes capabilities for managing the Merkle tree, such as adding leaves, updating root hashes, \
+    \ and maintaining various states of the tree. It also enforces governance through specific administrative controls, \
+    \ ensuring that only authorized operations can modify the tree. Key functionalities include initialization of the tree,\
+    \ insertion of leaves, and verification of tree integrity through root hash management."
+   
+    (defcap GOVERNANCE ()
+        @doc "Capability to enforce specific administrative privileges."
+        (enforce-keyset "free.opact-admin")
+    )
+
+    (defschema FilledSubtreesSchema
+        @doc 
+        "Schema for the filledSubtrees table. \
+        \ This table stores the values of the filled subtrees in the Merkle tree. \
+        \ Each entry in this table represents a subtree that has been filled up to a certain level. \ 
+        \ When a new leaf is added to the Merkle tree, the hash of this leaf will be combined with the hash values \
+        \ in this table to update the Merkle root. The filled subtrees are used for updating and \
+        \ maintaining the integrity of the Merkle tree as new leaves are added."
+        value:integer)
+      
+    (defschema RootsSchema
+        @doc 
+        "Schema for the roots table. This table stores the root hashes of the Merkle tree at different states. \
+        \ Each root hash represents the state of the Merkle tree at a specific point in time."
+        value:integer)
+
+    (defschema StateSchema
+        @doc
+        "Schema for the state table. This table keeps track of the current state of the Merkle tree, \
+        \ including the current root index, which identifies the latest root hash, and the next index, \
+        \ indicating the position where the next leaf will be inserted."
+
+        current_root_index:integer
+        next_index:integer
+    )
+
+    (defschema admin
+        @doc
+        "Schema defining the structure for the admin table. \
+        \ This schema is used to store administrative information for the Merkle tree module, \
+        \ specifically the administrative guard. The 'guard' field holds the security information or \
+        \ rules (such as a keyset) that determine who has administrative privileges over the module. \ 
+        \ This schema is critical for enforcing access control and secure management of the Merkle tree operations."
+
+        guard:guard
+    )
+      
+    (deftable filledSubtrees:{FilledSubtreesSchema})
+    (deftable roots:{RootsSchema})
+    (deftable state:{StateSchema})
+    (deftable admins:{admin})
+
+    (defconst MODULE_KEY "M")
+
+    (defun get-current-root-index ()
+        @doc 
+        "Retrieves the current root index from the state table. \
+        \ This index points to the latest root hash of the Merkle tree."
+      
+        (at 'current_root_index (read state "0")))
+    
+    (defun get-next-index ()
+        @doc 
+        "Retrieves the next index from the state table. \
+        \ This index indicates the position where the next leaf will be inserted in the Merkle tree."
+        
+        (at 'next_index (read state "0")))
+
+    (defun set-current-root-index (current_root_index:integer)
+        @doc 
+        "Updates the current root index in the state table. \
+        \ This operation is used when the Merkle tree's root has changed due to the insertion of a new leaf."
+
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
+        (update state "0" {"current_root_index": current_root_index}))
+    
+    (defun set-next-index (next_index:integer)
+        @doc 
+        "Updates the next index in the state table. \ 
+        \ This is used to prepare for the next leaf insertion, incrementing the position for the upcoming leaf."
+
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
+        (update state "0" {"next_index": next_index}))
+
+    (defun set-filled-subtrees (key:string value:integer)
+        @doc 
+        "Updates the values of filled subtrees in the Merkle tree. \
+        \ This function is used to maintain the state of the tree as new leaves are added. \
+        \ Each subtree in the Merkle tree is represented by a hash value, \ 
+        \ and this function updates these values as the tree evolves. \
+        \ The 'key' corresponds to the specific level of the subtree being updated, \
+        \ and 'value' is the new hash for that subtree."
+   
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
+        (write filledSubtrees key { "value": value }))
+
+    (defun insert-root (key:string value:integer)
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
+        (write roots key { "value": value }))
+
+    (defun initialize()
+        @doc "Initializes the Merkle tree, setting up the initial state, filled subtrees, and the first root. \
+        \ This function is typically called once when the module is first used to prepare the Merkle tree for operation."
+
+        (with-capability (GOVERNANCE)
+        
+            (set-filled-subtrees "0" (poseidon-zeros 0))
+        
+            (set-filled-subtrees "1" (poseidon-zeros 1))
+        
+            (set-filled-subtrees "2" (poseidon-zeros 2))
+        
+            (set-filled-subtrees "3" (poseidon-zeros 3))
+        
+            (set-filled-subtrees "4" (poseidon-zeros 4))
+        
+            (set-filled-subtrees "5" (poseidon-zeros 5))
+        
+            (set-filled-subtrees "6" (poseidon-zeros 6))
+        
+            (set-filled-subtrees "7" (poseidon-zeros 7))
+        
+            (set-filled-subtrees "8" (poseidon-zeros 8))
+        
+            (set-filled-subtrees "9" (poseidon-zeros 9))
+        
+            (set-filled-subtrees "10" (poseidon-zeros 10))
+        
+            (set-filled-subtrees "11" (poseidon-zeros 11))
+        
+            (set-filled-subtrees "12" (poseidon-zeros 12))
+        
+            (set-filled-subtrees "13" (poseidon-zeros 13))
+        
+            (set-filled-subtrees "14" (poseidon-zeros 14))
+        
+            (set-filled-subtrees "15" (poseidon-zeros 15))
+        
+            (set-filled-subtrees "16" (poseidon-zeros 16))
+        
+            (set-filled-subtrees "17" (poseidon-zeros 17))
+        
+            (set-filled-subtrees "18" (poseidon-zeros 18))
+        
+            (set-filled-subtrees "19" (poseidon-zeros 19))
+        
+            (set-filled-subtrees "20" (poseidon-zeros 20))
+        
+            (set-filled-subtrees "21" (poseidon-zeros 21))
+        
+            (set-filled-subtrees "22" (poseidon-zeros 22))
+        
+            (set-filled-subtrees "23" (poseidon-zeros 23))
+        
+            (set-filled-subtrees "24" (poseidon-zeros 24))
+        
+            (set-filled-subtrees "25" (poseidon-zeros 25))
+        
+            (set-filled-subtrees "26" (poseidon-zeros 26))
+        
+            (set-filled-subtrees "27" (poseidon-zeros 27))
+        
+            (set-filled-subtrees "28" (poseidon-zeros 28))
+        
+            (set-filled-subtrees "29" (poseidon-zeros 29))
+        
+            (set-filled-subtrees "30" (poseidon-zeros 30))
+        
+            (set-filled-subtrees "31" (poseidon-zeros 31))
+        
+
+            (insert-root "0" (poseidon-zeros 0))
+
+            (insert state "0" {
+                "current_root_index": 0,
+                "next_index": 0
+            })
+        )
+    )
+
+    (defun reset()
+        @doc 
+        "Resets the Merkle tree to its initial state. \
+        \ This can be useful for testing or in scenarios where the tree needs to be restarted from a clean state."
+
+        (with-capability (GOVERNANCE)
+        
+            (set-filled-subtrees "0" (poseidon-zeros 0))
+        
+            (set-filled-subtrees "1" (poseidon-zeros 1))
+        
+            (set-filled-subtrees "2" (poseidon-zeros 2))
+        
+            (set-filled-subtrees "3" (poseidon-zeros 3))
+        
+            (set-filled-subtrees "4" (poseidon-zeros 4))
+        
+            (set-filled-subtrees "5" (poseidon-zeros 5))
+        
+            (set-filled-subtrees "6" (poseidon-zeros 6))
+        
+            (set-filled-subtrees "7" (poseidon-zeros 7))
+        
+            (set-filled-subtrees "8" (poseidon-zeros 8))
+        
+            (set-filled-subtrees "9" (poseidon-zeros 9))
+        
+            (set-filled-subtrees "10" (poseidon-zeros 10))
+        
+            (set-filled-subtrees "11" (poseidon-zeros 11))
+        
+            (set-filled-subtrees "12" (poseidon-zeros 12))
+        
+            (set-filled-subtrees "13" (poseidon-zeros 13))
+        
+            (set-filled-subtrees "14" (poseidon-zeros 14))
+        
+            (set-filled-subtrees "15" (poseidon-zeros 15))
+        
+            (set-filled-subtrees "16" (poseidon-zeros 16))
+        
+            (set-filled-subtrees "17" (poseidon-zeros 17))
+        
+            (set-filled-subtrees "18" (poseidon-zeros 18))
+        
+            (set-filled-subtrees "19" (poseidon-zeros 19))
+        
+            (set-filled-subtrees "20" (poseidon-zeros 20))
+        
+            (set-filled-subtrees "21" (poseidon-zeros 21))
+        
+            (set-filled-subtrees "22" (poseidon-zeros 22))
+        
+            (set-filled-subtrees "23" (poseidon-zeros 23))
+        
+            (set-filled-subtrees "24" (poseidon-zeros 24))
+        
+            (set-filled-subtrees "25" (poseidon-zeros 25))
+        
+            (set-filled-subtrees "26" (poseidon-zeros 26))
+        
+            (set-filled-subtrees "27" (poseidon-zeros 27))
+        
+            (set-filled-subtrees "28" (poseidon-zeros 28))
+        
+            (set-filled-subtrees "29" (poseidon-zeros 29))
+        
+            (set-filled-subtrees "30" (poseidon-zeros 30))
+        
+            (set-filled-subtrees "31" (poseidon-zeros 31))
+        
+
+            (insert-root "0" (poseidon-zeros 0))
+
+            (write state "0" {
+                "current_root_index": 0,
+                "next_index": 0
+            })
+        )
+    )
+
+    (defun poseidon-zeros (i:integer)
+       @doc
+       "A helper function that provides Poseidon hash values for 'zero elements', \
+       \ used in the Merkle tree's construction and operations."
+
+        (if (= i 0)
+            19014214495641488759237505126948346942972912379615652741039992445865937985820 ; (hash "0") zeroElement
+            (if (= i 1)
+                10447686833432518214645507207530993719569269870494442919228205482093666444588 ; (hash (+ "19014214495641488759237505126948346942972912379615652741039992445865937985820" "19014214495641488759237505126948346942972912379615652741039992445865937985820"))
+                (if (= i 2)
+                    2186774891605521484511138647132707263205739024356090574223746683689524510919 ; (hash (+ "10447686833432518214645507207530993719569269870494442919228205482093666444588" "10447686833432518214645507207530993719569269870494442919228205482093666444588"))
+                    (if (= i 3)
+                        6624528458765032300068640025753348171674863396263322163275160878496476761795
+                        (if (= i 4)
+                            17621094343163687115133447910975434564869602694443155644084608475290066932181
+                            (if (= i 5)
+                                21545791430054675679721663567345713395464273214026699272957697111075114407152
+                                (if (= i 6)
+                                    792508374812064496349952600148548816899123600522533230070209098983274365937
+                                    (if (= i 7)
+                                        19099089739310512670052334354801295180468996808740953306205199022348496584760
+                                        (if (= i 8)
+                                            1343295825314773980905176364810862207662071643483131058898955641727916222615
+                                            (if (= i 9)
+                                                16899046943457659513232595988635409932880678645111808262227296196974010078534
+                                                (if (= i 10)
+                                                    4978389689432283653287395535267662892150042177938506928108984372770188067714
+                                                    (if (= i 11)
+                                                        9761894086225021818188968785206790816885919715075386907160173350566467311501
+                                                        (if (= i 12)
+                                                            13558719211472510351154804954267502807430687253403060703311957777648054137517
+                                                            (if (= i 13)
+                                                                15093063772197360439942670764347374738539884999170539844715519374005555450641
+                                                                (if (= i 14)
+                                                                    8536725160056600348017064378079921187897118401199171112659606555966521727181
+                                                                    (if (= i 15)
+                                                                        17731960725993409205647629535433695139708451502526773527161126281730851312303
+                                                                        (if (= i 16)
+                                                                            12378336118662422402312038713508977861617293534645772054906298430730335052258
+                                                                            (if (= i 17)
+                                                                                15746370922467144378022955960137552273962623515478055069197781668972427980569
+                                                                                (if (= i 18)
+                                                                                    12833304663529859056360652781553170470307618587436982477441419650866727735640
+                                                                                    (if (= i 19)
+                                                                                        19675769322130325405595465035336399585577759990829087793049230689392015057069
+                                                                                        (if (= i 20)
+                                                                                            20460142462285856218765860898052067672306981225120697436392828593803361495377
+                                                                                            (if (= i 21)
+                                                                                                1942429939665438243642882743222215597996755330878238278454825452269798788659
+                                                                                                (if (= i 22)
+                                                                                                    3680120961298734454556264424276743339847269018642429207242435412350006451141
+                                                                                                    (if (= i 23)
+                                                                                                        17355733648944254784716965955209881109394425269146540067736115686834449561815
+                                                                                                        (if (= i 24)
+                                                                                                            7814425154102164661924206185851966203709420761102601320266162949469822497631
+                                                                                                            (if (= i 25)
+                                                                                                                20500940315674828709940203301795070113483112804555517947060811444629615490886
+                                                                                                                (if (= i 26)
+                                                                                                                    12943513298019549814669382523773192352531310057962994442623921531591290970586
+                                                                                                                    (if (= i 27)
+                                                                                                                        9463184482936435911705007425526132250967847301066197135590479391265638556562
+                                                                                                                        (if (= i 28)
+                                                                                                                            16532470416046677990694259805372275394047147822061768800965480071549373561346
+                                                                                                                            (if (= i 29)
+                                                                                                                                6881547692304206611837169059928209217064150439977546062638353296618744427535
+                                                                                                                                (if (= i 30)
+                                                                                                                                    11311817982268587140804034457558811604681102050619457785272093068988798070016
+                                                                                                                                    (if (= i 31)
+                                                                                                                                        6098629282112318983356928234184677637049116404036076847941175648853529936605
+                                                                                                                                        ""
+                                                                                                                                    )
+                                                                                                                                )
+                                                                                                                            )
+                                                                                                                        )
+                                                                                                                    )
+                                                                                                                )
+                                                                                                            )
+                                                                                                        )
+                                                                                                    )
+                                                                                                )
+                                                                                            )
+                                                                                        )
+                                                                                    )
+                                                                                )
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )  
+        )
+    )
+
+    (defun is-known-root (root:integer)
+        @doc 
+        "Checks whether a given root hash is already known (i.e., exists) in the Merkle tree. \
+        \ This is useful for verifying the presence of specific states of the tree."
+
+        (
+            let*
+            (
+                (root_value (length (select roots (where 'value (= root)))))
+            )
+            (= root_value 1)
+        )
+    )
+
+    (defun init-admin (guard:guard)
+        @doc 
+        "Initializes the admin for the Merkle tree module. \
+        \ This function sets up the initial administrative guard, \
+        \ which is used to enforce security and governance over operations within the module. \
+        \ It's typically called once during the module setup to establish the initial administrative control."
+   
+        (with-capability (GOVERNANCE)
+            (insert admins MODULE_KEY {'guard: guard}))
+    )
+
+    (defun insert-leaf (leaf:integer)
+       @doc 
+       "Inserts a new leaf into the Merkle tree. This operation involves several steps: \
+       \ computing the new hash values at each level of the tree up to the root, \ 
+       \ updating the filled subtrees, and adjusting the tree's current root index and next index. \
+       \ The function takes the new leaf's value and integrates it into the tree, \ 
+       \ recalculating and updating the necessary nodes to maintain the integrity of the Merkle tree. \ 
+       \ Upon successful insertion, the function returns the new root hash and the index of the newly inserted leaf, \
+       \ reflecting the updated state of the Merkle tree."
+
+        (enforce-guard (at 'guard (read admins MODULE_KEY)))
+        (
+            let*
+            (
+                (root-history-size 30)
+                (next-index (get-next-index))
+                (current-index next-index)
+                (current-level-hash leaf)
+                (hashes [])
+
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "0")))
+
+                    (lr_1 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 0)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 0)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_1) (at 'right lr_1)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "1")))
+
+                    (lr_2 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 1)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 1)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_2) (at 'right lr_2)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "2")))
+
+                    (lr_3 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 2)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 2)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_3) (at 'right lr_3)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "3")))
+
+                    (lr_4 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 3)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 3)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_4) (at 'right lr_4)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "4")))
+
+                    (lr_5 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 4)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 4)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_5) (at 'right lr_5)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "5")))
+
+                    (lr_6 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 5)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 5)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_6) (at 'right lr_6)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "6")))
+
+                    (lr_7 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 6)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 6)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_7) (at 'right lr_7)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "7")))
+
+                    (lr_8 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 7)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 7)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_8) (at 'right lr_8)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "8")))
+
+                    (lr_9 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 8)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 8)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_9) (at 'right lr_9)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "9")))
+
+                    (lr_10 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 9)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 9)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_10) (at 'right lr_10)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "10")))
+
+                    (lr_11 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 10)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 10)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_11) (at 'right lr_11)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "11")))
+
+                    (lr_12 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 11)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 11)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_12) (at 'right lr_12)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "12")))
+
+                    (lr_13 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 12)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 12)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_13) (at 'right lr_13)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "13")))
+
+                    (lr_14 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 13)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 13)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_14) (at 'right lr_14)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "14")))
+
+                    (lr_15 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 14)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 14)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_15) (at 'right lr_15)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "15")))
+
+                    (lr_16 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 15)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 15)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_16) (at 'right lr_16)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "16")))
+
+                    (lr_17 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 16)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 16)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_17) (at 'right lr_17)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "17")))
+
+                    (lr_18 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 17)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 17)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_18) (at 'right lr_18)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "18")))
+
+                    (lr_19 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 18)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 18)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_19) (at 'right lr_19)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "19")))
+
+                    (lr_20 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 19)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 19)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_20) (at 'right lr_20)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "20")))
+
+                    (lr_21 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 20)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 20)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_21) (at 'right lr_21)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "21")))
+
+                    (lr_22 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 21)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 21)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_22) (at 'right lr_22)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "22")))
+
+                    (lr_23 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 22)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 22)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_23) (at 'right lr_23)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "23")))
+
+                    (lr_24 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 23)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 23)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_24) (at 'right lr_24)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "24")))
+
+                    (lr_25 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 24)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 24)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_25) (at 'right lr_25)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "25")))
+
+                    (lr_26 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 25)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 25)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_26) (at 'right lr_26)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "26")))
+
+                    (lr_27 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 26)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 26)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_27) (at 'right lr_27)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "27")))
+
+                    (lr_28 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 27)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 27)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_28) (at 'right lr_28)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "28")))
+
+                    (lr_29 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 28)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 28)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_29) (at 'right lr_29)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "29")))
+
+                    (lr_30 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 29)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 29)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_30) (at 'right lr_30)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "30")))
+
+                    (lr_31 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 30)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 30)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_31) (at 'right lr_31)))
+
+                    (current-index (/ current-index 2))
+                
+                    (filled-subtrees (at 'value (read filledSubtrees "31")))
+
+                    (lr_32 (if (= (mod current-index 2) 0)
+                        {"left": current-level-hash, "right": (poseidon-zeros 31)}
+                        {"left": filled-subtrees, "right": current-level-hash}
+                    ))
+
+                    (hashes (+ hashes (if (= (mod current-index 2) 0)
+                        [current-level-hash]
+                        [(poseidon-zeros 31)])
+                    ))
+
+                    (current-level-hash (poseidon-hash (at 'left lr_32) (at 'right lr_32)))
+
+                    (current-index (/ current-index 2))
+                
+
+                (current-root-index (at 'current_root_index (read state "0")))
+                (new-root-global-index (+ current-root-index 1))
+                (new-root-history-index (mod new-root-global-index root-history-size))
+                (root-history-index (int-to-str 10 new-root-history-index))
+            )
+            (insert-root root-history-index current-level-hash)
+            (set-current-root-index new-root-global-index)
+            (set-next-index (+ next-index 1))
+        
+            (if (= (at 0 hashes) (poseidon-zeros 0))
+                ""
+                (set-filled-subtrees "0" (at 0 hashes))
+            )
+        
+            (if (= (at 1 hashes) (poseidon-zeros 1))
+                ""
+                (set-filled-subtrees "1" (at 1 hashes))
+            )
+        
+            (if (= (at 2 hashes) (poseidon-zeros 2))
+                ""
+                (set-filled-subtrees "2" (at 2 hashes))
+            )
+        
+            (if (= (at 3 hashes) (poseidon-zeros 3))
+                ""
+                (set-filled-subtrees "3" (at 3 hashes))
+            )
+        
+            (if (= (at 4 hashes) (poseidon-zeros 4))
+                ""
+                (set-filled-subtrees "4" (at 4 hashes))
+            )
+        
+            (if (= (at 5 hashes) (poseidon-zeros 5))
+                ""
+                (set-filled-subtrees "5" (at 5 hashes))
+            )
+        
+            (if (= (at 6 hashes) (poseidon-zeros 6))
+                ""
+                (set-filled-subtrees "6" (at 6 hashes))
+            )
+        
+            (if (= (at 7 hashes) (poseidon-zeros 7))
+                ""
+                (set-filled-subtrees "7" (at 7 hashes))
+            )
+        
+            (if (= (at 8 hashes) (poseidon-zeros 8))
+                ""
+                (set-filled-subtrees "8" (at 8 hashes))
+            )
+        
+            (if (= (at 9 hashes) (poseidon-zeros 9))
+                ""
+                (set-filled-subtrees "9" (at 9 hashes))
+            )
+        
+            (if (= (at 10 hashes) (poseidon-zeros 10))
+                ""
+                (set-filled-subtrees "10" (at 10 hashes))
+            )
+        
+            (if (= (at 11 hashes) (poseidon-zeros 11))
+                ""
+                (set-filled-subtrees "11" (at 11 hashes))
+            )
+        
+            (if (= (at 12 hashes) (poseidon-zeros 12))
+                ""
+                (set-filled-subtrees "12" (at 12 hashes))
+            )
+        
+            (if (= (at 13 hashes) (poseidon-zeros 13))
+                ""
+                (set-filled-subtrees "13" (at 13 hashes))
+            )
+        
+            (if (= (at 14 hashes) (poseidon-zeros 14))
+                ""
+                (set-filled-subtrees "14" (at 14 hashes))
+            )
+        
+            (if (= (at 15 hashes) (poseidon-zeros 15))
+                ""
+                (set-filled-subtrees "15" (at 15 hashes))
+            )
+        
+            (if (= (at 16 hashes) (poseidon-zeros 16))
+                ""
+                (set-filled-subtrees "16" (at 16 hashes))
+            )
+        
+            (if (= (at 17 hashes) (poseidon-zeros 17))
+                ""
+                (set-filled-subtrees "17" (at 17 hashes))
+            )
+        
+            (if (= (at 18 hashes) (poseidon-zeros 18))
+                ""
+                (set-filled-subtrees "18" (at 18 hashes))
+            )
+        
+            (if (= (at 19 hashes) (poseidon-zeros 19))
+                ""
+                (set-filled-subtrees "19" (at 19 hashes))
+            )
+        
+            (if (= (at 20 hashes) (poseidon-zeros 20))
+                ""
+                (set-filled-subtrees "20" (at 20 hashes))
+            )
+        
+            (if (= (at 21 hashes) (poseidon-zeros 21))
+                ""
+                (set-filled-subtrees "21" (at 21 hashes))
+            )
+        
+            (if (= (at 22 hashes) (poseidon-zeros 22))
+                ""
+                (set-filled-subtrees "22" (at 22 hashes))
+            )
+        
+            (if (= (at 23 hashes) (poseidon-zeros 23))
+                ""
+                (set-filled-subtrees "23" (at 23 hashes))
+            )
+        
+            (if (= (at 24 hashes) (poseidon-zeros 24))
+                ""
+                (set-filled-subtrees "24" (at 24 hashes))
+            )
+        
+            (if (= (at 25 hashes) (poseidon-zeros 25))
+                ""
+                (set-filled-subtrees "25" (at 25 hashes))
+            )
+        
+            (if (= (at 26 hashes) (poseidon-zeros 26))
+                ""
+                (set-filled-subtrees "26" (at 26 hashes))
+            )
+        
+            (if (= (at 27 hashes) (poseidon-zeros 27))
+                ""
+                (set-filled-subtrees "27" (at 27 hashes))
+            )
+        
+            (if (= (at 28 hashes) (poseidon-zeros 28))
+                ""
+                (set-filled-subtrees "28" (at 28 hashes))
+            )
+        
+            (if (= (at 29 hashes) (poseidon-zeros 29))
+                ""
+                (set-filled-subtrees "29" (at 29 hashes))
+            )
+        
+            (if (= (at 30 hashes) (poseidon-zeros 30))
+                ""
+                (set-filled-subtrees "30" (at 30 hashes))
+            )
+        
+            (if (= (at 31 hashes) (poseidon-zeros 31))
+                ""
+                (set-filled-subtrees "31" (at 31 hashes))
+            )
+        
+        {
+            "root": current-level-hash,
+            "index": new-root-global-index
+        })
+    )
+)
+
+(create-table roots)
+(create-table filledSubtrees)
+(create-table state)
+(create-table admins)
