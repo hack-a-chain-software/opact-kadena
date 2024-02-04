@@ -1,46 +1,59 @@
 ## Overview
 
-This project contains modules for three zero-knowledge proof technologies: `Groth16`, `Plonk`, and `Merkle Tree`. Each module includes code dynamically generated with EJS templates from input data in `.json` files. 
+This project contains modules for three zero-knowledge proof technologies: `Gas Payer',` `Groth16`, `Merkle Tree` and `Transact`. Some modules include code dynamically generated with EJS templates from input data in `.json` files. 
 
 Below is the project structure and a brief description of each module:
 
 ## Project structure
 ```markdown
 .
-├── groth16-verifier    # Groth16 verifier module
-│   ├── src             # Source code for the Groth16 verifier
-│   │   ├── ejs         # EJS templates for generating Groth16 verifier code
-│   │   │   ├── lib.ejs.repl      # EJS template file
+├── gas-payer                           # Gas payer module
+│   ├── gas-payer-v1.pact               # Source code for gas payer interface
+│   ├── opact-gas-station.pact          # Source code for gas payer implementation
+
+├── groth16-verifier                    # Groth16 verifier module
+│   ├── src                             # Source code for the Groth16 verifier
+│   │   ├── ejs                         # EJS templates for generating Groth16 verifier code
+│   │   │   ├── lib.ejs.repl            # EJS template file
 │   │   │   └── sample.verifier.json
-│   │   └── lib.repl    # Groth16 verifier code, generated from EJS template
-│   └── tests           # Test scripts for the Groth16 verifier
+│   │   └── lib-1x2.repl                # Used for 1x2 circuit (1 input, 2 outputs)
+│   │   └── lib-2x2.repl                # Used for 2x2 circuit (2 inputs, 2 outputs)
+│   │   └── lib-3x2.repl                # Used for 3x2 circuit (3 inputs, 2 outputs)
+│   │   └── lib-4x2.repl                # Used for 4x2 circuit (4 inputs, 2 outputs)
+│   │   └── lib-5x2.repl                # Used for 5x2 circuit (5 inputs, 2 outputs)
+│   │   └── lib-6x2.repl                # Used for 6x2 circuit (6 inputs, 2 outputs)
+│   │   └── lib-7x2.repl                # Used for 7x2 circuit (7 inputs, 2 outputs)
+│   │   └── lib-8x2.repl                # Used for 8x2 circuit (8 inputs, 2 outputs)
+│   │   └── lib-9x2.repl                # Used for 9x2 circuit (9 inputs, 2 outputs)
+│   │   └── lib-10x2.repl               # Used for 10x2 circuit (10 inputs, 2 outputs)
+│   └── tests                           # Test scripts for the Groth16 verifier
 │       └── groth16-tests.repl
-├── plonk-verifier      # Plonk verifier module
-│   ├── src             # Source code for the Plonk verifier
-│   │   ├── ejs         # EJS templates for generating Plonk verifier code
-│   │   │   ├── lib.ejs.repl      # EJS template file
-│   │   │   └── sample.verifier.json
-│   │   └── lib.repl    # Plonk verifier code, generated from EJS template
-│   └── tests           # Test scripts for the Plonk verifier
-│       └── plonk-tests.repl
-├── merkle-tree         # Merkle tree module
-│   └── src             # Source code for the Merkle tree
-│       ├── ejs         # EJS templates for generating Merkle tree code
+
+├── merkle-tree                         # Merkle tree module
+│   └── src                             # Source code for the Merkle tree
+│       ├── ejs                         # EJS templates for generating Merkle tree code
 │       │   ├── data.json
-│       │   └── merkle-tree.ejs.repl # EJS template file
-│       ├── lib.repl    # Merkle tree code, generated from EJS template
-├── package.json        # Project metadata and dependencies
-├── pnpm-lock.yaml      # Exact version of your dependencies. Don't edit this file directly.
-└── README.md           # Project description and instructions
+│       │   └── merkle-tree.ejs.repl    # EJS template file
+│       └── lib.repl                    # Merkle tree implementation code, generated from EJS template.
+
+├── transact                            # Transact module
+│   ├── src                             
+│   │   ├── contract.pact               # Source code for the Transact contract
+│   └── tests                           # Test scripts for the Groth16 verifier
+│       └── Kip                         # Reference source code for the KIP contract, used for testing.
+│       └── transact-tests.repl         # Test scripts for the Transact contract, simulating a deposit and withdrawal.
+├── package.json                        # Project metadata and dependencies
+├── pnpm-lock.yaml                      # Exact version of your dependencies. Don't edit this file directly.
+└── README.md                           # Project description and instructions
 ```
+
+### Gas Payer
+
+The gas payer module contains the source code for the gas payer interface and its implementation. The gas payer is a smart contract that allows users not to pay for gas when they interact with the Opact contract, because the gas payer contract pays for the gas on behalf of the user. The `gas-payer-v1.pact` file contains the source code for the gas payer interface, and the `opact-gas-station.pact` file contains the source code for the gas payer implementation.
 
 ### Groth16 Verifier
 
 Groth16 is a zero-knowledge proof scheme, which allows a party to prove that they have knowledge of certain information without revealing that information. This scheme is widely used in privacy-centric applications and is efficient in terms of proof size and verification time. In this module, we use EJS templates to generate the Groth16 verifier code dynamically. The `lib.ejs.repl` file is the template and the `sample.verifier.json` file contains input data for this template. The generated code is stored in the `lib.repl` file.
-
-### Plonk Verifier
-
-Plonk is another zero-knowledge proof scheme, which is quite efficient and versatile. It has been adopted for various privacy and scaling solutions in the blockchain space. Similar to the Groth16 module, we use an EJS template (`lib.ejs.repl`) and input data (`sample.verifier.json`) to generate the Plonk verifier code, which is stored in the `lib.repl` file.
 
 ### Merkle Tree
 
@@ -72,15 +85,27 @@ Then for each contract:
 
 Specifically, for each module:
 - `groth16-verifier`: We run `generate-groth16` and `test-groth16`.
-- `plonk-verifier`: We run `generate-plonk` and `test-plonk`.
 - `merkle-tree`: We run `generate-merkle`.
+
+## Generate the contract code
+
+To generate the contract code, we use the `contracts` command of the `pnpm` package manager. To generate the Groth16 verifier and Merkle Tree code, we run the following commands:
+
+```bash
+pnpm contracts generate-groth16
+pnpm contracts generate-merkle
+```
+
+The output of the generated files is already available in this repository within the `src` part of each respective folder. Each file starting with `lib` is the generated file from the EJS template.
 
 ## Run the test
 
-The unit tests for each module are placed in the `tests` directory. For example, in order to test the Plonk verifier, we run the following command:
+The unit tests for each module are placed in the `tests` directory. In order to test the contracts, we run the following command:
 
 ```bash
-pnpm contracts test-plonk
+pnpm contracts test-groth16
+pnpm contracts test-merkle
+pnpm contracts test-transact
 ```
 
 If everything went well, you should see the following output:
@@ -92,7 +117,6 @@ Load successful
 If any test fails, you should see something like this:
 
 ```bash
-plonk-verifier/tests/plonk-tests.repl:7:0:ExecError: FAILURE: verify: expected {"paired": true}:object:*, received {"paired": false}:object:*
 Load failed
 ```
 
