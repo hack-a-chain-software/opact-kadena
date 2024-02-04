@@ -1,3 +1,27 @@
+; --------------------------------------------------------
+; Notes
+; --------------------------------------------------------
+
+; A Merkle tree is built from the bottom up, where each leaf is a data block and non-leaf nodes are hashes of their child nodes. 
+; The root of the tree, known as the Merkle root, represents the entire dataset. Changing even a single block (leaf) would result in 
+; a different Merkle root. 
+
+; The poseidon-zeros function, is used for handling uninitialized parts of the tree. 
+; This function generates predefined hash values for "zero elements," which are used to represent empty leaves 
+; or subtrees within the Merkle tree.
+
+; The test values below were used as reference and tested in javascript libraries where the same results were obtained.
+; Anyone can replicate these results by building a merkle tree of height 32 using the poseidon hash function as zero element.
+
+; --------------------------------------------------------
+; Test Cases
+; --------------------------------------------------------
+
+; [✗] Insert Leaf | Failure
+; [✔] Insert Leaf | Successful
+; [✔] Is Known Root | True
+; [✗] Is Known Root | False
+
 (define-namespace 'free (sig-keyset) (sig-keyset))
 
 (env-data 
@@ -19,61 +43,98 @@
 (env-gas 0)
 
 (init-admin (read-keyset "user1"))
+
+; [✗] Insert Leaf | Failure
+
+(expect-failure "trying to insert into a not initialize merkle" "row not found" (insert-leaf 0))
+
 (initialize)
 
-; A Merkle tree is built from the bottom up, where each leaf is a data block and non-leaf nodes are hashes of their child nodes. 
-; The root of the tree, known as the Merkle root, represents the entire dataset. Changing even a single block (leaf) would result in 
-; a different Merkle root. 
-; The poseidon-zeros function, is used for handling empty or uninitialized parts of the tree. 
-; This function generates predefined hash values for "zero elements," which are used to represent empty leaves or subtrees within the Merkle tree.
-; The test values below were used as reference in javascript libraries and obtained the same result as here.
-; Anyone can obtain the same results by building a merkle tree of height 32 using the poseidon hash function as zero element.
+; [✔] Insert Leaf | Successful
 
 (expect "merkle" {"root": 75384953468489046983911671876400248222449372029672832467076510649225676077, "index": 1} (insert-leaf 0))
-(expect "is-know-root" 75384953468489046983911671876400248222449372029672832467076510649225676077)
-(expect-failure "is-know-root" (is-know-root 7100261737961175651894661471628070425717871781918545820690660904436371636492))
-(expect-failure "is-know-root" (is-know-root 433691966820481170835612732662415018601648678037719227187608695860310427976))
-(expect-failure "is-know-root" (is-know-root 7098826222200342209188065928557332008815532855779868708346378343137310353829))
-(expect-failure "is-know-root" (is-know-root 5761155846399808156424816482501372050616463271338541789615967734134838540609))
 
-(print {"Total gas (insert-leaf)": (env-gas)})
+(print {"Total gas (insert-leaf 0)": (env-gas)})
 (env-gas 0)
+
+; [✔] Is Known Root | True
+
+(expect "is-known-root" true (is-known-root 75384953468489046983911671876400248222449372029672832467076510649225676077)) (env-gas 0)
+
+; [✗] Is Known Root | False
+; These roots are never included in the tree, so they are unknown roots so far.
+
+(expect "is-known-root" false (is-known-root 7100261737961175651894661471628070425717871781918545820690660904436371636492)) (env-gas 0)
+(expect "is-known-root" false (is-known-root 433691966820481170835612732662415018601648678037719227187608695860310427976)) (env-gas 0)
+(expect "is-known-root" false (is-known-root 7098826222200342209188065928557332008815532855779868708346378343137310353829)) (env-gas 0)
+(expect "is-known-root" false (is-known-root 5761155846399808156424816482501372050616463271338541789615967734134838540609)) (env-gas 0)
+
+; [✔] Insert Leaf | True
 
 (expect "merkle" {"root": 7100261737961175651894661471628070425717871781918545820690660904436371636492, "index": 2} (insert-leaf 1))
-(expect "is-know-root" 75384953468489046983911671876400248222449372029672832467076510649225676077)
-(expect "is-know-root" 7100261737961175651894661471628070425717871781918545820690660904436371636492)
-(expect-failure "is-know-root" (is-know-root 433691966820481170835612732662415018601648678037719227187608695860310427976))
-(expect-failure "is-know-root" (is-know-root 7098826222200342209188065928557332008815532855779868708346378343137310353829))
-(expect-failure "is-know-root" (is-know-root 5761155846399808156424816482501372050616463271338541789615967734134838540609))
 
-(print {"Total gas (insert-leaf)": (env-gas)})
+(print {"Total gas (insert-leaf 1)": (env-gas)})
 (env-gas 0)
+
+; [✔] Is Known Root | True
+
+(expect "is-known-root" true (is-known-root 75384953468489046983911671876400248222449372029672832467076510649225676077)) (env-gas 0)
+(expect "is-known-root" true (is-known-root 7100261737961175651894661471628070425717871781918545820690660904436371636492)) (env-gas 0)
+
+; [✗] Is Known Root | False
+
+(expect "is-known-root" false (is-known-root 433691966820481170835612732662415018601648678037719227187608695860310427976)) (env-gas 0)
+(expect "is-known-root" false (is-known-root 7098826222200342209188065928557332008815532855779868708346378343137310353829)) (env-gas 0)
+(expect "is-known-root" false (is-known-root 5761155846399808156424816482501372050616463271338541789615967734134838540609)) (env-gas 0)
+
+; [✔] Insert Leaf | True
 
 (expect "merkle" {"root": 433691966820481170835612732662415018601648678037719227187608695860310427976, "index": 3} (insert-leaf 2))
-(expect "is-know-root" 75384953468489046983911671876400248222449372029672832467076510649225676077)
-(expect "is-know-root" 7100261737961175651894661471628070425717871781918545820690660904436371636492)
-(expect "is-know-root" 433691966820481170835612732662415018601648678037719227187608695860310427976)
-(expect-failure "is-know-root" (is-know-root 7098826222200342209188065928557332008815532855779868708346378343137310353829))
-(expect-failure "is-know-root" (is-know-root 5761155846399808156424816482501372050616463271338541789615967734134838540609))
-
-(print {"Total gas (insert-leaf)": (env-gas)})
+(print {"Total gas (insert-leaf 2)": (env-gas)})
 (env-gas 0)
+
+; [✔] Is Known Root | True
+
+(expect "is-known-root" true (is-known-root 75384953468489046983911671876400248222449372029672832467076510649225676077)) (env-gas 0)
+(expect "is-known-root" true (is-known-root 7100261737961175651894661471628070425717871781918545820690660904436371636492)) (env-gas 0)
+(expect "is-known-root" true (is-known-root 433691966820481170835612732662415018601648678037719227187608695860310427976)) (env-gas 0)
+
+; [✗] Is Known Root | False
+
+(expect "is-known-root" false (is-known-root 7098826222200342209188065928557332008815532855779868708346378343137310353829)) (env-gas 0)
+(expect "is-known-root" false (is-known-root 5761155846399808156424816482501372050616463271338541789615967734134838540609)) (env-gas 0)
+
+; [✔] Insert Leaf | True
 
 (expect "merkle" {"root": 7098826222200342209188065928557332008815532855779868708346378343137310353829, "index": 4} (insert-leaf 3))
-(expect "is-know-root" 75384953468489046983911671876400248222449372029672832467076510649225676077)
-(expect "is-know-root" 7100261737961175651894661471628070425717871781918545820690660904436371636492)
-(expect "is-know-root" 433691966820481170835612732662415018601648678037719227187608695860310427976)
-(expect "is-know-root" 7098826222200342209188065928557332008815532855779868708346378343137310353829)
-(expect-failure "is-know-root" (is-know-root 5761155846399808156424816482501372050616463271338541789615967734134838540609))
-
-(print {"Total gas (insert-leaf)": (env-gas)})
+(print {"Total gas (insert-leaf 3)": (env-gas)})
 (env-gas 0)
 
-(expect "merkle" {"root": 5761155846399808156424816482501372050616463271338541789615967734134838540609, "index": 5} (insert-leaf 4))
-(expect "is-know-root" 75384953468489046983911671876400248222449372029672832467076510649225676077)
-(expect "is-know-root" 7100261737961175651894661471628070425717871781918545820690660904436371636492)
-(expect "is-know-root" 433691966820481170835612732662415018601648678037719227187608695860310427976)
-(expect "is-know-root" 7098826222200342209188065928557332008815532855779868708346378343137310353829)
-(expect "is-know-root" 5761155846399808156424816482501372050616463271338541789615967734134838540609)
+; [✔] Is Known Root | True
 
-(print {"Total gas (insert-leaf)": (env-gas)})
+(expect "is-know-root" true (is-known-root 75384953468489046983911671876400248222449372029672832467076510649225676077)) (env-gas 0)
+(expect "is-know-root" true (is-known-root 7100261737961175651894661471628070425717871781918545820690660904436371636492)) (env-gas 0)
+(expect "is-know-root" true (is-known-root 433691966820481170835612732662415018601648678037719227187608695860310427976)) (env-gas 0)
+(expect "is-know-root" true (is-known-root 7098826222200342209188065928557332008815532855779868708346378343137310353829)) (env-gas 0)
+
+; [✗] Is Known Root | False
+
+(expect "is-known-root" false (is-known-root 5761155846399808156424816482501372050616463271338541789615967734134838540609)) (env-gas 0)
+
+; [✔] Insert Leaf | True
+
+(expect "merkle" {"root": 5761155846399808156424816482501372050616463271338541789615967734134838540609, "index": 5} (insert-leaf 4))
+(print {"Total gas (insert-leaf 4)": (env-gas)})
+(env-gas 0)
+
+; [✔] Is Known Root | True
+
+(expect "is-known-root" true (is-known-root 75384953468489046983911671876400248222449372029672832467076510649225676077)) (env-gas 0)
+(expect "is-known-root" true (is-known-root 7100261737961175651894661471628070425717871781918545820690660904436371636492)) (env-gas 0)
+(expect "is-known-root" true (is-known-root 433691966820481170835612732662415018601648678037719227187608695860310427976)) (env-gas 0)
+(expect "is-known-root" true (is-known-root 7098826222200342209188065928557332008815532855779868708346378343137310353829)) (env-gas 0)
+(expect "is-known-root" true (is-known-root 5761155846399808156424816482501372050616463271338541789615967734134838540609)) (env-gas 0)
+
+; [✗] Is Known Root | False
+
+(expect "is-know-root" false (is-known-root 6524856559452108156424816482501372050616463271338541789615967734134838540609))
