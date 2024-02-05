@@ -61,6 +61,14 @@
 
 ; Simulate a transaction using opact contract with provided proof and external data
 ; For more information on how the proof is generated, see: https://github.com/iden3/snarkjs?tab=readme-ov-file#groth16-1
+; The public values array contains the following values:
+;  - root,
+;  - subtree_root,
+;  - nullifier,
+;  - utxo_out_hash,
+;  - token,
+;  - delta,
+;  - message_hash
 ; The external data is a JSON object that contains the sender, recipient, token type, token amount, and the encrypted output commitments
 ; - sender: This field represents the public key of the sender of the transaction;
 ; - recipient: This field represents the public key of the recipient of the transaction;
@@ -136,6 +144,7 @@
 ; [✗] Deposit Transaction (coin) | Invalid message hash
 ; [✗] Deposit Transaction (coin) | Invalid token
 ; [✗] Deposit Transaction (coin) | Amount is larger than maximum deposit amount
+; [✗] Deposit Transaction (coin) | Invalid merkle root
 ; [✔] Deposit Transaction (coin) | Successful
 ; [✗] Deposit Transaction (coin) | Input is already spent
 ; [✔] Withdraw Transaction (coin) | Successful
@@ -164,6 +173,11 @@
 (poly-fungible-reference.create-account "1" "OZK7f534e0c85e82c0d8ba2c08c7b91e0d984f6bdcf009c5c62f7d5f0a25abb091e0f71142cf7e2bbd7f2cd02b586295eba1f7442caef4f2d7b3e3e3aa6fbeab9b1" (read-keyset "user1"))
 (test-capability (poly-fungible-reference.CREDIT "1" "OZK7f534e0c85e82c0d8ba2c08c7b91e0d984f6bdcf009c5c62f7d5f0a25abb091e0f71142cf7e2bbd7f2cd02b586295eba1f7442caef4f2d7b3e3e3aa6fbeab9b1"))
 (poly-fungible-reference.credit "1" "OZK7f534e0c85e82c0d8ba2c08c7b91e0d984f6bdcf009c5c62f7d5f0a25abb091e0f71142cf7e2bbd7f2cd02b586295eba1f7442caef4f2d7b3e3e3aa6fbeab9b1" (read-keyset "user1") 100.0)
+
+; Setup Merkle Root
+; As initial state, we are assuming the merkle tree has the following roots already inserted
+
+(free.merkle.insert-root "0" 9634049270485623739522952278040765597599123811671707163189917519424521430627)
 
 ; --------------------------------------------------------
 ; [✗] Deposit Transaction (coin) | Invalid public amount
@@ -313,6 +327,45 @@
 (print {"Total gas": (env-gas)})
 
 ; --------------------------------------------------------
+; [✗] Deposit Transaction (coin) | Invalid merkle root
+; --------------------------------------------------------
+
+(env-gasmodel "table")
+(env-gaslimit 10000000)
+(env-gas 0)
+
+; i will change the first value in the public values array to simulate a different merkle root
+; from 9634049270485623739522952278040765597599123811671707163189917519424521430627
+; to 9634049270485623739522952278040765597599123811671707163189917519424521430628
+
+(env-data { 
+  "token-instance": {"refName": {"name": "coin"},
+                     "refSpec": [{"name": "fungible-v2"}]},
+  "recipient-guard": {}
+})
+
+(test.opact.configure-limits 1000000000000.0)
+
+(expect-failure "fungible - deposit" "Invalid merkle root" (test.opact.transact {
+    "public_values":[9634049270485623739522952278040765597599123811671707163189917519424521430628 21443572485391568159800782191812935835534334817699172242223315142338162256601 4269983123749734087340863410786988242831943576810492558288143918332007368943 6250154787840353350922368577567451549626086440710487070480985801649216763244 12973498529895528841357449857067896740778377304443808515519232933800937283664 16768852531924857013319233799278541472304671946104081319805955428966186195608 13888677220227962285664607641729914664378206451716621336834392294603475737022 21414792165107094930503066755869007218485843369153027361954450892852833682115 10000000000000 19008814558092846015329179347507921612538374877486845078133601374546666165621],
+    "a":{"x": 10058150586437843421650730904424051900338990434800132508300590266559781969208, "y": 12060224241606888197632270738692982527946635782137844917299504167392357454904 },
+    "b":{"x":[11976227435144011517945955405558823388407115247215723266525760425528087239431 4439252845693994089886610845293600457590176571764381502449300422217212924896],"y":[14504775324758750444802879280091144430387585945725482650771520836937194770319 9690577804582453332179654047256202632829052703460549481040993204215278286442]},
+    "c":{"x":7290687456311232397082418700335835970458993736518772473278005856027608329697,"y":4188508661923614223195539050205891218097748297891572332869999439412573600739}
+  } { 
+    "sender":"k:aaecdc57dd287ab576f48f7357f470fd41e0060e83197df1fe86c6866698c221",
+    "recipient":"k:aaecdc57dd287ab576f48f7357f470fd41e0060e83197df1fe86c6866698c221",
+    "tokenType": "fungible-v2",
+    "tokenAmount":10000000000000,
+    "tokenId": "0",
+    "outputCommitments": [16768852531924857013319233799278541472304671946104081319805955428966186195608 13888677220227962285664607641729914664378206451716621336834392294603475737022],
+    "encryptedReceipts": [""],
+    "encryptedCommitments": ["eyJ2ZXJzaW9uIjoieDI1NTE5LXhzYWxzYTIwLXBvbHkxMzA1Iiwibm9uY2UiOiJjblo5NXZjQ3BDeDN0dWhYeTdpeG4rUjJDdWd6MUZJUCIsImVwaGVtUHVibGljS2V5IjoiTGk0TVNONEozTzMwQVUrYVBQMGp6WnFVbEFtVlRnNVZDd2J2Q2t0R28zRT0iLCJjaXBoZXJ0ZXh0IjoiSFYxdjlxUnNnZXdaYU9jajJQb2lndm55Y1B1UG9ZSEczc2ZCK1BSeTNHblpjMlZtVnhWcDZYcXJ3VENUOENTRVN6WWpGcmpCLzVMMkpzeUNvLzU1eEowVDlGTWhOcXYwOTBZOE9MSzRIRmpodzh5a3JTTm1wUVRqOTdiWWM4dXpCWHdFUk0zemhWUTRhaUZIOHdJdy9hMERsOENuNjBJNUY0bkpTWDh0d0ZKQTdjZ2MrZkh4NmppUWxLVHhhbDRya2djU0h0Z09XaDA1cjczeXJ4L3ZDMVdXSER6Z1BoNEdzZ2Z4cFUyNmRKYXExTFhaRmx2dDZKbERMSzNPRGQvZUFMaTd4YXgyb2xuQWVxcHc0MXVIYWlDRE9QSFRwZDhPcWFWdVdjb3Vjc0RHY1V4VGI4dUpWVkxUa1REY1JGaEFBSk5tbHB0UjVteGQxY2JsQ255VUJQbmhzTFNPenZIMTFsZ0NGdGRpdUliKy9uZkt1UHZMYnFETWpTTFRFTlREWmJ1ZVJONjJXOHNVRWtkM2hxRVFlZEMxSG1MeDdZNmJqQklEaGVIbjFnK2J1NXB3Sk5mWTUxOE92a0x6TmMxT3JoL2ZBL0ZUdGJiS3Z5SDZNMnVyeklNRDBFYkQ3TVRHdzBpbkIyZStnWk0vZFg3MGh3K05KNUQ5cU1mMWNKVG8vNktIS0llTUFWRmtjVEd1M2wvWlpoNU9HcEsvQUgzYXJxUTFyNVo5azBlYkFFY0oySUQ5R0dIUlhleHR6SzVFWHhGVmVDcm43ekM4L1VlcWZjdGIzNGxJTVJQQkwyQk92eU5aRDBqZEhCbHpncEJKSmtYck1QcHVxVVJCT1VlRnRqYUxuSVptWmp1NWN0OVRyU3kyNGJjOFM1azR2bENsRWFxT3p2R3pBZXRkYmpKWkQ2dFBqb3AvTCsxanFDRWhMd0dCS0pCTWRKbTFGNGN3UVh1VXc3R0Y2SVpNb2E0OWhzSDdMYmtHZ2pTS1hTVk5DZU8wV3ppM0hhTWwxSjVmSVBBS2QwZmV3R2pKZ3V6eFBjQWp1cjJKKzhHc2NkMDRLSGI0T2psUFFPSi9MZGZZbmo0Szkzek1kMDZMWU10MTh6SldSK0l2b3NWamZYcVM2dGtiWXg3WllySzlXQTZqcDloblA1WnpKWmhneTkweXoyT1ppRTFCSG9lSkpRS0MxcDNuT3RkN1pxM0tWbk5lKzJraGxaOWVlOE5CTGtBWGMvbXg4MUpIRmdRTzRBV05kT2d6aWZWOVBWU0k4VThtNmdFK0dMUlRmR2lDWmdUWk14NTE5anhUVlV5K0Q1amJSZz09In0=" "eyJ2ZXJzaW9uIjoieDI1NTE5LXhzYWxzYTIwLXBvbHkxMzA1Iiwibm9uY2UiOiJXRmVEekJyV1lIVHRwZXVmUStOSm1rRnpTdWZqN0dBRyIsImVwaGVtUHVibGljS2V5IjoiMGJKcklxbnpKYXFOSHRHZWkvNFlsekxsMEtEV2Y5WDJWVFZ5MnphQWRBUT0iLCJjaXBoZXJ0ZXh0IjoiVU45NWhiNWMrMTR5ZUhkbU1Sa3AxcTZ4bWIrZndZQkxWY1l0WXEyRmF5MlBXRndkRWVqRHFWbFJ1VTJ5TDcvaC8yL3BnelZtMDV2ZDBmeUxwUmFZQzNEUFFab3NaSlJranNta2d5eExPMDBxQnZwaFd5a1NiMzc3WUduRDNoSFFwRW5HMDJuNUtMdzBkZW03SE5XR1RwczI4RGhUYktaN1NrRFArWjlsbXJyTk9DSnYwaDN2NjBXYkZvT3hoSnJxOTJXM3RVQ0NBZ1JEMHBZbWsvWUJKcFV5T1Bod05YMm1Ham1hay94VHhhODJpaTFsaWpQaGcxZXdLaWExbGg0djdBMExjSnNWandaS0ZtVm42T3FYUW52VnR4a3NucVdZYnpURTNSYXdnc2VLSm0raDlXNGVJSzJ5S29vYnBUVU1VNC9ndCt0YlBzNVlUS2JSaFJPcGQ3QjIzbHpBR2VydmMwKzNrYTFjaVBSR21yMzZ4V09ic2xob0UwRmlzY0JKb2NGRWphMEVEQ1cxWndUYkhiWnZTSUNqS1F0aGtTSlEzL0ZyN1p2dTloaWxpTkhMN3JmLzEraXQ5dC91bzFtcXhOb2NqZE9ZNDZhYXE4ZjQ0UjZyWlJJZHN4WTFlUFRKbVFSUUhHR3JYazBINGdXTisrMjBmeldTWDVPaEhDMTd1Sms5Y3BaZG1OY0FmaVM4RWZDODRRMTc5L04vRSsxNW8zdGtPdFlMWGhhd2JrbGd6STlpaXNzPSJ9"]
+  }))
+
+
+(print {"Total gas": (env-gas)})
+
+; --------------------------------------------------------
 ; [✔] Deposit Transaction (coin) | Successful
 ; --------------------------------------------------------
 
@@ -327,8 +380,6 @@
                        "refSpec": [{"name": "fungible-v2"}]},
     "recipient-guard": {}
 })
-
-(test.opact.configure-limits 1000000000000.0)
 
 (test.opact.transact {
     "public_values":[9634049270485623739522952278040765597599123811671707163189917519424521430627 21443572485391568159800782191812935835534334817699172242223315142338162256601 4269983123749734087340863410786988242831943576810492558288143918332007368943 6250154787840353350922368577567451549626086440710487070480985801649216763244 12973498529895528841357449857067896740778377304443808515519232933800937283664 16768852531924857013319233799278541472304671946104081319805955428966186195608 13888677220227962285664607641729914664378206451716621336834392294603475737022 21414792165107094930503066755869007218485843369153027361954450892852833682115 10000000000000 19008814558092846015329179347507921612538374877486845078133601374546666165621],
@@ -469,6 +520,11 @@
 ; [✗] Deposit Transaction (NFT) | Invalid transaction proof
 ; --------------------------------------------------------
 
+; Setup Merkle Root
+; As initial state, we are assuming the merkle tree has the following roots already inserted
+
+(free.merkle.insert-root "1" 8167310674242190125613361098771638458174204659337315431516698800658503838720)
+
 (test-capability (poly-fungible-reference.TRANSFER "1" "OZK7f534e0c85e82c0d8ba2c08c7b91e0d984f6bdcf009c5c62f7d5f0a25abb091e0f71142cf7e2bbd7f2cd02b586295eba1f7442caef4f2d7b3e3e3aa6fbeab9b1" "opact-contract" 10.0))
 
 (env-data { 
@@ -505,6 +561,11 @@
 ; --------------------------------------------------------
 ; [✗] Withdraw Transaction (NFT) | Invalid transaction proof
 ; --------------------------------------------------------
+
+; Setup Merkle Root
+; As initial state, we are assuming the merkle tree has the following roots already inserted
+
+(free.merkle.insert-root "1" 21512720597624602800564972456725208033390830061304333350934114141444863172687)
 
 ;  (test-capability (test.poly-fungible-reference.TRANSFER "1" "opact-contract" "k:045d640d3abaf87670e2676c094629e29d1665ef6f409fde0247b606ab552131" 1.0))
 

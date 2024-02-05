@@ -187,7 +187,6 @@
             (coin.create-account "opact-contract" (create-module-guard "opact-contract-guard"))
             (free.merkle.init-admin (create-module-guard "opact-contract-guard"))
             (free.merkle.initialize)
-            ;(coin.rotate "opact-contract" (opact-contract-guard))
         )
     )
 
@@ -511,11 +510,11 @@
                 (public-amount-calculated (calculate-public-amount (at 'tokenAmount ext-data) FEE))
                 (public-message-hash-calculated (poseidon-hash (str-to-int 64 ext-data-hash)))
             )
+            (enforce (= is-known-root true) "Invalid merkle root")
             (enforce (= (verify-proof proof) true) "Invalid transaction proof")
             (enforce (= public-amount public-amount-calculated) "Invalid public amount")
             (enforce (= public-message-hash-calculated public-message-hash) "Invalid message hash")
             (enforce (= public-token-calculated public-token) "Invalid token")
-            ; (enforce (= is-known-root true) "Invalid merkle root")
 
             (map (validate-spent) were-spent)
             {
