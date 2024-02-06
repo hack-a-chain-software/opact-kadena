@@ -1,43 +1,100 @@
 (namespace (read-msg 'ns))
 
 (module merkle GOVERNANCE
+    @doc
+    "This module includes capabilities for managing the Merkle tree, such as adding leaves, updating root hashes, \
+    \ and maintaining various states of the tree. It also enforces governance through specific administrative controls, \
+    \ ensuring that only authorized operations can modify the tree. Key functionalities include initialization of the tree,\
+    \ insertion of leaves, and verification of tree integrity through root hash management."
+   
     (defcap GOVERNANCE ()
+        @doc "Capability to enforce specific administrative privileges."
         (enforce-keyset "free.opact-admin")
     )
 
     (defschema FilledSubtreesSchema
-        "Schema for the filledSubtrees table"
+        @doc 
+        "Schema for the filledSubtrees table. \
+        \ This table stores the values of the filled subtrees in the Merkle tree. \
+        \ Each entry in this table represents a subtree that has been filled up to a certain level. \ 
+        \ When a new leaf is added to the Merkle tree, the hash of this leaf will be combined with the hash values \
+        \ in this table to update the Merkle root. The filled subtrees are used for updating and \
+        \ maintaining the integrity of the Merkle tree as new leaves are added."
         value:integer)
       
     (defschema RootsSchema
-        "Schema for the roots table"
+        @doc 
+        "Schema for the roots table. This table stores the root hashes of the Merkle tree at different states. \
+        \ Each root hash represents the state of the Merkle tree at a specific point in time."
         value:integer)
 
     (defschema StateSchema
-        "Schema for the config table"
+        @doc
+        "Schema for the state table. This table keeps track of the current state of the Merkle tree, \
+        \ including the current root index, which identifies the latest root hash, and the next index, \
+        \ indicating the position where the next leaf will be inserted."
+
         current_root_index:integer
         next_index:integer
+    )
+
+    (defschema admin
+        @doc
+        "Schema defining the structure for the admin table. \
+        \ This schema is used to store administrative information for the Merkle tree module, \
+        \ specifically the administrative guard. The 'guard' field holds the security information or \
+        \ rules (such as a keyset) that determine who has administrative privileges over the module. \ 
+        \ This schema is critical for enforcing access control and secure management of the Merkle tree operations."
+
+        guard:guard
     )
       
     (deftable filledSubtrees:{FilledSubtreesSchema})
     (deftable roots:{RootsSchema})
     (deftable state:{StateSchema})
+    (deftable admins:{admin})
+
+    (defconst MODULE_KEY "M")
 
     (defun get-current-root-index ()
+        @doc 
+        "Retrieves the current root index from the state table. \
+        \ This index points to the latest root hash of the Merkle tree."
+      
         (at 'current_root_index (read state "0")))
     
     (defun get-next-index ()
+        @doc 
+        "Retrieves the next index from the state table. \
+        \ This index indicates the position where the next leaf will be inserted in the Merkle tree."
+        
         (at 'next_index (read state "0")))
 
     (defun set-current-root-index (current_root_index:integer)
+        @doc 
+        "Updates the current root index in the state table. \
+        \ This operation is used when the Merkle tree's root has changed due to the insertion of a new leaf."
+
         (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (update state "0" {"current_root_index": current_root_index}))
     
     (defun set-next-index (next_index:integer)
+        @doc 
+        "Updates the next index in the state table. \ 
+        \ This is used to prepare for the next leaf insertion, incrementing the position for the upcoming leaf."
+
         (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (update state "0" {"next_index": next_index}))
 
     (defun set-filled-subtrees (key:string value:integer)
+        @doc 
+        "Updates the values of filled subtrees in the Merkle tree. \
+        \ This function is used to maintain the state of the tree as new leaves are added. \
+        \ Each subtree in the Merkle tree is represented by a hash value, \ 
+        \ and this function updates these values as the tree evolves. \
+        \ The 'key' corresponds to the specific level of the subtree being updated, \
+        \ and 'value' is the new hash for that subtree."
+   
         (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (write filledSubtrees key { "value": value }))
 
@@ -45,10 +102,10 @@
         (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (write roots key { "value": value }))
 
-    (defun blake-hash (left:string right:string)
-        (hash [left right]))
-
     (defun initialize()
+        @doc "Initializes the Merkle tree, setting up the initial state, filled subtrees, and the first root. \
+        \ This function is typically called once when the module is first used to prepare the Merkle tree for operation."
+
         (with-capability (GOVERNANCE)
         <% for (let i = 0; i < level; i++) { %>
             (set-filled-subtrees "<%= i %>" (poseidon-zeros <%= i %>))
@@ -64,6 +121,10 @@
     )
 
     (defun reset()
+        @doc 
+        "Resets the Merkle tree to its initial state. \
+        \ This can be useful for testing or in scenarios where the tree needs to be restarted from a clean state."
+
         (with-capability (GOVERNANCE)
         <% for (let i = 0; i < level; i++) { %>
             (set-filled-subtrees "<%= i %>" (poseidon-zeros <%= i %>))
@@ -78,20 +139,11 @@
         )
     )
 
-    (defun blake-zeros (i:integer)
-        (if (= i 0)
-            "gU2Q4_mob4UQ6u3w7mAh9vts0iI3_pSIQUEzl2dPXKo" ; (hash "0") zeroElement
-            (if (= i 1)
-                "Il1ocCVlKjmfq4tniMxSaMdTAwof1Damh7g1SZsFd1E" ; (hash (+ "gU2Q4_mob4UQ6u3w7mAh9vts0iI3_pSIQUEzl2dPXKo" "gU2Q4_mob4UQ6u3w7mAh9vts0iI3_pSIQUEzl2dPXKo"))
-                (if (= i 2)
-                    "Br5EWetygPF7ePyxUz8J6V2txrCR_xwSDalTWmGvOfI" ; (hash (+ "Il1ocCVlKjmfq4tniMxSaMdTAwof1Damh7g1SZsFd1E" "Il1ocCVlKjmfq4tniMxSaMdTAwof1Damh7g1SZsFd1E"))
-                    ""
-                )
-            )  
-        )
-    )
-
     (defun poseidon-zeros (i:integer)
+       @doc
+       "A helper function that provides Poseidon hash values for 'zero elements', \
+       \ used in the Merkle tree's construction and operations."
+
         (if (= i 0)
             19014214495641488759237505126948346942972912379615652741039992445865937985820 ; (hash "0") zeroElement
             (if (= i 1)
@@ -192,6 +244,10 @@
     )
 
     (defun is-known-root (root:integer)
+        @doc 
+        "Checks whether a given root hash is already known (i.e., exists) in the Merkle tree. \
+        \ This is useful for verifying the presence of specific states of the tree."
+
         (
             let*
             (
@@ -201,20 +257,27 @@
         )
     )
 
-    (defconst MODULE_KEY "M")
-
-    (defschema admin
-        guard:guard
-    )
-    
-    (deftable admins:{admin})
-
     (defun init-admin (guard:guard)
+        @doc 
+        "Initializes the admin for the Merkle tree module. \
+        \ This function sets up the initial administrative guard, \
+        \ which is used to enforce security and governance over operations within the module. \
+        \ It's typically called once during the module setup to establish the initial administrative control."
+   
         (with-capability (GOVERNANCE)
             (insert admins MODULE_KEY {'guard: guard}))
     )
 
     (defun insert-leaf (leaf:integer)
+       @doc 
+       "Inserts a new leaf into the Merkle tree. This operation involves several steps: \
+       \ computing the new hash values at each level of the tree up to the root, \ 
+       \ updating the filled subtrees, and adjusting the tree's current root index and next index. \
+       \ The function takes the new leaf's value and integrates it into the tree, \ 
+       \ recalculating and updating the necessary nodes to maintain the integrity of the Merkle tree. \ 
+       \ Upon successful insertion, the function returns the new root hash and the index of the newly inserted leaf, \
+       \ reflecting the updated state of the Merkle tree."
+
         (enforce-guard (at 'guard (read admins MODULE_KEY)))
         (
             let*

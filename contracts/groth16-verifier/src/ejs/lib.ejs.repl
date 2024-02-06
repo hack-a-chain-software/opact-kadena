@@ -1,24 +1,44 @@
 (namespace (read-msg 'ns))
 
 (module groth16-<%= n_public - 7 %>x2 GOVERNANCE
+    @doc
+    "This module implements Groth16 zk-SNARKs (Zero-Knowledge Succinct Non-Interactive Argument of Knowledge) verification. \
+    \ It dynamically names the module based on the number of public inputs. \
+    \ The module includes definitions for G1 and G2 points on an elliptic curve, a verifier structure, \
+    \ and a proof structure. It also provides functions to verify zk-SNARKs proofs."
+
     (defcap GOVERNANCE ()
+        @doc 
+        "Governance capability to enforce specific administrative privileges. \
+        \ It ensures that only authorized keysets can perform critical operations within the module."
+     
         (enforce-keyset "free.opact-admin")
     )
 
     (defschema G1Point
-        "Structure representing a G1 point."
+        @doc
+        "Structure representing a G1 point in an elliptic curve, consisting of x and y coordinates as integers. \
+        \ G1 points are used in various cryptographic operations within the zk-SNARKs protocol."
+   
         x: integer
         y: integer
     )
     
     (defschema G2Point
-        "Structure representing a G2 point."
+        @doc
+        "Structure representing a G2 point in an elliptic curve. G2 points are similar to G1 points but require arrays \
+        \ of integers for coordinates to accommodate the complexity and size of the data involved in zk-SNARKs."
+       
         x: [integer]
         y: [integer]
     )
 
     (defschema Verifier
-        "Structure representing the verifier."
+        @doc 
+        "Structure representing the verifier in zk-SNARKs. \
+        \ It includes the number of public inputs, points alfa1, beta2, gamma2, \
+        \ delta2 in G1 or G2, an array of G1 points for input consistency (ic), and the snark scalar field."
+      
         n_public: integer
         alfa1: object{G1Point}
         beta2: object{G2Point}
@@ -29,7 +49,10 @@
     )
 
     (defschema Proof
-        "Structure representing a proof."
+        @doc 
+        "Structure representing a proof in zk-SNARKs. \
+        \ It includes an array of public values and points a, b, and c in G1 or G2."
+
         public_values: [integer]
         a: object{G1Point}
         b: object{G2Point}
@@ -37,6 +60,10 @@
     )
 
     (defun verify (proof:object{Proof})
+        @doc 
+        "Structure representing a proof in zk-SNARKs. It comprises the public values and points a, b, and c in G1 or G2 forms. \
+        \ This structure is used to encapsulate the proof data that needs to be verified using the Groth16 verification algorithm."
+      
         (
             let* 
             (
@@ -87,6 +114,10 @@
     )
 
     (defun negate(p:object{G1Point})
+        @doc
+        "Function to negate a G1 point, a common operation in elliptic curve cryptography. \
+        \ It takes a G1 point and returns its negation. This function is used within the verification process."
+
         (
             let*
             (
@@ -102,6 +133,11 @@
     )
 
     (defun check-pairing(a1:object{G1Point} a2:object{G2Point} b1:object{G1Point} b2:object{G2Point} c1:object{G1Point} c2:object{G2Point} d1:object{G1Point} d2:object{G2Point})
+        @doc 
+        "Function to perform a pairing check, a core component of zk-SNARKs verification. \
+        \ It involves checking the mathematical relationships between pairs of G1 and G2 points, \
+        \ which is used to ensure the validity of a zk-SNARKs proof."
+     
         (
             let*
             (

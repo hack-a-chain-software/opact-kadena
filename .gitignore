@@ -20,7 +20,6 @@ wip
 /tests/*.js
 .pact-history
 .draft
-lib*.repl
 *.env
 **/.env
 **/node_modules
@@ -35,7 +34,6 @@ out
 out_tests
 .pact-history
 .draft
-lib*.repl
 *.env
 **/.env
 **/node_modules
